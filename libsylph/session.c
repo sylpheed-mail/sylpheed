@@ -40,6 +40,7 @@ typedef struct _SessionPrivData	SessionPrivData;
 struct _SessionPrivData {
 	Session *session;
 	SocksInfo *socks_info;
+	SessionErrorValue error_val;
 	gpointer data;
 };
 
@@ -83,6 +84,8 @@ static gboolean session_write_data_cb	(SockInfo	*source,
 
 void session_init(Session *session)
 {
+	SessionPrivData *priv;
+
 	session->type = SESSION_UNKNOWN;
 	session->sock = NULL;
 	session->server = NULL;
@@ -127,6 +130,12 @@ void session_init(Session *session)
 	session->ping_tag = 0;
 
 	session->data = NULL;
+
+	priv = g_new0(SessionPrivData, 1);
+	priv->session = session;
+	priv->socks_info = NULL;
+	priv->error_val = SESSION_ERROR_OK;
+	priv_list = g_list_prepend(priv_list, priv);
 }
 
 static SessionPrivData *session_get_priv(Session *session)
@@ -153,12 +162,17 @@ gint session_connect(Session *session, const gchar *server, gushort port)
 gint session_connect_full(Session *session, const gchar *server, gushort port,
 			  SocksInfo *socks_info)
 {
+	SessionPrivData *priv;
 #ifndef G_OS_UNIX
 	SockInfo *sock = NULL;
 #endif
 	g_return_val_if_fail(session != NULL, -1);
 	g_return_val_if_fail(server != NULL, -1);
 	g_return_val_if_fail(port > 0, -1);
+
+	priv = session_get_priv(session);
+	g_return_val_if_fail(priv != NULL, -1);
+	priv->socks_info = socks_info;
 
 	if (session->server != server) {
 		g_free(session->server);
@@ -178,6 +192,7 @@ gint session_connect_full(Session *session, const gchar *server, gushort port,
 	if (session->conn_id < 0) {
 		g_warning("can't connect to server.");
 		session->state = SESSION_ERROR;
+		priv->error_val = SESSION_ERROR_CONNFAIL;
 		return -1;
 	}
 #elif USE_THREADS
@@ -185,30 +200,23 @@ gint session_connect_full(Session *session, const gchar *server, gushort port,
 	if (session->conn_id < 0) {
 		g_warning("can't connect to server.");
 		session->state = SESSION_ERROR;
+		priv->error_val = SESSION_ERROR_CONNFAIL;
 		return -1;
 	}
-	if (sock_connect_async_thread_wait(session->conn_id, &sock) < 0) {
-		g_warning("can't connect to server.");
-		session->state = SESSION_ERROR;
+	if (sock_info_connect_async_thread_wait(session->conn_id, &sock) < 0) {
+		session_connect_cb(sock, session);
+		if (sock)
+			sock_close(sock);
 		return -1;
 	}
 #else /* !USE_THREADS */
-	sock = sock_connect(server, port);
-	if (sock == NULL) {
-		g_warning("can't connect to server.");
-		session->state = SESSION_ERROR;
+	sock = sock_new(server, port);
+	if (sock_info_connect(sock) < 0) {
+		session_connect_cb(sock, session);
+		sock_close(sock);
 		return -1;
 	}
 #endif
-
-	if (socks_info) {
-		SessionPrivData *priv;
-
-		priv = g_new0(SessionPrivData, 1);
-		priv->session = session;
-		priv->socks_info = socks_info;
-		priv_list = g_list_prepend(priv_list, priv);
-	}
 
 #ifdef G_OS_UNIX
 	return 0;
@@ -222,23 +230,37 @@ static gint session_connect_cb(SockInfo *sock, gpointer data)
 	Session *session = SESSION(data);
 	SessionPrivData *priv;
 
+	priv = session_get_priv(session);
 	session->conn_id = 0;
 
 	if (!sock) {
 		g_warning("can't connect to server.");
 		session->state = SESSION_ERROR;
+		priv->error_val = SESSION_ERROR_CONNFAIL;
+		return -1;
+	}
+	if (sock->state == CONN_LOOKUPFAILED) {
+		g_warning("DNS lookup failed.");
+		session->state = SESSION_ERROR;
+		priv->error_val = SESSION_ERROR_LOOKUP;
+		return -1;
+	} else if (sock->state != CONN_ESTABLISHED) {
+		g_warning("can't connect to server (ConnectionState: %d).",
+			  sock->state);
+		session->state = SESSION_ERROR;
+		priv->error_val = SESSION_ERROR_CONNFAIL;
 		return -1;
 	}
 
 	session->sock = sock;
 
-	priv = session_get_priv(session);
-	if (priv && priv->socks_info) {
+	if (priv->socks_info) {
 		sock_set_nonblocking_mode(sock, FALSE);
 		if (socks_connect(sock, session->server, session->port,
 				  priv->socks_info) < 0) {
 			g_warning("can't establish SOCKS connection.");
 			session->state = SESSION_ERROR;
+			priv->error_val = SESSION_ERROR_CONNFAIL;
 			return -1;
 		}
 	}
@@ -249,6 +271,7 @@ static gint session_connect_cb(SockInfo *sock, gpointer data)
 		if (!ssl_init_socket(sock)) {
 			g_warning("can't initialize SSL.");
 			session->state = SESSION_ERROR;
+			priv->error_val = SESSION_ERROR_SOCKET;
 			return -1;
 		}
 	}
@@ -259,6 +282,7 @@ static gint session_connect_cb(SockInfo *sock, gpointer data)
 	sock_set_nonblocking_mode(sock, session->nonblocking);
 
 	session->state = SESSION_RECV;
+	priv->error_val = SESSION_ERROR_OK;
 	session->io_tag = sock_add_watch(session->sock, G_IO_IN,
 					 session_read_msg_cb,
 					 session);
@@ -312,6 +336,17 @@ gboolean session_is_connected(Session *session)
 		session->state == SESSION_RECV);
 }
 
+SessionErrorValue session_get_error(Session *session)
+{
+	SessionPrivData *priv;
+
+	priv = session_get_priv(session);
+	if (priv)
+		return priv->error_val;
+	else
+		return SESSION_ERROR_ERROR;
+}
+
 void session_set_access_time(Session *session)
 {
 	session->last_access_time = time(NULL);
@@ -333,6 +368,7 @@ void session_set_timeout(Session *session, guint interval)
 static gboolean session_timeout_cb(gpointer data)
 {
 	Session *session = SESSION(data);
+	SessionPrivData *priv;
 
 	g_warning("session timeout.\n");
 
@@ -343,6 +379,8 @@ static gboolean session_timeout_cb(gpointer data)
 
 	session->timeout_tag = 0;
 	session->state = SESSION_TIMEOUT;
+	priv = session_get_priv(session);
+	priv->error_val = SESSION_ERROR_TIMEOUT;
 
 	return FALSE;
 }
@@ -681,6 +719,7 @@ static gboolean session_read_msg_cb(SockInfo *source, GIOCondition condition,
 				    gpointer data)
 {
 	Session *session = SESSION(data);
+	SessionPrivData *priv;
 	gchar buf[SESSION_BUFFSIZE];
 	gint line_len;
 	gchar *newline;
@@ -708,6 +747,8 @@ static gboolean session_read_msg_cb(SockInfo *source, GIOCondition condition,
 			default:
 				g_warning("%s: sock_read: %s\n", G_STRFUNC, g_strerror(errno));
 				session->state = SESSION_ERROR;
+				priv = session_get_priv(session);
+				priv->error_val = SESSION_ERROR_SOCKET;
 				return FALSE;
 			}
 		}
@@ -759,8 +800,11 @@ static gboolean session_read_msg_cb(SockInfo *source, GIOCondition condition,
 
 	g_free(msg);
 
-	if (ret < 0)
+	if (ret < 0) {
 		session->state = SESSION_ERROR;
+		priv = session_get_priv(session);
+		priv->error_val = SESSION_ERROR_SOCKET;
+	}
 
 	return FALSE;
 }
@@ -769,6 +813,7 @@ static gboolean session_read_data_cb(SockInfo *source, GIOCondition condition,
 				     gpointer data)
 {
 	Session *session = SESSION(data);
+	SessionPrivData *priv;
 	GByteArray *data_buf;
 	gint terminator_len;
 	gboolean complete = FALSE;
@@ -796,6 +841,8 @@ static gboolean session_read_data_cb(SockInfo *source, GIOCondition condition,
 			default:
 				g_warning("%s: sock_read: %s\n", G_STRFUNC, g_strerror(errno));
 				session->state = SESSION_ERROR;
+				priv = session_get_priv(session);
+				priv->error_val = SESSION_ERROR_SOCKET;
 				return FALSE;
 			}
 		}
@@ -866,8 +913,11 @@ static gboolean session_read_data_cb(SockInfo *source, GIOCondition condition,
 		session->recv_data_notify(session, data_len,
 					  session->recv_data_notify_data);
 
-	if (ret < 0)
+	if (ret < 0) {
 		session->state = SESSION_ERROR;
+		priv = session_get_priv(session);
+		priv->error_val = SESSION_ERROR_SOCKET;
+	}
 
 	return FALSE;
 }
@@ -882,6 +932,7 @@ static gboolean session_read_data_as_file_cb(SockInfo *source,
 					     gpointer data)
 {
 	Session *session = SESSION(data);
+	SessionPrivData *priv;
 	gint terminator_len;
 	gchar *data_begin_p;
 	gint buf_data_len;
@@ -909,6 +960,8 @@ static gboolean session_read_data_as_file_cb(SockInfo *source,
 			default:
 				g_warning("%s: sock_read: %s\n", G_STRFUNC, g_strerror(errno));
 				session->state = SESSION_ERROR;
+				priv = session_get_priv(session);
+				priv->error_val = SESSION_ERROR_SOCKET;
 				return FALSE;
 			}
 		}
@@ -980,6 +1033,8 @@ static gboolean session_read_data_as_file_cb(SockInfo *source,
 			g_warning("session_read_data_as_file_cb: "
 				  "writing data to file failed\n");
 			session->state = SESSION_ERROR;
+			priv = session_get_priv(session);
+			priv->error_val = SESSION_ERROR_IO;
 			return FALSE;
 		}
 		session->read_data_pos += write_len;
@@ -1016,6 +1071,8 @@ static gboolean session_read_data_as_file_cb(SockInfo *source,
 		g_warning("session_read_data_as_file_cb: "
 			  "writing data to file failed\n");
 		session->state = SESSION_ERROR;
+		priv = session_get_priv(session);
+		priv->error_val = SESSION_ERROR_IO;
 		return FALSE;
 	}
 	session->read_data_pos += write_len;
@@ -1025,6 +1082,8 @@ static gboolean session_read_data_as_file_cb(SockInfo *source,
 		g_warning("session_read_data_as_file_cb: "
 			  "writing data to file failed\n");
 		session->state = SESSION_ERROR;
+		priv = session_get_priv(session);
+		priv->error_val = SESSION_ERROR_IO;
 		return FALSE;
 	}
 	rewind(session->read_data_fp);
@@ -1046,8 +1105,11 @@ static gboolean session_read_data_as_file_cb(SockInfo *source,
 
 	session->read_data_pos = 0;
 
-	if (ret < 0)
+	if (ret < 0) {
 		session->state = SESSION_ERROR;
+		priv = session_get_priv(session);
+		priv->error_val = SESSION_ERROR_IO;
+	}
 
 	return FALSE;
 }
@@ -1056,6 +1118,7 @@ static gint session_write_buf(Session *session)
 {
 	gint write_len;
 	gint to_write_len;
+	SessionPrivData *priv;
 
 	g_return_val_if_fail(session->write_buf != NULL, -1);
 	g_return_val_if_fail(session->write_buf_p != NULL, -1);
@@ -1076,6 +1139,8 @@ static gint session_write_buf(Session *session)
 		default:
 			g_warning("sock_write: %s\n", g_strerror(errno));
 			session->state = SESSION_ERROR;
+			priv = session_get_priv(session);
+			priv->error_val = SESSION_ERROR_SOCKET;
 			return -1;
 		}
 	}
@@ -1102,6 +1167,7 @@ static gint session_write_data(Session *session, gint *nwritten)
 	gchar buf[WRITE_DATA_BUFFSIZE];
 	gint write_len;
 	gint to_write_len;
+	SessionPrivData *priv;
 
 	g_return_val_if_fail(session->write_data_fp != NULL, -1);
 	g_return_val_if_fail(session->write_data_pos >= 0, -1);
@@ -1112,6 +1178,8 @@ static gint session_write_data(Session *session, gint *nwritten)
 	if (fread(buf, to_write_len, 1, session->write_data_fp) < 1) {
 		g_warning("session_write_data: reading data from file failed\n");
 		session->state = SESSION_ERROR;
+		priv = session_get_priv(session);
+		priv->error_val = SESSION_ERROR_IO;
 		return -1;
 	}
 
@@ -1125,6 +1193,8 @@ static gint session_write_data(Session *session, gint *nwritten)
 		default:
 			g_warning("sock_write: %s\n", g_strerror(errno));
 			session->state = SESSION_ERROR;
+			priv = session_get_priv(session);
+			priv->error_val = SESSION_ERROR_SOCKET;
 			*nwritten = write_len;
 			return -1;
 		}
@@ -1140,6 +1210,8 @@ static gint session_write_data(Session *session, gint *nwritten)
 				  session->write_data_pos, SEEK_SET) < 0) {
 				g_warning("session_write_data: file seek failed\n");
 				session->state = SESSION_ERROR;
+				priv = session_get_priv(session);
+				priv->error_val = SESSION_ERROR_IO;
 				return -1;
 			}
 		}
@@ -1157,6 +1229,7 @@ static gboolean session_write_msg_cb(SockInfo *source, GIOCondition condition,
 				     gpointer data)
 {
 	Session *session = SESSION(data);
+	SessionPrivData *priv;
 	gint ret;
 
 	g_return_val_if_fail(condition == G_IO_OUT, FALSE);
@@ -1168,6 +1241,9 @@ static gboolean session_write_msg_cb(SockInfo *source, GIOCondition condition,
 
 	if (ret < 0) {
 		session->state = SESSION_ERROR;
+		priv = session_get_priv(session);
+		if (priv->error_val == SESSION_ERROR_OK)
+			priv->error_val = SESSION_ERROR_IO;
 		return FALSE;
 	} else if (ret > 0)
 		return TRUE;
@@ -1186,6 +1262,7 @@ static gboolean session_write_data_cb(SockInfo *source,
 				      GIOCondition condition, gpointer data)
 {
 	Session *session = SESSION(data);
+	SessionPrivData *priv;
 	guint write_data_len;
 	gint write_len;
 	gint ret;
@@ -1201,6 +1278,9 @@ static gboolean session_write_data_cb(SockInfo *source,
 
 	if (ret < 0) {
 		session->state = SESSION_ERROR;
+		priv = session_get_priv(session);
+		if (priv->error_val == SESSION_ERROR_OK)
+			priv->error_val = SESSION_ERROR_IO;
 		return FALSE;
 	} else if (ret > 0) {
 		GTimeVal tv_cur;

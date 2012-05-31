@@ -997,7 +997,11 @@ static void send_put_error(Session *session)
 	default:
 		switch (session->state) {
 		case SESSION_ERROR:
-			if (SMTP_SESSION(session)->state == SMTP_READY) {
+			if (session_get_error(session) == SESSION_ERROR_LOOKUP) {
+				log_msg = _("Server not found.");
+				err_msg = g_strdup_printf
+					(_("SMTP server not found: %s:%d"), session->server, session->port);
+			} else if (SMTP_SESSION(session)->state == SMTP_READY) {
 				log_msg = _("Can't connect to SMTP server.");
 				err_msg = g_strdup_printf
 					(_("Can't connect to SMTP server: %s:%d"), session->server, session->port);

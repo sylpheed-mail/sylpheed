@@ -73,6 +73,16 @@ typedef enum
 } SSLType;
 #endif
 
+typedef enum {
+	SESSION_ERROR_OK,
+	SESSION_ERROR_LOOKUP,
+	SESSION_ERROR_CONNFAIL,
+	SESSION_ERROR_IO,
+	SESSION_ERROR_SOCKET,
+	SESSION_ERROR_TIMEOUT,
+	SESSION_ERROR_ERROR
+} SessionErrorValue;
+
 typedef gint (*RecvMsgNotify)			(Session	*session,
 						 const gchar	*msg,
 						 gpointer	 user_data);
@@ -189,6 +199,8 @@ gint session_connect_full	(Session	*session,
 gint session_disconnect		(Session	*session);
 void session_destroy		(Session	*session);
 gboolean session_is_connected	(Session	*session);
+
+SessionErrorValue session_get_error	(Session	*session);
 
 void session_set_access_time	(Session	*session);
 

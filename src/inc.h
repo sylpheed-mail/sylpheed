@@ -47,7 +47,8 @@ typedef enum
 	INC_SOCKET_ERROR,
 	INC_EOF,
 	INC_TIMEOUT,
-	INC_CANCEL
+	INC_CANCEL,
+	INC_LOOKUP_ERROR
 } IncState;
 
 struct _IncProgressDialog

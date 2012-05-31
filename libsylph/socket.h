@@ -86,6 +86,8 @@ gint sock_cleanup			(void);
 
 gint sock_set_io_timeout		(guint sec);
 
+SockInfo *sock_new			(const gchar *hostname, gushort port);
+
 gint sock_set_nonblocking_mode		(SockInfo *sock, gboolean nonblock);
 gboolean sock_is_nonblocking_mode	(SockInfo *sock);
 
@@ -107,6 +109,16 @@ gint sock_connect_async_cancel		(gint id);
 #if USE_THREADS
 gint sock_connect_async_thread		(const gchar *hostname, gushort port);
 gint sock_connect_async_thread_wait	(gint id, SockInfo **sock);
+#endif
+
+gint sock_info_connect			(SockInfo *sock);
+#ifdef G_OS_UNIX
+gint sock_info_connect_async		(SockInfo *sock,
+					 SockConnectFunc func, gpointer data);
+#endif
+#if USE_THREADS
+gint sock_info_connect_async_thread	(SockInfo *sock);
+gint sock_info_connect_async_thread_wait(gint id, SockInfo **sock);
 #endif
 
 /* Basic I/O functions */

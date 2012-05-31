@@ -87,6 +87,7 @@ Session *nntp_session_new_full(const gchar *server, gushort port,
 		if (socks_connect(sock, server, port, socks_info) < 0) {
 			log_warning("Can't establish SOCKS connection: %s:%d\n",
 				    server, port);
+			sock_close(sock);
 			return NULL;
 		}
 	}

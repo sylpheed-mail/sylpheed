@@ -867,6 +867,10 @@ static gint inc_start(IncProgressDialog *inc_dialog, GSList **count_list)
 			SET_PIXMAP_AND_TEXT(ok_pixbuf, _("Done"), msg);
 			g_free(msg);
 			break;
+		case INC_LOOKUP_ERROR:
+			SET_PIXMAP_AND_TEXT(error_pixbuf,
+					    _("Server not found"), NULL);
+			break;
 		case INC_CONNECT_ERROR:
 			SET_PIXMAP_AND_TEXT(error_pixbuf,
 					    _("Connection failed"), NULL);
@@ -1017,6 +1021,8 @@ static IncState inc_pop3_session_do(IncSession *session)
 			    SESSION(pop3_session)->server,
 			    SESSION(pop3_session)->port);
 		session->inc_state = INC_CONNECT_ERROR;
+		if (session_get_error(SESSION(pop3_session)) == SESSION_ERROR_LOOKUP)
+			session->inc_state = INC_LOOKUP_ERROR;
 		statusbar_pop_all();
 		return INC_CONNECT_ERROR;
 	}
@@ -1036,6 +1042,8 @@ static IncState inc_pop3_session_do(IncSession *session)
 					session->inc_state = INC_CONNECT_ERROR;
 				else
 					session->inc_state = INC_ERROR;
+				if (session_get_error(SESSION(pop3_session)) == SESSION_ERROR_LOOKUP)
+					session->inc_state = INC_LOOKUP_ERROR;
 				break;
 			case SESSION_EOF:
 				session->inc_state = INC_EOF;
@@ -1522,6 +1530,12 @@ static void inc_put_error(IncState istate, const gchar *msg)
 	gboolean fatal_error = FALSE;
 
 	switch (istate) {
+	case INC_LOOKUP_ERROR:
+		log_msg = _("Server not found.");
+		if (prefs_common.no_recv_err_panel)
+			break;
+		err_msg = g_strdup(log_msg);
+		break;
 	case INC_CONNECT_ERROR:
 		log_msg = _("Connection failed.");
 		if (prefs_common.no_recv_err_panel)

@@ -91,8 +91,8 @@ struct _SockConnectData {
 #if USE_THREADS
 	gint flag;
 	GThread *thread;
-	SockInfo *sock;
 #endif /* G_OS_UNIX */
+	SockInfo *sock;
 	SockConnectFunc func;
 	gpointer data;
 };
@@ -146,9 +146,8 @@ static gint sock_connect_with_timeout	(gint			 sock,
 					 guint			 timeout_secs);
 
 #ifndef INET6
-static gint sock_connect_by_hostname	(gint		 sock,
-					 const gchar	*hostname,
-					 gushort	 port);
+static gint sock_info_connect_by_hostname
+					(SockInfo	*sock);
 #else
 #ifdef G_OS_WIN32
 typedef int (*GetAddrInfoFunc)		(const char	*node,
@@ -166,8 +165,7 @@ static FreeAddrInfoFunc freeaddrinfo_func = NULL;
 #define freeaddrinfo	my_freeaddrinfo
 #endif
 
-static SockDesc sock_connect_by_getaddrinfo	(const gchar	*hostname,
-						 gushort	 port);
+static SockDesc sock_info_connect_by_getaddrinfo(SockInfo	*sock);
 #endif
 
 #ifdef G_OS_UNIX
@@ -376,6 +374,22 @@ gint fd_accept(gint sock)
 	return accept(sock, (struct sockaddr *)&caddr, &caddr_len);
 }
 
+
+SockInfo *sock_new(const gchar *hostname, gushort port)
+{
+	SockInfo *sockinfo;
+
+	sockinfo = g_new0(SockInfo, 1);
+	sockinfo->sock = INVALID_SOCKET;
+	sockinfo->sock_ch = NULL;
+	sockinfo->hostname = g_strdup(hostname);
+	sockinfo->port = port;
+	sockinfo->state = CONN_READY;
+	sockinfo->flags = 0;
+	sockinfo->data = NULL;
+
+	return sockinfo;
+}
 
 static SockInfo *sock_find_from_fd(gint fd)
 {
@@ -816,11 +830,14 @@ static gint my_inet_aton(const gchar *hostname, struct in_addr *inp)
 #endif /* !defined(INET6) || defined(G_OS_WIN32) */
 
 #ifndef INET6
-static gint sock_connect_by_hostname(gint sock, const gchar *hostname,
-				     gushort port)
+static gint sock_info_connect_by_hostname(SockInfo *sock)
 {
 	struct hostent *hp;
 	struct sockaddr_in ad;
+	gint ret;
+
+	g_return_val_if_fail(sock != NULL, -1);
+	g_return_val_if_fail(sock->hostname != NULL && sock->port > 0, -1);
 
 	resolver_init();
 
@@ -828,24 +845,32 @@ static gint sock_connect_by_hostname(gint sock, const gchar *hostname,
 	ad.sin_family = AF_INET;
 	ad.sin_port = htons(port);
 
-	if (!my_inet_aton(hostname, &ad.sin_addr)) {
-		if ((hp = my_gethostbyname(hostname)) == NULL) {
-			fprintf(stderr, "%s: unknown host.\n", hostname);
+	if (!my_inet_aton(sock->hostname, &ad.sin_addr)) {
+		if ((hp = my_gethostbyname(sock->hostname)) == NULL) {
+			fprintf(stderr, "%s: unknown host.\n", sock->hostname);
 			errno = 0;
+			sock->state = CONN_LOOKUPFAILED;
 			return -1;
 		}
 
 		if (hp->h_length != 4 && hp->h_length != 8) {
-			fprintf(stderr, "illegal address length received for host %s\n", hostname);
+			fprintf(stderr, "illegal address length received for host %s\n", sock->hostname);
 			errno = 0;
+			sock->state = CONN_LOOKUPFAILED;
 			return -1;
 		}
 
 		memcpy(&ad.sin_addr, hp->h_addr, hp->h_length);
 	}
 
-	return sock_connect_with_timeout(sock, (struct sockaddr *)&ad,
-					 sizeof(ad), io_timeout);
+	sock->state = CONN_LOOKUPSUCCESS;
+
+	ret = sock_connect_with_timeout(sock->sock, (struct sockaddr *)&ad,
+					sizeof(ad), io_timeout);
+	if (ret < 0)
+		sock->state = CONN_FAILED;
+	else
+		sock->state = CONN_ESTABLISHED;
 }
 
 #else /* INET6 */
@@ -982,12 +1007,15 @@ const gchar *gai_strerror(gint errcode)
 }
 #endif
 
-static SockDesc sock_connect_by_getaddrinfo(const gchar *hostname, gushort port)
+static SockDesc sock_info_connect_by_getaddrinfo(SockInfo *sockinfo)
 {
 	SockDesc sock = INVALID_SOCKET;
 	gint gai_error;
 	struct addrinfo hints, *res, *ai;
 	gchar port_str[6];
+
+	g_return_val_if_fail(sockinfo != NULL, INVALID_SOCKET);
+	g_return_val_if_fail(sockinfo->hostname != NULL && sockinfo->port > 0, INVALID_SOCKET);
 
 	resolver_init();
 
@@ -998,11 +1026,12 @@ static SockDesc sock_connect_by_getaddrinfo(const gchar *hostname, gushort port)
 	hints.ai_protocol = IPPROTO_TCP;
 
 	/* convert port from integer to string. */
-	g_snprintf(port_str, sizeof(port_str), "%d", port);
+	g_snprintf(port_str, sizeof(port_str), "%d", sockinfo->port);
 
-	if ((gai_error = getaddrinfo(hostname, port_str, &hints, &res)) != 0) {
+	if ((gai_error = getaddrinfo(sockinfo->hostname, port_str, &hints, &res)) != 0) {
 		fprintf(stderr, "getaddrinfo for %s:%s failed: %s\n",
-			hostname, port_str, gai_strerror(gai_error));
+			sockinfo->hostname, port_str, gai_strerror(gai_error));
+		sockinfo->state = CONN_LOOKUPFAILED;
 		return INVALID_SOCKET;
 	}
 
@@ -1022,22 +1051,45 @@ static SockDesc sock_connect_by_getaddrinfo(const gchar *hostname, gushort port)
 	if (res != NULL)
 		freeaddrinfo(res);
 
-	if (ai == NULL)
+	if (ai == NULL) {
+		sockinfo->state = CONN_FAILED;
 		return INVALID_SOCKET;
+	}
 
+	sockinfo->state = CONN_ESTABLISHED;
 	return sock;
 }
 #endif /* !INET6 */
 
 SockInfo *sock_connect(const gchar *hostname, gushort port)
 {
-	SockDesc sock;
 	SockInfo *sockinfo;
 
-#ifdef INET6
-	sock = sock_connect_by_getaddrinfo(hostname, port);
-	if (!SOCKET_IS_VALID(sock))
+	sockinfo = sock_new(hostname, port);
+	if (sock_info_connect(sockinfo) < 0) {
+		sock_close(sockinfo);
 		return NULL;
+	}
+
+	return sockinfo;
+}
+
+gint sock_info_connect(SockInfo *sockinfo)
+{
+	SockDesc sock;
+#ifndef INET6
+	gint ret;
+#endif
+
+	g_return_val_if_fail(sockinfo != NULL, -1);
+	g_return_val_if_fail(sockinfo->hostname != NULL && sockinfo->port > 0,
+			     -1);
+
+#ifdef INET6
+	sock = sock_info_connect_by_getaddrinfo(sockinfo);
+	if (!SOCKET_IS_VALID(sock)) {
+		return -1;
+	}
 #else
 	sock = socket(AF_INET, SOCK_STREAM, 0);
 	if (!SOCKET_IS_VALID(sock)) {
@@ -1046,30 +1098,29 @@ SockInfo *sock_connect(const gchar *hostname, gushort port)
 #else
 		perror("socket");
 #endif /* G_OS_WIN32 */
-		return NULL;
+		sockinfo->state = CONN_FAILED;
+		return -1;
 	}
 	sock_set_buffer_size(sock);
 
-	if (sock_connect_by_hostname(sock, hostname, port) < 0) {
+	sockinfo->sock = sock;
+	if ((ret = sock_info_connect_by_hostname(sockinfo)) < 0) {
 		if (errno != 0) perror("connect");
 		fd_close(sock);
-		return NULL;
+		sockinfo->sock = INVALID_SOCKET;
+		return ret;
 	}
 #endif /* INET6 */
 
-	sockinfo = g_new0(SockInfo, 1);
 	sockinfo->sock = sock;
 	sockinfo->sock_ch = g_io_channel_unix_new(sock);
-	sockinfo->hostname = g_strdup(hostname);
-	sockinfo->port = port;
-	sockinfo->state = CONN_ESTABLISHED;
 	sockinfo->flags = SYL_SOCK_CHECK_IO;
 
 	sock_list = g_list_prepend(sock_list, sockinfo);
 
 	g_usleep(100000);
 
-	return sockinfo;
+	return 0;
 }
 
 #ifdef G_OS_UNIX
@@ -1126,11 +1177,9 @@ static gboolean sock_connect_async_cb(GIOChannel *source,
 		return FALSE;
 	}
 
-	sockinfo = g_new0(SockInfo, 1);
+	sockinfo = conn_data->sock;
 	sockinfo->sock = fd;
 	sockinfo->sock_ch = g_io_channel_unix_new(fd);
-	sockinfo->hostname = g_strdup(conn_data->hostname);
-	sockinfo->port = conn_data->port;
 	sockinfo->state = CONN_ESTABLISHED;
 	sockinfo->flags = SYL_SOCK_NONBLOCK;
 
@@ -1138,6 +1187,7 @@ static gboolean sock_connect_async_cb(GIOChannel *source,
 
 	conn_data->func(sockinfo, conn_data->data);
 
+	conn_data->sock = NULL;
 	sock_connect_async_cancel(conn_data->id);
 
 	return FALSE;
@@ -1158,22 +1208,40 @@ static gint sock_connect_async_get_address_info_cb(GList *addr_list,
 gint sock_connect_async(const gchar *hostname, gushort port,
 			SockConnectFunc func, gpointer data)
 {
+	SockInfo *sock;
+	gint ret;
+
+	sock = sock_new(hostname, port);
+	ret = sock_info_connect_async(sock, func, data);
+	if (ret < 0)
+		sock_close(sock);
+
+	return ret;
+}
+
+gint sock_info_connect_async(SockInfo *sock, SockConnectFunc func,
+			     gpointer data)
+{
 	static gint id = 1;
 	SockConnectData *conn_data;
 
+	g_return_val_if_fail(sock != NULL, -1);
+	g_return_val_if_fail(sock->hostname != NULL && sock->port > 0, -1);
+
 	conn_data = g_new0(SockConnectData, 1);
 	conn_data->id = id++;
-	conn_data->hostname = g_strdup(hostname);
-	conn_data->port = port;
+	conn_data->hostname = g_strdup(sock->hostname);
+	conn_data->port = sock->port;
 	conn_data->addr_list = NULL;
 	conn_data->cur_addr = NULL;
 	conn_data->io_tag = 0;
+	conn_data->sock = sock;
 	conn_data->func = func;
 	conn_data->data = data;
 
 	conn_data->lookup_data = sock_get_address_info_async
-		(hostname, port, sock_connect_async_get_address_info_cb,
-		 conn_data);
+		(sock->hostname, sock->port,
+		 sock_connect_async_get_address_info_cb, conn_data);
 
 	if (conn_data->lookup_data == NULL) {
 		g_free(conn_data->hostname);
@@ -1213,6 +1281,8 @@ gint sock_connect_async_cancel(gint id)
 			g_io_channel_shutdown(conn_data->channel, FALSE, NULL);
 			g_io_channel_unref(conn_data->channel);
 		}
+		if (conn_data->sock)
+			sock_close(conn_data->sock);
 
 		sock_address_list_free(conn_data->addr_list);
 		g_free(conn_data->hostname);
@@ -1229,6 +1299,15 @@ static gint sock_connect_address_list_async(SockConnectData *conn_data)
 {
 	SockAddrData *addr_data;
 	gint sock = -1;
+
+	if (conn_data->addr_list == NULL) {
+		g_warning("sock_connect_address_list_async: "
+			  "DNS lookup for %s failed", conn_data->hostname);
+		conn_data->sock->state = CONN_LOOKUPFAILED;
+		conn_data->func(conn_data->sock, conn_data->data);
+		sock_connect_async_cancel(conn_data->id);
+		return -1;
+	}
 
 	for (; conn_data->cur_addr != NULL;
 	     conn_data->cur_addr = conn_data->cur_addr->next) {
@@ -1256,9 +1335,10 @@ static gint sock_connect_address_list_async(SockConnectData *conn_data)
 
 	if (conn_data->cur_addr == NULL) {
 		g_warning("sock_connect_address_list_async: "
-			  "connection to %s:%d failed\n",
+			  "connection to %s:%d failed",
 			  conn_data->hostname, conn_data->port);
-		conn_data->func(NULL, conn_data->data);
+		conn_data->sock->state = CONN_FAILED;
+		conn_data->func(conn_data->sock, conn_data->data);
 		sock_connect_async_cancel(conn_data->id);
 		return -1;
 	}
@@ -1319,7 +1399,7 @@ static gboolean sock_get_address_info_async_cb(GIOChannel *source,
 			break;
 
 		if (ai_member[0] == AF_UNSPEC) {
-			g_warning("DNS lookup failed\n");
+			g_warning("DNS lookup failed");
 			break;
 		}
 
@@ -1412,7 +1492,7 @@ static SockLookupData *sock_get_address_info_async(const gchar *hostname,
 
 		gai_err = getaddrinfo(hostname, port_str, &hints, &res);
 		if (gai_err != 0) {
-			g_warning("getaddrinfo for %s:%s failed: %s\n",
+			g_warning("getaddrinfo for %s:%s failed: %s",
 				  hostname, port_str, gai_strerror(gai_err));
 			fd_write_all(pipe_fds[1], (gchar *)ai_member,
 				     sizeof(ai_member));
@@ -1507,14 +1587,15 @@ static gpointer sock_connect_async_func(gpointer data)
 	SockConnectData *conn_data = (SockConnectData *)data;
 	gint ret;
 
-	conn_data->sock = sock_connect(conn_data->hostname, conn_data->port);
+	ret = sock_info_connect(conn_data->sock);
 
-	if (conn_data->sock) {
+	if (ret == 0) {
 		debug_print("sock_connect_async_func: connected\n");
-		ret = 0;
 	} else {
-		debug_print("sock_connect_async_func: connection failed\n");
-		ret = -1;
+		if (conn_data->sock->state == CONN_LOOKUPFAILED)
+			debug_print("sock_connect_async_func: DNS lookup failed\n");
+		else
+			debug_print("sock_connect_async_func: connection failed\n");
 	}
 
 	g_atomic_int_set(&conn_data->flag, 1);
@@ -1526,15 +1607,31 @@ static gpointer sock_connect_async_func(gpointer data)
 
 gint sock_connect_async_thread(const gchar *hostname, gushort port)
 {
+	SockInfo *sock;
+	gint ret;
+
+	sock = sock_new(hostname, port);
+	ret = sock_info_connect_async_thread(sock);
+	if (ret < 0)
+		sock_close(sock);
+
+	return ret;
+}
+
+gint sock_info_connect_async_thread(SockInfo *sock)
+{
 	static gint id = 1;
 	SockConnectData *data;
 
+	g_return_val_if_fail(sock != NULL, -1);
+	g_return_val_if_fail(sock->hostname != NULL && sock->port > 0, -1);
+
 	data = g_new0(SockConnectData, 1);
 	data->id = id++;
-	data->hostname = g_strdup(hostname);
-	data->port = port;
+	data->hostname = g_strdup(sock->hostname);
+	data->port = sock->port;
 	data->flag = 0;
-	data->sock = NULL;
+	data->sock = sock;
 
 	data->thread = g_thread_create(sock_connect_async_func, data, TRUE,
 				       NULL);
@@ -1551,6 +1648,22 @@ gint sock_connect_async_thread(const gchar *hostname, gushort port)
 
 gint sock_connect_async_thread_wait(gint id, SockInfo **sock)
 {
+	gint ret;
+
+	*sock = NULL;
+	ret = sock_info_connect_async_thread_wait(id, sock);
+	if (ret < 0) {
+		if (*sock) {
+			sock_close(*sock);
+			*sock = NULL;
+		}
+	}
+
+	return ret;
+}
+
+gint sock_info_connect_async_thread_wait(gint id, SockInfo **sock)
+{
 	SockConnectData *conn_data = NULL;
 	GList *cur;
 	gint ret;
@@ -1563,7 +1676,7 @@ gint sock_connect_async_thread_wait(gint id, SockInfo **sock)
 	}
 
 	if (!conn_data) {
-		g_warning("sock_connect_async_thread_wait: id %d not found.", id);
+		g_warning("sock_info_connect_async_thread_wait: id %d not found.", id);
 		return -1;
 	}
 
@@ -1572,9 +1685,10 @@ gint sock_connect_async_thread_wait(gint id, SockInfo **sock)
 		event_loop_iterate();
 
 	ret = GPOINTER_TO_INT(g_thread_join(conn_data->thread));
-	debug_print("sock_connect_async_thread_wait: thread exited with status %d\n", ret);
+	debug_print("sock_info_connect_async_thread_wait: thread exited with status %d\n", ret);
 
-	*sock = conn_data->sock;
+	if (sock)
+		*sock = conn_data->sock;
 
 	sock_connect_data_list = g_list_remove(sock_connect_data_list,
 					       conn_data);
@@ -1972,6 +2086,8 @@ gint sock_close(SockInfo *sock)
 
 	if (!sock)
 		return 0;
+
+	debug_print("sock_close: %s:%u (%p)\n", sock->hostname ? sock->hostname : "(none)", sock->port, sock);
 
 #if USE_SSL
 	if (sock->ssl)
