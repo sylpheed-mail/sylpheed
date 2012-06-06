@@ -1024,7 +1024,7 @@ static IncState inc_pop3_session_do(IncSession *session)
 		if (session_get_error(SESSION(pop3_session)) == SESSION_ERROR_LOOKUP)
 			session->inc_state = INC_LOOKUP_ERROR;
 		statusbar_pop_all();
-		return INC_CONNECT_ERROR;
+		return session->inc_state;
 	}
 
 	while (session_is_connected(SESSION(pop3_session)) &&
