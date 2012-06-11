@@ -25,6 +25,14 @@
 #include <gtk/gtkexpander.h>
 #include <gtk/gtkstock.h>
 
+#ifdef G_OS_WIN32
+#  define COBJMACROS
+#  include <windows.h>
+#  include <objbase.h>
+#  include <objidl.h>
+#  include <shlobj.h>
+#endif
+
 #include "main.h"
 #include "filesel.h"
 #include "manage_window.h"
@@ -50,6 +58,9 @@ static gboolean filesel_save_expander_get_expanded (GtkWidget	*dialog);
 static GtkFileChooserConfirmation filesel_confirm_overwrite_cb
 					(GtkFileChooser		*chooser,
 					 gpointer		 data);
+#endif
+#ifdef G_OS_WIN32
+static gchar *filesel_get_link		(const gchar		*link_file);
 #endif
 
 
@@ -185,9 +196,37 @@ static GSList *filesel_select_file_full(const gchar *title, const gchar *file,
 
 	inc_lock();
 
+again:
 	if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT) {
 		list = gtk_file_chooser_get_filenames(GTK_FILE_CHOOSER(dialog));
 		if (list) {
+#ifdef G_OS_WIN32
+			/* follow Windows shortcut */
+			if (g_slist_length(list) == 1) {
+				gchar *selected = (gchar *)list->data;
+				gchar *target;
+				const gchar *ext;
+
+				if ((ext = strrchr(selected, '.')) &&
+				    g_ascii_strcasecmp(ext, ".lnk") == 0) {
+					target = filesel_get_link(selected);
+					if (is_dir_exist(target)) {
+						gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), target);
+						g_free(target);
+						slist_free_strings(list);
+						g_slist_free(list);
+						list = NULL;
+					    	goto again;
+					} else if (is_file_exist(target)) {
+						slist_free_strings(list);
+						g_slist_free(list);
+						list = g_slist_append(NULL, target);
+					} else {
+					    	g_free(target);
+					}
+				}
+			}
+#endif
 			cwd = gtk_file_chooser_get_current_folder
 				(GTK_FILE_CHOOSER(dialog));
 			if (cwd) {
@@ -346,5 +385,45 @@ static GtkFileChooserConfirmation filesel_confirm_overwrite_cb
 	g_free(filename);
 
 	return ret;
+}
+#endif
+
+#ifdef G_OS_WIN32
+static gchar *filesel_get_link(const gchar *link_file)
+{
+	WIN32_FIND_DATAW wfd;
+	IShellLinkW *psl;
+	IPersistFile *ppf;
+	HRESULT hr;
+	wchar_t *wlink_file;
+	wchar_t wtarget[MAX_PATH];
+	gchar *target = NULL;
+
+	wtarget[0] = 0L;
+
+	debug_print("link_file: %s\n", link_file);
+
+	CoInitialize(NULL);
+	if (S_OK == CoCreateInstance(&CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, &IID_IShellLinkW, (void **)&psl)) {
+		if (S_OK == IShellLinkW_QueryInterface(psl, &IID_IPersistFile, (void **)&ppf)) {
+			wlink_file = g_utf8_to_utf16(link_file, -1, NULL, NULL, NULL);
+			hr = IPersistFile_Load(ppf, wlink_file, STGM_READ);
+			if (S_OK == hr) {
+				IShellLinkW_GetPath(psl, wtarget, MAX_PATH, &wfd, SLGP_UNCPRIORITY);
+				target = g_utf16_to_utf8(wtarget, -1, NULL, NULL, NULL);
+			}
+			IPersistFile_Release(ppf);
+			g_free(wlink_file);
+		}
+		IShellLinkW_Release(psl);
+	}
+	CoUninitialize();
+
+	if (target)
+		debug_print("target: %s\n", target);
+	else
+		debug_print("target not found\n");
+
+	return target;
 }
 #endif
