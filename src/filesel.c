@@ -60,7 +60,11 @@ static GtkFileChooserConfirmation filesel_confirm_overwrite_cb
 					 gpointer		 data);
 #endif
 #ifdef G_OS_WIN32
+static gboolean is_ext_lnk		(const gchar		*filename);
 static gchar *filesel_get_link		(const gchar		*link_file);
+static GSList *filesel_resolve_link	(GtkFileChooser		*chooser,
+					 GSList			*list,
+					 gboolean		*dir_selected);
 #endif
 
 
@@ -199,34 +203,20 @@ static GSList *filesel_select_file_full(const gchar *title, const gchar *file,
 again:
 	if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT) {
 		list = gtk_file_chooser_get_filenames(GTK_FILE_CHOOSER(dialog));
-		if (list) {
 #ifdef G_OS_WIN32
-			/* follow Windows shortcut */
-			if (g_slist_length(list) == 1) {
-				gchar *selected = (gchar *)list->data;
-				gchar *target;
-				const gchar *ext;
-
-				if ((ext = strrchr(selected, '.')) &&
-				    g_ascii_strcasecmp(ext, ".lnk") == 0) {
-					target = filesel_get_link(selected);
-					if (is_dir_exist(target)) {
-						gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), target);
-						g_free(target);
-						slist_free_strings(list);
-						g_slist_free(list);
-						list = NULL;
-					    	goto again;
-					} else if (is_file_exist(target)) {
-						slist_free_strings(list);
-						g_slist_free(list);
-						list = g_slist_append(NULL, target);
-					} else {
-					    	g_free(target);
-					}
-				}
+		if (list) {
+			/* resolve Windows shortcut */
+			gboolean dir_selected = FALSE;
+			list = filesel_resolve_link(GTK_FILE_CHOOSER(dialog),
+						    list, &dir_selected);
+			if (!list) {
+				if (!dir_selected)
+					alertpanel_error(_("The link target not found."));
+				goto again;
 			}
+		}
 #endif
+		if (list) {
 			cwd = gtk_file_chooser_get_current_folder
 				(GTK_FILE_CHOOSER(dialog));
 			if (cwd) {
@@ -373,6 +363,20 @@ static GtkFileChooserConfirmation filesel_confirm_overwrite_cb
 	if (filename && is_file_exist(filename)) {
 		AlertValue aval;
 
+#ifdef G_OS_WIN32
+		gchar *target = NULL;
+
+		if (is_ext_lnk(filename) &&
+		    (target = filesel_get_link(filename)) != NULL &&
+		    is_dir_exist(target)) {
+			gtk_file_chooser_set_current_folder(chooser, target);
+		    	g_free(target);
+		    	g_free(filename);
+		    	return GTK_FILE_CHOOSER_CONFIRMATION_SELECT_AGAIN;
+		}
+		g_free(target);
+#endif
+
 		aval = alertpanel(_("Overwrite existing file"),
 				  _("The file already exists. Do you want to replace it?"),
 				  GTK_STOCK_YES, GTK_STOCK_NO, NULL);
@@ -389,6 +393,17 @@ static GtkFileChooserConfirmation filesel_confirm_overwrite_cb
 #endif
 
 #ifdef G_OS_WIN32
+static gboolean is_ext_lnk(const gchar *filename)
+{
+	const gchar *ext;
+
+	if (filename && (ext = strrchr(filename, '.')) &&
+	    g_ascii_strcasecmp(ext, ".lnk") == 0)
+		return TRUE;
+
+	return FALSE;
+}
+
 static gchar *filesel_get_link(const gchar *link_file)
 {
 	WIN32_FIND_DATAW wfd;
@@ -407,10 +422,10 @@ static gchar *filesel_get_link(const gchar *link_file)
 	if (S_OK == CoCreateInstance(&CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, &IID_IShellLinkW, (void **)&psl)) {
 		if (S_OK == IShellLinkW_QueryInterface(psl, &IID_IPersistFile, (void **)&ppf)) {
 			wlink_file = g_utf8_to_utf16(link_file, -1, NULL, NULL, NULL);
-			hr = IPersistFile_Load(ppf, wlink_file, STGM_READ);
-			if (S_OK == hr) {
-				IShellLinkW_GetPath(psl, wtarget, MAX_PATH, &wfd, SLGP_UNCPRIORITY);
-				target = g_utf16_to_utf8(wtarget, -1, NULL, NULL, NULL);
+			if (S_OK == IPersistFile_Load(ppf, wlink_file, STGM_READ)) {
+				if (S_OK == IShellLinkW_GetPath(psl, wtarget, MAX_PATH, &wfd, SLGP_UNCPRIORITY)) {
+					target = g_utf16_to_utf8(wtarget, -1, NULL, NULL, NULL);
+				}
 			}
 			IPersistFile_Release(ppf);
 			g_free(wlink_file);
@@ -425,5 +440,41 @@ static gchar *filesel_get_link(const gchar *link_file)
 		debug_print("target not found\n");
 
 	return target;
+}
+
+static GSList *filesel_resolve_link(GtkFileChooser *chooser, GSList *list, gboolean *dir_selected)
+{
+	GSList *cur;
+	GSList *new_list = NULL;
+	gchar *target;
+
+	for (cur = list; cur != NULL; cur = cur->next) {
+		gchar *selected = (gchar *)cur->data;
+
+		if (is_ext_lnk(selected)) {
+			target = filesel_get_link(selected);
+
+		    	if (is_dir_exist(target)) {
+				gtk_file_chooser_set_current_folder(chooser, target);
+				g_free(target);
+				slist_free_strings(new_list);
+				g_slist_free(new_list);
+		    		new_list = NULL;
+				*dir_selected = TRUE;
+		    		break;
+			} else if (is_file_exist(target)) {
+				new_list = g_slist_append(new_list, target);
+			} else {
+			    	g_free(target);
+			}
+		} else {
+			new_list = g_slist_append(new_list, g_strdup(selected));
+		}
+	}
+
+	slist_free_strings(list);
+	g_slist_free(list);
+
+	return new_list;
 }
 #endif
