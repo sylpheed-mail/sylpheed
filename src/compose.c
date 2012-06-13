@@ -6443,6 +6443,7 @@ static void compose_attach_property(Compose *compose)
 	compose_attach_property_create(&cancelled);
 	gtk_widget_grab_focus(attach_prop.ok_btn);
 	gtk_widget_show(attach_prop.window);
+	manage_window_focus_in(compose->window, NULL, NULL);
 	manage_window_set_transient(GTK_WINDOW(attach_prop.window));
 
 	optmenu = GTK_OPTION_MENU(attach_prop.encoding_optmenu);
