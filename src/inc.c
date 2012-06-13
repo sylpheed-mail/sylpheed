@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2011 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -138,8 +138,9 @@ static gint inc_recv_message		(Session	*session,
 static gint inc_drop_message		(Pop3Session	*session,
 					 const gchar	*file);
 
-static void inc_put_error		(IncState	 istate,
-					 const gchar	*msg);
+static void inc_put_error		(IncSession	*session,
+					 IncState	 istate,
+					 const gchar	*pop3_msg);
 
 static void inc_cancel_cb		(GtkWidget	*widget,
 					 gpointer	 data);
@@ -921,7 +922,8 @@ static gint inc_start(IncProgressDialog *inc_dialog, GSList **count_list)
 				manage_window_focus_in
 					(inc_dialog->dialog->window,
 					 NULL, NULL);
-			inc_put_error(inc_state, pop3_session->error_msg);
+			inc_put_error(session, inc_state,
+				      pop3_session->error_msg);
 			if (inc_dialog->show_dialog)
 				manage_window_focus_out
 					(inc_dialog->dialog->window,
@@ -1523,7 +1525,7 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 	return val;
 }
 
-static void inc_put_error(IncState istate, const gchar *msg)
+static void inc_put_error(IncSession *session, IncState istate, const gchar *pop3_msg)
 {
 	gchar *log_msg = NULL;
 	gchar *err_msg = NULL;
@@ -1534,22 +1536,25 @@ static void inc_put_error(IncState istate, const gchar *msg)
 		log_msg = _("Server not found.");
 		if (prefs_common.no_recv_err_panel)
 			break;
-		err_msg = g_strdup(log_msg);
+		err_msg = g_strdup_printf
+			(_("Server %s not found."), session->session->server);
 		break;
 	case INC_CONNECT_ERROR:
 		log_msg = _("Connection failed.");
 		if (prefs_common.no_recv_err_panel)
 			break;
-		err_msg = g_strdup(log_msg);
+		err_msg = g_strdup_printf
+			(_("Connection to %s:%d failed."),
+			 session->session->server, session->session->port);
 		break;
 	case INC_ERROR:
 		log_msg = _("Error occurred while processing mail.");
 		if (prefs_common.no_recv_err_panel)
 			break;
-		if (msg)
+		if (pop3_msg)
 			err_msg = g_strdup_printf
 				(_("Error occurred while processing mail:\n%s"),
-				 msg);
+				 pop3_msg);
 		else
 			err_msg = g_strdup(log_msg);
 		break;
@@ -1579,9 +1584,9 @@ static void inc_put_error(IncState istate, const gchar *msg)
 		log_msg = _("Mailbox is locked.");
 		if (prefs_common.no_recv_err_panel)
 			break;
-		if (msg)
+		if (pop3_msg)
 			err_msg = g_strdup_printf(_("Mailbox is locked:\n%s"),
-						  msg);
+						  pop3_msg);
 		else
 			err_msg = g_strdup(log_msg);
 		break;
@@ -1589,9 +1594,9 @@ static void inc_put_error(IncState istate, const gchar *msg)
 		log_msg = _("Authentication failed.");
 		if (prefs_common.no_recv_err_panel)
 			break;
-		if (msg)
+		if (pop3_msg)
 			err_msg = g_strdup_printf
-				(_("Authentication failed:\n%s"), msg);
+				(_("Authentication failed:\n%s"), pop3_msg);
 		else
 			err_msg = g_strdup(log_msg);
 		break;

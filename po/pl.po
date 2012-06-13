@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-06 16:00+0900\n"
+"POT-Creation-Date: 2012-06-13 15:40+0900\n"
 "PO-Revision-Date: 2011-01-07 12:00+0100\n"
 "Last-Translator: Jan Stępień <jstepien@users.sourceforge.net>\n"
 "Language-Team: Jan Stępień <jstepien@users.sourceforge.net>\n"
@@ -1252,7 +1252,7 @@ msgstr "Notatka"
 msgid "Warning"
 msgstr "Ostrzeżenie"
 
-#: src/alertpanel.c:168 src/inc.c:890
+#: src/alertpanel.c:168 src/inc.c:891
 #: plugin/attachment_tool/attachment_tool.c:263
 msgid "Error"
 msgstr "Błąd"
@@ -2285,19 +2285,24 @@ msgstr "Wybierz plik docelowy"
 msgid "Select destination folder"
 msgstr "Wybierz katalog docelowy"
 
-#: src/filesel.c:216
+#: src/filesel.c:214
+#, fuzzy
+msgid "The link target not found."
+msgstr "znaleziono %d wiadomości.\n"
+
+#: src/filesel.c:245
 msgid "Save as"
 msgstr "Zapisz jako"
 
-#: src/filesel.c:223 src/filesel.c:337
+#: src/filesel.c:252 src/filesel.c:380
 msgid "Overwrite existing file"
 msgstr "Nadpisz istniejący plik"
 
-#: src/filesel.c:224 src/filesel.c:338
+#: src/filesel.c:253 src/filesel.c:381
 msgid "The file already exists. Do you want to replace it?"
 msgstr "Plik o tej nazwie już istnieje. Czy chcesz go zastąpić?"
 
-#: src/filesel.c:241 src/foldersel.c:256
+#: src/filesel.c:270 src/foldersel.c:256
 msgid "Select folder"
 msgstr "Wybierz katalog"
 
@@ -2862,157 +2867,157 @@ msgstr "Importuj plik LDIF do książki adresowej"
 msgid "Attributes"
 msgstr "Atrybuty"
 
-#: src/inc.c:196
+#: src/inc.c:197
 #, c-format
 msgid "Sylpheed: %d new messages"
 msgstr "Sylpheed: %d nowe wiadomości"
 
-#: src/inc.c:207
+#: src/inc.c:208
 #, c-format
 msgid "[Local]: %d"
 msgstr ""
 
-#: src/inc.c:608
+#: src/inc.c:609
 msgid "Authenticating with POP3"
 msgstr "Uwierzytelnianie POP3"
 
-#: src/inc.c:637
+#: src/inc.c:638
 msgid "Retrieving new messages"
 msgstr "Pobieranie nowych wiadomości"
 
-#: src/inc.c:639
+#: src/inc.c:640
 #, fuzzy
 msgid "Cancel _all"
 msgstr "Anulowano"
 
-#: src/inc.c:685
+#: src/inc.c:686
 msgid "Standby"
 msgstr "Oczekiwanie"
 
-#: src/inc.c:842 src/inc.c:896
+#: src/inc.c:843 src/inc.c:897
 msgid "Cancelled"
 msgstr "Anulowano"
 
-#: src/inc.c:853
+#: src/inc.c:854
 msgid "Retrieving"
 msgstr "Pobieranie"
 
-#: src/inc.c:862 src/inc.c:1203
+#: src/inc.c:863 src/inc.c:1205
 #, fuzzy, c-format
 msgid "%d message(s) (%s) received"
 msgstr "Gotowe (%d wiadomośći (%s) odebrano)"
 
-#: src/inc.c:866
+#: src/inc.c:867
 #, fuzzy, c-format
 msgid "no new messages"
 msgstr "Brak nowych wiadomości"
 
-#: src/inc.c:867
+#: src/inc.c:868
 #, fuzzy
 msgid "Done"
 msgstr "Gotowe."
 
-#: src/inc.c:872
+#: src/inc.c:873
 #, fuzzy
 msgid "Server not found"
 msgstr "Informacje o serwerze"
 
-#: src/inc.c:876
+#: src/inc.c:877
 msgid "Connection failed"
 msgstr "Błąd połączenia"
 
-#: src/inc.c:879
+#: src/inc.c:880
 msgid "Auth failed"
 msgstr "Błąd autoryzacji"
 
-#: src/inc.c:883
+#: src/inc.c:884
 msgid "Locked"
 msgstr "Zablokowano"
 
-#: src/inc.c:893
+#: src/inc.c:894
 msgid "Timeout"
 msgstr "Opóźnienie"
 
-#: src/inc.c:942
+#: src/inc.c:944
 #, c-format
 msgid "Finished (%d new message(s))"
 msgstr "Zakończono (%d nowe wiadomości)"
 
-#: src/inc.c:945
+#: src/inc.c:947
 #, c-format
 msgid "Finished (no new messages)"
 msgstr "Zakończono (brak nowych wiadomości)"
 
-#: src/inc.c:954
+#: src/inc.c:956
 msgid "Some errors occurred while getting mail."
 msgstr "Wystąpiły błędy podczas pobierania poczty."
 
-#: src/inc.c:990
+#: src/inc.c:992
 #, c-format
 msgid "getting new messages of account %s...\n"
 msgstr "pobieranie nowych wiadomości z konta %s ...\n"
 
-#: src/inc.c:994
+#: src/inc.c:996
 #, c-format
 msgid "%s: Authenticating with POP3"
 msgstr "%s: Uwierzytelnianie POP3"
 
-#: src/inc.c:997
+#: src/inc.c:999
 #, c-format
 msgid "%s: Retrieving new messages"
 msgstr "%s : Pobieranie nowych wiadomości"
 
-#: src/inc.c:1002
+#: src/inc.c:1004
 #, c-format
 msgid "Connecting to POP3 server: %s..."
 msgstr "Nawiązywanie połączenia z serwerem POP3: %s..."
 
-#: src/inc.c:1020
+#: src/inc.c:1022
 #, c-format
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Nie można nawiązać połączenia z serwerem POP3: %s:%d\n"
 
-#: src/inc.c:1106 src/rpop3.c:862 src/send_message.c:846
+#: src/inc.c:1108 src/rpop3.c:862 src/send_message.c:846
 #, c-format
 msgid "Authenticating..."
 msgstr "Uwierzytelnianie..."
 
-#: src/inc.c:1107
+#: src/inc.c:1109
 #, c-format
 msgid "Retrieving messages from %s..."
 msgstr "Pobieranie wiadomości z %s..."
 
-#: src/inc.c:1112
+#: src/inc.c:1114
 msgid "Getting the number of new messages (STAT)..."
 msgstr "Pobieranie liczby nowych wiadomości (STAT)..."
 
-#: src/inc.c:1116
+#: src/inc.c:1118
 msgid "Getting the number of new messages (LAST)..."
 msgstr "Pobieranie liczby nowych wiadomości (LAST)..."
 
-#: src/inc.c:1120
+#: src/inc.c:1122
 msgid "Getting the number of new messages (UIDL)..."
 msgstr "Pobieranie liczby nowych wiadomości (UIDL)"
 
-#: src/inc.c:1124
+#: src/inc.c:1126
 msgid "Getting the size of messages (LIST)..."
 msgstr "Pobieranie rozmiaru wiadomości (LIST)..."
 
-#: src/inc.c:1134
+#: src/inc.c:1136
 #, c-format
 msgid "Deleting message %d"
 msgstr "Usuwanie wiadomości %d"
 
-#: src/inc.c:1141 src/send_message.c:864
+#: src/inc.c:1143 src/send_message.c:864
 msgid "Quitting"
 msgstr "Wychodzenie"
 
-#: src/inc.c:1178
+#: src/inc.c:1180
 #, c-format
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "Pobieranie wiadomości (%d / %d) (%s / %s)"
 
-#: src/inc.c:1443 src/inc.c:1470 src/summaryview.c:4807 src/summaryview.c:4997
+#: src/inc.c:1445 src/inc.c:1472 src/summaryview.c:4807 src/summaryview.c:4997
 #: src/summaryview.c:5048
 msgid ""
 "Execution of the junk filter command failed.\n"
@@ -3022,20 +3027,30 @@ msgstr ""
 "niepowodzeniem.\n"
 "Sprawdź ustawienia filtrów niechcianej poczty."
 
-#: src/inc.c:1534 src/send_message.c:1001
+#: src/inc.c:1536 src/send_message.c:1001
 #, fuzzy
 msgid "Server not found."
 msgstr "znaleziono %d wiadomości.\n"
 
 #: src/inc.c:1540
+#, fuzzy, c-format
+msgid "Server %s not found."
+msgstr "znaleziono %d wiadomości.\n"
+
+#: src/inc.c:1543
 msgid "Connection failed."
 msgstr "Błąd połączenia."
 
-#: src/inc.c:1546
+#: src/inc.c:1547
+#, fuzzy, c-format
+msgid "Connection to %s:%d failed."
+msgstr "Błąd połączenia."
+
+#: src/inc.c:1551
 msgid "Error occurred while processing mail."
 msgstr "Błąd podczas przetwarzania wiadomości."
 
-#: src/inc.c:1551
+#: src/inc.c:1556
 #, c-format
 msgid ""
 "Error occurred while processing mail:\n"
@@ -3044,29 +3059,29 @@ msgstr ""
 "Błąd podczas przetwarzania wiadomości:\n"
 "%s"
 
-#: src/inc.c:1557
+#: src/inc.c:1562
 msgid "No disk space left."
 msgstr "Brak miejsca na dysku."
 
-#: src/inc.c:1562
+#: src/inc.c:1567
 msgid "Can't write file."
 msgstr "Nie można zapisać pliku."
 
-#: src/inc.c:1567
+#: src/inc.c:1572
 msgid "Socket error."
 msgstr "Błąd gniazda."
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1573 src/rpop3.c:575 src/rpop3.c:576 src/send_message.c:786
+#: src/inc.c:1578 src/rpop3.c:575 src/rpop3.c:576 src/send_message.c:786
 #: src/send_message.c:1014
 msgid "Connection closed by the remote host."
 msgstr "Połączenie zamknięte przez zdalny komputer."
 
-#: src/inc.c:1579
+#: src/inc.c:1584
 msgid "Mailbox is locked."
 msgstr "Skrzynka jest zablokowana."
 
-#: src/inc.c:1583
+#: src/inc.c:1588
 #, c-format
 msgid ""
 "Mailbox is locked:\n"
@@ -3075,11 +3090,11 @@ msgstr ""
 "Skrzynka jest zablokowana:\n"
 "%s"
 
-#: src/inc.c:1589 src/rpop3.c:550 src/rpop3.c:555 src/send_message.c:990
+#: src/inc.c:1594 src/rpop3.c:550 src/rpop3.c:555 src/send_message.c:990
 msgid "Authentication failed."
 msgstr "Błąd uwierzytelniania."
 
-#: src/inc.c:1594 src/rpop3.c:552 src/send_message.c:993
+#: src/inc.c:1599 src/rpop3.c:552 src/send_message.c:993
 #, c-format
 msgid ""
 "Authentication failed:\n"
@@ -3088,15 +3103,15 @@ msgstr ""
 "Błąd uwierzytelniania:\n"
 "%s"
 
-#: src/inc.c:1599 src/rpop3.c:580 src/rpop3.c:581 src/send_message.c:1018
+#: src/inc.c:1604 src/rpop3.c:580 src/rpop3.c:581 src/send_message.c:1018
 msgid "Session timed out."
 msgstr "Sesja wygasła."
 
-#: src/inc.c:1640
+#: src/inc.c:1645
 msgid "Incorporation cancelled\n"
 msgstr "Odbieranie anulowano\n"
 
-#: src/inc.c:1752
+#: src/inc.c:1757
 #, c-format
 msgid "Getting new messages from %s into %s...\n"
 msgstr "Pobieranie wiadomości z %s do %s...\n"
