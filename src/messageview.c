@@ -407,7 +407,7 @@ MessageView *messageview_create(void)
 			 messageview);
 
 	menu = gtk_menu_new();
-	MENUITEM_ADD_WITH_MNEMONIC(menu, menuitem, _("Save _all..."), 0);
+	MENUITEM_ADD_WITH_MNEMONIC(menu, menuitem, _("Save _all attachments..."), 0);
 	g_signal_connect(G_OBJECT(menuitem), "activate",
 			 G_CALLBACK(messageview_save_all_cb), messageview);
 	gtk_widget_show_all(menu);
