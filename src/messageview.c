@@ -31,6 +31,8 @@
 #include <gtk/gtkmenuitem.h>
 #include <gtk/gtkcheckmenuitem.h>
 #include <gtk/gtkstatusbar.h>
+#include <gtk/gtktooltips.h>
+#include <gtk/gtkarrow.h>
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
@@ -79,9 +81,17 @@ static gint messageview_delete_cb	(GtkWidget		*widget,
 					 MessageView		*messageview);
 static void messageview_size_allocate_cb(GtkWidget		*widget,
 					 GtkAllocation		*allocation);
+static void messageview_toggle_attach_cb(GtkToggleButton	*toggle,
+					 MessageView		*messageview);
 static void messageview_switch_page_cb	(GtkNotebook		*notebook,
 					 GtkNotebookPage	*page,
 					 guint			 page_num,
+					 MessageView		*messageview);
+static gint messageview_menu_tool_btn_pressed
+					(GtkWidget		*widget,
+					 GdkEventButton		*event,
+					 MessageView		*messageview);
+static void messageview_save_all_cb	(GtkWidget		*widget,
 					 MessageView		*messageview);
 static gboolean key_pressed		(GtkWidget		*widget,
 					 GdkEventKey		*event,
@@ -310,9 +320,19 @@ MessageView *messageview_create(void)
 	MessageView *messageview;
 	GtkWidget *vbox;
 	GtkWidget *notebook;
+	GtkWidget *hbox;
+	GtkWidget *toolbar_vbox;
+	GtkWidget *toolbar_hbox;
+	GtkWidget *image;
+	GtkWidget *arrow;
+	GtkWidget *mime_toggle_btn;
+	GtkWidget *menu_tool_btn;
+	GtkWidget *menu;
+	GtkWidget *menuitem;
 	HeaderView *headerview;
 	TextView *textview;
 	MimeView *mimeview;
+	GtkTooltips *tip;
 
 	debug_print(_("Creating message view...\n"));
 	messageview = g_new0(MessageView, 1);
@@ -349,9 +369,58 @@ MessageView *messageview_create(void)
 	gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 0);
 	gtk_widget_show_all(notebook);
 
-	vbox = gtk_vbox_new(FALSE, 0);
-	gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET_PTR(headerview),
+	/* Attachment toolbar */
+	toolbar_vbox = gtk_vbox_new(FALSE, 0);
+	gtk_widget_show(toolbar_vbox);
+
+	toolbar_hbox = gtk_hbox_new(FALSE, 0);
+	gtk_widget_show(toolbar_hbox);
+	gtk_box_pack_end(GTK_BOX(toolbar_vbox), toolbar_hbox, FALSE, FALSE, 0);
+
+	mime_toggle_btn = gtk_toggle_button_new();
+	gtk_widget_show(mime_toggle_btn);
+	gtk_box_pack_start(GTK_BOX(toolbar_hbox), mime_toggle_btn,
 			   FALSE, FALSE, 0);
+	g_signal_connect(G_OBJECT(mime_toggle_btn), "toggled",
+			 G_CALLBACK(messageview_toggle_attach_cb), messageview);
+
+	image = stock_pixbuf_widget_scale(NULL, STOCK_PIXMAP_MAIL_ATTACH, 18, 18);
+	gtk_widget_show(image);
+	gtk_container_add(GTK_CONTAINER(mime_toggle_btn), image);
+
+	tip = gtk_tooltips_new();
+	gtk_tooltips_set_tip(tip, mime_toggle_btn,
+			     _("Switch to attachment list view"), NULL);
+
+	arrow = gtk_arrow_new(GTK_ARROW_DOWN, GTK_SHADOW_OUT);
+	gtk_widget_show(arrow);
+	gtk_widget_set_size_request(arrow, 6, -1);
+
+	menu_tool_btn = gtk_button_new();
+	gtk_container_add(GTK_CONTAINER(menu_tool_btn), arrow);
+	GTK_WIDGET_UNSET_FLAGS(menu_tool_btn, GTK_CAN_FOCUS);
+	gtk_widget_show(menu_tool_btn);
+	gtk_box_pack_start(GTK_BOX(toolbar_hbox), menu_tool_btn,
+			   FALSE, FALSE, 0);
+	g_signal_connect(G_OBJECT(menu_tool_btn), "button_press_event",
+			 G_CALLBACK(messageview_menu_tool_btn_pressed),
+			 messageview);
+
+	menu = gtk_menu_new();
+	MENUITEM_ADD_WITH_MNEMONIC(menu, menuitem, _("Save _all..."), 0);
+	g_signal_connect(G_OBJECT(menuitem), "activate",
+			 G_CALLBACK(messageview_save_all_cb), messageview);
+	gtk_widget_show_all(menu);
+
+	gtk_widget_hide(toolbar_vbox);
+
+	hbox = gtk_hbox_new(FALSE, 0);
+	gtk_widget_show(hbox);
+	gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET_PTR(headerview), TRUE, TRUE, 0);
+	gtk_box_pack_end(GTK_BOX(hbox), toolbar_vbox, FALSE, FALSE, 0);
+
+	vbox = gtk_vbox_new(FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(vbox), notebook, TRUE, TRUE, 0);
 	gtk_widget_show(vbox);
 
@@ -363,7 +432,14 @@ MessageView *messageview_create(void)
 			 G_CALLBACK(messageview_switch_page_cb), messageview);
 
 	messageview->vbox        = vbox;
+
 	messageview->notebook    = notebook;
+
+	messageview->hbox            = hbox;
+	messageview->toolbar_vbox    = toolbar_vbox;
+	messageview->mime_toggle_btn = mime_toggle_btn;
+	messageview->menu_tool_btn   = menu_tool_btn;
+	messageview->tool_menu       = menu;
 
 	messageview->new_window  = FALSE;
 	messageview->window      = NULL;
@@ -449,6 +525,7 @@ MessageView *messageview_create_with_new_window(void)
 	msgview->visible = TRUE;
 
 	gtk_widget_show_all(window);
+	gtk_widget_hide(msgview->toolbar_vbox);
 
 	messageview_init(msgview);
 
@@ -550,13 +627,17 @@ static void messageview_change_view_type(MessageView *messageview,
 	if (messageview->type == type) return;
 
 	if (type == MVIEW_MIME) {
-		gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), TRUE);
+		gtk_widget_show(messageview->toolbar_vbox);
 		gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook),
 					      messageview->current_page);
+		if (messageview->current_page == 0)
+			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(messageview->mime_toggle_btn), FALSE);
+		else
+			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(messageview->mime_toggle_btn), TRUE);
 	} else if (type == MVIEW_TEXT) {
 		gint current_page = messageview->current_page;
 
-		gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), FALSE);
+		gtk_widget_hide(messageview->toolbar_vbox);
 		gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 0);
 		messageview->current_page = current_page;
 		mimeview_clear(messageview->mimeview);
@@ -799,11 +880,39 @@ static void messageview_size_allocate_cb(GtkWidget *widget,
 	prefs_common.msgwin_height = allocation->height;
 }
 
+static void messageview_toggle_attach_cb(GtkToggleButton *toggle,
+					 MessageView *messageview)
+{
+	if (gtk_toggle_button_get_active(toggle))
+		gtk_notebook_set_current_page(GTK_NOTEBOOK(messageview->notebook), 1);
+	else
+		gtk_notebook_set_current_page(GTK_NOTEBOOK(messageview->notebook), 0);
+}
+
 static void messageview_switch_page_cb(GtkNotebook *notebook,
 				       GtkNotebookPage *page, guint page_num,
 				       MessageView *messageview)
 {
 	messageview->current_page = page_num;
+}
+
+static gint messageview_menu_tool_btn_pressed(GtkWidget *widget,
+					      GdkEventButton *event,
+					      MessageView *messageview)
+{
+	if (!event)
+		return FALSE;
+
+	gtk_menu_popup(GTK_MENU(messageview->tool_menu), NULL, NULL, 
+		       menu_button_position, messageview->mime_toggle_btn,
+		       event->button, event->time);
+
+	return TRUE;
+}
+
+static void messageview_save_all_cb(GtkWidget *widget, MessageView *messageview)
+{
+	mimeview_save_all(messageview->mimeview);
 }
 
 static gboolean key_pressed(GtkWidget *widget, GdkEventKey *event,

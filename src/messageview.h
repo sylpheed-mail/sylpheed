@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,6 +45,12 @@ struct _MessageView
 	GtkWidget *notebook;
 
 	MessageType type;
+
+	GtkWidget *hbox;
+	GtkWidget *toolbar_vbox;
+	GtkWidget *mime_toggle_btn;
+	GtkWidget *menu_tool_btn;
+	GtkWidget *tool_menu;
 
 	gboolean new_window;
 	GtkWidget *window;
