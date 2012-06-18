@@ -71,6 +71,8 @@ struct _MimeView
 	gchar *file;
 
 	gchar *drag_file;
+
+	gboolean has_attach_file;
 };
 
 MimeView *mimeview_create	(void);

@@ -412,6 +412,7 @@ void mimeview_clear(MimeView *mimeview)
 {
 	procmime_mimeinfo_free_all(mimeview->mimeinfo);
 	mimeview->mimeinfo = NULL;
+	mimeview->has_attach_file = FALSE;
 
 	gtk_tree_store_clear(mimeview->store);
 	textview_clear(mimeview->textview);
@@ -534,6 +535,8 @@ static gboolean mimeview_append_part(MimeView *mimeview, MimeInfo *partinfo,
 	mime_type = partinfo->content_type ? partinfo->content_type : "";
 	size = to_human_readable(partinfo->content_size);
 	name = get_part_name(partinfo);
+	if (name && *name != '\0')
+		mimeview->has_attach_file = TRUE;
 
 	gtk_tree_store_append(mimeview->store, iter, parent);
 	gtk_tree_store_set(mimeview->store, iter,
@@ -879,6 +882,9 @@ static gint mimeview_button_pressed(GtkWidget *widget, GdkEventButton *event,
 		else
 			menu_set_sensitive(mimeview->popupfactory,
 					   "/Open", TRUE);
+
+		menu_set_sensitive(mimeview->popupfactory,
+				   "/Save all...", mimeview->has_attach_file);
 
 		if (partinfo && (partinfo->mime_type == MIME_TEXT ||
 				 partinfo->mime_type == MIME_TEXT_HTML ||
