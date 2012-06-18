@@ -497,6 +497,7 @@ SummaryView *summary_create(void)
 	GtkWidget *statlabel_msgs;
 	GtkWidget *toggle_eventbox;
 	GtkWidget *toggle_arrow;
+	GtkTooltips *tip;
 	GtkWidget *popupmenu;
 	GtkItemFactory *popupfactory;
 	gint n_entries;
@@ -544,6 +545,9 @@ SummaryView *summary_create(void)
 	gtk_container_add(GTK_CONTAINER(toggle_eventbox), toggle_arrow);
 	g_signal_connect(G_OBJECT(toggle_eventbox), "button_press_event",
 			 G_CALLBACK(summary_toggle_pressed), summaryview);
+	tip = gtk_tooltips_new();
+	gtk_tooltips_set_tip(tip, toggle_eventbox, _("Toggle message view"),
+			     NULL);
 
 	statlabel_msgs = gtk_label_new("");
 	gtk_misc_set_alignment(GTK_MISC(statlabel_msgs), 1, 0.5);
