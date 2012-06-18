@@ -396,7 +396,7 @@ MessageView *messageview_create(void)
 
 	arrow = gtk_arrow_new(GTK_ARROW_DOWN, GTK_SHADOW_OUT);
 	gtk_widget_show(arrow);
-	gtk_widget_set_size_request(arrow, 6, -1);
+	gtk_widget_set_size_request(arrow, 5, -1);
 
 	menu_tool_btn = gtk_button_new();
 	gtk_container_add(GTK_CONTAINER(menu_tool_btn), arrow);
