@@ -103,6 +103,19 @@ Section "Exec Installer"
   Abort
 
   ExecWait "$INSTDIR\sylpheed.exe --exit" $R0
+
+  ; Wait for sylpheed.exe quit completely
+  ${nsProcess::FindProcess} "sylpheed.exe" $R0
+  StrCmp $R0 "0" 0 wait_done
+  Sleep 1000
+  ${nsProcess::FindProcess} "sylpheed.exe" $R0
+  StrCmp $R0 "0" 0 wait_done
+  Sleep 1000
+  ${nsProcess::FindProcess} "sylpheed.exe" $R0
+  StrCmp $R0 "0" 0 wait_done
+  Sleep 1000
+
+  wait_done:
   ExecWait '"${TEMP_INSTALLER_PATH}" /S' $0
 SectionEnd
 
