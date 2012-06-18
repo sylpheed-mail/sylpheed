@@ -71,6 +71,8 @@ static GList *messageview_list = NULL;
 
 static void messageview_change_view_type(MessageView		*messageview,
 					 MessageType		 type);
+static void messageview_set_tool_menu	(MessageView		*messageview,
+					 MimeInfo		*mimeinfo);
 static void messageview_set_menu_state	(MessageView		*messageview);
 
 static void messageview_set_encoding_menu
@@ -327,7 +329,7 @@ MessageView *messageview_create(void)
 	GtkWidget *arrow;
 	GtkWidget *mime_toggle_btn;
 	GtkWidget *menu_tool_btn;
-	GtkWidget *menu;
+	GtkWidget *tool_menu;
 	GtkWidget *menuitem;
 	HeaderView *headerview;
 	TextView *textview;
@@ -406,11 +408,12 @@ MessageView *messageview_create(void)
 			 G_CALLBACK(messageview_menu_tool_btn_pressed),
 			 messageview);
 
-	menu = gtk_menu_new();
-	MENUITEM_ADD_WITH_MNEMONIC(menu, menuitem, _("Save _all attachments..."), 0);
+	tool_menu = gtk_menu_new();
+	MENUITEM_ADD(tool_menu, menuitem, NULL, 0);
+	MENUITEM_ADD_WITH_MNEMONIC(tool_menu, menuitem, _("Save _all attachments..."), 0);
 	g_signal_connect(G_OBJECT(menuitem), "activate",
 			 G_CALLBACK(messageview_save_all_cb), messageview);
-	gtk_widget_show_all(menu);
+	gtk_widget_show_all(tool_menu);
 
 	gtk_widget_hide(toolbar_vbox);
 
@@ -439,7 +442,7 @@ MessageView *messageview_create(void)
 	messageview->toolbar_vbox    = toolbar_vbox;
 	messageview->mime_toggle_btn = mime_toggle_btn;
 	messageview->menu_tool_btn   = menu_tool_btn;
-	messageview->tool_menu       = menu;
+	messageview->tool_menu       = tool_menu;
 
 	messageview->new_window  = FALSE;
 	messageview->window      = NULL;
@@ -602,6 +605,7 @@ gint messageview_show(MessageView *messageview, MsgInfo *msginfo,
 	     mimeinfo->mime_type != MIME_TEXT_HTML)) {
 		messageview_change_view_type(messageview, MVIEW_MIME);
 		mimeview_show_message(messageview->mimeview, mimeinfo, file);
+		messageview_set_tool_menu(messageview, mimeinfo);
 	} else {
 		messageview_change_view_type(messageview, MVIEW_TEXT);
 		textview_show_message(messageview->textview, mimeinfo, file);
@@ -645,6 +649,45 @@ static void messageview_change_view_type(MessageView *messageview,
 		return;
 
 	messageview->type = type;
+}
+
+static void messageview_set_tool_menu(MessageView *messageview,
+				      MimeInfo *mimeinfo)
+{
+	MimeInfo *partinfo;
+	const gchar *name;
+	GtkWidget *menuitem;
+	GList *cur_item, *next = NULL;
+	gint pos = 0;
+	gboolean exist;
+
+	cur_item = GTK_MENU_SHELL(messageview->tool_menu)->children;
+	while (cur_item != NULL) {
+		next = cur_item->next;
+		if (GTK_BIN(cur_item->data)->child == NULL)
+			break;
+		gtk_widget_destroy(GTK_WIDGET(cur_item->data));
+		cur_item = next;
+	}
+
+	for (partinfo = mimeinfo; partinfo != NULL;
+	     partinfo = procmime_mimeinfo_next(partinfo)) {
+		if (partinfo->filename || partinfo->name) {
+			name = g_basename(partinfo->filename ? partinfo->filename : partinfo->name);
+			if (*name == '\0')
+				name = "mimetmp";
+			menuitem = gtk_menu_item_new_with_label(name);
+			gtk_widget_show(menuitem);
+			gtk_widget_set_sensitive(menuitem, FALSE);
+			gtk_menu_shell_insert(GTK_MENU_SHELL(messageview->tool_menu), menuitem, pos++);
+		}
+	}
+
+	exist = (pos != 0);
+	for (cur_item = next; cur_item != NULL; cur_item = cur_item->next) {
+		menuitem = GTK_WIDGET(cur_item->data);
+		gtk_widget_set_sensitive(menuitem, exist);
+	}
 }
 
 static void messageview_set_menu_state(MessageView *messageview)
@@ -727,6 +770,7 @@ void messageview_destroy(MessageView *messageview)
 
 	procmsg_msginfo_free(messageview->msginfo);
 
+	gtk_widget_destroy(messageview->tool_menu);
 	if (messageview->window)
 		gtk_widget_destroy(messageview->window);
 
