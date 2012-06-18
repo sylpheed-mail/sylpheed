@@ -433,6 +433,7 @@ void mimeview_destroy(MimeView *mimeview)
 	textview_destroy(mimeview->textview);
 	imageview_destroy(mimeview->imageview);
 	procmime_mimeinfo_free_all(mimeview->mimeinfo);
+	g_object_unref(mimeview->popupfactory);
 	g_free(mimeview->file);
 	g_free(mimeview->drag_file);
 	g_free(mimeview);
