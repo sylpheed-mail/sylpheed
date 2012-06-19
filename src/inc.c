@@ -293,9 +293,9 @@ void inc_mail(MainWindow *mainwin)
 	if (prefs_common.use_extinc && prefs_common.extinc_cmd) {
 		/* external incorporating program */
 		if (execute_command_line(prefs_common.extinc_cmd, FALSE) != 0) {
+			inc_is_running = FALSE;
 			main_window_unlock(mainwin);
 			inc_autocheck_timer_set();
-			inc_is_running = FALSE;
 			return;
 		}
 
@@ -318,10 +318,11 @@ void inc_mail(MainWindow *mainwin)
 	inc_finished(mainwin, list);
 	slist_free_strings(list);
 	g_slist_free(list);
-	main_window_unlock(mainwin);
-	inc_autocheck_timer_set();
 
 	inc_is_running = FALSE;
+
+	main_window_unlock(mainwin);
+	inc_autocheck_timer_set();
 }
 
 static gint inc_remote_account_mail(MainWindow *mainwin, PrefsAccount *account)
@@ -503,10 +504,11 @@ gint inc_account_mail(MainWindow *mainwin, PrefsAccount *account)
 	inc_finished(mainwin, list);
 	slist_free_strings(list);
 	g_slist_free(list);
-	main_window_unlock(mainwin);
-	inc_autocheck_timer_set();
 
 	inc_is_running = FALSE;
+
+	main_window_unlock(mainwin);
+	inc_autocheck_timer_set();
 
 	return new_msgs;
 }
@@ -576,10 +578,11 @@ void inc_all_account_mail(MainWindow *mainwin, gboolean autocheck)
 	inc_finished(mainwin, count_list);
 	slist_free_strings(count_list);
 	g_slist_free(count_list);
-	main_window_unlock(mainwin);
-	inc_autocheck_timer_set();
 
 	inc_is_running = FALSE;
+
+	main_window_unlock(mainwin);
+	inc_autocheck_timer_set();
 }
 
 gint inc_pop_before_smtp(PrefsAccount *account)
@@ -617,10 +620,10 @@ gint inc_pop_before_smtp(PrefsAccount *account)
 
 	inc_start(inc_dialog, NULL);
 
+	inc_is_running = FALSE;
+
 	main_window_unlock(mainwin);
 	inc_autocheck_timer_set();
-
-	inc_is_running = FALSE;
 
 	return 0;
 }
