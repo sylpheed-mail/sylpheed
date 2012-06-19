@@ -843,7 +843,7 @@ static gint sock_info_connect_by_hostname(SockInfo *sock)
 
 	memset(&ad, 0, sizeof(ad));
 	ad.sin_family = AF_INET;
-	ad.sin_port = htons(port);
+	ad.sin_port = htons(sock->port);
 
 	if (!my_inet_aton(sock->hostname, &ad.sin_addr)) {
 		if ((hp = my_gethostbyname(sock->hostname)) == NULL) {
@@ -871,6 +871,8 @@ static gint sock_info_connect_by_hostname(SockInfo *sock)
 		sock->state = CONN_FAILED;
 	else
 		sock->state = CONN_ESTABLISHED;
+
+	return ret;
 }
 
 #else /* INET6 */
