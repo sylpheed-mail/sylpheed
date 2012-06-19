@@ -200,7 +200,9 @@ static GSList *filesel_select_file_full(const gchar *title, const gchar *file,
 
 	inc_lock();
 
+#ifdef G_OS_WIN32
 again:
+#endif
 	if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT) {
 		list = gtk_file_chooser_get_filenames(GTK_FILE_CHOOSER(dialog));
 #ifdef G_OS_WIN32
