@@ -19,11 +19,15 @@
 </H2>
 
 <P>自動的に迷惑メールをフィルタリングするためには、まず学習型の迷惑メール判定プログラムが必要です。
-Sylpheedは現在bogofilterとbsfilterに対応しています。</P>
+Sylpheedは現在、Sylpheed向けに新たに開発された
+<A HREF="http://sylpheed.sraoss.jp/sylfilter/">SylFilter</A>と、
+<A HREF="http://bogofilter.sourceforge.net/">bogofilter</A>、
+<A HREF="http://sourceforge.jp/projects/bsfilter/">bsfilter</A>に対応しています。</P>
 <P>Sylpheedは最初に迷惑メールと非迷惑メールをこれらのプログラムに渡して学習させます。学習を繰り返すことでこれらのプログラムはどんどん判定精度が向上していきます。</P>
-<P>十分に学習が済んだら(それぞれ100通程度学習させれば問題ないでしょう)、受信したメールをこれらのプログラムに渡して、それが迷惑メールであるかどうか確認します。
+<P>迷惑メールと非迷惑メールの両方について十分に学習が済んだら(それぞれ50〜100通程度学習させれば問題ないでしょう)、受信したメールをこれらのプログラムに渡して、それが迷惑メールであるかどうか確認します。
 迷惑メールと判定された場合は、フォルダへの移動やサーバからの削除など、指定したアクションを実行します。</P>
 <P>もし誤判定があった場合は、そのメールを学習させることで判定精度をさらに向上させることができます。</P>
+<P>なお、迷惑メールと非迷惑メールのうち片方しか学習させていない状態では判定が行われませんので注意してください。</P>
 <H2><A NAME="ss15.2">15.2</A> <A HREF="sylpheed.html#toc15.2">迷惑メール対策機能を有効にする</A>
 </H2>
 
@@ -31,9 +35,12 @@ Sylpheedは現在bogofilterとbsfilterに対応しています。</P>
 <H2><A NAME="ss15.3">15.3</A> <A HREF="sylpheed.html#toc15.3">学習コマンドの設定</A>
 </H2>
 
-<P>迷惑メールを学習するためのコマンドを指定します。あらかじめbogofilterが使用できるように設定されています。Windows版の場合はbsfilterが設定されています。</P>
-<P>「(プリセットを選択)」と書かれたオプションメニューで、bogofilterとbsfilterの既定の設定を選択することができます。</P>
+<P>迷惑メールを学習するためのコマンドを指定します。あらかじめbogofilterが使用できるように設定されています。Windows版の場合はsylfilterが設定されています(WindowsではSylFilterの使用を推奨しています)。</P>
+<P>「(プリセットを選択)」と書かれたオプションメニューで、sylfilter、bogofilter、bsfilterの既定の設定を選択することができます。</P>
 <P>通常はそのままで問題ありません。</P>
+
+<H3>Windows版でbsfilterを使用する場合の注意</H3>
+
 <P>Windows版で管理者権限のないユーザでSylpheedを実行する場合、bsfilterはインストールされたディレクトリにファイルを書き込もうとするため、ファイルを書き込めずにエラーになります。その場合以下のいずれかの方法を行ってください。
 <UL>
 <LI>管理者権限をもつユーザでSylpheedを実行する</LI>
@@ -53,7 +60,6 @@ Sylpheedは現在bogofilterとbsfilterに対応しています。</P>
 </UL>
 </P>
 <P>なお、Vista/7の場合、標準のProgram Filesフォルダにインストールした場合に限り、自動的に「C:\Users\(ユーザ名)\AppData\Local\VirtualStore\Program Files\Sylpheed」以下にリダイレクトされるため、上記の対策は特に必要ありません。</P>
-
 <H2><A NAME="ss15.4">15.4</A> <A HREF="sylpheed.html#toc15.4">アクションの設定</A>
 </H2>
 
@@ -75,6 +81,30 @@ Sylpheedは現在bogofilterとbsfilterに対応しています。</P>
 <H3>振り分けた迷惑メールを既読にする</H3>
 
 <P>振り分けた迷惑メールの未読フラグを解除します。</P>
+<H2><A NAME="ss15.5">15.5</A> <A HREF="sylpheed.html#toc15.5">学習結果を初期化する</A>
+</H2>
+
+<P>学習を繰り返しても正しく判定されなくなったり、迷惑メールの判定に問題が生じた場合は、一度学習結果を初期化して学習をやり直すことで解決できる場合があります。</P>
+
+<H3>SylFilter</H3>
+
+<P>Unix/Linux環境では、~/.sylfilter 以下のファイルをすべて削除します。</P>
+<H3>bogofilter</H3>
+
+<P>Unix/Linux環境では、~/.bogofilter 以下のファイルをすべて削除します。</P>
+<H3>bsfilter</H3>
+
+<P>Unix/Linux環境では、~/.bsfilter 以下のファイルをすべて削除します。
+Windowsでは、Sylpheedをインストールしたフォルダ、または上記で設定したフォルダ内の以下のファイルをすべて削除します。
+<UL>
+<LI>C.clean.sdbm.*</LI>
+<LI>C.prob.sdbm.*</LI>
+<LI>C.spam.sdbm.*</LI>
+<LI>ja.clean.sdbm.*</LI>
+<LI>ja.prob.sdbm.*</LI>
+<LI>ja.spam.sdbm.*</LI>
+</UL>
+</P>
 <HR>
 <A HREF="sylpheed-16.html">次のページ</A>
 <A HREF="sylpheed-14.html">前のページ</A>
