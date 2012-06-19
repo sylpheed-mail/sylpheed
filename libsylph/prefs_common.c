@@ -365,11 +365,11 @@ static PrefParam param[] = {
 	/* Junk mail */
 	{"enable_junk", "FALSE", &prefs_common.enable_junk, P_BOOL},
 #ifdef G_OS_WIN32
-	{"junk_learn_command", "bsfilterw -C -s -u",
+	{"junk_learn_command", "sylfilter -j",
 	 &prefs_common.junk_learncmd, P_STRING},
-	{"nojunk_learn_command", "bsfilterw -c -S -u",
+	{"nojunk_learn_command", "sylfilter -c",
 	 &prefs_common.nojunk_learncmd, P_STRING},
-	{"junk_classify_command", "bsfilterw",
+	{"junk_classify_command", "sylfilter",
 	 &prefs_common.junk_classify_cmd, P_STRING},
 #else
 	{"junk_learn_command", "bogofilter -N -s -I",
