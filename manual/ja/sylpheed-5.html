@@ -43,7 +43,7 @@
 <H2><A NAME="ss5.2">5.2</A> <A HREF="sylpheed.html#toc5.2">動作確認されている環境</A>
 </H2>
 
-<P>さまざまなOSで動作が確認されています。
+<P>Linux、BSD、Mac OS Xなど、さまざまなOSで動作が確認されています。
 詳しくは
 <A HREF="http://sylpheed.sraoss.jp/ja/">Sylpheed公式サイト</A>
 で確認することができます。
@@ -53,7 +53,7 @@
 <H2><A NAME="gen-inst"></A> <A NAME="ss5.3">5.3</A> <A HREF="sylpheed.html#toc5.3">基本的なインストール方法</A>
 </H2>
 
-<P>ここに示すのはUnixならほぼ使えると思われるインストール方法です。
+<P>ここに示すのはUnix系OSならほぼ使えると思われるインストール方法です。
 しかし、OSの持っているファイル管理機構を壊す可能性があるので、あなたが使っているOSについての記述がある場合は、そちらを利用されることをお勧めします。</P>
 <P>Windowsの場合はインストーラを実行して、指示に従ってインストールしてください。zipアーカイブ版を使用する場合は、適当な場所に展開してください。</P>
 
@@ -80,7 +80,6 @@ Password: (パスワード入力)
 </CODE></BLOCKQUOTE>
 
 でインストール完了です。</P>
-
 
 <H2><A NAME="ss5.4">5.4</A> <A HREF="sylpheed.html#toc5.4">rpmを使用したLinux ディストリビューションへのインストール</A>
 </H2>
@@ -112,30 +111,27 @@ Password: (パスワードを入力)
 </PRE>
 </CODE></BLOCKQUOTE>
 
-というようにバージョンアップしてください。
-同様に、imlibのrpmもインストールしてください。</P>
+というようにバージョンアップしてください。</P>
 
 <H3>rpmのインストール</H3>
 
-<P>
-<A HREF="http://y-imai.good-day.net/sylpheed/">http://y-imai.good-day.net/sylpheed/</A>
-より、</P>
-<P>sylpheed-(バージョン).i386.rpmをダウンロードします。そして、
+<P>sylpheed-(バージョン).i386.rpmを取得します。そして、
 <BLOCKQUOTE><CODE>
 <PRE>
 $ su
 Password: (パスワードを入力)
-# rpm -Uvh sylpheed-(バージョン).i386.rpm
+# rpm -ivh sylpheed-(バージョン).i386.rpm (新規インストールの場合)
+# rpm -Uvh sylpheed-(バージョン).i386.rpm (アップグレードの場合)
 </PRE>
 </CODE></BLOCKQUOTE>
 
 で完了です。
-なお、glibcのバージョンによる警告を受ける場合があります。
+なお、glibcなどの依存関係の問題による警告を受ける場合があります。
 その場合は、下記のソースパッケージをご利用ください。</P>
 
 <H3><A NAME="inst_from_srpm"></A> ソースパッケージを用いる場合</H3>
 
-<P>この方法は、上記のglibcのバージョンが低かった場合でも利用可能です。</P>
+<P>この方法は、上記のglibcの依存関係に問題があった場合でも利用可能です。</P>
 <H3><A NAME="gtk-inst-src"></A> gtk+のインストール/アップグレード</H3>
 
 <P>まず、gtk+のrpmが入ってるかどうかを確認します。
@@ -158,19 +154,19 @@ gtk+-devel-2.4.x-1vl5
 
 でバージョンアップしてください。</P>
 
-<H3>rpmのrebuild &amp; install</H3>
+<H3>rpmのbuild &amp; install</H3>
 
-<P>そして、
-<A HREF="http://y-imai.good-day.net/sylpheed/">http://y-imai.good-day.net/sylpheed/</A>より、
-sylpheed-(バージョン).src.rpmをダウンロードします。
+<P>
+<A HREF="http://sylpheed.sraoss.jp/">http://sylpheed.sraoss.jp/</A>より、
+sylpheed-(バージョン).tar.gzをダウンロードします。
 次に下のコマンドを実行します。
-ただし、下記の方法ではコンパイルにもrootになるため少しだけ危険です。
-ならなくても良い環境を整えている方は、rpm --rebuildのためにsuは必要ありません。
+ただし、下記の方法ではコンパイルにもroot権限が必要なため、少し危険です。
+rootにならなくても良い環境を整えている方は、rpmbuildのためにsuは必要ありません。
 <BLOCKQUOTE><CODE>
 <PRE>
 $ su
 Password: (パスワードを入力)
-# rpm --rebuild sylpheed-(バージョン).src.rpm
+# rpmbuild -tb sylpheed-(バージョン).tar.gz
 </PRE>
 </CODE></BLOCKQUOTE>
 
@@ -183,7 +179,7 @@ Password: (パスワードを入力)
 </PRE>
 </CODE></BLOCKQUOTE>
 
-のようなメッセージ(書き込み中:がWrote: などになる場合もあります)が現れて、
+のようなメッセージ(書き込み中:がWrote: などになる場合もあります)が表示されます。
 終了したら、上記に示されたファイル(sylpheed-(バージョン).i386.rpm)を
 <BLOCKQUOTE><CODE>
 <PRE>
