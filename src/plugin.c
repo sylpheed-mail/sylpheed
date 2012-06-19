@@ -366,7 +366,7 @@ gint syl_plugin_load(const gchar *name)
 		return -1;
 	}
 
-	if (g_module_symbol(module, "plugin_load", (gpointer *)&load_func)) {
+	if (g_module_symbol(module, "plugin_load", (gpointer)&load_func)) {
 		if (!syl_plugin_check_version(module)) {
 			g_warning("Version check failed. Skipping: %s", name);
 			g_module_close(module);
@@ -430,7 +430,7 @@ void syl_plugin_unload_all(void)
 		SylPluginUnloadFunc unload_func = NULL;
 
 		if (g_module_symbol(module, "plugin_unload",
-				    (gpointer *)&unload_func)) {
+				    (gpointer)&unload_func)) {
 			g_signal_emit(plugin_obj, plugin_signals[PLUGIN_UNLOAD],
 				      0, module);
 			debug_print("calling plugin_unload() in %s\n",
@@ -463,7 +463,7 @@ SylPluginInfo *syl_plugin_get_info(GModule *module)
 		    g_module_name(module));
 
 	if (g_module_symbol(module, "plugin_info",
-			    (gpointer *)&plugin_info_func)) {
+			    (gpointer)&plugin_info_func)) {
 		debug_print("calling plugin_info() in %s\n",
 			    g_module_name(module));
 		return plugin_info_func();
@@ -486,7 +486,7 @@ gboolean syl_plugin_check_version(GModule *module)
 	g_return_val_if_fail(module != NULL, FALSE);
 
 	if (g_module_symbol(module, "plugin_interface_version",
-			    (gpointer *)&version_func)) {
+			    (gpointer)&version_func)) {
 		debug_print("calling plugin_interface_version() in %s\n",
 			    g_module_name(module));
 		ver = version_func();
