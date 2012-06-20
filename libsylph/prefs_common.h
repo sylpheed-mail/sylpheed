@@ -337,6 +337,8 @@ struct _PrefsCommon
 
 	gboolean enable_newmsg_notify_sound; /* Receive */
 	gchar *newmsg_notify_sound;          /* Receive */
+
+	gboolean show_attach_tab;            /* Message */
 };
 
 extern PrefsCommon prefs_common;

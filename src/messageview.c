@@ -631,7 +631,12 @@ static void messageview_change_view_type(MessageView *messageview,
 	if (messageview->type == type) return;
 
 	if (type == MVIEW_MIME) {
-		gtk_widget_show(messageview->toolbar_vbox);
+		if (prefs_common.show_attach_tab)
+			gtk_widget_hide(messageview->toolbar_vbox);
+		else
+			gtk_widget_show(messageview->toolbar_vbox);
+		gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook),
+					   prefs_common.show_attach_tab);
 		gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook),
 					      messageview->current_page);
 		if (messageview->current_page == 0)
@@ -642,6 +647,7 @@ static void messageview_change_view_type(MessageView *messageview,
 		gint current_page = messageview->current_page;
 
 		gtk_widget_hide(messageview->toolbar_vbox);
+		gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), FALSE);
 		gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 0);
 		messageview->current_page = current_page;
 		mimeview_clear(messageview->mimeview);
@@ -937,7 +943,13 @@ static void messageview_switch_page_cb(GtkNotebook *notebook,
 				       GtkNotebookPage *page, guint page_num,
 				       MessageView *messageview)
 {
-	messageview->current_page = page_num;
+	if (messageview->current_page != page_num) {
+		messageview->current_page = page_num;
+		if (page_num == 0)
+			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(messageview->mime_toggle_btn), FALSE);
+		else
+			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(messageview->mime_toggle_btn), TRUE);
+	}
 }
 
 static gint messageview_menu_tool_btn_pressed(GtkWidget *widget,
