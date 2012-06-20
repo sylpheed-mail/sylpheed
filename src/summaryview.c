@@ -122,11 +122,11 @@
 #ifdef G_OS_WIN32
 #  define SUMMARY_COL_MARK_WIDTH	23
 #  define SUMMARY_COL_UNREAD_WIDTH	26
-#  define SUMMARY_COL_MIME_WIDTH	19
+#  define SUMMARY_COL_MIME_WIDTH	21
 #else
 #  define SUMMARY_COL_MARK_WIDTH	21
 #  define SUMMARY_COL_UNREAD_WIDTH	24
-#  define SUMMARY_COL_MIME_WIDTH	17
+#  define SUMMARY_COL_MIME_WIDTH	19
 #endif
 
 static GdkPixbuf *mark_pixbuf;
