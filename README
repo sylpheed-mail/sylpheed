@@ -69,6 +69,7 @@ Supported protocols
 	o NNTP
 	o SSL/TLSv1 (POP3, SMTP, IMAP4rev1, NNTP)
 	o IPv6
+	o SOCKS4/5
 
 Features
 
@@ -149,9 +150,9 @@ If you want to display messages translated to your language,
 you must specify some environmental variables related to locale.
 For example:
 
-% export LANG=de_DE
+% export LANG=de_DE.UTF-8
 
-(replace de_DE to the actual locale name)
+(replace de_DE.UTF-8 to the actual locale name)
 
 If you don't want translated messages, set LC_MESSAGES to "C"
 (and unset LC_ALL if specified).
@@ -194,7 +195,7 @@ Hidden settings
 You can configure most of the features in Sylpheed through the preferences
 dialog, but there are a few parameters which don't have user interface
 (you don't need to modify them in normal use). You must edit
-~/.sylpheed-2.0/sylpheedrc by an editor when Sylpheed is not running.
+~/.sylpheed-2.0/sylpheedrc by an editor while Sylpheed is not running.
 
 allow_jisx0201_kana		allow JIS X 0201 Kana (half-width kana) on
 				sending
@@ -221,6 +222,9 @@ logwindow_line_limit		specify the limit of line numbers of log
 mark_as_read_on_new_window	only mark messages as read when they are
 				opened with new window
 				0: off  1: on   [default: 0]
+show_attach_tab			switch attachment list view using previous
+				tab interface, not toggle button
+				0: off  1: on   [default: 0]
 
 Unlike 1.0.x, this version doesn't allow direct modification of the menu
 shortcuts by default. You can use the following methods to configure them:
@@ -242,6 +246,14 @@ Information
 You can check the newest version and information about Sylpheed at:
 
 	http://sylpheed.sraoss.jp/
+
+You can also download files from the SourceForce.JP project page:
+
+	http://sourceforge.jp/projects/sylpheed/
+
+The bug tracking system of Sylpheed is:
+
+	http://sylpheed.sraoss.jp/redmine/projects/sylpheed
 
 The Sylpheed documentation in English and several other languages can be
 obtained from:

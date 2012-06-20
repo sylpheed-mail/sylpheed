@@ -81,12 +81,13 @@ Emacs 系メーラに近い感覚で、キーボードのみによる操作が可能となっています。
 
 対応プロトコル
 
-	o POP3 対応
-	o IMAP4rev1 対応
+	o POP3
+	o IMAP4rev1
 	o SMTP
 	o NNTP
 	o SSL/TLSv1 (POP3, SMTP, IMAP4rev1, NNTP)
 	o IPv6
+	o SOCKS4/5
 
 機能
 
@@ -166,9 +167,9 @@ Emacs 系メーラに近い感覚で、キーボードのみによる操作が可能となっています。
 を指定しなければなりません(日本語 Linux ディストリビューションの場合は
 大抵すでに設定されています)。例えば、
 
-% export LANG=ja_JP.eucJP
+% export LANG=ja_JP.UTF-8
 
-(ja_JP.eucJP は実際のロケール名に置き換えてください。)
+(ja_JP.UTF-8 は実際のロケール名に置き換えてください。)
 
 翻訳されたメッセージが必要なければ、 LC_MESSAGES を "C" に指定して
 ください(LC_ALL が指定されていれば外してください)。
@@ -177,7 +178,7 @@ Emacs 系メーラに近い感覚で、キーボードのみによる操作が可能となっています。
 --------
 
 コマンドラインから sylpheed と入力するか、またはファイルマネージャ
-からアイコンをダブルクリックするなりして起動してください。
+からアイコンをダブルクリックするなどして起動してください。
 
 初回起動時の注意
 ----------------
@@ -209,7 +210,7 @@ Emacs 系メーラに近い感覚で、キーボードのみによる操作が可能となっています。
 
 Sylpheed のほとんどの機能は設定ダイアログから設定できますが、ユーザインタ
 フェースを持たない設定項目がいくつかあります(通常は変更する必要はありません)。
-Sylpheed が起動していないときに ~/.sylpheed-2.0/sylpheedrc をエディタで編集
+Sylpheed が起動していない状態で ~/.sylpheed-2.0/sylpheedrc をエディタで編集
 する必要があります。
 
 allow_jisx0201_kana		JIS X 0201 カナ(半角カナ)を送信時に許可する
@@ -235,6 +236,9 @@ logwindow_line_limit		ログウィンドウの行数制限を指定
 mark_as_read_on_new_window	新しいウィンドウでメッセージを開いたときのみ
 				既読にする
 				0: off  1: on   [デフォルト: 0]
+show_attach_tab			メッセージの添付リストビューの切り替えを
+				トグルボタンではなく従来のタブで行う
+				0: off  1: on   [デフォルト: 0]
 
 また、1.0.xとは異なり、デフォルトではメニューのショートカットの変更が直接
 行えないようになっています。以下のいずれかの方法で設定してください。
@@ -256,6 +260,15 @@ mark_as_read_on_new_window	新しいウィンドウでメッセージを開いたときのみ
 最新バージョンや Sylpheed に関する情報は以下でチェックできます。
 
 	http://sylpheed.sraoss.jp/
+
+ファイルのダウンロードなどは以下の SourceForce.JP プロジェクトページからも
+行えます。
+
+	http://sourceforge.jp/projects/sylpheed/
+
+Sylpheed のバグトラッキングシステムは以下になります。
+
+	http://sylpheed.sraoss.jp/redmine/projects/sylpheed
 
 英語とその他の言語の Sylpheed のドキュメントは以下より入手できます。
 
