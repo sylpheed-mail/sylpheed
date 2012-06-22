@@ -9,16 +9,15 @@
 # Updated by : P`tit Lu <ptitlu@ptitlu.org>
 # Nicolas Boos <nicolas.boos@wanadoo.fr>, 2003,2004,2005,2006.
 # Nicolas Boos <nicolas.boos@wanadoo.fr>, 2006.
-# tvY <mr.somewhere@yahoo.fr> 2006-2011.
-#
+# Tou Vu Yang <mr.somewhere@yahoo.fr> 2006-2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-18 16:16+0900\n"
-"PO-Revision-Date: 2011-01-28 00:22+0100\n"
-"Last-Translator: tvY <mr.somewhere@yahoo.fr>\n"
+"POT-Creation-Date: 2012-06-22 14:12+0900\n"
+"PO-Revision-Date: 2012-06-19 00:01+0200\n"
+"Last-Translator: Tou Vu Yang <mr.somewhere@yahoo.fr>\n"
 "Language-Team: French <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1274,7 +1273,7 @@ msgstr "Information"
 msgid "Warning"
 msgstr "Avertissement"
 
-#: src/alertpanel.c:168 src/inc.c:891
+#: src/alertpanel.c:168 src/inc.c:894
 #: plugin/attachment_tool/attachment_tool.c:263
 msgid "Error"
 msgstr "Erreur"
@@ -1710,11 +1709,12 @@ msgid "_Send"
 msgstr "_Envoyer"
 
 #: src/compose.c:3398
-#, fuzzy
 msgid ""
 "Checking for new messages is currently running.\n"
 "Please try again later."
-msgstr "Recherche des nouveaux messages..."
+msgstr ""
+"Recherche des nouveaux messages encours\n"
+"Réessayez plus tard."
 
 #: src/compose.c:3534
 msgid "can't get recipient list."
@@ -1737,7 +1737,7 @@ msgstr "Une erreur est survenue lors de l'envoi du message à %s ."
 msgid ""
 "Sending of message was completed, but the message could not be saved to "
 "outbox."
-msgstr ""
+msgstr "Le message a été envoyé mais n'a pas pu être sauvegardé."
 
 #: src/compose.c:3676
 #, c-format
@@ -2314,24 +2314,23 @@ msgstr "Sélection du fichier cible"
 msgid "Select destination folder"
 msgstr "Sélection du dossier cible"
 
-#: src/filesel.c:214
-#, fuzzy
+#: src/filesel.c:216
 msgid "The link target not found."
-msgstr "Message non trouvé"
+msgstr "Lien non trouvé."
 
-#: src/filesel.c:245
+#: src/filesel.c:247
 msgid "Save as"
 msgstr "Enregistrer sous"
 
-#: src/filesel.c:252 src/filesel.c:380
+#: src/filesel.c:254 src/filesel.c:382
 msgid "Overwrite existing file"
 msgstr "Remplacer le fichier existant ?"
 
-#: src/filesel.c:253 src/filesel.c:381
+#: src/filesel.c:255 src/filesel.c:383
 msgid "The file already exists. Do you want to replace it?"
 msgstr "Le fichier existe déjà. Voulez-vous le remplacer ?"
 
-#: src/filesel.c:270 src/foldersel.c:256
+#: src/filesel.c:272 src/foldersel.c:256
 msgid "Select folder"
 msgstr "Choix d'un dossier"
 
@@ -2895,147 +2894,146 @@ msgstr "Sylpheed : %d nouveau(x) message(s)"
 #: src/inc.c:208
 #, c-format
 msgid "[Local]: %d"
-msgstr ""
+msgstr "[Local]: %d"
 
-#: src/inc.c:609
+#: src/inc.c:612
 msgid "Authenticating with POP3"
 msgstr "Authentification POP3"
 
-#: src/inc.c:638
+#: src/inc.c:641
 msgid "Retrieving new messages"
 msgstr "Récupération des nouveaux messages"
 
-#: src/inc.c:640
+#: src/inc.c:643
 msgid "Cancel _all"
 msgstr "_Tout annuler"
 
-#: src/inc.c:686
+#: src/inc.c:689
 msgid "Standby"
 msgstr "Attente"
 
-#: src/inc.c:843 src/inc.c:897
+#: src/inc.c:846 src/inc.c:900
 msgid "Cancelled"
 msgstr "Annulé"
 
-#: src/inc.c:854
+#: src/inc.c:857
 msgid "Retrieving"
 msgstr "Récupération"
 
-#: src/inc.c:863 src/inc.c:1205
+#: src/inc.c:866 src/inc.c:1208
 #, c-format
 msgid "%d message(s) (%s) received"
 msgstr "%d message(s) (%s) reçu(s)"
 
-#: src/inc.c:867
+#: src/inc.c:870
 #, c-format
 msgid "no new messages"
 msgstr "pas de nouveau message"
 
-#: src/inc.c:868
+#: src/inc.c:871
 msgid "Done"
 msgstr "Terminé"
 
-#: src/inc.c:873
-#, fuzzy
+#: src/inc.c:876
 msgid "Server not found"
-msgstr "Configuration des serveurs"
+msgstr "Serveur non trouvé"
 
-#: src/inc.c:877
+#: src/inc.c:880
 msgid "Connection failed"
 msgstr "La connexion a échoué"
 
-#: src/inc.c:880
+#: src/inc.c:883
 msgid "Auth failed"
 msgstr "L'authentification a échoué"
 
-#: src/inc.c:884
+#: src/inc.c:887
 msgid "Locked"
 msgstr "Verrouillé"
 
-#: src/inc.c:894
+#: src/inc.c:897
 msgid "Timeout"
 msgstr "Délai d'attente"
 
-#: src/inc.c:944
+#: src/inc.c:947
 #, c-format
 msgid "Finished (%d new message(s))"
 msgstr "Terminé - %d nouveau(x) message(s)"
 
-#: src/inc.c:947
+#: src/inc.c:950
 #, c-format
 msgid "Finished (no new messages)"
 msgstr "Terminé - pas de nouveau(x) message(s)"
 
-#: src/inc.c:956
+#: src/inc.c:959
 msgid "Some errors occurred while getting mail."
 msgstr "Erreur lors de la récupération des messages."
 
-#: src/inc.c:992
+#: src/inc.c:995
 #, c-format
 msgid "getting new messages of account %s...\n"
 msgstr "Récupération des nouveaux messages du compte %s ...\n"
 
-#: src/inc.c:996
+#: src/inc.c:999
 #, c-format
 msgid "%s: Authenticating with POP3"
 msgstr "%s : Authentification POP3"
 
-#: src/inc.c:999
+#: src/inc.c:1002
 #, c-format
 msgid "%s: Retrieving new messages"
 msgstr "%s : Récupération des nouveaux messages"
 
-#: src/inc.c:1004
+#: src/inc.c:1007
 #, c-format
 msgid "Connecting to POP3 server: %s..."
 msgstr "Connexion au serveur POP3 : %s..."
 
-#: src/inc.c:1022
+#: src/inc.c:1025
 #, c-format
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Impossible de se connecter au serveur POP3 : %s:%d\n"
 
-#: src/inc.c:1108 src/rpop3.c:862 src/send_message.c:846
+#: src/inc.c:1111 src/rpop3.c:862 src/send_message.c:846
 #, c-format
 msgid "Authenticating..."
 msgstr "Authentification..."
 
-#: src/inc.c:1109
+#: src/inc.c:1112
 #, c-format
 msgid "Retrieving messages from %s..."
 msgstr "Réception des messages de %s..."
 
-#: src/inc.c:1114
+#: src/inc.c:1117
 msgid "Getting the number of new messages (STAT)..."
 msgstr "Récupération du nombre de nouveaux messages (STAT)..."
 
-#: src/inc.c:1118
+#: src/inc.c:1121
 msgid "Getting the number of new messages (LAST)..."
 msgstr "Récupération du nombre de nouveaux messages (LAST)..."
 
-#: src/inc.c:1122
+#: src/inc.c:1125
 msgid "Getting the number of new messages (UIDL)..."
 msgstr "Récupération du nombre de nouveaux messages (UIDL)..."
 
-#: src/inc.c:1126
+#: src/inc.c:1129
 msgid "Getting the size of messages (LIST)..."
 msgstr "Récupération de la taille des messages (LIST)..."
 
-#: src/inc.c:1136
+#: src/inc.c:1139
 #, c-format
 msgid "Deleting message %d"
 msgstr "Suppression du message %d"
 
-#: src/inc.c:1143 src/send_message.c:864
+#: src/inc.c:1146 src/send_message.c:864
 msgid "Quitting"
 msgstr "Fermeture"
 
-#: src/inc.c:1180
+#: src/inc.c:1183
 #, c-format
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "Récupération du message (%d / %d) (%s / %s)"
 
-#: src/inc.c:1445 src/inc.c:1472 src/summaryview.c:4811 src/summaryview.c:5001
+#: src/inc.c:1448 src/inc.c:1475 src/summaryview.c:4811 src/summaryview.c:5001
 #: src/summaryview.c:5052
 msgid ""
 "Execution of the junk filter command failed.\n"
@@ -3044,30 +3042,29 @@ msgstr ""
 "Erreur dans la gestion des messages indésirables.\n"
 "Vérifier les paramètres."
 
-#: src/inc.c:1536 src/send_message.c:1001
-#, fuzzy
+#: src/inc.c:1539 src/send_message.c:1001
 msgid "Server not found."
-msgstr "Message non trouvé"
-
-#: src/inc.c:1540
-#, fuzzy, c-format
-msgid "Server %s not found."
-msgstr "Message non trouvé"
+msgstr "Serveur non trouvé"
 
 #: src/inc.c:1543
+#, c-format
+msgid "Server %s not found."
+msgstr "Serveur %s non trouvé"
+
+#: src/inc.c:1546
 msgid "Connection failed."
 msgstr "La connexion a échoué."
 
-#: src/inc.c:1547
-#, fuzzy, c-format
+#: src/inc.c:1550
+#, c-format
 msgid "Connection to %s:%d failed."
-msgstr "La connexion a échoué."
+msgstr "La connexion à %s:%d a échoué."
 
-#: src/inc.c:1551
+#: src/inc.c:1554
 msgid "Error occurred while processing mail."
 msgstr "Une erreur est survenue pendant le traitement du message."
 
-#: src/inc.c:1556
+#: src/inc.c:1559
 #, c-format
 msgid ""
 "Error occurred while processing mail:\n"
@@ -3076,29 +3073,29 @@ msgstr ""
 "Une erreur est survenue pendant le traitement du message :\n"
 "%s"
 
-#: src/inc.c:1562
+#: src/inc.c:1565
 msgid "No disk space left."
 msgstr "Plus de place disponible sur le disque."
 
-#: src/inc.c:1567
+#: src/inc.c:1570
 msgid "Can't write file."
 msgstr "Impossible d'écrire dans le fichier."
 
-#: src/inc.c:1572
+#: src/inc.c:1575
 msgid "Socket error."
 msgstr "Erreur de protocole."
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1578 src/rpop3.c:575 src/rpop3.c:576 src/send_message.c:786
+#: src/inc.c:1581 src/rpop3.c:575 src/rpop3.c:576 src/send_message.c:786
 #: src/send_message.c:1014
 msgid "Connection closed by the remote host."
 msgstr "La connexion a été fermée par le serveur."
 
-#: src/inc.c:1584
+#: src/inc.c:1587
 msgid "Mailbox is locked."
 msgstr "Boîte verrouillée."
 
-#: src/inc.c:1588
+#: src/inc.c:1591
 #, c-format
 msgid ""
 "Mailbox is locked:\n"
@@ -3107,11 +3104,11 @@ msgstr ""
 "Boîte verrouillée :\n"
 "%s"
 
-#: src/inc.c:1594 src/rpop3.c:550 src/rpop3.c:555 src/send_message.c:990
+#: src/inc.c:1597 src/rpop3.c:550 src/rpop3.c:555 src/send_message.c:990
 msgid "Authentication failed."
 msgstr "L'authentification à échoué."
 
-#: src/inc.c:1599 src/rpop3.c:552 src/send_message.c:993
+#: src/inc.c:1602 src/rpop3.c:552 src/send_message.c:993
 #, c-format
 msgid ""
 "Authentication failed:\n"
@@ -3120,15 +3117,15 @@ msgstr ""
 "L'authentification a échoué :\n"
 "%s"
 
-#: src/inc.c:1604 src/rpop3.c:580 src/rpop3.c:581 src/send_message.c:1018
+#: src/inc.c:1607 src/rpop3.c:580 src/rpop3.c:581 src/send_message.c:1018
 msgid "Session timed out."
 msgstr "Dépassement du délai de réponse (timeout) de la session."
 
-#: src/inc.c:1645
+#: src/inc.c:1648
 msgid "Incorporation cancelled\n"
 msgstr "Relève du courrier annulée\n"
 
-#: src/inc.c:1757
+#: src/inc.c:1760
 #, c-format
 msgid "Getting new messages from %s into %s...\n"
 msgstr "Récupération des nouveaux messages de %s dans %s...\n"
@@ -4222,18 +4219,17 @@ msgstr "Pièces jointes"
 
 #: src/messageview.c:395
 msgid "Switch to attachment list view"
-msgstr ""
+msgstr "Lister les pièces jointes"
 
 #: src/messageview.c:413
-#, fuzzy
 msgid "Save _all attachments..."
-msgstr "Avec pièce(s) jointe(s)"
+msgstr "Enregistrer _toutes les pièces jointes..."
 
 #: src/messageview.c:477
 msgid "Message View - Sylpheed"
 msgstr "Fenêtre des messages - Sylpheed"
 
-#: src/messageview.c:902 src/summaryview.c:3922
+#: src/messageview.c:908 src/summaryview.c:3922
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "Impossible d'enregistrer le fichier « %s »."
@@ -5021,22 +5017,18 @@ msgstr "Mettre à jour tous les dossiers locaux après incorporation"
 
 #. New message notify
 #: src/prefs_common_dialog.c:888
-#, fuzzy
 msgid "New message notification"
-msgstr "Utiliser une authentification"
+msgstr "Notification de nouveau message"
 
 #: src/prefs_common_dialog.c:898
-#, fuzzy
 msgid "Play sound when new messages arrive"
-msgstr "Exécuter la commande lors de l'arrivée de nouveaux messages"
+msgstr "Jouer un son lors de l'arrivée de nouveaux messages"
 
 #: src/prefs_common_dialog.c:904
-#, fuzzy
 msgid "Sound file"
-msgstr "Impossible de lire le fichier."
+msgstr "Fichier son"
 
 #: src/prefs_common_dialog.c:924
-#, fuzzy
 msgid "Execute command when new messages arrive"
 msgstr "Exécuter la commande lors de l'arrivée de nouveaux messages"
 
@@ -6882,9 +6874,9 @@ msgid "Opened message %d"
 msgstr "Message ouverte %d"
 
 #: src/rpop3.c:1068
-#, fuzzy, c-format
+#, c-format
 msgid "Retrieved %d (of %d) message headers"
-msgstr "Récupération de %d en-têtes de message"
+msgstr "Récupération de %d (sur %d) en-têtes de message"
 
 #: src/rpop3.c:1072
 #, c-format
@@ -7053,9 +7045,9 @@ msgstr ""
 "%s"
 
 #: src/send_message.c:1003
-#, fuzzy, c-format
+#, c-format
 msgid "SMTP server not found: %s:%d"
-msgstr "Serveur SMTP non indiqué."
+msgstr "Serveur SMTP non trouvé: %s:%d"
 
 #: src/send_message.c:1005
 msgid "Can't connect to SMTP server."
@@ -7543,9 +7535,8 @@ msgid "Creating summary view...\n"
 msgstr "Création de la vue de l'index...\n"
 
 #: src/summaryview.c:549
-#, fuzzy
 msgid "Toggle message view"
-msgstr "Création de la vue message...\n"
+msgstr "Basculer l'affichage du message"
 
 #: src/summaryview.c:674
 #, c-format
@@ -7667,9 +7658,9 @@ msgid "%s%d copied"
 msgstr "%s%d copié"
 
 #: src/summaryview.c:2288
-#, fuzzy, c-format
+#, c-format
 msgid "%d/%d new, %d/%d unread, %d/%d total"
-msgstr "%d nouveau(x), %d non lu(s), %d au total"
+msgstr "%d/%d nouveau(x), %d/%d non lu(s), %d/%d au total"
 
 #: src/summaryview.c:2297
 #, c-format
@@ -7807,9 +7798,8 @@ msgid "This message is encrypted, but its decryption failed.\n"
 msgstr "Ce message est chiffré mais le déchiffrement a échoué \n"
 
 #: src/textview.c:835
-#, fuzzy
 msgid "_Copy file name"
-msgstr "Nom du fichier"
+msgstr "_Copier le nom du fichier"
 
 #: src/textview.c:1117
 msgid "This message can't be displayed.\n"
@@ -7933,17 +7923,17 @@ msgstr "Impossible de connaître les versions des plug-ins."
 
 #: plugin/attachment_tool/attachment_tool.c:50
 #: plugin/attachment_tool/attachment_tool.c:271
-#, fuzzy
 msgid "Remove attachments"
-msgstr "Avec pièce(s) jointe(s)"
+msgstr "Suppression des pièces jointes"
 
 #: plugin/attachment_tool/attachment_tool.c:263
 msgid "This tool is available on local folders only."
-msgstr ""
+msgstr "Outil disponible uniquement pour des dossiers locaux"
 
 #: plugin/attachment_tool/attachment_tool.c:272
 msgid "Do you really remove attached files from the selected messages?"
 msgstr ""
+"Voulez-vous vraiment supprimer les pièces jointes des messages sélectionnés?"
 
 #, fuzzy
 #~ msgid "Save _all..."

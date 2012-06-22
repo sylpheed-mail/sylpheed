@@ -1,20 +1,20 @@
 # translation of tr.po to Turkish
 # translation of tr.po to
 # Turkish translation of Sylpheed
-# Copyright (C) 2001, 2004, 2010, 2011 Free Software Foundation, Inc.
+# Copyright (C) 2001, 2004, 2010, 2011, 2012 Free Software Foundation, Inc.
 # From 'oh what a po file'
 #
 # Görkem Çetin <gorkem@gelecek.com.tr>, 2001-2002.
 # Arman Aksoy <armish@linux-sevenler.org>, 2004.
 # Fethican Coşkuner <fethicanc@gmail.com>, 2010.
-# Doruk Fisek <dfisek@fisek.com.tr>, 2010, 2011.
+# Doruk Fisek <dfisek@ozguryazilim.com.tr>, 2010, 2011, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: tr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-18 16:16+0900\n"
-"PO-Revision-Date: 2011-01-27 09:56+0200\n"
-"Last-Translator: Doruk Fisek <dfisek@fisek.com.tr>\n"
+"POT-Creation-Date: 2012-06-22 14:12+0900\n"
+"PO-Revision-Date: 2012-06-18 19:03+0300\n"
+"Last-Translator: Doruk Fisek <dfisek@ozguryazilim.com.tr>\n"
 "Language-Team: Turkish <gnu-tr-u12a@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -748,7 +748,7 @@ msgid ""
 "The selected action cannot be used in the compose window\n"
 "because it contains %%f, %%F or %%p."
 msgstr ""
-"Seçilen eylem ileti düzenleme penceresinde kullanılamaz\n"
+"Seçilen eylem ileti oluşturma penceresinde kullanılamaz\n"
 "Çünkü %%f, %%F veya %%p içeriyor."
 
 #: src/action.c:711
@@ -1259,7 +1259,7 @@ msgstr "Not"
 msgid "Warning"
 msgstr "Uyarı"
 
-#: src/alertpanel.c:168 src/inc.c:891
+#: src/alertpanel.c:168 src/inc.c:894
 #: plugin/attachment_tool/attachment_tool.c:263
 msgid "Error"
 msgstr "Hata"
@@ -1423,7 +1423,7 @@ msgstr "/_Görünüm/---"
 
 #: src/compose.c:622
 msgid "/_View/_Followup-To"
-msgstr ""
+msgstr "/_Görünüm/_Yanıtlanan İleti"
 
 #: src/compose.c:624
 msgid "/_View/R_uler"
@@ -1693,11 +1693,12 @@ msgid "_Send"
 msgstr "_Gönder"
 
 #: src/compose.c:3398
-#, fuzzy
 msgid ""
 "Checking for new messages is currently running.\n"
 "Please try again later."
-msgstr "Dizinlerde yeni iletiler kontrol ediliyor..."
+msgstr ""
+"Yeni ileti kontrolü şu anda çalışıyor.\n"
+"Lütfen daha sonra tekrar deneyin."
 
 #: src/compose.c:3534
 msgid "can't get recipient list."
@@ -1721,6 +1722,7 @@ msgid ""
 "Sending of message was completed, but the message could not be saved to "
 "outbox."
 msgstr ""
+"İleti gönderimi tamamlandı ama ileti gönderilen kutusuna kaydedilemedi."
 
 #: src/compose.c:3676
 #, c-format
@@ -1821,7 +1823,7 @@ msgstr "%s dosyası açılamadı."
 
 #: src/compose.c:5223
 msgid "Creating compose window...\n"
-msgstr "Düzenleme penceresi oluşturuluyor...\n"
+msgstr "İleti oluşturma penceresi oluşturuluyor...\n"
 
 #: src/compose.c:5348
 msgid "PGP Sign"
@@ -2294,24 +2296,23 @@ msgstr "Hedef dosyayı seç"
 msgid "Select destination folder"
 msgstr "Hedef dizini seç"
 
-#: src/filesel.c:214
-#, fuzzy
+#: src/filesel.c:216
 msgid "The link target not found."
-msgstr "İleti bulunamadı."
+msgstr "Hedef bağlantı bulunamadı."
 
-#: src/filesel.c:245
+#: src/filesel.c:247
 msgid "Save as"
 msgstr "Farklı kaydet"
 
-#: src/filesel.c:252 src/filesel.c:380
+#: src/filesel.c:254 src/filesel.c:382
 msgid "Overwrite existing file"
 msgstr "Var olan dosyanın üzerine yazılsın mı?"
 
-#: src/filesel.c:253 src/filesel.c:381
+#: src/filesel.c:255 src/filesel.c:383
 msgid "The file already exists. Do you want to replace it?"
 msgstr "Dosya sistemde var. Üzerine yazmak ister misiniz?"
 
-#: src/filesel.c:270 src/foldersel.c:256
+#: src/filesel.c:272 src/foldersel.c:256
 msgid "Select folder"
 msgstr "Dizini seç"
 
@@ -2869,147 +2870,146 @@ msgstr "Tamamlandı (%d yeni ileti)"
 #: src/inc.c:208
 #, c-format
 msgid "[Local]: %d"
-msgstr ""
+msgstr "[Yerel]: %d"
 
-#: src/inc.c:609
+#: src/inc.c:612
 msgid "Authenticating with POP3"
 msgstr "POP3 ile doğrulama yapılıyor"
 
-#: src/inc.c:638
+#: src/inc.c:641
 msgid "Retrieving new messages"
 msgstr "Yeni iletiler alınıyor"
 
-#: src/inc.c:640
+#: src/inc.c:643
 msgid "Cancel _all"
 msgstr "Hepsini i_ptal et"
 
-#: src/inc.c:686
+#: src/inc.c:689
 msgid "Standby"
 msgstr "Bekle"
 
-#: src/inc.c:843 src/inc.c:897
+#: src/inc.c:846 src/inc.c:900
 msgid "Cancelled"
 msgstr "İptal edildi"
 
-#: src/inc.c:854
+#: src/inc.c:857
 msgid "Retrieving"
 msgstr "Alınıyor"
 
-#: src/inc.c:863 src/inc.c:1205
+#: src/inc.c:866 src/inc.c:1208
 #, c-format
 msgid "%d message(s) (%s) received"
 msgstr "Tamamlandı (%d ileti, (%s) alındı)"
 
-#: src/inc.c:867
+#: src/inc.c:870
 #, c-format
 msgid "no new messages"
 msgstr "yeni ileti yok"
 
-#: src/inc.c:868
+#: src/inc.c:871
 msgid "Done"
 msgstr "Yapıldı"
 
-#: src/inc.c:873
-#, fuzzy
+#: src/inc.c:876
 msgid "Server not found"
-msgstr "Sunucu bilgisi"
+msgstr "Sunucu bulunamadı"
 
-#: src/inc.c:877
+#: src/inc.c:880
 msgid "Connection failed"
 msgstr "Bağlantıda hata"
 
-#: src/inc.c:880
+#: src/inc.c:883
 msgid "Auth failed"
 msgstr "Kimlik denetiminde hata"
 
-#: src/inc.c:884
+#: src/inc.c:887
 msgid "Locked"
 msgstr "Kilitli"
 
-#: src/inc.c:894
+#: src/inc.c:897
 msgid "Timeout"
 msgstr "Zaman aşımı"
 
-#: src/inc.c:944
+#: src/inc.c:947
 #, c-format
 msgid "Finished (%d new message(s))"
 msgstr "Tamamlandı (%d yeni ileti)"
 
-#: src/inc.c:947
+#: src/inc.c:950
 #, c-format
 msgid "Finished (no new messages)"
 msgstr "Tamamlandı (yeni ileti yok)"
 
-#: src/inc.c:956
+#: src/inc.c:959
 msgid "Some errors occurred while getting mail."
 msgstr " İletiler alınırken bazı hatalar oluştu."
 
-#: src/inc.c:992
+#: src/inc.c:995
 #, c-format
 msgid "getting new messages of account %s...\n"
 msgstr "%s hesabındaki yeni iletiler alınıyor...\n"
 
-#: src/inc.c:996
+#: src/inc.c:999
 #, c-format
 msgid "%s: Authenticating with POP3"
 msgstr "%s: POP3 doğrulaması yapılıyor"
 
-#: src/inc.c:999
+#: src/inc.c:1002
 #, c-format
 msgid "%s: Retrieving new messages"
 msgstr "%s: Yeni iletiler alınıyor"
 
-#: src/inc.c:1004
+#: src/inc.c:1007
 #, c-format
 msgid "Connecting to POP3 server: %s..."
 msgstr "POP3 sunucusuna bağlantı kuruluyor: %s ..."
 
-#: src/inc.c:1022
+#: src/inc.c:1025
 #, c-format
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "POP3 sunucuya bağlantı kurulamadı: %s:%d\n"
 
-#: src/inc.c:1108 src/rpop3.c:862 src/send_message.c:846
+#: src/inc.c:1111 src/rpop3.c:862 src/send_message.c:846
 #, c-format
 msgid "Authenticating..."
 msgstr "Kimlik denetimi yapılıyor..."
 
-#: src/inc.c:1109
+#: src/inc.c:1112
 #, c-format
 msgid "Retrieving messages from %s..."
 msgstr "%s konumundan iletiler alınıyor..."
 
-#: src/inc.c:1114
+#: src/inc.c:1117
 msgid "Getting the number of new messages (STAT)..."
 msgstr "Yeni ileti numaraları alınıyor (STAT)..."
 
-#: src/inc.c:1118
+#: src/inc.c:1121
 msgid "Getting the number of new messages (LAST)..."
 msgstr "Yeni ileti numaraları alınıyor (LAST)..."
 
-#: src/inc.c:1122
+#: src/inc.c:1125
 msgid "Getting the number of new messages (UIDL)..."
 msgstr "Yeni ileti numaraları alınıyor (UIDL)..."
 
-#: src/inc.c:1126
+#: src/inc.c:1129
 msgid "Getting the size of messages (LIST)..."
 msgstr "İletilerin boyutları alınıyor (LIST)..."
 
-#: src/inc.c:1136
+#: src/inc.c:1139
 #, c-format
 msgid "Deleting message %d"
 msgstr "%d. ileti siliniyor"
 
-#: src/inc.c:1143 src/send_message.c:864
+#: src/inc.c:1146 src/send_message.c:864
 msgid "Quitting"
 msgstr "Çıkılıyor"
 
-#: src/inc.c:1180
+#: src/inc.c:1183
 #, c-format
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "İletiler alınıyor (%d / %d) (%s / %s)"
 
-#: src/inc.c:1445 src/inc.c:1472 src/summaryview.c:4811 src/summaryview.c:5001
+#: src/inc.c:1448 src/inc.c:1475 src/summaryview.c:4811 src/summaryview.c:5001
 #: src/summaryview.c:5052
 msgid ""
 "Execution of the junk filter command failed.\n"
@@ -3018,30 +3018,29 @@ msgstr ""
 "Gereksiz ileti süzgeci komutu çalıştırılamadı.<br> Lütfen gereksiz ileti "
 "kontrol ayarlarınızı kontrol ediniz."
 
-#: src/inc.c:1536 src/send_message.c:1001
-#, fuzzy
+#: src/inc.c:1539 src/send_message.c:1001
 msgid "Server not found."
-msgstr "İleti bulunamadı."
-
-#: src/inc.c:1540
-#, fuzzy, c-format
-msgid "Server %s not found."
-msgstr "İleti bulunamadı."
+msgstr "Sunucu bulunamadı."
 
 #: src/inc.c:1543
+#, c-format
+msgid "Server %s not found."
+msgstr "Sunucu %s bulunamadı."
+
+#: src/inc.c:1546
 msgid "Connection failed."
 msgstr "Bağlantıda hata oluştu."
 
-#: src/inc.c:1547
-#, fuzzy, c-format
+#: src/inc.c:1550
+#, c-format
 msgid "Connection to %s:%d failed."
-msgstr "Bağlantıda hata oluştu."
+msgstr "%s:%d bağlantısı başarısız oldu."
 
-#: src/inc.c:1551
+#: src/inc.c:1554
 msgid "Error occurred while processing mail."
 msgstr "İletiler işlenirken bir hata oluştu."
 
-#: src/inc.c:1556
+#: src/inc.c:1559
 #, c-format
 msgid ""
 "Error occurred while processing mail:\n"
@@ -3050,29 +3049,29 @@ msgstr ""
 "E-posta işlenirken hata oluştu:\n"
 "%s"
 
-#: src/inc.c:1562
+#: src/inc.c:1565
 msgid "No disk space left."
 msgstr "Yeterli disk alanı kalmadı."
 
-#: src/inc.c:1567
+#: src/inc.c:1570
 msgid "Can't write file."
 msgstr "Dosyaya yazılamadı."
 
-#: src/inc.c:1572
+#: src/inc.c:1575
 msgid "Socket error."
 msgstr "protokol hatası"
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1578 src/rpop3.c:575 src/rpop3.c:576 src/send_message.c:786
+#: src/inc.c:1581 src/rpop3.c:575 src/rpop3.c:576 src/send_message.c:786
 #: src/send_message.c:1014
 msgid "Connection closed by the remote host."
 msgstr "Bağlantı karşı taraftan kesildi."
 
-#: src/inc.c:1584
+#: src/inc.c:1587
 msgid "Mailbox is locked."
 msgstr "Posta kutusu kilitli"
 
-#: src/inc.c:1588
+#: src/inc.c:1591
 #, c-format
 msgid ""
 "Mailbox is locked:\n"
@@ -3081,11 +3080,11 @@ msgstr ""
 "Posta kutusu kilitli:\n"
 "%s"
 
-#: src/inc.c:1594 src/rpop3.c:550 src/rpop3.c:555 src/send_message.c:990
+#: src/inc.c:1597 src/rpop3.c:550 src/rpop3.c:555 src/send_message.c:990
 msgid "Authentication failed."
 msgstr "Yetkilendirmede hata oluştu."
 
-#: src/inc.c:1599 src/rpop3.c:552 src/send_message.c:993
+#: src/inc.c:1602 src/rpop3.c:552 src/send_message.c:993
 #, c-format
 msgid ""
 "Authentication failed:\n"
@@ -3094,15 +3093,15 @@ msgstr ""
 "Yetkilendirme başarısız:\n"
 "%s"
 
-#: src/inc.c:1604 src/rpop3.c:580 src/rpop3.c:581 src/send_message.c:1018
+#: src/inc.c:1607 src/rpop3.c:580 src/rpop3.c:581 src/send_message.c:1018
 msgid "Session timed out."
 msgstr "Oturum zaman aşımına uğradı."
 
-#: src/inc.c:1645
+#: src/inc.c:1648
 msgid "Incorporation cancelled\n"
 msgstr "İptal edildi\n"
 
-#: src/inc.c:1757
+#: src/inc.c:1760
 #, c-format
 msgid "Getting new messages from %s into %s...\n"
 msgstr "%s'den yeni iletiler %s e alınıyor...\n"
@@ -3127,7 +3126,7 @@ msgstr "Kullanım: %s [SEÇENEKLER] ...\n"
 
 #: src/main.c:615
 msgid "  --compose [address]    open composition window"
-msgstr "  --compose [adres]    düzenleme penceresini açar"
+msgstr "  --compose [adres]    ileti oluşturma penceresini açar"
 
 #: src/main.c:616
 msgid ""
@@ -3658,7 +3657,7 @@ msgstr "/İ_leti/---"
 
 #: src/mainwindow.c:799 src/messageview.c:277
 msgid "/_Message/Compose _new message"
-msgstr "/İ_leti/Yeni _ileti gönder"
+msgstr "/İ_leti/Yeni _ileti oluştur"
 
 #: src/mainwindow.c:801 src/messageview.c:280
 msgid "/_Message/_Reply"
@@ -4179,18 +4178,17 @@ msgstr "Ekler"
 
 #: src/messageview.c:395
 msgid "Switch to attachment list view"
-msgstr ""
+msgstr "Ek liste görünümüne geç"
 
 #: src/messageview.c:413
-#, fuzzy
 msgid "Save _all attachments..."
-msgstr "Ek dosyası olan"
+msgstr "_Tüm ekleri kaydet..."
 
 #: src/messageview.c:477
 msgid "Message View - Sylpheed"
 msgstr "İleti Görünümü - Sylpheed"
 
-#: src/messageview.c:902 src/summaryview.c:3922
+#: src/messageview.c:908 src/summaryview.c:3922
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "`%s' dosyası kaydedilemedi."
@@ -4383,7 +4381,7 @@ msgstr "Gönder"
 #: src/prefs_account_dialog.c:599 src/prefs_common_dialog.c:794
 #: src/prefs_folder_item.c:140 src/prefs_toolbar.c:53
 msgid "Compose"
-msgstr "Düzenle"
+msgstr "Oluştur"
 
 #: src/prefs_account_dialog.c:602 src/prefs_common_dialog.c:801
 msgid "Privacy"
@@ -4976,24 +4974,20 @@ msgstr "Dağıtımdan sonra tüm yerel dizinleri güncelle"
 
 #. New message notify
 #: src/prefs_common_dialog.c:888
-#, fuzzy
 msgid "New message notification"
-msgstr "Doğrulama kullan"
+msgstr "Yeni ileti uyarısı"
 
 #: src/prefs_common_dialog.c:898
-#, fuzzy
 msgid "Play sound when new messages arrive"
-msgstr "Yeni iletiler geldiğinde komut çalıştır"
+msgstr "Yeni iletiler geldiğinde ses çal"
 
 #: src/prefs_common_dialog.c:904
-#, fuzzy
 msgid "Sound file"
-msgstr "Dosya okunamadı."
+msgstr "Ses dosyası"
 
 #: src/prefs_common_dialog.c:924
-#, fuzzy
 msgid "Execute command when new messages arrive"
-msgstr "Yeni iletiler geldiğinde komut çalıştır"
+msgstr "Yeni iletiler geldiğinde komutu çalıştır"
 
 #: src/prefs_common_dialog.c:930 src/prefs_common_dialog.c:2857
 #: src/prefs_common_dialog.c:2879 src/prefs_common_dialog.c:2901
@@ -6469,7 +6463,7 @@ msgstr "Kuyruktaki iletileri gönder"
 
 #: src/prefs_toolbar.c:54
 msgid "Compose new message"
-msgstr "Yeni ileti düzenle"
+msgstr "Yeni ileti oluştur"
 
 #: src/prefs_toolbar.c:57
 msgid "Reply to the message"
@@ -6824,9 +6818,9 @@ msgid "Opened message %d"
 msgstr "%d iletisi açıldı"
 
 #: src/rpop3.c:1068
-#, fuzzy, c-format
+#, c-format
 msgid "Retrieved %d (of %d) message headers"
-msgstr "%d ileti başlığı alındı"
+msgstr "%d/%d ileti başlığı alındı"
 
 #: src/rpop3.c:1072
 #, c-format
@@ -6995,9 +6989,9 @@ msgstr ""
 "%s"
 
 #: src/send_message.c:1003
-#, fuzzy, c-format
+#, c-format
 msgid "SMTP server not found: %s:%d"
-msgstr "SMTP sunucu girilmemiş."
+msgstr "SMTP sunucusu bulunamadı: %s:%d"
 
 #: src/send_message.c:1005
 msgid "Can't connect to SMTP server."
@@ -7479,9 +7473,8 @@ msgid "Creating summary view...\n"
 msgstr "Özet oluşturuluyor...\n"
 
 #: src/summaryview.c:549
-#, fuzzy
 msgid "Toggle message view"
-msgstr "İleti görüntüsü oluşturuluyor...\n"
+msgstr "İleti görünümünü aç/kapa"
 
 #: src/summaryview.c:674
 #, c-format
@@ -7601,9 +7594,9 @@ msgid "%s%d copied"
 msgstr "%s%d kopyalandı"
 
 #: src/summaryview.c:2288
-#, fuzzy, c-format
+#, c-format
 msgid "%d/%d new, %d/%d unread, %d/%d total"
-msgstr "%d yeni, %d okunmamış, toplam %d"
+msgstr "%d/%d yeni, %d/%d okunmamış, %d/%d toplam"
 
 #: src/summaryview.c:2297
 #, c-format
@@ -7739,9 +7732,8 @@ msgid "This message is encrypted, but its decryption failed.\n"
 msgstr "Bu ileti şifrelenmiş ama şifre açılamadı.\n"
 
 #: src/textview.c:835
-#, fuzzy
 msgid "_Copy file name"
-msgstr "Dosya adı"
+msgstr "_Dosya adını kopyala"
 
 #: src/textview.c:1117
 msgid "This message can't be displayed.\n"
@@ -7759,7 +7751,7 @@ msgstr "Bu resmi farklı ka_ydet..."
 
 #: src/textview.c:2383 src/trayicon.c:160
 msgid "Compose _new message"
-msgstr "Yeni ileti düze_nle"
+msgstr "Yeni ileti olu_ştur"
 
 #: src/textview.c:2385
 msgid "R_eply to this address"
@@ -7864,28 +7856,14 @@ msgstr "Eklentilerin sürüm bilgisi alınamadı."
 
 #: plugin/attachment_tool/attachment_tool.c:50
 #: plugin/attachment_tool/attachment_tool.c:271
-#, fuzzy
 msgid "Remove attachments"
-msgstr "Ek dosyası olan"
+msgstr "Ekleri kaldır"
 
 #: plugin/attachment_tool/attachment_tool.c:263
 msgid "This tool is available on local folders only."
-msgstr ""
+msgstr "Bu araç yalnızca yerel dizinler için kullanılabilir."
 
 #: plugin/attachment_tool/attachment_tool.c:272
 msgid "Do you really remove attached files from the selected messages?"
 msgstr ""
-
-#, fuzzy
-#~ msgid "Save _all..."
-#~ msgstr "/_Hepsini kaydet..."
-
-#, fuzzy
-#~ msgid "_Open"
-#~ msgstr "/_Aç"
-
-#~ msgid "Can't save the message to outbox."
-#~ msgstr "İleti, giden kutusuna kaydedilemiyor."
-
-#~ msgid "generated Message-ID: %s\n"
-#~ msgstr "İleti numarası oluşturuldu: %s\n"
+"Seçilen iletilere eklenmiş dosyaları gerçekten kaldırmak istiyor musunuz?"
