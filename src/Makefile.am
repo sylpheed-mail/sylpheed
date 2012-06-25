@@ -154,6 +154,7 @@ endif
 sylpheed_LDADD = \
 	$(INTLLIBS) \
 	$(GTK_LIBS) \
+	$(GLIB_LIBS) \
 	$(GPGME_LIBS) \
 	$(LDAP_LIBS) \
 	$(LIBICONV) \
