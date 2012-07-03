@@ -4185,7 +4185,8 @@ static gint imap_cmd_fetch_func(IMAPSession *session, gpointer data)
 			g_free(buf);
 			return IMAP_ERROR;
 		}
-		if (strstr(buf, "FETCH") != NULL) break;
+		if (strstr(buf, "FETCH") != NULL && strstr(buf, "BODY") != NULL)
+			break;
 		g_free(buf);
 	}
 	if (ok != IMAP_SUCCESS)
