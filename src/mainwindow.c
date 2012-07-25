@@ -1303,6 +1303,8 @@ void main_window_reflect_prefs_all(void)
 
 	folderview_reflect_prefs(mainwin->folderview);
 
+	messageview_reflect_prefs(mainwin->messageview);
+
 	headerview_set_visibility(mainwin->messageview->headerview,
 				  prefs_common.display_header_pane);
 

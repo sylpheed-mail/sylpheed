@@ -79,6 +79,7 @@ struct _MessageView
 MessageView *messageview_create			(void);
 MessageView *messageview_create_with_new_window	(void);
 void messageview_init				(MessageView	*messageview);
+void messageview_reflect_prefs			(MessageView	*messageview);
 gint messageview_show				(MessageView	*messageview,
 						 MsgInfo	*msginfo,
 						 gboolean	 all_headers);

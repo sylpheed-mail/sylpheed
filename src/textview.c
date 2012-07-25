@@ -181,6 +181,9 @@ static void textview_show_header	(TextView	*textview,
 static void textview_insert_border	(TextView	*textview,
 					 GtkTextIter	*iter,
 					 gint		 padding);
+static void textview_insert_pad		(TextView	*textview,
+					 GtkTextIter	*iter,
+					 gint		 padding);
 
 static gboolean textview_key_pressed		(GtkWidget	*widget,
 						 GdkEventKey	*event,
@@ -326,11 +329,17 @@ static void textview_create_tags(TextView *textview)
 	GtkTextView *text = GTK_TEXT_VIEW(textview->text);
 	GtkTextBuffer *buffer;
 	static PangoFontDescription *font_desc;
+	GtkTextIter iter;
+	GtkTextMark *mark;
 
 	if (!font_desc)
 		font_desc = gtkut_get_default_font_desc();
 
 	buffer = gtk_text_view_get_buffer(text);
+
+	gtk_text_buffer_get_end_iter(buffer, &iter);
+	mark = gtk_text_buffer_create_mark(buffer, "attach-file-pos",
+					   &iter, TRUE);
 
 	gtk_text_buffer_create_tag(buffer, "header",
 				   "pixels-above-lines", 1,
@@ -500,6 +509,11 @@ void textview_show_message(TextView *textview, MimeInfo *mimeinfo,
 
 		gtk_text_buffer_get_end_iter(buffer, &iter);
 		textview->body_pos = gtk_text_iter_get_offset(&iter);
+	} else {
+		gtk_text_buffer_get_end_iter(buffer, &iter);
+		mark = gtk_text_buffer_get_mark(buffer, "attach-file-pos");
+		gtk_text_buffer_move_mark(buffer, mark, &iter);
+		g_object_set_data(G_OBJECT(mark), "attach-file-count", GINT_TO_POINTER(0));
 	}
 
 #if USE_GPGME
@@ -615,6 +629,11 @@ void textview_show_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 		textview->body_pos = gtk_text_iter_get_offset(&iter);
 		if (!mimeinfo->main)
 			gtk_text_buffer_insert(buffer, &iter, "\n", 1);
+	} else {
+		gtk_text_buffer_get_end_iter(buffer, &iter);
+		mark = gtk_text_buffer_get_mark(buffer, "attach-file-pos");
+		gtk_text_buffer_move_mark(buffer, mark, &iter);
+		g_object_set_data(G_OBJECT(mark), "attach-file-count", GINT_TO_POINTER(0));
 	}
 
 	if (mimeinfo->mime_type == MIME_MULTIPART || is_rfc822_part)
@@ -859,7 +878,6 @@ static void textview_add_part_widget(TextView *textview, GtkTextIter *iter,
 	GdkColor fg2 = {0, 0x6000, 0x8000, 0xffff};
 
 	buffer = gtk_text_view_get_buffer(text);
-	gtk_text_buffer_insert(buffer, iter, "\n", 1);
 	anchor = gtk_text_buffer_create_child_anchor(buffer, iter);
 	ebox = gtk_event_box_new();
 	hbox = gtk_hbox_new(FALSE, 4);
@@ -907,6 +925,7 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 	gint boundary_len = 0;
 	const gchar *charset;
 	GPtrArray *headers = NULL;
+	GtkTextMark *mark;
 
 	g_return_if_fail(mimeinfo != NULL);
 	g_return_if_fail(fp != NULL);
@@ -935,12 +954,17 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 		g_snprintf(buf, sizeof(buf), "%s (%s)",
 			   mimeinfo->content_type,
 			   to_human_readable(mimeinfo->content_size));
+		gtk_text_buffer_insert(buffer, &iter, "\n", 1);
 		textview_add_part_widget(textview, &iter, mimeinfo, buf);
 		gtk_text_buffer_get_end_iter(buffer, &iter);
 		headers = textview_scan_header(textview, fp, charset);
 		if (headers) {
 			textview_show_header(textview, headers);
 			procheader_header_array_destroy(headers);
+		} else {
+			mark = gtk_text_buffer_get_mark(buffer, "attach-file-pos");
+			gtk_text_buffer_move_mark(buffer, mark, &iter);
+			g_object_set_data(G_OBJECT(mark), "attach-file-count", GINT_TO_POINTER(0));
 		}
 		return;
 	}
@@ -965,7 +989,6 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 
 	if (mimeinfo->mime_type != MIME_TEXT &&
 	    mimeinfo->mime_type != MIME_TEXT_HTML) {
-		textview_add_part_widget(textview, &iter, mimeinfo, buf);
 		if (mimeinfo->mime_type == MIME_IMAGE &&
 		    prefs_common.inline_image) {
 			GdkPixbuf *pixbuf;
@@ -973,6 +996,9 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 			gchar *filename;
 			RemoteURI *uri;
 			gchar *uri_str;
+
+			gtk_text_buffer_insert(buffer, &iter, "\n", 1);
+			textview_add_part_widget(textview, &iter, mimeinfo, buf);
 
 			filename = procmime_get_tmp_file_name(mimeinfo);
 			if (procmime_get_part_fp(filename, fp, mimeinfo) < 0) {
@@ -1017,14 +1043,32 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 
 			g_object_unref(pixbuf);
 			g_free(filename);
+		} else if (prefs_common.show_attached_files_first) {
+			gint count;
+
+			mark = gtk_text_buffer_get_mark(buffer, "attach-file-pos");
+
+			gtk_text_buffer_get_iter_at_mark(buffer, &iter, mark);
+			count = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(mark), "attach-file-count"));
+			if (count == 0) {
+				textview_insert_pad(textview, &iter, 4);
+				gtk_text_buffer_move_mark(buffer, mark, &iter);
+			}
+			textview_add_part_widget(textview, &iter, mimeinfo, buf);
+			gtk_text_buffer_move_mark(buffer, mark, &iter);
+			g_object_set_data(G_OBJECT(mark), "attach-file-count", GINT_TO_POINTER(count + 1));
+			gtk_text_buffer_get_end_iter(buffer, &iter);
+		} else {
+			gtk_text_buffer_insert(buffer, &iter, "\n", 1);
+			textview_add_part_widget(textview, &iter, mimeinfo, buf);
 		}
 	} else {
+		/* text part */
+		gtk_text_buffer_insert(buffer, &iter, "\n", 1);
 		if (!mimeinfo->main &&
 		    mimeinfo->parent &&
 		    mimeinfo->parent->children != mimeinfo)
 			textview_add_part_widget(textview, &iter, mimeinfo, buf);
-		else
-			gtk_text_buffer_insert(buffer, &iter, "\n", 1);
 		textview_write_body(textview, mimeinfo, fp, charset);
 	}
 }
@@ -1668,6 +1712,7 @@ static void textview_show_header(TextView *textview, GPtrArray *headers)
 	GtkTextIter iter;
 	Header *header;
 	gint i;
+	GtkTextMark *mark;
 
 	g_return_if_fail(headers != NULL);
 
@@ -1710,6 +1755,10 @@ static void textview_show_header(TextView *textview, GPtrArray *headers)
 			(buffer, &iter, "\n", 1, "header", NULL);
 	}
 
+	mark = gtk_text_buffer_get_mark(buffer, "attach-file-pos");
+	gtk_text_buffer_move_mark(buffer, mark, &iter);
+	g_object_set_data(G_OBJECT(mark), "attach-file-count", GINT_TO_POINTER(0));
+
 	textview_insert_border(textview, &iter, 0);
 }
 
@@ -1741,6 +1790,25 @@ static void textview_insert_border(TextView *textview, GtkTextIter *iter,
 			 G_CALLBACK(textview_hline_destroy_cb), text);
 	g_signal_connect(G_OBJECT(text), "size-allocate",
 			 G_CALLBACK(textview_size_allocate_cb), hline);
+}
+
+static void textview_insert_pad(TextView *textview, GtkTextIter *iter,
+				gint padding)
+{
+	GtkTextView *text = GTK_TEXT_VIEW(textview->text);
+	GtkTextBuffer *buffer;
+	GtkTextChildAnchor *anchor;
+	GtkWidget *vbox;
+
+	buffer = gtk_text_view_get_buffer(text);
+
+	anchor = gtk_text_buffer_create_child_anchor(buffer, iter);
+	vbox = gtk_vbox_new(FALSE, 0);
+	gtk_widget_set_size_request(vbox, -1, padding);
+	gtk_widget_show_all(vbox);
+	gtk_text_view_add_child_at_anchor(text, vbox, anchor);
+
+	gtk_text_buffer_insert(buffer, iter, "\n", 1);
 }
 
 gboolean textview_search_string(TextView *textview, const gchar *str,

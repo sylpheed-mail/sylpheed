@@ -329,6 +329,8 @@ static PrefParam param[] = {
 	{"display_header_pane", "TRUE", &prefs_common.display_header_pane,
 	 P_BOOL},
 	{"show_attach_tab", "FALSE", &prefs_common.show_attach_tab, P_BOOL},
+	{"show_attached_files_first", "TRUE",
+	 &prefs_common.show_attached_files_first, P_BOOL},
 	{"display_header", "TRUE", &prefs_common.display_header, P_BOOL},
 	{"render_html", "TRUE", &prefs_common.render_html, P_BOOL},
 	{"html_only_as_attach", "FALSE", &prefs_common.html_only_as_attach,

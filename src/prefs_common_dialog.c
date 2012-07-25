@@ -173,6 +173,11 @@ static struct Message {
 	GtkWidget *chkbtn_inline_image;
 } message;
 
+static struct Attach {
+	GtkWidget *chkbtn_show_attach_tab;
+	GtkWidget *chkbtn_show_files_first;
+} attach;
+
 static struct ColorLabel {
 	GtkWidget *entry_color[7];
 } colorlabel;
@@ -468,6 +473,12 @@ static PrefsUIData ui_data[] = {
 	{"inline_image", &message.chkbtn_inline_image,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
+	/* Attachment */
+	{"show_attach_tab", &attach.chkbtn_show_attach_tab,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"show_attached_files_first", &attach.chkbtn_show_files_first,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+
 	/* Encoding */
 	{"default_encoding", &display.optmenu_dispencoding,
 	 prefs_common_charset_set_data_from_optmenu,
@@ -631,6 +642,7 @@ static GtkWidget *prefs_spell_create	(void);
 #endif
 static void prefs_display_create	(void);
 static GtkWidget *prefs_message_create	(void);
+static GtkWidget *prefs_attach_create	(void);
 
 static GtkWidget *prefs_colorlabel_create	(void);
 static void prefs_common_colorlabel_set_dialog	(void);
@@ -1607,6 +1619,7 @@ static void prefs_display_create(void)
 	GtkWidget *button_dispitem;
 
 	GtkWidget *msg_wid;
+	GtkWidget *att_wid;
 	GtkWidget *clabel_wid;
 
 	GtkWidget *label_dispencoding;
@@ -1750,6 +1763,10 @@ static void prefs_display_create(void)
 	APPEND_SUB_NOTEBOOK(notebook, vbox_tab, _("Message"));
 	msg_wid = prefs_message_create();
 	gtk_box_pack_start(GTK_BOX(vbox_tab), msg_wid, FALSE, FALSE, 0);
+
+	APPEND_SUB_NOTEBOOK(notebook, vbox_tab, _("Attachment"));
+	att_wid = prefs_attach_create();
+	gtk_box_pack_start(GTK_BOX(vbox_tab), att_wid, FALSE, FALSE, 0);
 
 	APPEND_SUB_NOTEBOOK(notebook, vbox_tab, _("Color label"));
 	clabel_wid = prefs_colorlabel_create();
@@ -2004,6 +2021,31 @@ static GtkWidget *prefs_message_create(void)
 
 	message.chkbtn_resize_image = chkbtn_resize_image;
 	message.chkbtn_inline_image = chkbtn_inline_image;
+
+	return vbox1;
+}
+
+static GtkWidget *prefs_attach_create(void)
+{
+	GtkWidget *vbox1;
+	GtkWidget *vbox2;
+	GtkWidget *chkbtn_show_attach_tab;
+	GtkWidget *chkbtn_show_files_first;
+
+	vbox1 = gtk_vbox_new (FALSE, VSPACING);
+	gtk_widget_show (vbox1);
+
+	vbox2 = gtk_vbox_new (FALSE, 0);
+	gtk_widget_show (vbox2);
+	gtk_box_pack_start (GTK_BOX (vbox1), vbox2, FALSE, FALSE, 0);
+
+	PACK_CHECK_BUTTON(vbox2, chkbtn_show_attach_tab,
+			  _("Toggle attachment list with tab"));
+	PACK_CHECK_BUTTON(vbox2, chkbtn_show_files_first,
+			  _("Show attached files first on message view"));
+
+	attach.chkbtn_show_attach_tab  = chkbtn_show_attach_tab;
+	attach.chkbtn_show_files_first = chkbtn_show_files_first;
 
 	return vbox1;
 }

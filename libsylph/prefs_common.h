@@ -338,7 +338,8 @@ struct _PrefsCommon
 	gboolean enable_newmsg_notify_sound; /* Receive */
 	gchar *newmsg_notify_sound;          /* Receive */
 
-	gboolean show_attach_tab;            /* Message */
+	gboolean show_attach_tab;            /* Message - Attachment */
+	gboolean show_attached_files_first;  /* Message - Attachment */
 };
 
 extern PrefsCommon prefs_common;

@@ -377,7 +377,7 @@ MessageView *messageview_create(void)
 
 	toolbar_hbox = gtk_hbox_new(FALSE, 0);
 	gtk_widget_show(toolbar_hbox);
-	gtk_box_pack_end(GTK_BOX(toolbar_vbox), toolbar_hbox, FALSE, FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(toolbar_vbox), toolbar_hbox, TRUE, FALSE, 0);
 
 	mime_toggle_btn = gtk_toggle_button_new();
 	gtk_widget_show(mime_toggle_btn);
@@ -419,8 +419,8 @@ MessageView *messageview_create(void)
 
 	hbox = gtk_hbox_new(FALSE, 0);
 	gtk_widget_show(hbox);
+	gtk_box_pack_start(GTK_BOX(hbox), toolbar_vbox, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET_PTR(headerview), TRUE, TRUE, 0);
-	gtk_box_pack_end(GTK_BOX(hbox), toolbar_vbox, FALSE, FALSE, 0);
 
 	vbox = gtk_vbox_new(FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
@@ -550,6 +550,18 @@ void messageview_init(MessageView *messageview)
 	textview_init(messageview->textview);
 	mimeview_init(messageview->mimeview);
 	/* messageview_set_font(messageview); */
+}
+
+void messageview_reflect_prefs(MessageView *messageview)
+{
+	if (messageview->type == MVIEW_MIME) {
+		if (prefs_common.show_attach_tab)
+			gtk_widget_hide(messageview->toolbar_vbox);
+		else
+			gtk_widget_show(messageview->toolbar_vbox);
+		gtk_notebook_set_show_tabs(GTK_NOTEBOOK(messageview->notebook),
+					   prefs_common.show_attach_tab);
+	}
 }
 
 GList *messageview_get_window_list(void)

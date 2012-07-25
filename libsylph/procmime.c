@@ -40,7 +40,8 @@
 #include "utils.h"
 #include "prefs_common.h"
 
-#undef MIME_DEBUG
+//#undef MIME_DEBUG
+#define MIME_DEBUG
 #ifdef MIME_DEBUG
 #  define mime_debug_print	debug_print
 #else
@@ -252,6 +253,7 @@ void procmime_scan_multipart_message(MimeInfo *mimeinfo, FILE *fp)
 		return;
 	}
 
+	mime_debug_print("==== enter part\n");
 	mime_debug_print("level = %d\n", mimeinfo->level);
 
 	for (;;) {
@@ -286,6 +288,10 @@ void procmime_scan_multipart_message(MimeInfo *mimeinfo, FILE *fp)
 			procmime_mimeinfo_insert(mimeinfo, partinfo);
 			mime_debug_print("content-type: %s\n",
 					 partinfo->content_type);
+			if (partinfo->filename)
+				mime_debug_print("filename: %s\n", partinfo->filename);
+			else if (partinfo->name)
+				mime_debug_print("name: %s\n", partinfo->name);
 		}
 
 		/* begin content */
@@ -295,6 +301,8 @@ void procmime_scan_multipart_message(MimeInfo *mimeinfo, FILE *fp)
 		if (partinfo->mime_type == MIME_MULTIPART ||
 		    partinfo->mime_type == MIME_MESSAGE_RFC822) {
 			if (partinfo->level < MAX_MIME_LEVEL)
+				mime_debug_print("\n");
+				mime_debug_print("enter to child part:\n");
 				procmime_scan_multipart_message(partinfo, fp);
 		}
 
@@ -354,6 +362,7 @@ void procmime_scan_multipart_message(MimeInfo *mimeinfo, FILE *fp)
 	}
 
 	g_free(buf);
+	mime_debug_print("==== leave part\n");
 }
 
 void procmime_scan_encoding(MimeInfo *mimeinfo, const gchar *encoding)
