@@ -2040,7 +2040,7 @@ static GtkWidget *prefs_attach_create(void)
 	gtk_box_pack_start (GTK_BOX (vbox1), vbox2, FALSE, FALSE, 0);
 
 	PACK_CHECK_BUTTON(vbox2, chkbtn_show_attach_tab,
-			  _("Toggle attachment list with tab"));
+			  _("Toggle attachment list view with tab"));
 	PACK_CHECK_BUTTON(vbox2, chkbtn_show_files_first,
 			  _("Show attached files first on message view"));
 
