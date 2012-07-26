@@ -168,14 +168,14 @@ static struct Message {
 	GtkWidget *spinbtn_scrollstep;
 	GtkObject *spinbtn_scrollstep_adj;
 	GtkWidget *chkbtn_halfpage;
-
-	GtkWidget *chkbtn_resize_image;
-	GtkWidget *chkbtn_inline_image;
 } message;
 
 static struct Attach {
 	GtkWidget *chkbtn_show_attach_tab;
 	GtkWidget *chkbtn_show_files_first;
+
+	GtkWidget *chkbtn_resize_image;
+	GtkWidget *chkbtn_inline_image;
 } attach;
 
 static struct ColorLabel {
@@ -468,15 +468,15 @@ static PrefsUIData ui_data[] = {
 	{"scroll_half_page", &message.chkbtn_halfpage,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
-	{"resize_image", &message.chkbtn_resize_image,
-	 prefs_set_data_from_toggle, prefs_set_toggle},
-	{"inline_image", &message.chkbtn_inline_image,
-	 prefs_set_data_from_toggle, prefs_set_toggle},
-
 	/* Attachment */
 	{"show_attach_tab", &attach.chkbtn_show_attach_tab,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"show_attached_files_first", &attach.chkbtn_show_files_first,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+
+	{"resize_image", &attach.chkbtn_resize_image,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"inline_image", &attach.chkbtn_inline_image,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	/* Encoding */
@@ -1859,11 +1859,6 @@ static GtkWidget *prefs_message_create(void)
 	GtkWidget *spinbtn_scrollstep;
 	GtkWidget *chkbtn_halfpage;
 
-	GtkWidget *frame_image;
-	GtkWidget *vbox_image;
-	GtkWidget *chkbtn_resize_image;
-	GtkWidget *chkbtn_inline_image;
-
 	vbox1 = gtk_vbox_new (FALSE, VSPACING);
 	gtk_widget_show (vbox1);
 
@@ -1994,18 +1989,6 @@ static GtkWidget *prefs_message_create(void)
 
 	SET_TOGGLE_SENSITIVITY (chkbtn_smoothscroll, hbox_scr)
 
-	PACK_FRAME(vbox1, frame_image, _("Images"));
-
-	vbox_image = gtk_vbox_new (FALSE, 0);
-	gtk_widget_show (vbox_image);
-	gtk_container_add (GTK_CONTAINER (frame_image), vbox_image);
-	gtk_container_set_border_width (GTK_CONTAINER (vbox_image), 8);
-
-	PACK_CHECK_BUTTON(vbox_image, chkbtn_resize_image,
-			  _("Resize attached large images to fit in the window"));
-	PACK_CHECK_BUTTON(vbox_image, chkbtn_inline_image,
-			  _("Display images as inline"));
-
 	message.chkbtn_enablecol   = chkbtn_enablecol;
 	message.button_edit_col    = button_edit_col;
 	message.chkbtn_disphdrpane = chkbtn_disphdrpane;
@@ -2019,9 +2002,6 @@ static GtkWidget *prefs_message_create(void)
 	message.spinbtn_scrollstep_adj = spinbtn_scrollstep_adj;
 	message.chkbtn_halfpage        = chkbtn_halfpage;
 
-	message.chkbtn_resize_image = chkbtn_resize_image;
-	message.chkbtn_inline_image = chkbtn_inline_image;
-
 	return vbox1;
 }
 
@@ -2031,6 +2011,10 @@ static GtkWidget *prefs_attach_create(void)
 	GtkWidget *vbox2;
 	GtkWidget *chkbtn_show_attach_tab;
 	GtkWidget *chkbtn_show_files_first;
+	GtkWidget *frame_image;
+	GtkWidget *vbox_image;
+	GtkWidget *chkbtn_resize_image;
+	GtkWidget *chkbtn_inline_image;
 
 	vbox1 = gtk_vbox_new (FALSE, VSPACING);
 	gtk_widget_show (vbox1);
@@ -2044,8 +2028,23 @@ static GtkWidget *prefs_attach_create(void)
 	PACK_CHECK_BUTTON(vbox2, chkbtn_show_files_first,
 			  _("Show attached files first on message view"));
 
+	PACK_FRAME(vbox1, frame_image, _("Images"));
+
+	vbox_image = gtk_vbox_new (FALSE, 0);
+	gtk_widget_show (vbox_image);
+	gtk_container_add (GTK_CONTAINER (frame_image), vbox_image);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox_image), 8);
+
+	PACK_CHECK_BUTTON(vbox_image, chkbtn_resize_image,
+			  _("Resize attached large images to fit in the window"));
+	PACK_CHECK_BUTTON(vbox_image, chkbtn_inline_image,
+			  _("Display images as inline"));
+
 	attach.chkbtn_show_attach_tab  = chkbtn_show_attach_tab;
 	attach.chkbtn_show_files_first = chkbtn_show_files_first;
+
+	attach.chkbtn_resize_image = chkbtn_resize_image;
+	attach.chkbtn_inline_image = chkbtn_inline_image;
 
 	return vbox1;
 }
