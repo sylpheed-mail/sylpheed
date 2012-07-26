@@ -93,6 +93,8 @@ static gint messageview_menu_tool_btn_pressed
 					(GtkWidget		*widget,
 					 GdkEventButton		*event,
 					 MessageView		*messageview);
+static void messageview_open_file_cb	(GtkWidget		*widget,
+					 MessageView		*messageview);
 static void messageview_save_all_cb	(GtkWidget		*widget,
 					 MessageView		*messageview);
 static gboolean key_pressed		(GtkWidget		*widget,
@@ -696,8 +698,11 @@ static void messageview_set_tool_menu(MessageView *messageview,
 				name = "mimetmp";
 			menuitem = gtk_menu_item_new_with_label(name);
 			gtk_widget_show(menuitem);
-			gtk_widget_set_sensitive(menuitem, FALSE);
 			gtk_menu_shell_insert(GTK_MENU_SHELL(messageview->tool_menu), menuitem, pos++);
+			g_object_set_data(G_OBJECT(menuitem), "tool-menu-mimeinfo", partinfo);
+			g_signal_connect(G_OBJECT(menuitem), "activate",
+					 G_CALLBACK(messageview_open_file_cb),
+					 messageview);
 		}
 	}
 
@@ -767,6 +772,7 @@ static void messageview_set_encoding_menu(MessageView *messageview)
 
 void messageview_clear(MessageView *messageview)
 {
+	messageview_set_tool_menu(messageview, NULL);
 	procmsg_msginfo_free(messageview->msginfo);
 	messageview->msginfo = NULL;
 	messageview_change_view_type(messageview, MVIEW_TEXT);
@@ -976,6 +982,15 @@ static gint messageview_menu_tool_btn_pressed(GtkWidget *widget,
 		       event->button, event->time);
 
 	return TRUE;
+}
+
+static void messageview_open_file_cb(GtkWidget *widget, MessageView *messageview)
+{
+	MimeInfo *partinfo;
+
+	partinfo = g_object_get_data(G_OBJECT(widget), "tool-menu-mimeinfo");
+	if (partinfo)
+		mimeview_launch_part(messageview->mimeview, partinfo);
 }
 
 static void messageview_save_all_cb(GtkWidget *widget, MessageView *messageview)
