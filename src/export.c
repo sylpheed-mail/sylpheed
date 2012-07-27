@@ -207,14 +207,23 @@ static gint export_do(void)
 		mbox = g_strdup(utf8mbox);
 	}
 
-	src = folder_find_item_from_identifier(srcdir);
+	selected_only = gtk_toggle_button_get_active
+		(GTK_TOGGLE_BUTTON(selected_only_chkbtn));
+
+	if (selected_only) {
+		mainwin = main_window_get();
+		src = mainwin->summaryview->folder_item;
+		mlist = summary_get_selected_msg_list(mainwin->summaryview);
+	} else
+		src = folder_find_item_from_identifier(srcdir);
+
 	if (!src) {
 		g_warning("Can't find the folder.");
 		g_free(mbox);
 		return -1;
 	}
 
-	msg = g_strdup_printf(_("Exporting %s ..."), g_basename(srcdir));
+	msg = g_strdup_printf(_("Exporting %s ..."), src->name);
 	progress = progress_dialog_simple_create();
 	gtk_window_set_title(GTK_WINDOW(progress->window), _("Exporting"));
 	progress_dialog_set_label(progress, msg);
@@ -227,13 +236,6 @@ static gint export_do(void)
 			 G_CALLBACK(gtk_true), NULL);
 	gtk_widget_show(progress->window);
 	ui_update();
-
-	selected_only = gtk_toggle_button_get_active
-		(GTK_TOGGLE_BUTTON(selected_only_chkbtn));
-	if (selected_only) {
-		mainwin = main_window_get();
-		mlist = summary_get_selected_msg_list(mainwin->summaryview);
-	}
 
 	progress_cancel = FALSE;
 
