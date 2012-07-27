@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-25 18:13+0900\n"
+"POT-Creation-Date: 2012-07-27 15:53+0900\n"
 "PO-Revision-Date: 2011-01-23 01:42+0200\n"
 "Last-Translator: Petr Kovar <pknbe@volny.cz>\n"
 "Language-Team: Petr Kovar <pknbe@volny.cz>\n"
@@ -232,7 +232,7 @@ msgstr "iconv nemůže provést konverzi z UTF-7 na %s\n"
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "iconv nemůže provést konverzi z %s na UTF-7\n"
 
-#: libsylph/mbox.c:49 libsylph/mbox.c:226
+#: libsylph/mbox.c:49 libsylph/mbox.c:230
 msgid "can't write to temporary file\n"
 msgstr "nelze zapisovat do dočasného souboru\n"
 
@@ -255,11 +255,11 @@ msgstr "neplatný formát poštovní schránky: %s\n"
 msgid "malformed mbox: %s\n"
 msgstr "selhání poštovní schránky: %s\n"
 
-#: libsylph/mbox.c:139
+#: libsylph/mbox.c:143
 msgid "can't open temporary file\n"
 msgstr "nelze otevřít dočasný soubor\n"
 
-#: libsylph/mbox.c:191
+#: libsylph/mbox.c:195
 #, c-format
 msgid ""
 "unescaped From found:\n"
@@ -268,43 +268,43 @@ msgstr ""
 "nalezeno nezměněné záhlaví From:\n"
 "%s"
 
-#: libsylph/mbox.c:338
+#: libsylph/mbox.c:342
 #, c-format
 msgid "can't create lock file %s\n"
 msgstr "nelze vytvořit uzamčený soubor %s\n"
 
-#: libsylph/mbox.c:339
+#: libsylph/mbox.c:343
 msgid "use 'flock' instead of 'file' if possible.\n"
 msgstr "pokud to jde, použijte \"flock\" namísto \"file\".\n"
 
-#: libsylph/mbox.c:351
+#: libsylph/mbox.c:355
 #, c-format
 msgid "can't create %s\n"
 msgstr "nelze vytvořit %s\n"
 
-#: libsylph/mbox.c:357
+#: libsylph/mbox.c:361
 msgid "mailbox is owned by another process, waiting...\n"
 msgstr "poštovní schránka je vlastněna jiným procesem, čekejte...\n"
 
-#: libsylph/mbox.c:386
+#: libsylph/mbox.c:390
 #, c-format
 msgid "can't lock %s\n"
 msgstr "nelze uzamknout %s\n"
 
-#: libsylph/mbox.c:393 libsylph/mbox.c:443
+#: libsylph/mbox.c:397 libsylph/mbox.c:447
 msgid "invalid lock type\n"
 msgstr "neplatný typ zámku\n"
 
-#: libsylph/mbox.c:429
+#: libsylph/mbox.c:433
 #, c-format
 msgid "can't unlock %s\n"
 msgstr "nelze odemknout %s\n"
 
-#: libsylph/mbox.c:464
+#: libsylph/mbox.c:468
 msgid "can't truncate mailbox to zero.\n"
 msgstr "nelze smazat poštovní schránku.\n"
 
-#: libsylph/mbox.c:489
+#: libsylph/mbox.c:508
 #, c-format
 msgid "Exporting messages from %s into %s...\n"
 msgstr "Exportování zprávy z %s do %s...\n"
@@ -848,7 +848,7 @@ msgid "Auto-registered address"
 msgstr "Automaticky registrované adresy"
 
 #: src/addressbook.c:405 src/compose.c:581 src/mainwindow.c:550
-#: src/messageview.c:162
+#: src/messageview.c:164
 msgid "/_File"
 msgstr "/_Soubor"
 
@@ -871,8 +871,8 @@ msgstr "/_Soubor/Nový server _LDAP"
 #: src/addressbook.c:414 src/addressbook.c:417 src/compose.c:586
 #: src/compose.c:591 src/compose.c:594 src/compose.c:597 src/mainwindow.c:568
 #: src/mainwindow.c:571 src/mainwindow.c:573 src/mainwindow.c:575
-#: src/mainwindow.c:580 src/mainwindow.c:582 src/messageview.c:164
-#: src/messageview.c:169
+#: src/mainwindow.c:580 src/mainwindow.c:582 src/messageview.c:166
+#: src/messageview.c:171
 msgid "/_File/---"
 msgstr "/_Soubor/---"
 
@@ -888,17 +888,17 @@ msgstr "/_Soubor/_Smazat"
 msgid "/_File/_Save"
 msgstr "/_Soubor/_Uložit"
 
-#: src/addressbook.c:419 src/compose.c:598 src/messageview.c:170
+#: src/addressbook.c:419 src/compose.c:598 src/messageview.c:172
 msgid "/_File/_Close"
 msgstr "/_Soubor/_Zavřít"
 
 #: src/addressbook.c:421 src/addressbook.c:468 src/addressbook.c:485
-#: src/compose.c:600 src/mainwindow.c:586 src/messageview.c:172
+#: src/compose.c:600 src/mainwindow.c:586 src/messageview.c:174
 msgid "/_Edit"
 msgstr "/Úp_ravy"
 
 #: src/addressbook.c:422 src/compose.c:605 src/mainwindow.c:587
-#: src/messageview.c:173
+#: src/messageview.c:175
 msgid "/_Edit/_Copy"
 msgstr "/Úp_ravy/_Kopírovat"
 
@@ -947,7 +947,7 @@ msgid "/_Address/_Delete"
 msgstr "/_Adresa/S_mazat"
 
 #: src/addressbook.c:440 src/compose.c:716 src/mainwindow.c:834
-#: src/messageview.c:295
+#: src/messageview.c:297
 msgid "/_Tools"
 msgstr "/_Nástroje"
 
@@ -960,12 +960,12 @@ msgid "/_Tools/Import _CSV file"
 msgstr "/_Nástroje/Importovat soubor _CSV"
 
 #: src/addressbook.c:444 src/compose.c:740 src/mainwindow.c:892
-#: src/messageview.c:315
+#: src/messageview.c:317
 msgid "/_Help"
 msgstr "/Nápo_věda"
 
 #: src/addressbook.c:445 src/compose.c:741 src/mainwindow.c:912
-#: src/messageview.c:316
+#: src/messageview.c:318
 msgid "/_Help/_About"
 msgstr "/Nápo_věda/_O aplikaci"
 
@@ -1018,7 +1018,7 @@ msgstr "/_Kopírovat"
 msgid "/_Paste"
 msgstr "/_Vložit"
 
-#: src/addressbook.c:614 src/prefs_common_dialog.c:2698 src/prefs_toolbar.c:90
+#: src/addressbook.c:614 src/prefs_common_dialog.c:2697 src/prefs_toolbar.c:90
 msgid "Address book"
 msgstr "Adresář"
 
@@ -1209,7 +1209,7 @@ msgstr "Chyba při konverzi adresáře"
 msgid "Address Book Conversion"
 msgstr "Konverze adresáře"
 
-#: src/addressbook.c:4179 src/prefs_common_dialog.c:2497
+#: src/addressbook.c:4179 src/prefs_common_dialog.c:2496
 msgid "Interface"
 msgstr "Rozhraní"
 
@@ -1363,7 +1363,7 @@ msgid "/_Edit/_Redo"
 msgstr "/Úp_ravy/Z_novu"
 
 #: src/compose.c:603 src/compose.c:610 src/mainwindow.c:590
-#: src/messageview.c:175
+#: src/messageview.c:177
 msgid "/_Edit/---"
 msgstr "/Úp_ravy/---"
 
@@ -1375,7 +1375,7 @@ msgstr "/Úp_ravy/_Vyjmout"
 msgid "/_Edit/Paste as _quotation"
 msgstr "/Úp_ravy/Vložit jako _citaci"
 
-#: src/compose.c:609 src/mainwindow.c:588 src/messageview.c:174
+#: src/compose.c:609 src/mainwindow.c:588 src/messageview.c:176
 msgid "/_Edit/Select _all"
 msgstr "/Úp_ravy/Vybr_at vše"
 
@@ -1391,7 +1391,7 @@ msgstr "/Úp_ravy/Zar_ovnat všechny dlouhé řádky"
 msgid "/_Edit/Aut_o wrapping"
 msgstr "/Úp_ravy/A_utomatické zarovnávání"
 
-#: src/compose.c:616 src/mainwindow.c:596 src/messageview.c:179
+#: src/compose.c:616 src/mainwindow.c:596 src/messageview.c:181
 #: src/summaryview.c:476
 msgid "/_View"
 msgstr "/Z_obrazit"
@@ -1415,7 +1415,7 @@ msgstr "/Z_obrazit/Odpovědi z_aslat na"
 #: src/compose.c:621 src/compose.c:623 src/compose.c:625 src/compose.c:627
 #: src/compose.c:630 src/mainwindow.c:619 src/mainwindow.c:625
 #: src/mainwindow.c:652 src/mainwindow.c:676 src/mainwindow.c:779
-#: src/mainwindow.c:783 src/messageview.c:271
+#: src/mainwindow.c:783 src/messageview.c:273
 msgid "/_View/---"
 msgstr "/Z_obrazit/---"
 
@@ -1435,7 +1435,7 @@ msgstr "/Z_obrazit/Přílo_ha"
 msgid "/_View/Cu_stomize toolbar..."
 msgstr "/Z_obrazit/Up_ravit nástrojovou lištu..."
 
-#: src/compose.c:636 src/mainwindow.c:683 src/messageview.c:186
+#: src/compose.c:636 src/mainwindow.c:683 src/messageview.c:188
 msgid "/_View/Character _encoding"
 msgstr "/Z_obrazit/Znaková _sada"
 
@@ -1447,111 +1447,111 @@ msgstr "/Z_obrazit/Znaková _sada/_Automaticky rozpoznat"
 #: src/compose.c:663 src/compose.c:667 src/compose.c:673 src/compose.c:679
 #: src/compose.c:683 src/compose.c:693 src/compose.c:697 src/compose.c:705
 #: src/compose.c:709 src/mainwindow.c:679 src/mainwindow.c:686
-#: src/messageview.c:182
+#: src/messageview.c:184
 msgid "/_View/Character _encoding/---"
 msgstr "/Z_obrazit/Znaková _sada/---"
 
-#: src/compose.c:641 src/mainwindow.c:687 src/messageview.c:190
+#: src/compose.c:641 src/mainwindow.c:687 src/messageview.c:192
 msgid "/_View/Character _encoding/7bit ascii (US-ASC_II)"
 msgstr "/Z_obrazit/Znaková _sada/7bitový ASCII (US-ASC_II)"
 
-#: src/compose.c:643 src/mainwindow.c:689 src/messageview.c:193
+#: src/compose.c:643 src/mainwindow.c:689 src/messageview.c:195
 msgid "/_View/Character _encoding/Unicode (_UTF-8)"
 msgstr "/Z_obrazit/Znaková _sada/Unicode (_UTF-8)"
 
-#: src/compose.c:647 src/mainwindow.c:693 src/messageview.c:196
+#: src/compose.c:647 src/mainwindow.c:693 src/messageview.c:198
 msgid "/_View/Character _encoding/Western European (ISO-8859-_1)"
 msgstr "/Z_obrazit/Znaková _sada/Západoevropské jazyky (ISO-8859-_1)"
 
-#: src/compose.c:649 src/mainwindow.c:695 src/messageview.c:198
+#: src/compose.c:649 src/mainwindow.c:695 src/messageview.c:200
 msgid "/_View/Character _encoding/Western European (ISO-8859-15)"
 msgstr "/Z_obrazit/Znaková _sada/Západoevropské jazyky (ISO-8859-15)"
 
-#: src/compose.c:653 src/mainwindow.c:701 src/messageview.c:203
+#: src/compose.c:653 src/mainwindow.c:701 src/messageview.c:205
 msgid "/_View/Character _encoding/Central European (ISO-8859-_2)"
 msgstr "/Z_obrazit/Znaková _sada/Středoevropské jazyky (ISO-8859-_2)"
 
-#: src/compose.c:657 src/mainwindow.c:705 src/messageview.c:206
+#: src/compose.c:657 src/mainwindow.c:705 src/messageview.c:208
 msgid "/_View/Character _encoding/_Baltic (ISO-8859-13)"
 msgstr "/Z_obrazit/Znaková _sada/_Pobaltské jazyky (ISO-8859-13)"
 
-#: src/compose.c:659 src/mainwindow.c:707 src/messageview.c:208
+#: src/compose.c:659 src/mainwindow.c:707 src/messageview.c:210
 msgid "/_View/Character _encoding/Baltic (ISO-8859-_4)"
 msgstr "/Z_obrazit/Znaková _sada/Pobaltské jazyky (ISO-8859-_4)"
 
-#: src/compose.c:661 src/mainwindow.c:709 src/messageview.c:210
+#: src/compose.c:661 src/mainwindow.c:709 src/messageview.c:212
 msgid "/_View/Character _encoding/Baltic (Windows-1257)"
 msgstr "/Z_obrazit/Znaková _sada/Pobaltské jazyky (Windows-1257)"
 
-#: src/compose.c:665 src/mainwindow.c:713 src/messageview.c:213
+#: src/compose.c:665 src/mainwindow.c:713 src/messageview.c:215
 msgid "/_View/Character _encoding/Greek (ISO-8859-_7)"
 msgstr "/Z_obrazit/Znaková _sada/Řečtina (ISO-8859-_7)"
 
-#: src/compose.c:669 src/mainwindow.c:717 src/messageview.c:216
+#: src/compose.c:669 src/mainwindow.c:717 src/messageview.c:218
 msgid "/_View/Character _encoding/Arabic (ISO-8859-_6)"
 msgstr "/Z_obrazit/Znaková _sada/Arabština (ISO-8859-_6)"
 
-#: src/compose.c:671 src/mainwindow.c:719 src/messageview.c:218
+#: src/compose.c:671 src/mainwindow.c:719 src/messageview.c:220
 msgid "/_View/Character _encoding/Arabic (Windows-1256)"
 msgstr "/Z_obrazit/Znaková _sada/Arabština (Windows-1256)"
 
-#: src/compose.c:675 src/mainwindow.c:723 src/messageview.c:221
+#: src/compose.c:675 src/mainwindow.c:723 src/messageview.c:223
 msgid "/_View/Character _encoding/Hebrew (ISO-8859-_8)"
 msgstr "/Z_obrazit/Znaková _sada/Hebrejština (ISO-8859-_8)"
 
-#: src/compose.c:677 src/mainwindow.c:725 src/messageview.c:223
+#: src/compose.c:677 src/mainwindow.c:725 src/messageview.c:225
 msgid "/_View/Character _encoding/Hebrew (Windows-1255)"
 msgstr "/Z_obrazit/Znaková _sada/Hebrejština (Windows-1255)"
 
-#: src/compose.c:681 src/mainwindow.c:729 src/messageview.c:226
+#: src/compose.c:681 src/mainwindow.c:729 src/messageview.c:228
 msgid "/_View/Character _encoding/Turkish (ISO-8859-_9)"
 msgstr "/Z_obrazit/Znaková _sada/Turečtina (ISO-8859-_9)"
 
-#: src/compose.c:685 src/mainwindow.c:733 src/messageview.c:229
+#: src/compose.c:685 src/mainwindow.c:733 src/messageview.c:231
 msgid "/_View/Character _encoding/Cyrillic (ISO-8859-_5)"
 msgstr "/Z_obrazit/Znaková _sada/Cyrilice (ISO-8859-_5)"
 
-#: src/compose.c:687 src/mainwindow.c:735 src/messageview.c:231
+#: src/compose.c:687 src/mainwindow.c:735 src/messageview.c:233
 msgid "/_View/Character _encoding/Cyrillic (KOI8-_R)"
 msgstr "/Z_obrazit/Znaková _sada/Cyrilice (KOI8-_R)"
 
-#: src/compose.c:689 src/mainwindow.c:737 src/messageview.c:233
+#: src/compose.c:689 src/mainwindow.c:737 src/messageview.c:235
 msgid "/_View/Character _encoding/Cyrillic (KOI8-U)"
 msgstr "/Z_obrazit/Znaková _sada/Cyrilice (KOI8-U)"
 
-#: src/compose.c:691 src/mainwindow.c:739 src/messageview.c:235
+#: src/compose.c:691 src/mainwindow.c:739 src/messageview.c:237
 msgid "/_View/Character _encoding/Cyrillic (Windows-1251)"
 msgstr "/Z_obrazit/Znaková _sada/Cyrilice (Windows-1251)"
 
-#: src/compose.c:695 src/mainwindow.c:743 src/messageview.c:238
+#: src/compose.c:695 src/mainwindow.c:743 src/messageview.c:240
 msgid "/_View/Character _encoding/Japanese (ISO-2022-_JP)"
 msgstr "/Z_obrazit/Znaková _sada/Japonština (ISO-2022-_JP)"
 
-#: src/compose.c:699 src/mainwindow.c:753 src/messageview.c:247
+#: src/compose.c:699 src/mainwindow.c:753 src/messageview.c:249
 msgid "/_View/Character _encoding/Simplified Chinese (_GB2312)"
 msgstr "/Z_obrazit/Znaková _sada/Zjednodušená čínština (_GB2312)"
 
-#: src/compose.c:701 src/mainwindow.c:755 src/messageview.c:249
+#: src/compose.c:701 src/mainwindow.c:755 src/messageview.c:251
 msgid "/_View/Character _encoding/Simplified Chinese (GBK)"
 msgstr "/Z_obrazit/Znaková _sada/Zjednodušená čínština (GBK)"
 
-#: src/compose.c:703 src/mainwindow.c:757 src/messageview.c:251
+#: src/compose.c:703 src/mainwindow.c:757 src/messageview.c:253
 msgid "/_View/Character _encoding/Traditional Chinese (_Big5)"
 msgstr "/Z_obrazit/Znaková _sada/Tradiční čínština (_Big5)"
 
-#: src/compose.c:707 src/mainwindow.c:765 src/messageview.c:258
+#: src/compose.c:707 src/mainwindow.c:765 src/messageview.c:260
 msgid "/_View/Character _encoding/Korean (EUC-_KR)"
 msgstr "/Z_obrazit/Znaková _sada/Korejština (EUC-_KR)"
 
-#: src/compose.c:711 src/mainwindow.c:771 src/messageview.c:263
+#: src/compose.c:711 src/mainwindow.c:771 src/messageview.c:265
 msgid "/_View/Character _encoding/Thai (TIS-620)"
 msgstr "/Z_obrazit/Znaková _sada/Thajština (TIS-620)"
 
-#: src/compose.c:713 src/mainwindow.c:773 src/messageview.c:265
+#: src/compose.c:713 src/mainwindow.c:773 src/messageview.c:267
 msgid "/_View/Character _encoding/Thai (Windows-874)"
 msgstr "/Z_obrazit/Znaková _sada/Thajština (Windows-874)"
 
-#: src/compose.c:717 src/mainwindow.c:835 src/messageview.c:296
+#: src/compose.c:717 src/mainwindow.c:835 src/messageview.c:298
 msgid "/_Tools/_Address book"
 msgstr "/_Nástroje/Ad_resář"
 
@@ -1559,14 +1559,14 @@ msgstr "/_Nástroje/Ad_resář"
 msgid "/_Tools/_Template"
 msgstr "/_Nástroje/Ša_blona"
 
-#: src/compose.c:720 src/mainwindow.c:859 src/messageview.c:312
+#: src/compose.c:720 src/mainwindow.c:859 src/messageview.c:314
 msgid "/_Tools/Actio_ns"
 msgstr "/_Nástroje/_Akce"
 
 #: src/compose.c:722 src/compose.c:725 src/compose.c:729 src/compose.c:735
 #: src/mainwindow.c:838 src/mainwindow.c:852 src/mainwindow.c:857
 #: src/mainwindow.c:860 src/mainwindow.c:866 src/mainwindow.c:868
-#: src/messageview.c:299 src/messageview.c:311
+#: src/messageview.c:301 src/messageview.c:313
 msgid "/_Tools/---"
 msgstr "/_Nástroje/---"
 
@@ -1917,7 +1917,7 @@ msgstr "Zprávu nelze zařadit."
 msgid "Select files"
 msgstr "Vybrat soubory"
 
-#: src/compose.c:7487 src/inputdialog.c:372 src/prefs_common_dialog.c:4473
+#: src/compose.c:7487 src/inputdialog.c:372 src/prefs_common_dialog.c:4472
 msgid "Select file"
 msgstr "Vybrat soubor"
 
@@ -2127,7 +2127,7 @@ msgstr "Upravit záznam JPilot"
 
 #: src/editjpilot.c:289 src/editldap.c:349 src/editvcard.c:202
 #: src/importcsv.c:696 src/importldif.c:498 src/prefs_account_dialog.c:2021
-#: src/prefs_common_dialog.c:2294
+#: src/prefs_common_dialog.c:2293
 msgid " ... "
 msgstr " ... "
 
@@ -2231,65 +2231,70 @@ msgstr "Upravit záznam vCard"
 msgid "Add New vCard Entry"
 msgstr "Přidat nový záznam vCard"
 
-#: src/export.c:202
+#: src/export.c:226
 #, c-format
 msgid "Exporting %s ..."
 msgstr "Exportuje se %s..."
 
-#: src/export.c:204
+#: src/export.c:228
 msgid "Exporting"
 msgstr "Exportuje se"
 
-#: src/export.c:229
+#: src/export.c:261
 msgid "Error occurred on export."
 msgstr "Během exportu se vyskytla chyba."
 
-#: src/export.c:312
+#: src/export.c:355
 msgid "Export"
 msgstr "Export"
 
-#: src/export.c:331 src/export.c:416
+#: src/export.c:374 src/export.c:471
 msgid "Specify source folder and destination file."
 msgstr "Zadejte prosím zdrojovou složku a cílový soubor."
 
-#: src/export.c:341 src/import.c:621
+#: src/export.c:384 src/import.c:623
 msgid "File format:"
 msgstr "Formát souboru:"
 
-#: src/export.c:346
+#: src/export.c:389
 msgid "Source folder:"
 msgstr "Zdrojová složka:"
 
-#: src/export.c:351
+#: src/export.c:394
 msgid "Destination:"
 msgstr "Cíl:"
 
-#: src/export.c:361 src/import.c:641
+#: src/export.c:404 src/import.c:643
 msgid "UNIX mbox"
 msgstr "UNIX mbox"
 
-#: src/export.c:364
+#: src/export.c:407
 msgid "eml (number + .eml)"
 msgstr "eml (číslo + .eml)"
 
-#: src/export.c:367
+#: src/export.c:410
 msgid "MH (number only)"
 msgstr "MH (pouze číslo)"
 
-#: src/export.c:381 src/export.c:387 src/import.c:661 src/import.c:667
+#: src/export.c:424 src/export.c:430 src/import.c:663 src/import.c:669
 #: src/prefs_account_dialog.c:998
 msgid " Select... "
 msgstr " Vybrat... "
 
-#: src/export.c:419
+#: src/export.c:441
+#, fuzzy
+msgid "Export only selected messages"
+msgstr "Pamatovat si poslední vybranou zprávu"
+
+#: src/export.c:474
 msgid "Specify source folder and destination folder."
 msgstr "Zadejte prosím zdrojovou složku a cílovou složku."
 
-#: src/export.c:445
+#: src/export.c:500
 msgid "Select destination file"
 msgstr "Vybrat cílový soubor"
 
-#: src/export.c:449
+#: src/export.c:504
 msgid "Select destination folder"
 msgstr "Vybrat cílovou složku"
 
@@ -2334,7 +2339,7 @@ msgstr "Koš"
 msgid "Drafts"
 msgstr "Koncepty"
 
-#: src/foldersel.c:423 src/folderview.c:1280 src/prefs_common_dialog.c:2238
+#: src/foldersel.c:423 src/folderview.c:1280 src/prefs_common_dialog.c:2237
 #: src/prefs_folder_item.c:240 src/prefs_toolbar.c:68
 msgid "Junk"
 msgstr "Nevyžádaná"
@@ -2642,73 +2647,73 @@ msgstr "Vytváří se náhled obrázku...\n"
 msgid "Can't load the image."
 msgstr "Nelze nahrát obrázek."
 
-#: src/import.c:207
+#: src/import.c:211
 msgid "The source file does not exist."
 msgstr "Zdrojový soubor neexistuje."
 
-#: src/import.c:218
+#: src/import.c:222
 msgid "Can't find the destination folder."
 msgstr "Nelze nalézt cílovou složku."
 
-#: src/import.c:223 src/import.c:550
+#: src/import.c:227 src/import.c:552
 #, c-format
 msgid "Importing %s ..."
 msgstr "Importuje se %s..."
 
-#: src/import.c:225 src/import.c:508
+#: src/import.c:229 src/import.c:510
 msgid "Importing"
 msgstr "Importuje se"
 
-#: src/import.c:248 src/import.c:555
+#: src/import.c:251 src/import.c:557
 msgid "Scanning folder..."
 msgstr "Prohledává se složka..."
 
-#: src/import.c:259
+#: src/import.c:262
 msgid "Error occurred on import."
 msgstr "Během importu se vyskytla chyba."
 
-#: src/import.c:509
+#: src/import.c:511
 msgid "Importing Outlook Express folders"
 msgstr "Importují se složky aplikace Outlook Express"
 
-#: src/import.c:544
+#: src/import.c:546
 #, c-format
 msgid "Cannot create the folder '%s'."
 msgstr "Nelze vytvořit složku \"%s\"."
 
-#: src/import.c:592
+#: src/import.c:594
 msgid "Import"
 msgstr "Import"
 
-#: src/import.c:611 src/import.c:699
+#: src/import.c:613 src/import.c:701
 msgid "Specify source file and destination folder."
 msgstr "Zadejte prosím zdrojový soubor a cílovou složku."
 
-#: src/import.c:626
+#: src/import.c:628
 msgid "Source:"
 msgstr "Zdroj:"
 
-#: src/import.c:631
+#: src/import.c:633
 msgid "Destination folder:"
 msgstr "Cílová složka:"
 
-#: src/import.c:644
+#: src/import.c:646
 msgid "eml (folder)"
 msgstr "eml (složka)"
 
-#: src/import.c:647
+#: src/import.c:649
 msgid "Outlook Express (dbx)"
 msgstr "Outlook Express (dbx)"
 
-#: src/import.c:696
+#: src/import.c:698
 msgid "Specify source folder including eml files and destination folder."
 msgstr "Zadejte prosím zdrojovou složku včetně souborů eml a cílovou složku."
 
-#: src/import.c:726
+#: src/import.c:728
 msgid "Select importing folder"
 msgstr "Vybrat složku k importu"
 
-#: src/import.c:729
+#: src/import.c:731
 msgid "Select importing file"
 msgstr "Vybrat soubor k importu"
 
@@ -3329,15 +3334,15 @@ msgstr "/_Soubor/E_xportovat poštovní zprávy..."
 msgid "/_File/Empty all _trash"
 msgstr "/_Soubor/V_yprázdnit všechny koše"
 
-#: src/mainwindow.c:574 src/messageview.c:163
+#: src/mainwindow.c:574 src/messageview.c:165
 msgid "/_File/_Save as..."
 msgstr "/_Soubor/Uložit j_ako..."
 
-#: src/mainwindow.c:577 src/messageview.c:166
+#: src/mainwindow.c:577 src/messageview.c:168
 msgid "/_File/Page set_up..."
 msgstr "/_Soubor/_Vzhled stránky..."
 
-#: src/mainwindow.c:579 src/messageview.c:168
+#: src/mainwindow.c:579 src/messageview.c:170
 msgid "/_File/_Print..."
 msgstr "/_Soubor/_Tisk..."
 
@@ -3354,7 +3359,7 @@ msgstr "/_Soubor/U_končit"
 msgid "/_Edit/Select _thread"
 msgstr "/Úp_ravy/Vybrat _vlákno"
 
-#: src/mainwindow.c:591 src/messageview.c:176
+#: src/mainwindow.c:591 src/messageview.c:178
 msgid "/_Edit/_Find in current message..."
 msgstr "/Ú_pravy/_Hledat v aktuální zprávě..."
 
@@ -3572,35 +3577,35 @@ msgstr "/Z_obrazit/_Přejít/Nás_ledující zpráva se štítkem"
 msgid "/_View/_Go to/Other _folder..."
 msgstr "/Z_obrazit/_Přejít/Do _jiné složky..."
 
-#: src/mainwindow.c:684 src/messageview.c:187
+#: src/mainwindow.c:684 src/messageview.c:189
 msgid "/_View/Character _encoding/_Auto detect"
 msgstr "/Z_obrazit/_Znaková sada/_Automaticky rozpoznat"
 
-#: src/mainwindow.c:697 src/messageview.c:200
+#: src/mainwindow.c:697 src/messageview.c:202
 msgid "/_View/Character _encoding/Western European (Windows-1252)"
 msgstr "/Z_obrazit/_Znaková sada/Západoevropské jazyky (Windows-1252)"
 
-#: src/mainwindow.c:745 src/messageview.c:240
+#: src/mainwindow.c:745 src/messageview.c:242
 msgid "/_View/Character _encoding/Japanese (ISO-2022-JP-2)"
 msgstr "/Z_obrazit/_Znaková sada/Japonština (ISO-2022-JP-2)"
 
-#: src/mainwindow.c:747 src/messageview.c:242
+#: src/mainwindow.c:747 src/messageview.c:244
 msgid "/_View/Character _encoding/Japanese (_EUC-JP)"
 msgstr "/Z_obrazit/_Znaková sada/Japonština (_EUC-JP)"
 
-#: src/mainwindow.c:749 src/messageview.c:244
+#: src/mainwindow.c:749 src/messageview.c:246
 msgid "/_View/Character _encoding/Japanese (_Shift__JIS)"
 msgstr "/Z_obrazit/_Znaková sada/Japonština (_Shift__JIS)"
 
-#: src/mainwindow.c:759 src/messageview.c:253
+#: src/mainwindow.c:759 src/messageview.c:255
 msgid "/_View/Character _encoding/Traditional Chinese (EUC-_TW)"
 msgstr "/Z_obrazit/_Znaková sada/Tradiční čínština (EUC-_TW)"
 
-#: src/mainwindow.c:761 src/messageview.c:255
+#: src/mainwindow.c:761 src/messageview.c:257
 msgid "/_View/Character _encoding/Chinese (ISO-2022-_CN)"
 msgstr "/Z_obrazit/_Znaková sada/Čínština (ISO-2022-_CN)"
 
-#: src/mainwindow.c:767 src/messageview.c:260
+#: src/mainwindow.c:767 src/messageview.c:262
 msgid "/_View/Character _encoding/Korean (ISO-2022-KR)"
 msgstr "/Z_obrazit/_Znaková sada/Korejština (ISO-2022-KR)"
 
@@ -3608,11 +3613,11 @@ msgstr "/Z_obrazit/_Znaková sada/Korejština (ISO-2022-KR)"
 msgid "/_View/Open in new _window"
 msgstr "/Z_obrazit/Otevřít v _novém okně"
 
-#: src/mainwindow.c:781 src/messageview.c:272 src/summaryview.c:479
+#: src/mainwindow.c:781 src/messageview.c:274 src/summaryview.c:479
 msgid "/_View/Mess_age source"
 msgstr "/Z_obrazit/Zd_roj zprávy"
 
-#: src/mainwindow.c:782 src/messageview.c:273 src/summaryview.c:480
+#: src/mainwindow.c:782 src/messageview.c:275 src/summaryview.c:480
 msgid "/_View/All _headers"
 msgstr "/Z_obrazit/Všechna zá_hlaví"
 
@@ -3620,7 +3625,7 @@ msgstr "/Z_obrazit/Všechna zá_hlaví"
 msgid "/_View/_Update summary"
 msgstr "/Z_obrazit/_Aktualizovat souhrn"
 
-#: src/mainwindow.c:786 src/messageview.c:276
+#: src/mainwindow.c:786 src/messageview.c:278
 msgid "/_Message"
 msgstr "/_Zpráva"
 
@@ -3654,16 +3659,16 @@ msgstr "/_Zpráva/Odeslat pozd_ržené zprávy"
 
 #: src/mainwindow.c:798 src/mainwindow.c:800 src/mainwindow.c:807
 #: src/mainwindow.c:812 src/mainwindow.c:815 src/mainwindow.c:826
-#: src/mainwindow.c:828 src/mainwindow.c:831 src/messageview.c:279
-#: src/messageview.c:287 src/messageview.c:292
+#: src/mainwindow.c:828 src/mainwindow.c:831 src/messageview.c:281
+#: src/messageview.c:289 src/messageview.c:294
 msgid "/_Message/---"
 msgstr "/_Zpráva/---"
 
-#: src/mainwindow.c:799 src/messageview.c:277
+#: src/mainwindow.c:799 src/messageview.c:279
 msgid "/_Message/Compose _new message"
 msgstr "/_Zpráva/_Nová zpráva"
 
-#: src/mainwindow.c:801 src/messageview.c:280
+#: src/mainwindow.c:801 src/messageview.c:282
 msgid "/_Message/_Reply"
 msgstr "/_Zpráva/_Odpovědět"
 
@@ -3671,27 +3676,27 @@ msgstr "/_Zpráva/_Odpovědět"
 msgid "/_Message/Repl_y to"
 msgstr "/_Zpráva/Odpo_vědět komu"
 
-#: src/mainwindow.c:803 src/messageview.c:281
+#: src/mainwindow.c:803 src/messageview.c:283
 msgid "/_Message/Repl_y to/_all"
 msgstr "/_Zpráva/Odpo_vědět komu/_Všem"
 
-#: src/mainwindow.c:804 src/messageview.c:283
+#: src/mainwindow.c:804 src/messageview.c:285
 msgid "/_Message/Repl_y to/_sender"
 msgstr "/_Zpráva/Odpo_vědět komu/_Odesílateli"
 
-#: src/mainwindow.c:805 src/messageview.c:285
+#: src/mainwindow.c:805 src/messageview.c:287
 msgid "/_Message/Repl_y to/mailing _list"
 msgstr "/_Zpráva/Odpo_vědět komu/_Elektronické konferenci"
 
-#: src/mainwindow.c:808 src/messageview.c:288
+#: src/mainwindow.c:808 src/messageview.c:290
 msgid "/_Message/_Forward"
 msgstr "/_Zpráva/Předat dá_l"
 
-#: src/mainwindow.c:809 src/messageview.c:289
+#: src/mainwindow.c:809 src/messageview.c:291
 msgid "/_Message/For_ward as attachment"
 msgstr "/_Zpráva/Předat dál _jako přílohu"
 
-#: src/mainwindow.c:811 src/messageview.c:291
+#: src/mainwindow.c:811 src/messageview.c:293
 msgid "/_Message/Redirec_t"
 msgstr "/_Zpráva/Přesměrov_at"
 
@@ -3747,7 +3752,7 @@ msgstr "/_Zpráva/Označi_t jako nevyžádanou poštu"
 msgid "/_Message/Set as not j_unk mail"
 msgstr "/_Zpráva/Označit jako _vyžádanou poštu"
 
-#: src/mainwindow.c:832 src/messageview.c:293
+#: src/mainwindow.c:832 src/messageview.c:295
 msgid "/_Message/Re-_edit"
 msgstr "/_Zpráva/Znov_u upravit"
 
@@ -3763,23 +3768,23 @@ msgstr "/_Nástroje/Filtrovat všechny z_právy ve složce"
 msgid "/_Tools/Filter _selected messages"
 msgstr "/_Nástroje/_Filtrovat vybrané zprávy"
 
-#: src/mainwindow.c:843 src/messageview.c:300
+#: src/mainwindow.c:843 src/messageview.c:302
 msgid "/_Tools/_Create filter rule"
 msgstr "/_Nástroje/_Vytvoření filtru"
 
-#: src/mainwindow.c:844 src/messageview.c:302
+#: src/mainwindow.c:844 src/messageview.c:304
 msgid "/_Tools/_Create filter rule/_Automatically"
 msgstr "/_Nástroje/_Vytvoření filtru/_Automaticky"
 
-#: src/mainwindow.c:846 src/messageview.c:304
+#: src/mainwindow.c:846 src/messageview.c:306
 msgid "/_Tools/_Create filter rule/by _From"
 msgstr "/_Nástroje/_Vytvoření filtru/Podle _odesílatele"
 
-#: src/mainwindow.c:848 src/messageview.c:306
+#: src/mainwindow.c:848 src/messageview.c:308
 msgid "/_Tools/_Create filter rule/by _To"
 msgstr "/_Nástroje/_Vytvoření filtru/Podle pří_jemce"
 
-#: src/mainwindow.c:850 src/messageview.c:308
+#: src/mainwindow.c:850 src/messageview.c:310
 msgid "/_Tools/_Create filter rule/by _Subject"
 msgstr "/_Nástroje/_Vytvoření filtru/Podle _předmětu"
 
@@ -4167,36 +4172,36 @@ msgstr "Dosažen konec zprávy, pokračovat od začátku?"
 msgid "Search finished"
 msgstr "Hledání ukončeno"
 
-#: src/messageview.c:297
+#: src/messageview.c:299
 msgid "/_Tools/Add sender to address boo_k"
 msgstr "/_Nástroje/Přidat odesílatele do a_dresáře"
 
-#: src/messageview.c:339
+#: src/messageview.c:341
 msgid "Creating message view...\n"
 msgstr "Vytváří se zobrazení zprávy...\n"
 
-#: src/messageview.c:364
+#: src/messageview.c:366
 msgid "Text"
 msgstr "Text"
 
-#: src/messageview.c:369
+#: src/messageview.c:371
 msgid "Attachments"
 msgstr "Přílohy"
 
-#: src/messageview.c:395
+#: src/messageview.c:397
 msgid "Switch to attachment list view"
 msgstr ""
 
-#: src/messageview.c:413
+#: src/messageview.c:415
 #, fuzzy
 msgid "Save _all attachments..."
 msgstr "S přílohou"
 
-#: src/messageview.c:477
+#: src/messageview.c:479
 msgid "Message View - Sylpheed"
 msgstr "Zobrazení zprávy - Sylpheed"
 
-#: src/messageview.c:920 src/summaryview.c:3922
+#: src/messageview.c:926 src/summaryview.c:3922
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "Nelze uložit soubor \"%s\"."
@@ -4403,7 +4408,7 @@ msgstr "SSL"
 msgid "Proxy"
 msgstr "Proxy"
 
-#: src/prefs_account_dialog.c:611 src/prefs_common_dialog.c:2606
+#: src/prefs_account_dialog.c:611 src/prefs_common_dialog.c:2605
 msgid "Advanced"
 msgstr "Rozšířené"
 
@@ -4527,8 +4532,8 @@ msgid "Authentication method"
 msgstr "Metoda autentizace"
 
 #: src/prefs_account_dialog.c:1032 src/prefs_account_dialog.c:1191
-#: src/prefs_common_dialog.c:1128 src/prefs_common_dialog.c:2724
-#: src/prefs_common_dialog.c:3092
+#: src/prefs_common_dialog.c:1128 src/prefs_common_dialog.c:2723
+#: src/prefs_common_dialog.c:3091
 msgid "Automatic"
 msgstr "Automaticky rozpoznat"
 
@@ -4572,8 +4577,8 @@ msgstr "Generovat ID zprávy"
 msgid "Add user-defined header"
 msgstr "Přidávat uživatelsky definované záhlaví"
 
-#: src/prefs_account_dialog.c:1148 src/prefs_common_dialog.c:1883
-#: src/prefs_common_dialog.c:1910
+#: src/prefs_account_dialog.c:1148 src/prefs_common_dialog.c:1878
+#: src/prefs_common_dialog.c:1905
 msgid " Edit... "
 msgstr " Upravit... "
 
@@ -5000,8 +5005,8 @@ msgstr "Nelze načíst soubor."
 msgid "Execute command when new messages arrive"
 msgstr "Vykonávat příkaz ihned při přijmutí nových zpráv"
 
-#: src/prefs_common_dialog.c:942 src/prefs_common_dialog.c:2899
-#: src/prefs_common_dialog.c:2921 src/prefs_common_dialog.c:2943
+#: src/prefs_common_dialog.c:942 src/prefs_common_dialog.c:2898
+#: src/prefs_common_dialog.c:2920 src/prefs_common_dialog.c:2942
 msgid "Command"
 msgstr "Příkaz"
 
@@ -5126,7 +5131,7 @@ msgid "Set only mail address of recipients when replying"
 msgstr "Při odpovídání nastavovat pouze e-mailovou adresu příjemců"
 
 #. editor
-#: src/prefs_common_dialog.c:1288 src/prefs_common_dialog.c:2860
+#: src/prefs_common_dialog.c:1288 src/prefs_common_dialog.c:2859
 #: src/prefs_toolbar.c:120
 msgid "Editor"
 msgstr "Editor"
@@ -5232,8 +5237,8 @@ msgstr ""
 msgid "Expand threads"
 msgstr "Rozbalovat vlákna"
 
-#: src/prefs_common_dialog.c:1736 src/prefs_common_dialog.c:3335
-#: src/prefs_common_dialog.c:3373
+#: src/prefs_common_dialog.c:1736 src/prefs_common_dialog.c:3334
+#: src/prefs_common_dialog.c:3372
 msgid "Date format"
 msgstr "Formát data"
 
@@ -5274,11 +5279,11 @@ msgstr ""
 "Pokud je zvoleno \"Automatická\", bude použita nejvhodnější znaková sada pro "
 "lokalizaci libc."
 
-#: src/prefs_common_dialog.c:1879
+#: src/prefs_common_dialog.c:1874
 msgid "Enable coloration of message"
 msgstr "Povolit obarvení textu ve zprávách"
 
-#: src/prefs_common_dialog.c:1894
+#: src/prefs_common_dialog.c:1889
 msgid ""
 "Display multi-byte alphabet and numeric as\n"
 "ASCII character (Japanese only)"
@@ -5286,96 +5291,96 @@ msgstr ""
 "Zobrazovat vícebajtovou abecedu a číslice\n"
 "jako znaky ASCII (pouze pro japonštinu)"
 
-#: src/prefs_common_dialog.c:1901
+#: src/prefs_common_dialog.c:1896
 msgid "Display header pane above message view"
 msgstr "Zobrazovat pole se záhlavím nad zprávou"
 
-#: src/prefs_common_dialog.c:1908
+#: src/prefs_common_dialog.c:1903
 msgid "Display short headers on message view"
 msgstr "Zobrazovat krátké záhlaví při zobrazení zprávy"
 
-#: src/prefs_common_dialog.c:1920
+#: src/prefs_common_dialog.c:1915
 msgid "Render HTML messages as text"
 msgstr "Zobrazovat HTML jako prostý text"
 
-#: src/prefs_common_dialog.c:1922
+#: src/prefs_common_dialog.c:1917
 msgid "Treat HTML only messages as attachment"
 msgstr "Považovat zprávy obsahující pouze HTML za přílohu"
 
-#: src/prefs_common_dialog.c:1926
+#: src/prefs_common_dialog.c:1921
 msgid "Display cursor in message view"
 msgstr "Ukazovat kurzor při zobrazení zpráv"
 
-#: src/prefs_common_dialog.c:1939
+#: src/prefs_common_dialog.c:1934
 msgid "Line space"
 msgstr "Prázdná řádka"
 
-#: src/prefs_common_dialog.c:1953 src/prefs_common_dialog.c:1991
+#: src/prefs_common_dialog.c:1948 src/prefs_common_dialog.c:1986
 msgid "pixel(s)"
 msgstr "pixelů"
 
-#: src/prefs_common_dialog.c:1958
+#: src/prefs_common_dialog.c:1953
 msgid "Scroll"
 msgstr "Posun"
 
-#: src/prefs_common_dialog.c:1965
+#: src/prefs_common_dialog.c:1960
 msgid "Half page"
 msgstr "Polovina stránky"
 
-#: src/prefs_common_dialog.c:1971
+#: src/prefs_common_dialog.c:1966
 msgid "Smooth scroll"
 msgstr "Jemný posun"
 
-#: src/prefs_common_dialog.c:1977
+#: src/prefs_common_dialog.c:1972
 msgid "Step"
 msgstr "Krok"
 
-#: src/prefs_common_dialog.c:1997
-msgid "Images"
-msgstr "Obrázky"
-
-#: src/prefs_common_dialog.c:2005
-msgid "Resize attached large images to fit in the window"
-msgstr "Měnit velikost přiložených obrázků tak, aby se vešly do okna"
-
-#: src/prefs_common_dialog.c:2007
-msgid "Display images as inline"
-msgstr "Zobrazovat obrázky v těle zprávy"
-
-#: src/prefs_common_dialog.c:2043
+#: src/prefs_common_dialog.c:2027
 msgid "Toggle attachment list view with tab"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2045
+#: src/prefs_common_dialog.c:2029
 #, fuzzy
 msgid "Show attached files first on message view"
 msgstr "Zobrazovat krátké záhlaví při zobrazení zprávy"
 
-#: src/prefs_common_dialog.c:2071
+#: src/prefs_common_dialog.c:2031
+msgid "Images"
+msgstr "Obrázky"
+
+#: src/prefs_common_dialog.c:2039
+msgid "Resize attached large images to fit in the window"
+msgstr "Měnit velikost přiložených obrázků tak, aby se vešly do okna"
+
+#: src/prefs_common_dialog.c:2041
+msgid "Display images as inline"
+msgstr "Zobrazovat obrázky v těle zprávy"
+
+#: src/prefs_common_dialog.c:2070
 msgid "You can specify label names for each color (Work, TODO etc.)."
 msgstr "Pro každou z barev lze určit název štítku (práce, úkol atd.)."
 
-#: src/prefs_common_dialog.c:2201
+#: src/prefs_common_dialog.c:2200
 msgid "Enable Junk mail control"
 msgstr "Zapnout kontrolu nevyžádané pošty"
 
-#: src/prefs_common_dialog.c:2213
+#: src/prefs_common_dialog.c:2212
 msgid "Learning command:"
 msgstr "Učit se příkazem:"
 
-#: src/prefs_common_dialog.c:2222
+#: src/prefs_common_dialog.c:2221
 msgid "(Select preset)"
 msgstr "(Vybrat předvolby)"
 
-#: src/prefs_common_dialog.c:2250
+#: src/prefs_common_dialog.c:2249
 msgid "Not Junk"
 msgstr "Vyžádaná pošta"
 
-#: src/prefs_common_dialog.c:2265
+#: src/prefs_common_dialog.c:2264
 msgid "Classifying command"
 msgstr "Příkaz k třídění"
 
-#: src/prefs_common_dialog.c:2276
+#: src/prefs_common_dialog.c:2275
 msgid ""
 "To classify junk mails automatically, both junk and not junk mails must be "
 "learned manually to a certain extent."
@@ -5383,11 +5388,11 @@ msgstr ""
 "Aby mohla být nevyžádaná pošta automaticky rozpoznána, je nutné v určitém "
 "rozsahu ručně zpracovat zprávy nevyžádané i vyžádané."
 
-#: src/prefs_common_dialog.c:2286
+#: src/prefs_common_dialog.c:2285
 msgid "Junk folder"
 msgstr "Složka nevyžádané pošty"
 
-#: src/prefs_common_dialog.c:2304
+#: src/prefs_common_dialog.c:2303
 msgid ""
 "The messages which are set as junk mail will be moved to this folder. If "
 "empty, the default junk folder will be used."
@@ -5395,241 +5400,241 @@ msgstr ""
 "Zprávy označené jako nevyžádaná pošta budou přesunuty do této složky. V "
 "případě prázdné hodnoty bude použita výchozí složka nevyžádané pošty."
 
-#: src/prefs_common_dialog.c:2316
+#: src/prefs_common_dialog.c:2315
 msgid "Filter messages classified as junk on receiving"
 msgstr "Filtrovat zprávy vyhodnocené jako nevyžádané při přijmutí"
 
-#: src/prefs_common_dialog.c:2319
+#: src/prefs_common_dialog.c:2318
 msgid "Filter junk mails before normal filtering"
 msgstr "Filtrovat nevyžádanou poštu před běžným filtrováním"
 
-#: src/prefs_common_dialog.c:2322
+#: src/prefs_common_dialog.c:2321
 msgid "Delete junk mails from server on receiving"
 msgstr "Vymazávat nevyžádanou poštu ze serveru při příjmu"
 
-#: src/prefs_common_dialog.c:2327
+#: src/prefs_common_dialog.c:2326
 msgid "Mark filtered junk mails as read"
 msgstr "Označovat rozpoznanou nevyžádanou poštu jako přečtenou"
 
-#: src/prefs_common_dialog.c:2369
+#: src/prefs_common_dialog.c:2368
 msgid "Automatically check signatures"
 msgstr "Automaticky kontrolovat podpis"
 
-#: src/prefs_common_dialog.c:2372
+#: src/prefs_common_dialog.c:2371
 msgid "Show signature check result in a popup window"
 msgstr "Zobrazovat výsledek kontroly podpisu ve zvláštním okně"
 
-#: src/prefs_common_dialog.c:2375
+#: src/prefs_common_dialog.c:2374
 msgid "Store passphrase in memory temporarily"
 msgstr "Ukládat heslo dočasně v paměti"
 
-#: src/prefs_common_dialog.c:2390
+#: src/prefs_common_dialog.c:2389
 msgid "Expired after"
 msgstr "Vyprší za"
 
-#: src/prefs_common_dialog.c:2403
+#: src/prefs_common_dialog.c:2402
 msgid "minute(s) "
 msgstr "minut "
 
-#: src/prefs_common_dialog.c:2417
+#: src/prefs_common_dialog.c:2416
 msgid "Setting to '0' will store the passphrase for the whole session."
 msgstr "Nastavení na \"0\" uloží heslo během celé relace."
 
-#: src/prefs_common_dialog.c:2426
+#: src/prefs_common_dialog.c:2425
 msgid "Grab input while entering a passphrase"
 msgstr "Blokovat vstup při zadávání hesla"
 
-#: src/prefs_common_dialog.c:2431
+#: src/prefs_common_dialog.c:2430
 msgid "Display warning on startup if GnuPG doesn't work"
 msgstr "Zobrazovat varování, pokud GnuPG není funkční"
 
-#: src/prefs_common_dialog.c:2505
+#: src/prefs_common_dialog.c:2504
 msgid "Always open messages in summary when selected"
 msgstr "Vybrané zprávy vždy otevírat v souhrnu"
 
-#: src/prefs_common_dialog.c:2509
+#: src/prefs_common_dialog.c:2508
 msgid "Always mark as read when a message is opened"
 msgstr "Při otevření zprávy ji vždy označovat jako přečtenou"
 
-#: src/prefs_common_dialog.c:2515
+#: src/prefs_common_dialog.c:2514
 msgid "Open first unread message when a folder is opened"
 msgstr "Při vstupu do složky otevírat první nepřečtenou zprávu"
 
-#: src/prefs_common_dialog.c:2521
+#: src/prefs_common_dialog.c:2520
 msgid "Remember last selected message"
 msgstr "Pamatovat si poslední vybranou zprávu"
 
-#: src/prefs_common_dialog.c:2526
+#: src/prefs_common_dialog.c:2525
 msgid "Only mark message as read when opened in new window"
 msgstr "Označovat zprávu jako přečtenou pouze při otevření v novém okně"
 
-#: src/prefs_common_dialog.c:2534
+#: src/prefs_common_dialog.c:2533
 msgid "Open inbox after receiving new mail"
 msgstr "Po přijetí nových zpráv přejít na doručenou poštu"
 
-#: src/prefs_common_dialog.c:2536
+#: src/prefs_common_dialog.c:2535
 msgid "Open inbox on startup"
 msgstr "Otevírat doručenou poštu při spuštění"
 
-#: src/prefs_common_dialog.c:2540
+#: src/prefs_common_dialog.c:2539
 msgid "Change current account on folder open"
 msgstr "Měnit aktuální účet při otevření složky"
 
-#: src/prefs_common_dialog.c:2548
+#: src/prefs_common_dialog.c:2547
 msgid "Execute immediately when moving or deleting messages"
 msgstr "Vykonávat ihned při přesunu nebo mazání zpráv"
 
-#: src/prefs_common_dialog.c:2560
+#: src/prefs_common_dialog.c:2559
 msgid "Messages will be marked until execution if this is turned off."
 msgstr "Pokud je tato volba vypnuta, zprávy budou označeny až do vykonání."
 
-#: src/prefs_common_dialog.c:2569
+#: src/prefs_common_dialog.c:2568
 msgid "Make the order of buttons comply with GNOME HIG"
 msgstr "Pořadí tlačítek vyhovující GNOME HIG"
 
-#: src/prefs_common_dialog.c:2572
+#: src/prefs_common_dialog.c:2571
 msgid "Display tray icon"
 msgstr "Zobrazovat ikonu v oznamovací oblasti"
 
-#: src/prefs_common_dialog.c:2574
+#: src/prefs_common_dialog.c:2573
 msgid "Minimize to tray icon"
 msgstr "Minimalizovat do oznamovací oblasti"
 
-#: src/prefs_common_dialog.c:2576
+#: src/prefs_common_dialog.c:2575
 msgid "Toggle window on trayicon click"
 msgstr "Vyvolávat okno kliknutím na ikonu v oznamovací oblasti"
 
-#: src/prefs_common_dialog.c:2586
+#: src/prefs_common_dialog.c:2585
 msgid " Set key bindings... "
 msgstr " Nastavit klávesové zkratky... "
 
-#: src/prefs_common_dialog.c:2592 src/select-keys.c:337
+#: src/prefs_common_dialog.c:2591 src/select-keys.c:337
 msgid "Other"
 msgstr "Ostatní"
 
-#: src/prefs_common_dialog.c:2596
+#: src/prefs_common_dialog.c:2595
 msgid "External commands"
 msgstr "Externí příkazy"
 
-#: src/prefs_common_dialog.c:2601
+#: src/prefs_common_dialog.c:2600
 msgid "Update"
 msgstr "Aktualizace"
 
-#: src/prefs_common_dialog.c:2665
+#: src/prefs_common_dialog.c:2664
 msgid "Receive dialog"
 msgstr "Dialog o příjmu"
 
-#: src/prefs_common_dialog.c:2675
+#: src/prefs_common_dialog.c:2674
 msgid "Show receive dialog"
 msgstr "Zobrazovat dialog o příjmu"
 
-#: src/prefs_common_dialog.c:2685
+#: src/prefs_common_dialog.c:2684
 msgid "Always"
 msgstr "Vždy"
 
-#: src/prefs_common_dialog.c:2686
+#: src/prefs_common_dialog.c:2685
 msgid "Only on manual receiving"
 msgstr "Pouze při ručním příjmu"
 
-#: src/prefs_common_dialog.c:2688
+#: src/prefs_common_dialog.c:2687
 msgid "Never"
 msgstr "Nikdy"
 
-#: src/prefs_common_dialog.c:2693
+#: src/prefs_common_dialog.c:2692
 msgid "Don't popup error dialog on receive error"
 msgstr "Při chybě v příjmu nezobrazovat dialog o chybě"
 
-#: src/prefs_common_dialog.c:2696
+#: src/prefs_common_dialog.c:2695
 msgid "Close receive dialog when finished"
 msgstr "Zavírat dialog o příjmu po dokončení"
 
-#: src/prefs_common_dialog.c:2707
+#: src/prefs_common_dialog.c:2706
 msgid "Add address to destination when double-clicked"
 msgstr "Přidávat adresu do cíle dvojitým kliknutím"
 
-#: src/prefs_common_dialog.c:2711
+#: src/prefs_common_dialog.c:2710
 msgid "Set only mail address when entering recipient from address book"
 msgstr "Při zadávání příjemce z adresáře nastavit pouze e-mailovou adresu"
 
-#: src/prefs_common_dialog.c:2719
+#: src/prefs_common_dialog.c:2718
 msgid "Auto-completion:"
 msgstr "Automatické dokončování:"
 
-#: src/prefs_common_dialog.c:2732
+#: src/prefs_common_dialog.c:2731
 msgid "Start with Tab"
 msgstr "Spouštět tabulátorem"
 
-#: src/prefs_common_dialog.c:2740
+#: src/prefs_common_dialog.c:2739
 msgid "Disable"
 msgstr "Zakázat"
 
-#: src/prefs_common_dialog.c:2747
+#: src/prefs_common_dialog.c:2746
 msgid "On exit"
 msgstr "Při ukončení"
 
-#: src/prefs_common_dialog.c:2755
+#: src/prefs_common_dialog.c:2754
 msgid "Confirm on exit"
 msgstr "Potvrzovat ukončení"
 
-#: src/prefs_common_dialog.c:2762
+#: src/prefs_common_dialog.c:2761
 msgid "Empty trash on exit"
 msgstr "Vyprazdňovat koš"
 
-#: src/prefs_common_dialog.c:2764
+#: src/prefs_common_dialog.c:2763
 msgid "Ask before emptying"
 msgstr "Ptát se před vyprázdněním"
 
-#: src/prefs_common_dialog.c:2768
+#: src/prefs_common_dialog.c:2767
 msgid "Warn if there are queued messages"
 msgstr "Varovat, pokud jsou některé zprávy pozdržené"
 
-#: src/prefs_common_dialog.c:2825
+#: src/prefs_common_dialog.c:2824
 #, c-format
 msgid "External commands (%s will be replaced with file name / URI)"
 msgstr "Externí příkaz (\"%s\" bude nahrazeno názvem souboru nebo URI)"
 
-#: src/prefs_common_dialog.c:2834
+#: src/prefs_common_dialog.c:2833
 msgid "Web browser"
 msgstr "Webový prohlížeč"
 
-#: src/prefs_common_dialog.c:2846 src/prefs_common_dialog.c:4348
-#: src/prefs_common_dialog.c:4369
+#: src/prefs_common_dialog.c:2845 src/prefs_common_dialog.c:4347
+#: src/prefs_common_dialog.c:4368
 msgid "(Default browser)"
 msgstr "(Výchozí prohlížeč)"
 
-#: src/prefs_common_dialog.c:2887
+#: src/prefs_common_dialog.c:2886
 msgid "Use external program for printing"
 msgstr "Používat externí program při tisku"
 
-#: src/prefs_common_dialog.c:2909
+#: src/prefs_common_dialog.c:2908
 msgid "Use external program for incorporation"
 msgstr "Používat externí program při začleňování"
 
-#: src/prefs_common_dialog.c:2931
+#: src/prefs_common_dialog.c:2930
 msgid "Use external program for sending"
 msgstr "Používat externí program při odesílání"
 
-#: src/prefs_common_dialog.c:2983
+#: src/prefs_common_dialog.c:2982
 msgid "Update check requires 'curl' command."
 msgstr "Kontrola aktualizací vyžaduje příkaz \"curl\"."
 
-#: src/prefs_common_dialog.c:2994
+#: src/prefs_common_dialog.c:2993
 msgid "Enable auto update check"
 msgstr "Zapnout automatickou kontrolu aktualizací"
 
-#: src/prefs_common_dialog.c:2996
+#: src/prefs_common_dialog.c:2995
 msgid "Use HTTP proxy"
 msgstr "Používat HTTP proxy"
 
-#: src/prefs_common_dialog.c:2998
+#: src/prefs_common_dialog.c:2997
 msgid "HTTP proxy host (hostname:port):"
 msgstr "Počítač HTTP proxy (hostitel:port):"
 
-#: src/prefs_common_dialog.c:3039
+#: src/prefs_common_dialog.c:3038
 msgid "Enable strict checking of the integrity of summary caches"
 msgstr "Zapnout striktní kontrolu integrity vyrovnávací paměti souhrnu"
 
-#: src/prefs_common_dialog.c:3042
+#: src/prefs_common_dialog.c:3041
 msgid ""
 "Enable this if the contents of folders have the possibility of modification "
 "by other applications.\n"
@@ -5639,275 +5644,275 @@ msgstr ""
 "složek.\n"
 "Tato volba sníží rychlost zobrazování souhrnu."
 
-#: src/prefs_common_dialog.c:3049
+#: src/prefs_common_dialog.c:3048
 msgid "Socket I/O timeout:"
 msgstr "Časový limit V/V operací se socketem:"
 
-#: src/prefs_common_dialog.c:3062
+#: src/prefs_common_dialog.c:3061
 msgid "second(s)"
 msgstr "sekund"
 
-#: src/prefs_common_dialog.c:3090
+#: src/prefs_common_dialog.c:3089
 msgid "Automatic (Recommended)"
 msgstr "Automatická (doporučeno)"
 
-#: src/prefs_common_dialog.c:3095
+#: src/prefs_common_dialog.c:3094
 msgid "7bit ascii (US-ASCII)"
 msgstr "7bitový ASCII (US-ASCII)"
 
-#: src/prefs_common_dialog.c:3097
+#: src/prefs_common_dialog.c:3096
 msgid "Unicode (UTF-8)"
 msgstr "Unicode (UTF-8)"
 
-#: src/prefs_common_dialog.c:3099
+#: src/prefs_common_dialog.c:3098
 msgid "Western European (ISO-8859-1)"
 msgstr "Západoevropské jazyky (ISO-8859-1)"
 
-#: src/prefs_common_dialog.c:3100
+#: src/prefs_common_dialog.c:3099
 msgid "Western European (ISO-8859-15)"
 msgstr "Západoevropské jazyky (ISO-8859-15)"
 
-#: src/prefs_common_dialog.c:3102
+#: src/prefs_common_dialog.c:3101
 msgid "Western European (Windows-1252)"
 msgstr "Západoevropské jazyky (Windows-1252)"
 
-#: src/prefs_common_dialog.c:3106
+#: src/prefs_common_dialog.c:3105
 msgid "Central European (ISO-8859-2)"
 msgstr "Středoevropské jazyky (ISO-8859-2)"
 
-#: src/prefs_common_dialog.c:3108
+#: src/prefs_common_dialog.c:3107
 msgid "Baltic (ISO-8859-13)"
 msgstr "Pobaltské jazyky (ISO-8859-13)"
 
-#: src/prefs_common_dialog.c:3109
+#: src/prefs_common_dialog.c:3108
 msgid "Baltic (ISO-8859-4)"
 msgstr "Pobaltské jazyky (ISO-8859-4)"
 
-#: src/prefs_common_dialog.c:3110
+#: src/prefs_common_dialog.c:3109
 msgid "Baltic (Windows-1257)"
 msgstr "Pobaltské jazyky (Windows-1257)"
 
-#: src/prefs_common_dialog.c:3112
+#: src/prefs_common_dialog.c:3111
 msgid "Greek (ISO-8859-7)"
 msgstr "Řečtina (ISO-8859-7)"
 
-#: src/prefs_common_dialog.c:3114
+#: src/prefs_common_dialog.c:3113
 msgid "Arabic (ISO-8859-6)"
 msgstr "Arabština (ISO-8859-6)"
 
-#: src/prefs_common_dialog.c:3115
+#: src/prefs_common_dialog.c:3114
 msgid "Arabic (Windows-1256)"
 msgstr "Arabština (Windows-1256)"
 
-#: src/prefs_common_dialog.c:3117
+#: src/prefs_common_dialog.c:3116
 msgid "Hebrew (ISO-8859-8)"
 msgstr "Hebrejština (ISO-8859-8)"
 
-#: src/prefs_common_dialog.c:3118
+#: src/prefs_common_dialog.c:3117
 msgid "Hebrew (Windows-1255)"
 msgstr "Hebrejština (Windows-1255)"
 
-#: src/prefs_common_dialog.c:3120
+#: src/prefs_common_dialog.c:3119
 msgid "Turkish (ISO-8859-9)"
 msgstr "Turečtina (ISO-8859-9)"
 
-#: src/prefs_common_dialog.c:3122
+#: src/prefs_common_dialog.c:3121
 msgid "Cyrillic (ISO-8859-5)"
 msgstr "Cyrilice (ISO-8859-5)"
 
-#: src/prefs_common_dialog.c:3123
+#: src/prefs_common_dialog.c:3122
 msgid "Cyrillic (KOI8-R)"
 msgstr "Cyrilice (KOI8-R)"
 
-#: src/prefs_common_dialog.c:3124
+#: src/prefs_common_dialog.c:3123
 msgid "Cyrillic (KOI8-U)"
 msgstr "Cyrilice (KOI8-U)"
 
-#: src/prefs_common_dialog.c:3125
+#: src/prefs_common_dialog.c:3124
 msgid "Cyrillic (Windows-1251)"
 msgstr "Cyrilice (Windows-1251)"
 
-#: src/prefs_common_dialog.c:3127
+#: src/prefs_common_dialog.c:3126
 msgid "Japanese (ISO-2022-JP)"
 msgstr "Japonština (ISO-2022-JP)"
 
-#: src/prefs_common_dialog.c:3129
+#: src/prefs_common_dialog.c:3128
 msgid "Japanese (EUC-JP)"
 msgstr "Japonština (EUC-JP)"
 
-#: src/prefs_common_dialog.c:3130
+#: src/prefs_common_dialog.c:3129
 msgid "Japanese (Shift_JIS)"
 msgstr "Japonština (Shift_JIS)"
 
-#: src/prefs_common_dialog.c:3133
+#: src/prefs_common_dialog.c:3132
 msgid "Simplified Chinese (GB2312)"
 msgstr "Zjednodušená čínština (GB2312)"
 
-#: src/prefs_common_dialog.c:3134
+#: src/prefs_common_dialog.c:3133
 msgid "Simplified Chinese (GBK)"
 msgstr "Zjednodušená čínština (GBK)"
 
-#: src/prefs_common_dialog.c:3135
+#: src/prefs_common_dialog.c:3134
 msgid "Traditional Chinese (Big5)"
 msgstr "Tradiční čínština (Big5)"
 
-#: src/prefs_common_dialog.c:3137
+#: src/prefs_common_dialog.c:3136
 msgid "Traditional Chinese (EUC-TW)"
 msgstr "Tradiční čínština (EUC-TW)"
 
-#: src/prefs_common_dialog.c:3138
+#: src/prefs_common_dialog.c:3137
 msgid "Chinese (ISO-2022-CN)"
 msgstr "Čínština (ISO-2022-CN)"
 
-#: src/prefs_common_dialog.c:3141
+#: src/prefs_common_dialog.c:3140
 msgid "Korean (EUC-KR)"
 msgstr "Korejština (EUC-KR)"
 
-#: src/prefs_common_dialog.c:3143
+#: src/prefs_common_dialog.c:3142
 msgid "Thai (TIS-620)"
 msgstr "Thajština (TIS-620)"
 
-#: src/prefs_common_dialog.c:3144
+#: src/prefs_common_dialog.c:3143
 msgid "Thai (Windows-874)"
 msgstr "Thajština (Windows-874)"
 
-#: src/prefs_common_dialog.c:3311
+#: src/prefs_common_dialog.c:3310
 msgid "the full abbreviated weekday name"
 msgstr "zkratka dne v týdnu"
 
-#: src/prefs_common_dialog.c:3312
+#: src/prefs_common_dialog.c:3311
 msgid "the full weekday name"
 msgstr "plný název dne v týdnu"
 
-#: src/prefs_common_dialog.c:3313
+#: src/prefs_common_dialog.c:3312
 msgid "the abbreviated month name"
 msgstr "zkratka měsíce"
 
-#: src/prefs_common_dialog.c:3314
+#: src/prefs_common_dialog.c:3313
 msgid "the full month name"
 msgstr "plný název měsíce"
 
-#: src/prefs_common_dialog.c:3315
+#: src/prefs_common_dialog.c:3314
 msgid "the preferred date and time for the current locale"
 msgstr "datum a čas preferovaný aktuální lokalizací libc"
 
-#: src/prefs_common_dialog.c:3316
+#: src/prefs_common_dialog.c:3315
 msgid "the century number (year/100)"
 msgstr "století (rok/100)"
 
-#: src/prefs_common_dialog.c:3317
+#: src/prefs_common_dialog.c:3316
 msgid "the day of the month as a decimal number"
 msgstr "den v měsíci jako desítkové číslo"
 
-#: src/prefs_common_dialog.c:3318
+#: src/prefs_common_dialog.c:3317
 msgid "the hour as a decimal number using a 24-hour clock"
 msgstr "hodina jako desítkové číslo s 24hodinovým cyklem"
 
-#: src/prefs_common_dialog.c:3319
+#: src/prefs_common_dialog.c:3318
 msgid "the hour as a decimal number using a 12-hour clock"
 msgstr "hodina jako desítkové číslo s 12hodinovým cyklem"
 
-#: src/prefs_common_dialog.c:3320
+#: src/prefs_common_dialog.c:3319
 msgid "the day of the year as a decimal number"
 msgstr "den v roce jako desítkové číslo"
 
-#: src/prefs_common_dialog.c:3321
+#: src/prefs_common_dialog.c:3320
 msgid "the month as a decimal number"
 msgstr "měsíc jako desítkové číslo"
 
-#: src/prefs_common_dialog.c:3322
+#: src/prefs_common_dialog.c:3321
 msgid "the minute as a decimal number"
 msgstr "minuta jako desítkové číslo"
 
-#: src/prefs_common_dialog.c:3323
+#: src/prefs_common_dialog.c:3322
 msgid "either AM or PM"
 msgstr "dopoledne nebo odpoledne"
 
-#: src/prefs_common_dialog.c:3324
+#: src/prefs_common_dialog.c:3323
 msgid "the second as a decimal number"
 msgstr "sekunda jako desítkové číslo"
 
-#: src/prefs_common_dialog.c:3325
+#: src/prefs_common_dialog.c:3324
 msgid "the day of the week as a decimal number"
 msgstr "den v týdnu jako desítkové číslo"
 
-#: src/prefs_common_dialog.c:3326
+#: src/prefs_common_dialog.c:3325
 msgid "the preferred date for the current locale"
 msgstr "datum preferované aktuální lokalizací libc"
 
-#: src/prefs_common_dialog.c:3327
+#: src/prefs_common_dialog.c:3326
 msgid "the last two digits of a year"
 msgstr "poslední dvě číslice z roku"
 
-#: src/prefs_common_dialog.c:3328
+#: src/prefs_common_dialog.c:3327
 msgid "the year as a decimal number"
 msgstr "rok jako desítkové číslo"
 
-#: src/prefs_common_dialog.c:3329
+#: src/prefs_common_dialog.c:3328
 msgid "the time zone or name or abbreviation"
 msgstr "časová zóna, název nebo zkratka"
 
-#: src/prefs_common_dialog.c:3350
+#: src/prefs_common_dialog.c:3349
 msgid "Specifier"
 msgstr "Specifikátor"
 
-#: src/prefs_common_dialog.c:3351
+#: src/prefs_common_dialog.c:3350
 msgid "Description"
 msgstr "Popis"
 
-#: src/prefs_common_dialog.c:3391
+#: src/prefs_common_dialog.c:3390
 msgid "Example"
 msgstr "Příklad"
 
-#: src/prefs_common_dialog.c:3472
+#: src/prefs_common_dialog.c:3471
 msgid "Set message colors"
 msgstr "Nastavení barev ve zprávách"
 
-#: src/prefs_common_dialog.c:3480
+#: src/prefs_common_dialog.c:3479
 msgid "Colors"
 msgstr "Barvy"
 
-#: src/prefs_common_dialog.c:3514
+#: src/prefs_common_dialog.c:3513
 msgid "Quoted Text - First Level"
 msgstr "Citovaný text - první úroveň"
 
-#: src/prefs_common_dialog.c:3520
+#: src/prefs_common_dialog.c:3519
 msgid "Quoted Text - Second Level"
 msgstr "Citovaný text - druhá úroveň"
 
-#: src/prefs_common_dialog.c:3526
+#: src/prefs_common_dialog.c:3525
 msgid "Quoted Text - Third Level"
 msgstr "Citovaný text - třetí úroveň"
 
-#: src/prefs_common_dialog.c:3532
+#: src/prefs_common_dialog.c:3531
 msgid "URI link"
 msgstr "Odkaz URI"
 
-#: src/prefs_common_dialog.c:3539
+#: src/prefs_common_dialog.c:3538
 msgid "Recycle quote colors"
 msgstr "Rotovat barvy citací"
 
-#: src/prefs_common_dialog.c:3606
+#: src/prefs_common_dialog.c:3605
 msgid "Pick color for quotation level 1"
 msgstr "Vybrat barvu první úrovně citace"
 
-#: src/prefs_common_dialog.c:3609
+#: src/prefs_common_dialog.c:3608
 msgid "Pick color for quotation level 2"
 msgstr "Vybrat barvu druhé úrovně citace"
 
-#: src/prefs_common_dialog.c:3612
+#: src/prefs_common_dialog.c:3611
 msgid "Pick color for quotation level 3"
 msgstr "Vybrat barvu třetí úrovně citace"
 
-#: src/prefs_common_dialog.c:3615
+#: src/prefs_common_dialog.c:3614
 msgid "Pick color for URI"
 msgstr "Vybrat barvu URI"
 
-#: src/prefs_common_dialog.c:3755
+#: src/prefs_common_dialog.c:3754
 msgid "Description of symbols"
 msgstr "Popis symbolů"
 
-#: src/prefs_common_dialog.c:3811
+#: src/prefs_common_dialog.c:3810
 msgid ""
 "Date\n"
 "From\n"
@@ -5931,11 +5936,11 @@ msgstr ""
 "Diskusní skupiny\n"
 "ID zprávy"
 
-#: src/prefs_common_dialog.c:3824
+#: src/prefs_common_dialog.c:3823
 msgid "If x is set, displays expr"
 msgstr "Pokud je zadáno \"x\", zobrazí se \"expr\""
 
-#: src/prefs_common_dialog.c:3828
+#: src/prefs_common_dialog.c:3827
 msgid ""
 "Message body\n"
 "Quoted message body\n"
@@ -5949,7 +5954,7 @@ msgstr ""
 "Citované tělo zprávy bez podpisu\n"
 "Znak procento"
 
-#: src/prefs_common_dialog.c:3836
+#: src/prefs_common_dialog.c:3835
 msgid ""
 "Literal backslash\n"
 "Literal question mark\n"
@@ -5961,19 +5966,19 @@ msgstr ""
 "Znak levá složená závorka\n"
 "Znak pravá složená závorka"
 
-#: src/prefs_common_dialog.c:3890
+#: src/prefs_common_dialog.c:3889
 msgid "Key bindings"
 msgstr "Klávesové zkratky"
 
-#: src/prefs_common_dialog.c:3903
+#: src/prefs_common_dialog.c:3902
 msgid "Select the preset of key bindings."
 msgstr "Vyberte prosím předvolby klávesových zkratek."
 
-#: src/prefs_common_dialog.c:3913 src/prefs_common_dialog.c:4237
+#: src/prefs_common_dialog.c:3912 src/prefs_common_dialog.c:4236
 msgid "Default"
 msgstr "Výchozí"
 
-#: src/prefs_common_dialog.c:3916 src/prefs_common_dialog.c:4246
+#: src/prefs_common_dialog.c:3915 src/prefs_common_dialog.c:4245
 msgid "Old Sylpheed"
 msgstr "Starý Sylpheed"
 
