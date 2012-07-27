@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2011 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -114,6 +114,11 @@ typedef enum
 
 typedef void (*FolderUIFunc)		(Folder		*folder,
 					 FolderItem	*item,
+					 gpointer	 data);
+typedef gboolean (*FolderUIFunc2)	(Folder		*folder,
+					 FolderItem	*item,
+					 guint		 count,
+					 guint		 total,
 					 gpointer	 data);
 typedef void (*FolderDestroyNotify)	(Folder		*folder,
 					 FolderItem	*item,
@@ -354,9 +359,18 @@ void        folder_item_destroy		(FolderItem	*item);
 gint        folder_item_compare		(FolderItem	*item_a,
 					 FolderItem	*item_b);
 
-void        folder_set_ui_func	(Folder		*folder,
-				 FolderUIFunc	 func,
-				 gpointer	 data);
+void        folder_set_ui_func		(Folder		*folder,
+					 FolderUIFunc	 func,
+					 gpointer	 data);
+void        folder_set_ui_func2		(Folder		*folder,
+					 FolderUIFunc2	 func,
+					 gpointer	 data);
+FolderUIFunc2 folder_get_ui_func2	(Folder		*folder);
+gboolean    folder_call_ui_func2	(Folder		*folder,
+					 FolderItem	*item,
+					 guint		 count,
+					 guint		 total);
+
 void        folder_set_name	(Folder		*folder,
 				 const gchar	*name);
 void        folder_tree_destroy	(Folder		*folder);

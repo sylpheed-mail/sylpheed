@@ -81,6 +81,8 @@ static gboolean export_finished;
 static gboolean export_ack;
 static ProgressDialog *progress;
 
+static gboolean progress_cancel = FALSE;
+
 static void export_create	(void);
 static gint export_do		(void);
 static gint export_eml		(FolderItem	*src,
@@ -106,19 +108,18 @@ static gboolean key_pressed	(GtkWidget	*widget,
 				 GdkEventKey	*event,
 				 gpointer	 data);
 
+static void export_progress_cancel_cb	(GtkWidget	*widget,
+					 gpointer	 data);
 
-static void export_mbox_func(Folder *folder, FolderItem *item, gpointer data)
+
+static gboolean export_mbox_func(Folder *folder, FolderItem *item, guint count, guint total, gpointer data)
 {
 	gchar str[64];
-	gint count = GPOINTER_TO_INT(data);
 	static GTimeVal tv_prev = {0, 0};
 	GTimeVal tv_cur;
 
 	g_get_current_time(&tv_cur);
-	if (item->total > 0)
-		g_snprintf(str, sizeof(str), "%d / %d", count, item->total);
-	else
-		g_snprintf(str, sizeof(str), "%d", count);
+	g_snprintf(str, sizeof(str), "%u / %d", count, total);
 	gtk_progress_bar_set_text(GTK_PROGRESS_BAR(progress->progressbar), str);
 
 	if (tv_prev.tv_sec == 0 ||
@@ -131,6 +132,11 @@ static void export_mbox_func(Folder *folder, FolderItem *item, gpointer data)
 		ui_update();
 		tv_prev = tv_cur;
 	}
+
+	if (progress_cancel)
+		return FALSE;
+	else
+		return TRUE;
 }
 
 gint export_mail(FolderItem *default_src)
@@ -215,7 +221,8 @@ static gint export_do(void)
 	g_free(msg);
 	gtk_window_set_modal(GTK_WINDOW(progress->window), TRUE);
 	manage_window_set_transient(GTK_WINDOW(progress->window));
-	gtk_widget_hide(progress->cancel_btn);
+	g_signal_connect(G_OBJECT(progress->cancel_btn), "clicked",
+			 G_CALLBACK(export_progress_cancel_cb), NULL);
 	g_signal_connect(G_OBJECT(progress->window), "delete_event",
 			 G_CALLBACK(gtk_true), NULL);
 	gtk_widget_show(progress->window);
@@ -228,13 +235,15 @@ static gint export_do(void)
 		mlist = summary_get_selected_msg_list(mainwin->summaryview);
 	}
 
+	progress_cancel = FALSE;
+
 	if (type == EXPORT_MBOX) {
-		folder_set_ui_func(src->folder, export_mbox_func, NULL);
+		folder_set_ui_func2(src->folder, export_mbox_func, NULL);
 		if (mlist)
 			ok = export_msgs_to_mbox(src, mlist, mbox);
 		else
 			ok = export_to_mbox(src, mbox);
-		folder_set_ui_func(src->folder, NULL, NULL);
+		folder_set_ui_func2(src->folder, NULL, NULL);
 	} else if (type == EXPORT_EML || type == EXPORT_MH) {
 		ok = export_eml(src, mlist, mbox, type);
 	}
@@ -246,7 +255,7 @@ static gint export_do(void)
 		g_slist_free(mlist);
 	g_free(mbox);
 
-	if (ok < 0)
+	if (ok == -1)
 		alertpanel_error(_("Error occurred on export."));
 
 	return ok;
@@ -259,7 +268,8 @@ static gint export_eml(FolderItem *src, GSList *sel_mlist, const gchar *path,
 	GSList *mlist, *cur;
 	MsgInfo *msginfo;
 	gchar *file, *dest;
-	gint count = 0;
+	guint count = 0;
+	guint total;
 	gint ok = 0;
 
 	g_return_val_if_fail(src != NULL, -1);
@@ -287,19 +297,23 @@ static gint export_eml(FolderItem *src, GSList *sel_mlist, const gchar *path,
 		if (!mlist)
 			return 0;
 	}
+	total = g_slist_length(mlist);
 
 	for (cur = mlist; cur != NULL; cur = cur->next) {
 		msginfo = (MsgInfo *)cur->data;
 
 		count++;
-		export_mbox_func(src->folder, src, GINT_TO_POINTER(count));
+		if (export_mbox_func(src->folder, src, count, total, NULL) == FALSE) {
+			ok = -2;
+			break;
+		}
 
 		file = folder_item_fetch_msg(src, msginfo->msgnum);
 		if (!file) {
 			ok = -1;
 			break;
 		}
-		dest = g_strdup_printf("%s%c%d%s", path, G_DIR_SEPARATOR,
+		dest = g_strdup_printf("%s%c%u%s", path, G_DIR_SEPARATOR,
 				       count, ext);
 		if (g_file_test(dest, G_FILE_TEST_EXISTS)) {
 			g_warning("export_eml(): %s already exists.", dest);
@@ -527,4 +541,9 @@ static gboolean key_pressed(GtkWidget *widget, GdkEventKey *event, gpointer data
 	if (event && event->keyval == GDK_Escape)
 		export_cancel_cb(NULL, NULL);
 	return FALSE;
+}
+
+static void export_progress_cancel_cb(GtkWidget *widget, gpointer data)
+{
+	progress_cancel = TRUE;
 }

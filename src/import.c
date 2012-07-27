@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2010 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -119,15 +119,14 @@ static gint import_progress_delete_event(GtkWidget	*widget,
 					 gpointer	 data);
 
 
-static void proc_mbox_func(Folder *folder, FolderItem *item, gpointer data)
+static gboolean import_mbox_func(Folder *folder, FolderItem *item, guint count, guint total, gpointer data)
 {
 	gchar str[64];
-	gint count = GPOINTER_TO_INT(data);
 	static GTimeVal tv_prev = {0, 0};
 	GTimeVal tv_cur;
 
 	g_get_current_time(&tv_cur);
-	g_snprintf(str, sizeof(str), "%d", count);
+	g_snprintf(str, sizeof(str), "%u", count);
 	gtk_progress_bar_set_text(GTK_PROGRESS_BAR(progress->progressbar), str);
 
 	if (tv_prev.tv_sec == 0 ||
@@ -137,6 +136,11 @@ static void proc_mbox_func(Folder *folder, FolderItem *item, gpointer data)
 		ui_update();
 		tv_prev = tv_cur;
 	}
+
+	if (import_progress_cancelled)
+		return FALSE;
+	else
+		return TRUE;
 }
 
 gint import_mail(FolderItem *default_dest)
@@ -235,10 +239,9 @@ static gint import_do(void)
 	ui_update();
 
 	if (type == IMPORT_MBOX) {
-		gtk_widget_set_sensitive(progress->cancel_btn, FALSE);
-		folder_set_ui_func(dest->folder, proc_mbox_func, NULL);
+		folder_set_ui_func2(dest->folder, import_mbox_func, NULL);
 		ok = proc_mbox(dest, filename, NULL);
-		folder_set_ui_func(dest->folder, NULL, NULL);
+		folder_set_ui_func2(dest->folder, NULL, NULL);
 	} else if (type == IMPORT_EML_FOLDER) {
 		ok = import_eml_folder(dest, filename);
 	} else if (type == IMPORT_DBX) {
@@ -255,7 +258,7 @@ static gint import_do(void)
 
 	g_free(filename);
 
-	if (ok < 0)
+	if (ok == -1)
 		alertpanel_error(_("Error occurred on import."));
 
 	return ok;
@@ -299,16 +302,16 @@ static gint import_eml_folder(FolderItem *dest, const gchar *path)
 			msginfo->file_path = file;
 			file = NULL;
 			count++;
-			proc_mbox_func(dest->folder, dest,
-				       GINT_TO_POINTER(count));
+			if (import_mbox_func(dest->folder, dest, count, 0, NULL) == FALSE) {
+				ok = -2;
+				break;
+			}
 			ok = folder_item_add_msg_msginfo(dest, msginfo, FALSE);
 			procmsg_msginfo_free(msginfo);
 			if (ok < 0) {
 				g_warning("import_eml_folder(): folder_item_add_msg_msginfo() failed.");
 				break;
 			}
-			if (import_progress_cancelled)
-				break;
 		}
 	}
 
@@ -443,7 +446,7 @@ static gint import_dbx(FolderItem *dest, const gchar *file)
 	FILE *fp;
 	gint32 dw;
 	gint32 table_pos;
-	gint count = 0;
+	guint count = 0;
 	GArray *array;
 	gint i;
 
@@ -467,15 +470,14 @@ static gint import_dbx(FolderItem *dest, const gchar *file)
 		get_dbx_index(fp, table_pos, array);
 
 	for (i = 0; i < array->len; i++) {
-		proc_mbox_func(dest->folder, dest, GINT_TO_POINTER(count + 1));
+		if (import_mbox_func(dest->folder, dest, count + 1, 0, NULL) == FALSE)
+			break;
 		if (get_dbx_data(fp, g_array_index(array, gint32, i), dest) < 0)
 			break;
 		count++;
-		if (import_progress_cancelled)
-			break;
 	}
 
-	debug_print("import_dbx: %d imported\n", count);
+	debug_print("import_dbx: %u imported\n", count);
 
 	g_array_free(array, TRUE);
 	fclose(fp);

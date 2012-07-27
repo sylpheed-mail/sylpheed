@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2011 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -48,6 +48,10 @@ typedef struct _FolderPrivData FolderPrivData;
 struct _FolderPrivData {
 	Folder *folder;
 	FolderItem *junk;
+
+	FolderUIFunc2 ui_func2;
+	gpointer ui_func2_data;
+
 	gpointer data;
 };
 
@@ -440,6 +444,42 @@ void folder_set_ui_func(Folder *folder, FolderUIFunc func, gpointer data)
 
 	folder->ui_func = func;
 	folder->ui_func_data = data;
+}
+
+void folder_set_ui_func2(Folder *folder, FolderUIFunc2 func, gpointer data)
+{
+	FolderPrivData *priv;
+
+	priv = folder_get_priv(folder);
+	if (priv) {
+		priv->ui_func2 = func;
+		priv->ui_func2_data = data;
+	}
+}
+
+FolderUIFunc2 folder_get_ui_func2(Folder *folder)
+{
+	FolderPrivData *priv;
+
+	priv = folder_get_priv(folder);
+	if (priv)
+		return priv->ui_func2;
+
+	return NULL;
+}
+
+gboolean folder_call_ui_func2(Folder *folder, FolderItem *item, guint count,
+			      guint total)
+{
+	FolderPrivData *priv;
+
+	priv = folder_get_priv(folder);
+	if (priv && priv->ui_func2) {
+		return priv->ui_func2(folder, item, count, total,
+				      priv->ui_func2_data);
+	}
+
+	return TRUE;
 }
 
 void folder_set_name(Folder *folder, const gchar *name)

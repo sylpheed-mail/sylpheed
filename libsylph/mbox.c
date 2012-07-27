@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2010 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -71,7 +71,7 @@ gint proc_mbox_full(FolderItem *dest, const gchar *mbox,
 	gchar buf[BUFFSIZE], from_line[BUFFSIZE];
 	gchar *tmp_file;
 	gint new_msgs = 0;
-	gint count = 0;
+	guint count = 0;
 	Folder *folder;
 	FilterRule *junk_rule = NULL;
 	GSList junk_fltlist = {NULL, NULL};
@@ -132,7 +132,11 @@ gint proc_mbox_full(FolderItem *dest, const gchar *mbox,
 
 		count++;
 		if (folder->ui_func)
-			folder->ui_func(folder, dest, folder->ui_func_data ? dest->folder->ui_func_data : GINT_TO_POINTER(count));
+			folder->ui_func(folder, dest, folder->ui_func_data ? dest->folder->ui_func_data : GUINT_TO_POINTER(count));
+		if (folder_call_ui_func2(folder, dest, count, 0) == FALSE) {
+			debug_print("Import of mbox cancelled at %u\n", count);
+			break;
+		}
 
 		if ((tmp_fp = g_fopen(tmp_file, "wb")) == NULL) {
 			FILE_OP_ERROR(tmp_file, "fopen");
@@ -494,7 +498,7 @@ gint export_msgs_to_mbox(FolderItem *src, GSList *mlist, const gchar *mbox)
 	FILE *mbox_fp;
 	gchar buf[BUFFSIZE];
 	PrefsAccount *cur_ac;
-	gint count = 0, length;
+	guint count = 0, length;
 
 	g_return_val_if_fail(src != NULL, -1);
 	g_return_val_if_fail(src->folder != NULL, -1);
@@ -518,7 +522,11 @@ gint export_msgs_to_mbox(FolderItem *src, GSList *mlist, const gchar *mbox)
 
 		count++;
 		if (src->folder->ui_func)
-			src->folder->ui_func(src->folder, src, src->folder->ui_func_data ? src->folder->ui_func_data : GINT_TO_POINTER(count));
+			src->folder->ui_func(src->folder, src, src->folder->ui_func_data ? src->folder->ui_func_data : GUINT_TO_POINTER(count));
+		if (folder_call_ui_func2(src->folder, src, count, length) == FALSE) {
+			debug_print("Export to mbox cancelled at %u/%u\n", count, length);
+			break;
+		}
 
 		msg_fp = procmsg_open_message(msginfo);
 		if (!msg_fp)
