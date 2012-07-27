@@ -474,6 +474,20 @@ void empty_mbox(const gchar *mbox)
 gint export_to_mbox(FolderItem *src, const gchar *mbox)
 {
 	GSList *mlist;
+	gint ret = 0;
+
+	mlist = folder_item_get_msg_list(src, TRUE);
+	if (mlist) {
+		ret = export_msgs_to_mbox(src, mlist, mbox);
+		procmsg_msg_list_free(mlist);
+	}
+
+	return ret;
+}
+
+/* store MLIST into one MBOX file. */
+gint export_msgs_to_mbox(FolderItem *src, GSList *mlist, const gchar *mbox)
+{
 	GSList *cur;
 	MsgInfo *msginfo;
 	FILE *msg_fp;
@@ -484,6 +498,7 @@ gint export_to_mbox(FolderItem *src, const gchar *mbox)
 
 	g_return_val_if_fail(src != NULL, -1);
 	g_return_val_if_fail(src->folder != NULL, -1);
+	g_return_val_if_fail(mlist != NULL, -1);
 	g_return_val_if_fail(mbox != NULL, -1);
 
 	debug_print(_("Exporting messages from %s into %s...\n"),
@@ -496,7 +511,6 @@ gint export_to_mbox(FolderItem *src, const gchar *mbox)
 
 	cur_ac = account_get_current_account();
 
-	mlist = folder_item_get_msg_list(src, TRUE);
 	length = g_slist_length(mlist);
 
 	for (cur = mlist; cur != NULL; cur = cur->next) {
@@ -507,10 +521,8 @@ gint export_to_mbox(FolderItem *src, const gchar *mbox)
 			src->folder->ui_func(src->folder, src, src->folder->ui_func_data ? src->folder->ui_func_data : GINT_TO_POINTER(count));
 
 		msg_fp = procmsg_open_message(msginfo);
-		if (!msg_fp) {
-			procmsg_msginfo_free(msginfo);
+		if (!msg_fp)
 			continue;
-		}
 
 		strncpy2(buf,
 			 msginfo->from ? msginfo->from :
@@ -530,10 +542,7 @@ gint export_to_mbox(FolderItem *src, const gchar *mbox)
 		fputc('\n', mbox_fp);
 
 		fclose(msg_fp);
-		procmsg_msginfo_free(msginfo);
 	}
-
-	g_slist_free(mlist);
 
 	fclose(mbox_fp);
 

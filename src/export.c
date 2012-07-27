@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2009 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,6 +38,7 @@
 #include <gtk/gtkentry.h>
 #include <gtk/gtkhbbox.h>
 #include <gtk/gtkbutton.h>
+#include <gtk/gtkcheckbutton.h>
 #include <gtk/gtkprogressbar.h>
 
 #include "main.h"
@@ -54,6 +55,9 @@
 #include "utils.h"
 #include "progressdialog.h"
 #include "alertpanel.h"
+#include "mainwindow.h"
+#include "summaryview.h"
+#include "prefs_ui.h"
 
 enum
 {
@@ -70,6 +74,7 @@ static GtkWidget *src_entry;
 static GtkWidget *file_entry;
 static GtkWidget *src_button;
 static GtkWidget *file_button;
+static GtkWidget *selected_only_chkbtn;
 static GtkWidget *ok_button;
 static GtkWidget *cancel_button;
 static gboolean export_finished;
@@ -79,6 +84,7 @@ static ProgressDialog *progress;
 static void export_create	(void);
 static gint export_do		(void);
 static gint export_eml		(FolderItem	*src,
+				 GSList		*sel_mlist,
 				 const gchar	*path,
 				 gint		 type);
 
@@ -176,6 +182,9 @@ static gint export_do(void)
 	gchar *mbox;
 	gchar *msg;
 	gint type;
+	gboolean selected_only;
+	MainWindow *mainwin;
+	GSList *mlist = NULL;
 
 	type = menu_get_option_menu_active_index
 		(GTK_OPTION_MENU(format_optmenu));
@@ -212,17 +221,29 @@ static gint export_do(void)
 	gtk_widget_show(progress->window);
 	ui_update();
 
+	selected_only = gtk_toggle_button_get_active
+		(GTK_TOGGLE_BUTTON(selected_only_chkbtn));
+	if (selected_only) {
+		mainwin = main_window_get();
+		mlist = summary_get_selected_msg_list(mainwin->summaryview);
+	}
+
 	if (type == EXPORT_MBOX) {
 		folder_set_ui_func(src->folder, export_mbox_func, NULL);
-		ok = export_to_mbox(src, mbox);
+		if (mlist)
+			ok = export_msgs_to_mbox(src, mlist, mbox);
+		else
+			ok = export_to_mbox(src, mbox);
 		folder_set_ui_func(src->folder, NULL, NULL);
 	} else if (type == EXPORT_EML || type == EXPORT_MH) {
-		ok = export_eml(src, mbox, type);
+		ok = export_eml(src, mlist, mbox, type);
 	}
 
 	progress_dialog_destroy(progress);
 	progress = NULL;
 
+	if (mlist)
+		g_slist_free(mlist);
 	g_free(mbox);
 
 	if (ok < 0)
@@ -231,7 +252,8 @@ static gint export_do(void)
 	return ok;
 }
 
-static gint export_eml(FolderItem *src, const gchar *path, gint type)
+static gint export_eml(FolderItem *src, GSList *sel_mlist, const gchar *path,
+		       gint type)
 {
 	const gchar *ext = "";
 	GSList *mlist, *cur;
@@ -258,9 +280,13 @@ static gint export_eml(FolderItem *src, const gchar *path, gint type)
 		}
 	}
 
-	mlist = folder_item_get_msg_list(src, TRUE);
-	if (!mlist)
-		return 0;
+	if (sel_mlist)
+		mlist = sel_mlist;
+	else {
+		mlist = folder_item_get_msg_list(src, TRUE);
+		if (!mlist)
+			return 0;
+	}
 
 	for (cur = mlist; cur != NULL; cur = cur->next) {
 		msginfo = (MsgInfo *)cur->data;
@@ -292,7 +318,8 @@ static gint export_eml(FolderItem *src, const gchar *path, gint type)
 		g_free(file);
 	}
 
-	procmsg_msg_list_free(mlist);
+	if (!sel_mlist)
+		procmsg_msg_list_free(mlist);
 
 	return ok;
 }
@@ -389,6 +416,18 @@ static void export_create(void)
 			 0, 0, 0, 0);
 	g_signal_connect(G_OBJECT(file_button), "clicked",
 			 G_CALLBACK(export_filesel_cb), NULL);
+
+	hbox = gtk_hbox_new(FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+	gtk_container_set_border_width(GTK_CONTAINER(hbox), 4);
+
+	selected_only_chkbtn = gtk_check_button_new_with_label
+		(_("Export only selected messages"));
+	gtk_box_pack_start(GTK_BOX(hbox), selected_only_chkbtn,
+			   FALSE, FALSE, 0);
+
+	SET_TOGGLE_SENSITIVITY_REV(selected_only_chkbtn, src_entry);
+	SET_TOGGLE_SENSITIVITY_REV(selected_only_chkbtn, src_button);
 
 	gtkut_stock_button_set_create(&confirm_area,
 				      &ok_button, GTK_STOCK_OK,
