@@ -61,6 +61,7 @@
 #include "account.h"
 #include "account_dialog.h"
 #include "procmsg.h"
+#include "procheader.h"
 #include "filter.h"
 #include "send_message.h"
 #include "inc.h"
@@ -566,6 +567,8 @@ static void parse_cmd_opt(int argc, char *argv[])
 			const gchar *p = argv[i + 1];
 
 			if (p && *p != '\0' && *p != '-') {
+				if (cmd.open_msg)
+					g_free(cmd.open_msg);
 				cmd.open_msg = g_locale_to_utf8
 					(p, -1, NULL, NULL, NULL);
 				i++;
@@ -609,10 +612,10 @@ static void parse_cmd_opt(int argc, char *argv[])
 		} else if (!strncmp(argv[i], "--help", 6)) {
 			init_console();
 
-			g_print(_("Usage: %s [OPTION]...\n"),
+			g_print(_("Usage: %s [OPTIONS ...] [URL]\n"),
 				g_basename(argv[0]));
 
-			g_print("%s\n", _("  --compose [address]    open composition window"));
+			g_print("%s\n", _("  --compose [mailto URL] open composition window"));
 			g_print("%s\n", _("  --attach file1 [file2]...\n"
 				"                         open composition window with specified files\n"
 				"                         attached"));
@@ -622,7 +625,8 @@ static void parse_cmd_opt(int argc, char *argv[])
 			g_print("%s\n", _("  --status [folder]...   show the total number of messages"));
 			g_print("%s\n", _("  --status-full [folder]...\n"
 				"                         show the status of each folder"));
-			g_print("%s\n", _("  --open folderid/msgnum open message in new window"));
+			g_print("%s\n", _("  --open folderid/msgnum open existing message in a new window"));
+			g_print("%s\n", _("  --open <file URL>      open an rfc822 message file in a new window"));
 			g_print("%s\n", _("  --configdir dirname    specify directory which stores configuration files"));
 #ifdef G_OS_WIN32
 			g_print("%s\n", _("  --ipcport portnum      specify port for IPC remote commands"));
@@ -640,6 +644,21 @@ static void parse_cmd_opt(int argc, char *argv[])
 
 			cleanup_console();
 			exit(1);
+		} else {
+			/* file or URL */
+			const gchar *p = argv[i];
+
+			if (p && *p != '\0') {
+				if (!strncmp(p, "mailto:", 7)) {
+					cmd.compose = TRUE;
+					cmd.compose_mailto = p + 7;
+				} else {
+					if (cmd.open_msg)
+						g_free(cmd.open_msg);
+					cmd.open_msg = g_locale_to_utf8
+						(p, -1, NULL, NULL, NULL);
+				}
+			}
 		}
 	}
 
@@ -1794,6 +1813,7 @@ static void open_compose_new(const gchar *address, GPtrArray *attach_files)
 		utf8addr = g_locale_to_utf8(address, -1, NULL, NULL, NULL);
 		if (utf8addr)
 			g_strstrip(utf8addr);
+		debug_print("open compose: %s\n", utf8addr ? utf8addr : "");
 	}
 
 #ifdef G_OS_WIN32
@@ -1822,36 +1842,87 @@ static void open_compose_new(const gchar *address, GPtrArray *attach_files)
 	g_free(utf8addr);
 }
 
+static void open_message_file(const gchar *file)
+{
+	MsgInfo *msginfo;
+	MsgFlags flags = {0};
+	MessageView *msgview;
+
+	g_return_if_fail(file != NULL);
+
+	debug_print("open message file: %s\n", file);
+
+	if (!is_file_exist(file) || get_file_size(file) <= 0) {
+		debug_print("file not found: %s\n", file);
+		return;
+	}
+
+	msginfo = procheader_parse_file(file, flags, FALSE);
+	if (msginfo) {
+		msginfo->file_path = g_strdup(file);
+		msgview = messageview_create_with_new_window();
+		messageview_show(msgview, msginfo, FALSE);
+		procmsg_msginfo_free(msginfo);
+	} else
+		debug_print("cannot open message: %s\n", file);
+}
+
 static void open_message(const gchar *path)
 {
-	gchar *id;
+	gchar *fid;
 	gchar *msg;
 	gint num;
 	FolderItem *item;
 	MsgInfo *msginfo;
 	MessageView *msgview;
+	gchar *file;
+
+	g_return_if_fail(path != NULL);
 
 	if (gtkut_window_modal_exist())
 		return;
 
-	id = g_path_get_dirname(path);
+	debug_print("open message: %s\n", path);
+
+	if (!strncmp(path, "file:", 5)) {
+		file = g_filename_from_uri(path, NULL, NULL);
+		open_message_file(file);
+		g_free(file);
+		return;
+	} else if (g_path_is_absolute(path)) {
+		open_message_file(path);
+		return;
+	}
+
+	/* relative path, or folder identifier */
+
+	fid = g_path_get_dirname(path);
 	msg = g_path_get_basename(path);
 	num = to_number(msg);
-	item = folder_find_item_from_identifier(id);
-	debug_print("open folder id: %s (msg %d)\n", id, num);
+	item = folder_find_item_from_identifier(fid);
 
 	if (num > 0 && item) {
+		debug_print("open folder id: %s (msg %d)\n", fid, num);
 		msginfo = folder_item_get_msginfo(item, num);
 		if (msginfo) {
 			msgview = messageview_create_with_new_window();
 			messageview_show(msgview, msginfo, FALSE);
 			procmsg_msginfo_free(msginfo);
+			g_free(msg);
+			g_free(fid);
+			return;
 		} else
 			debug_print("message %d not found\n", num);
 	}
 
 	g_free(msg);
-	g_free(id);
+	g_free(fid);
+
+	/* relative path */
+
+	file = g_strconcat(get_startup_dir(), G_DIR_SEPARATOR_S, path, NULL);
+	open_message_file(file);
+	g_free(file);
 }
 
 static void send_queue(void)
