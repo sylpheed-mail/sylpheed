@@ -171,6 +171,7 @@ static struct Message {
 } message;
 
 static struct Attach {
+	GtkWidget *radiobtn_attach_toolbtn_pos;
 	GtkWidget *chkbtn_show_attach_tab;
 	GtkWidget *chkbtn_show_files_first;
 
@@ -298,6 +299,9 @@ static void prefs_common_uri_set_entry			   (PrefParam *pparam);
 
 static void prefs_common_addr_compl_set_data_from_radiobtn (PrefParam *pparam);
 static void prefs_common_addr_compl_set_radiobtn	   (PrefParam *pparam);
+
+static void prefs_common_attach_toolbtn_pos_set_data_from_radiobtn (PrefParam *pparam);
+static void prefs_common_attach_toolbtn_pos_set_radiobtn	   (PrefParam *pparam);
 
 static PrefsUIData ui_data[] = {
 	/* Receive */
@@ -469,6 +473,9 @@ static PrefsUIData ui_data[] = {
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 	/* Attachment */
+	{"attach_toolbutton_pos", &attach.radiobtn_attach_toolbtn_pos,
+	 prefs_common_attach_toolbtn_pos_set_data_from_radiobtn,
+	 prefs_common_attach_toolbtn_pos_set_radiobtn},
 	{"show_attach_tab", &attach.chkbtn_show_attach_tab,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"show_attached_files_first", &attach.chkbtn_show_files_first,
@@ -2009,6 +2016,10 @@ static GtkWidget *prefs_attach_create(void)
 {
 	GtkWidget *vbox1;
 	GtkWidget *vbox2;
+	GtkWidget *hbox1;
+	GtkWidget *label;
+	GtkWidget *radiobtn_attach_toolbtn_pos;
+	GtkWidget *radiobtn_attach_toolbtn_pos2;
 	GtkWidget *chkbtn_show_attach_tab;
 	GtkWidget *chkbtn_show_files_first;
 	GtkWidget *frame_image;
@@ -2023,10 +2034,36 @@ static GtkWidget *prefs_attach_create(void)
 	gtk_widget_show (vbox2);
 	gtk_box_pack_start (GTK_BOX (vbox1), vbox2, FALSE, FALSE, 0);
 
-	PACK_CHECK_BUTTON(vbox2, chkbtn_show_attach_tab,
-			  _("Toggle attachment list view with tab"));
-	PACK_CHECK_BUTTON(vbox2, chkbtn_show_files_first,
-			  _("Show attached files first on message view"));
+	hbox1 = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox1);
+	gtk_box_pack_start (GTK_BOX (vbox2), hbox1, FALSE, FALSE, 0);
+
+	label = gtk_label_new (_("Position of attachment tool button:"));
+	gtk_widget_show (label);
+	gtk_box_pack_start (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
+
+	radiobtn_attach_toolbtn_pos = gtk_radio_button_new_with_label
+		(NULL, _("Left"));
+	gtk_widget_show (radiobtn_attach_toolbtn_pos);
+	gtk_box_pack_start (GTK_BOX(hbox1), radiobtn_attach_toolbtn_pos,
+			    FALSE, FALSE, 0);
+	g_object_set_data (G_OBJECT (radiobtn_attach_toolbtn_pos), MENU_VAL_ID,
+			   GINT_TO_POINTER (0));
+
+	radiobtn_attach_toolbtn_pos2 = gtk_radio_button_new_with_label_from_widget
+		(GTK_RADIO_BUTTON (radiobtn_attach_toolbtn_pos), _("Right"));
+	gtk_widget_show (radiobtn_attach_toolbtn_pos2);
+	gtk_box_pack_start (GTK_BOX (hbox1), radiobtn_attach_toolbtn_pos2,
+			    FALSE, FALSE, 0);
+	g_object_set_data (G_OBJECT (radiobtn_attach_toolbtn_pos2), MENU_VAL_ID,
+			   GINT_TO_POINTER (1));
+
+	PACK_CHECK_BUTTON (vbox2, chkbtn_show_attach_tab,
+			   _("Toggle attachment list view with tab"));
+	SET_TOGGLE_SENSITIVITY_REV (chkbtn_show_attach_tab, hbox1);
+
+	PACK_CHECK_BUTTON (vbox2, chkbtn_show_files_first,
+			   _("Show attached files first on message view"));
 
 	PACK_FRAME(vbox1, frame_image, _("Images"));
 
@@ -2041,6 +2078,7 @@ static GtkWidget *prefs_attach_create(void)
 			  _("Display images as inline"));
 
 	attach.chkbtn_show_attach_tab  = chkbtn_show_attach_tab;
+	attach.radiobtn_attach_toolbtn_pos = radiobtn_attach_toolbtn_pos;
 	attach.chkbtn_show_files_first = chkbtn_show_files_first;
 
 	attach.chkbtn_resize_image = chkbtn_resize_image;
@@ -4434,6 +4472,56 @@ static void prefs_common_addr_compl_set_radiobtn(PrefParam *pparam)
 		data = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(btn),
 							 MENU_VAL_ID));
 		if (data == mode) {
+			gtk_toggle_button_set_active(btn, TRUE);
+			break;
+		}
+		group = group->next;
+	}
+}
+
+static void prefs_common_attach_toolbtn_pos_set_data_from_radiobtn(PrefParam *pparam)
+{
+	PrefsUIData *ui_data;
+	GtkRadioButton *radiobtn;
+	GSList *group;
+
+	ui_data = (PrefsUIData *)pparam->ui_data;
+	g_return_if_fail(ui_data != NULL);
+	g_return_if_fail(*ui_data->widget != NULL);
+
+	radiobtn = GTK_RADIO_BUTTON(*ui_data->widget);
+	group = gtk_radio_button_get_group(radiobtn);
+	while (group != NULL) {
+		GtkToggleButton *btn = GTK_TOGGLE_BUTTON(group->data);
+
+		if (gtk_toggle_button_get_active(btn)) {
+			prefs_common.attach_toolbutton_pos =
+				GPOINTER_TO_INT(g_object_get_data(G_OBJECT(btn), MENU_VAL_ID));
+			break;
+		}
+		group = group->next;
+	}
+}
+
+static void prefs_common_attach_toolbtn_pos_set_radiobtn(PrefParam *pparam)
+{
+	PrefsUIData *ui_data;
+	GtkRadioButton *radiobtn;
+	GSList *group;
+
+	ui_data = (PrefsUIData *)pparam->ui_data;
+	g_return_if_fail(ui_data != NULL);
+	g_return_if_fail(*ui_data->widget != NULL);
+
+	radiobtn = GTK_RADIO_BUTTON(*ui_data->widget);
+	group = gtk_radio_button_get_group(radiobtn);
+	while (group != NULL) {
+		GtkToggleButton *btn = GTK_TOGGLE_BUTTON(group->data);
+		gint data;
+
+		data = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(btn),
+							 MENU_VAL_ID));
+		if (data == prefs_common.attach_toolbutton_pos) {
 			gtk_toggle_button_set_active(btn, TRUE);
 			break;
 		}

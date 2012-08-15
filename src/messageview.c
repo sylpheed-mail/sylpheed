@@ -69,6 +69,8 @@
 
 static GList *messageview_list = NULL;
 
+static void messageview_set_mime_view_layout
+					(MessageView		*messageview);
 static void messageview_change_view_type(MessageView		*messageview,
 					 MessageType		 type);
 static void messageview_set_tool_menu	(MessageView		*messageview,
@@ -556,14 +558,8 @@ void messageview_init(MessageView *messageview)
 
 void messageview_reflect_prefs(MessageView *messageview)
 {
-	if (messageview->type == MVIEW_MIME) {
-		if (prefs_common.show_attach_tab)
-			gtk_widget_hide(messageview->toolbar_vbox);
-		else
-			gtk_widget_show(messageview->toolbar_vbox);
-		gtk_notebook_set_show_tabs(GTK_NOTEBOOK(messageview->notebook),
-					   prefs_common.show_attach_tab);
-	}
+	if (messageview->type == MVIEW_MIME)
+		messageview_set_mime_view_layout(messageview);
 }
 
 GList *messageview_get_window_list(void)
@@ -637,6 +633,22 @@ gint messageview_show(MessageView *messageview, MsgInfo *msginfo,
 	return 0;
 }
 
+static void messageview_set_mime_view_layout(MessageView *messageview)
+{
+	if (prefs_common.attach_toolbutton_pos == 0)
+		gtk_box_set_child_packing(GTK_BOX(messageview->hbox), messageview->toolbar_vbox, FALSE, FALSE, 0, GTK_PACK_START);
+	else
+		gtk_box_set_child_packing(GTK_BOX(messageview->hbox), messageview->toolbar_vbox, FALSE, FALSE, 0, GTK_PACK_END);
+
+	if (prefs_common.show_attach_tab)
+		gtk_widget_hide(messageview->toolbar_vbox);
+	else
+		gtk_widget_show(messageview->toolbar_vbox);
+
+	gtk_notebook_set_show_tabs(GTK_NOTEBOOK(messageview->notebook),
+				   prefs_common.show_attach_tab);
+}
+
 static void messageview_change_view_type(MessageView *messageview,
 					 MessageType type)
 {
@@ -645,12 +657,7 @@ static void messageview_change_view_type(MessageView *messageview,
 	if (messageview->type == type) return;
 
 	if (type == MVIEW_MIME) {
-		if (prefs_common.show_attach_tab)
-			gtk_widget_hide(messageview->toolbar_vbox);
-		else
-			gtk_widget_show(messageview->toolbar_vbox);
-		gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook),
-					   prefs_common.show_attach_tab);
+		messageview_set_mime_view_layout(messageview);
 		gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook),
 					      messageview->current_page);
 		if (messageview->current_page == 0)

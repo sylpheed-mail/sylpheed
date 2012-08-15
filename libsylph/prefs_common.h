@@ -340,6 +340,7 @@ struct _PrefsCommon
 
 	gboolean show_attach_tab;            /* Message - Attachment */
 	gboolean show_attached_files_first;  /* Message - Attachment */
+	gint attach_toolbutton_pos;          /* Message - Attachment */
 };
 
 extern PrefsCommon prefs_common;
