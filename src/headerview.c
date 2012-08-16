@@ -227,6 +227,7 @@ void headerview_show(HeaderView *headerview, MsgInfo *msginfo)
 	gtk_label_set_text(GTK_LABEL(headerview->from_body_label),
 			   msginfo->from ? msginfo->from : _("(No From)"));
 	if (msginfo->from) {
+		gtk_widget_show(headerview->from_body_label);
 		gtk_tooltips_set_tip(headerview->tip, headerview->from_body_label, msginfo->from, NULL);
 	}
 
@@ -258,6 +259,7 @@ void headerview_show(HeaderView *headerview, MsgInfo *msginfo)
 			   msginfo->subject ? msginfo->subject
 			   : _("(No Subject)"));
 	if (msginfo->subject) {
+		gtk_widget_show(headerview->subject_body_label);
 		gtk_tooltips_set_tip(headerview->tip, headerview->subject_body_label, msginfo->subject, NULL);
 	}
 
@@ -317,17 +319,20 @@ static void headerview_show_xface(HeaderView *headerview, MsgInfo *msginfo)
 
 void headerview_clear(HeaderView *headerview)
 {
+	g_print("clear\n");
 	gtk_label_set_text(GTK_LABEL(headerview->from_body_label), "");
 	gtk_label_set_text(GTK_LABEL(headerview->to_body_label), "");
 	gtk_label_set_text(GTK_LABEL(headerview->cc_body_label), "");
 	gtk_label_set_text(GTK_LABEL(headerview->ng_body_label), "");
 	gtk_label_set_text(GTK_LABEL(headerview->subject_body_label), "");
+	gtk_widget_hide(headerview->from_body_label);
 	gtk_widget_hide(headerview->to_header_label);
 	gtk_widget_hide(headerview->to_body_label);
 	gtk_widget_hide(headerview->cc_header_label);
 	gtk_widget_hide(headerview->cc_body_label);
 	gtk_widget_hide(headerview->ng_header_label);
 	gtk_widget_hide(headerview->ng_body_label);
+	gtk_widget_hide(headerview->subject_body_label);
 
 	gtk_tooltips_disable(headerview->tip);
 
