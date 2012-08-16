@@ -319,7 +319,6 @@ static void headerview_show_xface(HeaderView *headerview, MsgInfo *msginfo)
 
 void headerview_clear(HeaderView *headerview)
 {
-	g_print("clear\n");
 	gtk_label_set_text(GTK_LABEL(headerview->from_body_label), "");
 	gtk_label_set_text(GTK_LABEL(headerview->to_body_label), "");
 	gtk_label_set_text(GTK_LABEL(headerview->cc_body_label), "");
