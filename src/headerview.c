@@ -25,6 +25,7 @@
 
 #include <glib.h>
 #include <glib/gi18n.h>
+#include <gtk/gtkversion.h>
 #include <gtk/gtkwidget.h>
 #include <gtk/gtkstyle.h>
 #include <gtk/gtkscrolledwindow.h>
@@ -221,13 +222,11 @@ void headerview_init(HeaderView *headerview)
 void headerview_show(HeaderView *headerview, MsgInfo *msginfo)
 {
 	headerview_clear(headerview);
-
 	gtk_tooltips_enable(headerview->tip);
 
 	gtk_label_set_text(GTK_LABEL(headerview->from_body_label),
 			   msginfo->from ? msginfo->from : _("(No From)"));
 	if (msginfo->from) {
-		gtk_widget_show(headerview->from_body_label);
 		gtk_tooltips_set_tip(headerview->tip, headerview->from_body_label, msginfo->from, NULL);
 	}
 
@@ -259,7 +258,6 @@ void headerview_show(HeaderView *headerview, MsgInfo *msginfo)
 			   msginfo->subject ? msginfo->subject
 			   : _("(No Subject)"));
 	if (msginfo->subject) {
-		gtk_widget_show(headerview->subject_body_label);
 		gtk_tooltips_set_tip(headerview->tip, headerview->subject_body_label, msginfo->subject, NULL);
 	}
 
@@ -324,15 +322,17 @@ void headerview_clear(HeaderView *headerview)
 	gtk_label_set_text(GTK_LABEL(headerview->cc_body_label), "");
 	gtk_label_set_text(GTK_LABEL(headerview->ng_body_label), "");
 	gtk_label_set_text(GTK_LABEL(headerview->subject_body_label), "");
-	gtk_widget_hide(headerview->from_body_label);
 	gtk_widget_hide(headerview->to_header_label);
 	gtk_widget_hide(headerview->to_body_label);
 	gtk_widget_hide(headerview->cc_header_label);
 	gtk_widget_hide(headerview->cc_body_label);
 	gtk_widget_hide(headerview->ng_header_label);
 	gtk_widget_hide(headerview->ng_body_label);
-	gtk_widget_hide(headerview->subject_body_label);
 
+#if GTK_CHECK_VERSION(2, 12, 0)
+	gtk_widget_set_tooltip_text(headerview->from_body_label, NULL);
+	gtk_widget_set_tooltip_text(headerview->subject_body_label, NULL);
+#endif
 	gtk_tooltips_disable(headerview->tip);
 
 	if (headerview->image && GTK_WIDGET_VISIBLE(headerview->image)) {
