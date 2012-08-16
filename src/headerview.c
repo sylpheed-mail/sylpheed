@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,6 +33,7 @@
 #include <gtk/gtklabel.h>
 #include <gtk/gtkpixmap.h>
 #include <gtk/gtkimage.h>
+#include <gtk/gtktooltips.h>
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
@@ -86,6 +87,7 @@ HeaderView *headerview_create(void)
 	GtkWidget *ng_body_label;
 	GtkWidget *subject_header_label;
 	GtkWidget *subject_body_label;
+	GtkTooltips *tip;
 
 	debug_print(_("Creating header view...\n"));
 	headerview = g_new0(HeaderView, 1);
@@ -123,6 +125,9 @@ HeaderView *headerview_create(void)
 	GTK_WIDGET_UNSET_FLAGS(ng_body_label, GTK_CAN_FOCUS);
 	GTK_WIDGET_UNSET_FLAGS(subject_body_label, GTK_CAN_FOCUS);
 
+	tip = gtk_tooltips_new();
+	g_object_ref_sink(tip);
+
 	gtk_box_pack_start(GTK_BOX(hbox1), from_header_label, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(hbox1), from_body_label, FALSE, FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(hbox1), to_header_label, FALSE, FALSE, 0);
@@ -145,7 +150,10 @@ HeaderView *headerview_create(void)
 	headerview->ng_body_label        = ng_body_label;
 	headerview->subject_header_label = subject_header_label;
 	headerview->subject_body_label   = subject_body_label;
+
 	headerview->image = NULL;
+
+	headerview->tip = tip;
 
 	gtk_widget_show_all(hbox);
 
@@ -208,29 +216,44 @@ void headerview_show(HeaderView *headerview, MsgInfo *msginfo)
 {
 	headerview_clear(headerview);
 
+	gtk_tooltips_enable(headerview->tip);
+
 	gtk_label_set_text(GTK_LABEL(headerview->from_body_label),
 			   msginfo->from ? msginfo->from : _("(No From)"));
+	if (msginfo->from) {
+		gtk_tooltips_set_tip(headerview->tip, headerview->from_body_label, msginfo->from, NULL);
+	}
+
 	if (msginfo->to) {
 		gtk_label_set_text(GTK_LABEL(headerview->to_body_label),
 				   msginfo->to);
 		gtk_widget_show(headerview->to_header_label);
 		gtk_widget_show(headerview->to_body_label);
+		gtk_tooltips_set_tip(headerview->tip, headerview->to_body_label, msginfo->to, NULL);
 	}
+
 	if (msginfo->cc) {
 		gtk_label_set_text(GTK_LABEL(headerview->cc_body_label),
 				   msginfo->cc);
 		gtk_widget_show(headerview->cc_header_label);
 		gtk_widget_show(headerview->cc_body_label);
+		gtk_tooltips_set_tip(headerview->tip, headerview->cc_body_label, msginfo->cc, NULL);
 	}
+
 	if (msginfo->newsgroups) {
 		gtk_label_set_text(GTK_LABEL(headerview->ng_body_label),
 				   msginfo->newsgroups);
 		gtk_widget_show(headerview->ng_header_label);
 		gtk_widget_show(headerview->ng_body_label);
+		gtk_tooltips_set_tip(headerview->tip, headerview->ng_body_label, msginfo->newsgroups, NULL);
 	}
+
 	gtk_label_set_text(GTK_LABEL(headerview->subject_body_label),
 			   msginfo->subject ? msginfo->subject
 			   : _("(No Subject)"));
+	if (msginfo->subject) {
+		gtk_tooltips_set_tip(headerview->tip, headerview->subject_body_label, msginfo->subject, NULL);
+	}
 
 #if HAVE_LIBCOMPFACE
 	headerview_show_xface(headerview, msginfo);
@@ -300,6 +323,8 @@ void headerview_clear(HeaderView *headerview)
 	gtk_widget_hide(headerview->ng_header_label);
 	gtk_widget_hide(headerview->ng_body_label);
 
+	gtk_tooltips_disable(headerview->tip);
+
 	if (headerview->image && GTK_WIDGET_VISIBLE(headerview->image)) {
 		gtk_widget_hide(headerview->image);
 		gtk_widget_queue_resize(headerview->hbox);
@@ -316,6 +341,7 @@ void headerview_set_visibility(HeaderView *headerview, gboolean visibility)
 
 void headerview_destroy(HeaderView *headerview)
 {
+	g_object_unref(headerview->tip);
 	g_free(headerview);
 }
 

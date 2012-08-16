@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2012 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 
 #include <glib.h>
 #include <gtk/gtkwidget.h>
+#include <gtk/gtktooltips.h>
 
 #include "procmsg.h"
 
@@ -43,6 +44,8 @@ struct _HeaderView
 	GtkWidget *subject_body_label;
 
 	GtkWidget *image;
+
+	GtkTooltips *tip;
 };
 
 HeaderView *headerview_create	(void);
