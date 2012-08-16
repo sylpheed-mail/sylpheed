@@ -64,6 +64,7 @@
 #include <gtk/gtkstock.h>
 #include <gtk/gtkdialog.h>
 #include <gtk/gtkimage.h>
+#include <gtk/gtktooltips.h>
 #include <pango/pango-break.h>
 
 #if USE_GTKSPELL
@@ -5254,6 +5255,8 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	gtk_widget_set_size_request(menubar, 300, -1);
 	gtk_box_pack_start(GTK_BOX(vbox), menubar, FALSE, TRUE, 0);
 
+	compose->toolbar_tip = gtk_tooltips_new();
+	g_object_ref_sink(compose->toolbar_tip);
 	toolbar = compose_toolbar_create(compose);
 	gtk_widget_set_size_request(toolbar, 300, -1);
 	gtk_box_pack_start(GTK_BOX(vbox), toolbar, FALSE, FALSE, 0);
@@ -5889,7 +5892,6 @@ static GtkWidget *compose_toolbar_create_from_list(Compose *compose,
 	for (cur = item_list; cur != NULL; cur = cur->next) {
 		const PrefsDisplayItem *ditem = cur->data;
 		PrefsToolbarItem *item;
-		GtkTooltips *tips;
 		gint width;
 
 		if (ditem->id == T_SEPARATOR) {
@@ -5913,8 +5915,8 @@ static GtkWidget *compose_toolbar_create_from_list(Compose *compose,
 
 		toolitem = gtk_tool_button_new(icon_wid, gettext(ditem->label));
 		if (ditem->description) {
-			tips = gtk_tooltips_new();
-			gtk_tool_item_set_tooltip(toolitem, tips,
+			gtk_tool_item_set_tooltip(toolitem,
+						  compose->toolbar_tip,
 						  gettext(ditem->description),
 						  ditem->name);
 		}
@@ -6363,6 +6365,8 @@ static void compose_destroy(Compose *compose)
 	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(compose->text));
 	clipboard = gtk_clipboard_get(GDK_SELECTION_PRIMARY);
 	gtk_text_buffer_remove_selection_clipboard(buffer, clipboard);
+
+	g_object_unref(compose->toolbar_tip);
 
 	gtk_widget_destroy(compose->window);
 

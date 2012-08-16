@@ -988,6 +988,8 @@ MainWindow *main_window_create(SeparateType type)
 	gtk_box_pack_start(GTK_BOX(vbox), menubar, FALSE, TRUE, 0);
 	ifactory = gtk_item_factory_from_widget(menubar);
 
+	/* toolbar */
+	mainwin->toolbar_tip = gtk_tooltips_new();
 	toolbar = main_window_toolbar_create(mainwin);
 	gtk_widget_set_size_request(toolbar, 300, -1);
 	gtk_box_pack_start(GTK_BOX(vbox), toolbar, FALSE, FALSE, 0);
@@ -2691,7 +2693,6 @@ static GtkWidget *main_window_toolbar_create_from_list(MainWindow *mainwin,
 	for (cur = item_list; cur != NULL; cur = cur->next) {
 		const PrefsDisplayItem *ditem = cur->data;
 		PrefsToolbarItem *item;
-		GtkTooltips *tips;
 		gint width;
 
 		if (ditem->id == T_SEPARATOR) {
@@ -2715,8 +2716,8 @@ static GtkWidget *main_window_toolbar_create_from_list(MainWindow *mainwin,
 
 		toolitem = gtk_tool_button_new(icon_wid, gettext(ditem->label));
 		if (ditem->description) {
-			tips = gtk_tooltips_new();
-			gtk_tool_item_set_tooltip(toolitem, tips,
+			gtk_tool_item_set_tooltip(toolitem,
+						  mainwin->toolbar_tip,
 						  gettext(ditem->description),
 						  ditem->name);
 		}
@@ -2749,9 +2750,8 @@ static GtkWidget *main_window_toolbar_create_from_list(MainWindow *mainwin,
 			gtk_container_add(GTK_CONTAINER(comboitem),
 					  GTK_WIDGET_PTR(combo));
 			if (ditem->description) {
-				tips = gtk_tooltips_new();
 				gtk_tool_item_set_tooltip
-					(comboitem, tips,
+					(comboitem, mainwin->toolbar_tip,
 					 gettext(ditem->description),
 					 ditem->name);
 			}
@@ -2774,9 +2774,8 @@ static GtkWidget *main_window_toolbar_create_from_list(MainWindow *mainwin,
 			gtk_container_add(GTK_CONTAINER(comboitem),
 					  GTK_WIDGET_PTR(combo));
 			if (ditem->description) {
-				tips = gtk_tooltips_new();
 				gtk_tool_item_set_tooltip
-					(comboitem, tips,
+					(comboitem, mainwin->toolbar_tip,
 					 gettext(ditem->description),
 					 ditem->name);
 			}
