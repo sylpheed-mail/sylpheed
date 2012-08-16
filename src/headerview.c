@@ -125,6 +125,12 @@ HeaderView *headerview_create(void)
 	GTK_WIDGET_UNSET_FLAGS(ng_body_label, GTK_CAN_FOCUS);
 	GTK_WIDGET_UNSET_FLAGS(subject_body_label, GTK_CAN_FOCUS);
 
+	gtk_widget_add_events(from_body_label, GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK);
+	gtk_widget_add_events(to_body_label, GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK);
+	gtk_widget_add_events(cc_body_label, GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK);
+	gtk_widget_add_events(ng_body_label, GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK);
+	gtk_widget_add_events(subject_body_label, GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK);
+
 	tip = gtk_tooltips_new();
 	g_object_ref_sink(tip);
 
