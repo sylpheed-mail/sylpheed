@@ -15,6 +15,9 @@ Packager: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
 Buildroot: %{_tmppath}/%{name}-root
 
 %changelog
+* Thu Sep 13 2012 Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
+- fixed build on x86_64 platform.
+
 * Tue Aug 4 2009 Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
 - fixed %files section.
 
@@ -102,11 +105,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %setup
 %build
-CFLAGS="$RPM_OPT_FLAGS" ./configure --prefix=%{prefix} ${SYLPHEED_CONFIGURE_FLAGS}
+CFLAGS="$RPM_OPT_FLAGS" ./configure --prefix=%{prefix} --libdir=%{_libdir} ${SYLPHEED_CONFIGURE_FLAGS}
 make
 
 %install
-make prefix=${RPM_BUILD_ROOT}%{prefix} install
+make prefix=${RPM_BUILD_ROOT}%{prefix} libdir=${RPM_BUILD_ROOT}%{_libdir} install
 mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/pixmaps
 install -m 644 *.png ${RPM_BUILD_ROOT}%{_datadir}/pixmaps
 
