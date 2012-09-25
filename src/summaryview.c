@@ -5929,6 +5929,12 @@ static gboolean summary_button_pressed(GtkWidget *treeview,
 					summaryview->display_msg = TRUE;
 			}
 		}
+
+		if (summaryview->on_button_press == FALSE) {
+			/* button released within sub event loop */
+			gtk_tree_path_free(path);
+			return TRUE;
+		}
 	} else if (event->button == 2) {
 		summary_select_row(summaryview, &iter, TRUE, FALSE);
 		summary_mark_displayed_read(summaryview, &iter);
@@ -6309,6 +6315,8 @@ static void summary_column_clicked(GtkWidget *button, SummaryView *summaryview)
 static void summary_drag_begin(GtkWidget *widget, GdkDragContext *drag_context,
 			       SummaryView *summaryview)
 {
+	if (!summaryview->on_button_press)
+		g_warning("summary_drag_begin: drag began without button press");
 	summaryview->on_drag = TRUE;
 	gtk_drag_set_icon_default(drag_context);
 }
