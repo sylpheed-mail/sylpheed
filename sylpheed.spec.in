@@ -1,11 +1,10 @@
 %define ver @VERSION@
 %define rel %(if [ "${SYLPHEED_REL_DIST}" == "" ] ; then echo "1"; else echo "${SYLPHEED_REL_DIST}"; fi)
-%define prefix /usr
 
 Summary: a GTK+ based, lightweight, and fast e-mail client
 Name: sylpheed
 Version: %{ver}
-Release: %{rel}
+Release: %{rel}%{?dist}
 Source: http://sylpheed.sraoss.jp/sylpheed/%{name}-%{ver}.tar.gz
 License: GPL
 URL: http://sylpheed.sraoss.jp/
@@ -15,6 +14,11 @@ Packager: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
 Buildroot: %{_tmppath}/%{name}-root
 
 %changelog
+* Thu Sep 26 2012 Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
+- added sylpheed-plugins package.
+- added dist to Release.
+- fixed plugindir.
+
 * Thu Sep 13 2012 Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
 - fixed build on x86_64 platform.
 
@@ -100,30 +104,54 @@ with another mailer based on MH format (like Mew). You can also utilize
 fetchmail or/and procmail, and external programs on receiving (like inc or
 imget).
 
-%prep
-rm -rf $RPM_BUILD_ROOT
+%package plugins
+Summary: standard plug-ins for Sylpheed
+Group: Applications/Internet
+Requires: %{name} = %{version}-%{release}
 
-%setup
+%description plugins
+The %{name}-plugins package contains standard plug-ins for Sylpheed.
+
+%prep
+%setup -q
+
 %build
-CFLAGS="$RPM_OPT_FLAGS" ./configure --prefix=%{prefix} --libdir=%{_libdir} ${SYLPHEED_CONFIGURE_FLAGS}
-make
+export CFLAGS="$CFLAGS $RPM_OPT_FLAGS"
+%{configure} --with-plugindir=%{_libdir}/sylpheed/plugins ${SYLPHEED_CONFIGURE_FLAGS}
+%{__make}
 
 %install
-make prefix=${RPM_BUILD_ROOT}%{prefix} libdir=${RPM_BUILD_ROOT}%{_libdir} install
+%makeinstall
 mkdir -p ${RPM_BUILD_ROOT}%{_datadir}/pixmaps
 install -m 644 *.png ${RPM_BUILD_ROOT}%{_datadir}/pixmaps
 
+(cd plugin/attachment_tool && %{__make} prefix=${RPM_BUILD_ROOT}%{prefix} libdir=${RPM_BUILD_ROOT}%{_libdir}/sylpheed/plugins install-plugin)
+cp plugin/attachment_tool/README README.attachment_tool
+
 %clean
 rm -rf ${RPM_BUILD_ROOT}
+
+%post
+/sbin/ldconfig
+
+%postun
+/sbin/ldconfig
 
 %files
 %defattr(-,root,root)
 %doc AUTHORS COPYING COPYING.LIB ChangeLog ChangeLog.ja ChangeLog-1.0 ChangeLog-1.0.ja README README.es README.ja INSTALL INSTALL.ja NEWS NEWS-1.0 NEWS-2.0 LICENSE TODO TODO.ja
 %{_bindir}/%{name}
 %{_includedir}/%{name}
-%{_libdir}/*
+%{_libdir}/*.la
+%{_libdir}/*.so
+%{_libdir}/*.so.*
 %{_datadir}/locale/*/LC_MESSAGES/%{name}.mo
 %{_datadir}/%{name}/faq/*/*
 %{_datadir}/%{name}/manual/*/*
 %{_datadir}/pixmaps/*.png
 %{_datadir}/applications/sylpheed.desktop
+
+%files plugins
+%defattr(-,root,root)
+%doc README.attachment_tool
+%{_libdir}/sylpheed/plugins/*
