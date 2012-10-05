@@ -9,12 +9,12 @@ MINOR_VERSION=3
 MICRO_VERSION=0
 INTERFACE_AGE=0
 BINARY_AGE=0
-EXTRA_VERSION=beta2
-BUILD_REVISION=1140
+EXTRA_VERSION=
+BUILD_REVISION=1141
 VERSION=$MAJOR_VERSION.$MINOR_VERSION.$MICRO_VERSION$EXTRA_VERSION
 
 dnl define if this is a development release
-DEVEL_VERSION=1
+dnl DEVEL_VERSION=1
 
 dnl set $target
 AC_CANONICAL_SYSTEM
@@ -90,11 +90,11 @@ esac
 AM_CONDITIONAL(NATIVE_WIN32, test "$native_win32" = "yes")
 
 dnl Checks for libraries.
-AM_PATH_GLIB_2_0(2.4.0,, AC_MSG_ERROR(Test for GLib failed. See the 'INSTALL' for help.), gobject gmodule)
+AM_PATH_GLIB_2_0(2.8.0,, AC_MSG_ERROR(Test for GLib failed. See the 'INSTALL' for help.), gobject gmodule)
 
 AC_PATH_PROG(GLIB_GENMARSHAL, glib-genmarshal)
 
-AM_PATH_GTK_2_0(2.4.0,, AC_MSG_ERROR(Test for Gtk failed. See the 'INSTALL' for help.))
+AM_PATH_GTK_2_0(2.8.0,, AC_MSG_ERROR(Test for Gtk failed. See the 'INSTALL' for help.))
 
 dnl --disable-deprecated switch for GTK2 purification
 AC_ARG_ENABLE(deprecated, [  --disable-deprecated    Disable deprecated GTK functions. ],
