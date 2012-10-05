@@ -151,21 +151,75 @@ ${MementoUnselectedSection} "$(quick_shortcut)" sec_quick_shortcut
 ${MementoSectionEnd}
 
 ${MementoSection} "$(handler)" sec_handler
+   ; HKLM
+   ; .eml
+   WriteRegStr HKLM "Software\Classes\Sylpheed.EML" "" "Sylpheed Message"
+   WriteRegDWORD HKLM "Software\Classes\Sylpheed.EML" "EditFlags" 0x00000002
+   WriteRegStr HKLM "Software\Classes\Sylpheed.EML" "FriendlyTypeName" "Sylpheed Message"
+   WriteRegStr HKLM "Software\Classes\Sylpheed.EML\DefaultIcon" "" "$INSTDIR\sylpheed.exe,0"
+   WriteRegStr HKLM "Software\Classes\Sylpheed.EML\shell\open\command" "" "$\"$INSTDIR\sylpheed.exe$\" --open $\"%1$\""
+
+   ; mailto:
+   WriteRegStr HKLM "Software\Classes\mailto" "" "URL:MailTo Protocol"
+   WriteRegDWORD HKCU "Software\Classes\mailto" "EditFlags" 0x00000002
+   WriteRegStr HKLM "Software\Classes\mailto" "FriendlyTypeName" "Sylpheed MailTo"
+   WriteRegStr HKLM "Software\Classes\mailto" "URL Protocol" ""
+   WriteRegStr HKLM "Software\Classes\mailto\shell\open\command" "" "$\"$INSTDIR\sylpheed.exe$\" --compose $\"%1$\""
+
+   WriteRegStr HKLM "Software\Classes\Sylpheed.Url.MailTo" "" "URL:MailTo Protocol"
+   WriteRegDWORD HKLM "Software\Classes\Sylpheed.Url.MailTo" "EditFlags" 0x00000002
+   WriteRegStr HKLM "Software\Classes\Sylpheed.Url.MailTo" "FriendlyTypeName" "Sylpheed MailTo"
+   WriteRegStr HKLM "Software\Classes\Sylpheed.Url.MailTo" "URL Protocol" ""
+   WriteRegStr HKLM "Software\Classes\Sylpheed.Url.MailTo\DefaultIcon" "" "$INSTDIR\sylpheed.exe,0"
+   WriteRegStr HKLM "Software\Classes\Sylpheed.Url.MailTo\shell\open\command" "" "$\"$INSTDIR\sylpheed.exe$\" --compose $\"%1$\""
+
    WriteRegStr HKLM "Software\Clients\Mail\Sylpheed" "" "Sylpheed"
+   WriteRegStr HKLM "Software\Clients\Mail\Sylpheed\DefaultIcon" "" "$INSTDIR\sylpheed.exe,0"
    WriteRegStr HKLM "Software\Clients\Mail\Sylpheed\Protocols\mailto" "" "URL:MailTo Protocol"
    WriteRegStr HKLM "Software\Clients\Mail\Sylpheed\Protocols\mailto" "URL Protocol" ""
+   WriteRegStr HKLM "Software\Clients\Mail\Sylpheed\Protocols\mailto\DefaultIcon" "" "$INSTDIR\sylpheed.exe,0"
    WriteRegStr HKLM "Software\Clients\Mail\Sylpheed\Protocols\mailto\shell\open\command" "" "$\"$INSTDIR\sylpheed.exe$\" --compose $\"%1$\""
    WriteRegStr HKLM "Software\Clients\Mail\Sylpheed\shell\open\command" "" "$\"$INSTDIR\sylpheed.exe$\""
 
    WriteRegStr HKLM "Software\Clients\Mail\Sylpheed\Capabilities" "ApplicationName" "Sylpheed"
+   WriteRegStr HKLM "Software\Clients\Mail\Sylpheed\Capabilities" "ApplicationIcon" "$INSTDIR\sylpheed.exe,0"
    WriteRegStr HKLM "Software\Clients\Mail\Sylpheed\Capabilities" "ApplicationDescription" "Sylpheed - lightweight and user-friendly e-mail client"
-   WriteRegStr HKLM "Software\RegisteredApplications" "Sylpheed" "SOFTWARE\Clients\Mail\Sylpheed\Capabilities"
+   WriteRegStr HKLM "Software\Clients\Mail\Sylpheed\Capabilities\FileAssociations" ".eml" "Sylpheed.EML"
    WriteRegStr HKLM "Software\Clients\Mail\Sylpheed\Capabilities\URLAssociations" "mailto" "Sylpheed.Url.MailTo"
-   WriteRegStr HKCR "Sylpheed.Url.MailTo" "" "URL:MailTo Protocol"
-   WriteRegStr HKCR "Sylpheed.Url.MailTo" "FriendlyTypeName" "Sylpheed MailTo"
-   WriteRegDWORD HKCR "Sylpheed.Url.MailTo" "EditFlags" 0x00000002
-   WriteRegStr HKCR "Sylpheed.Url.MailTo" "URL Protocol" ""
-   WriteRegStr HKCR "Sylpheed.Url.MailTo\shell\open\command" "" "$\"$INSTDIR\sylpheed.exe$\" --compose $\"%1$\""
+   WriteRegStr HKLM "Software\Clients\Mail\Sylpheed\Capabilities\StartMenu" "Mail" "Sylpheed"
+
+   WriteRegStr HKLM "Software\RegisteredApplications" "Sylpheed" "SOFTWARE\Clients\Mail\Sylpheed\Capabilities"
+
+   ; HKCU
+   WriteRegStr HKCU "Software\Clients\Mail" "" "Sylpheed"
+
+   WriteRegStr HKCU "Software\Microsoft\Windows\Shell\Associations\URLAssociations\mailto\UserChoice" "Progid" "Sylpheed.Url.MailTo"
+   DeleteRegKey HKCU "Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\.eml\UserChoice"
+   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\.eml\UserChoice" "Progid" "Sylpheed.EML"
+
+   ; .eml
+   WriteRegStr HKCU "Software\Classes\.eml" "" "Sylpheed.EML"
+
+   WriteRegStr HKCU "Software\Classes\Sylpheed.EML" "" "Sylpheed Message"
+   WriteRegDWORD HKCU "Software\Classes\Sylpheed.EML" "EditFlags" 0x00000002
+   WriteRegStr HKCU "Software\Classes\Sylpheed.EML" "FriendlyTypeName" "Sylpheed Message"
+   WriteRegStr HKCU "Software\Classes\Sylpheed.EML\DefaultIcon" "" "$INSTDIR\sylpheed.exe,0"
+   WriteRegStr HKCU "Software\Classes\Sylpheed.EML\shell\open\command" "" "$\"$INSTDIR\sylpheed.exe$\" --open $\"%1$\""
+
+   ; mailto:
+   WriteRegStr HKCU "Software\Classes\mailto" "" "URL:MailTo Protocol"
+   WriteRegDWORD HKCU "Software\Classes\mailto" "EditFlags" 0x00000002
+   WriteRegStr HKCU "Software\Classes\mailto" "FriendlyTypeName" "Sylpheed MailTo"
+   WriteRegStr HKCU "Software\Classes\mailto" "URL Protocol" ""
+   WriteRegStr HKCU "Software\Classes\mailto\DefaultIcon" "" "$INSTDIR\sylpheed.exe,0"
+   WriteRegStr HKCU "Software\Classes\mailto\shell\open\command" "" "$\"$INSTDIR\sylpheed.exe$\" --compose $\"%1$\""
+
+   WriteRegStr HKCU "Software\Classes\Sylpheed.Url.MailTo" "" "URL:MailTo Protocol"
+   WriteRegDWORD HKCU "Software\Classes\Sylpheed.Url.MailTo" "EditFlags" 0x00000002
+   WriteRegStr HKCU "Software\Classes\Sylpheed.Url.MailTo" "FriendlyTypeName" "Sylpheed MailTo"
+   WriteRegStr HKCU "Software\Classes\Sylpheed.Url.MailTo" "URL Protocol" ""
+   WriteRegStr HKCU "Software\Classes\Sylpheed.Url.MailTo\DefaultIcon" "" "$INSTDIR\sylpheed.exe,0"
+   WriteRegStr HKCU "Software\Classes\Sylpheed.Url.MailTo\shell\open\command" "" "$\"$INSTDIR\sylpheed.exe$\" --compose $\"%1$\""
 ${MementoSectionEnd}
 
 ${MementoSectionDone}
@@ -313,8 +367,14 @@ Section "-un.install"
 
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_DIR_REGKEY}"
-  DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "Software\Clients\Mail\Sylpheed"
+  DeleteRegKey HKLM "Software\Classes\Sylpheed.EML"
+  DeleteRegKey HKLM "Software\Classes\Sylpheed.Url.MailTo"
+  DeleteRegKey HKLM "Software\Clients\Mail\Sylpheed"
+  DeleteRegValue HKLM "Software\RegisteredApplications" "Sylpheed"
+  DeleteRegKey HKCU "Software\Classes\Sylpheed.EML"
+  DeleteRegKey HKCU "Software\Classes\Sylpheed.Url.MailTo"
   DeleteRegKey ${MEMENTO_REGISTRY_ROOT} "${MEMENTO_REGISTRY_KEY}"
+
   SetAutoClose true
 SectionEnd
 
