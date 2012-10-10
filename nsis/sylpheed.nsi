@@ -161,9 +161,10 @@ ${MementoSection} "$(handler)" sec_handler
 
    ; mailto:
    WriteRegStr HKLM "Software\Classes\mailto" "" "URL:MailTo Protocol"
-   WriteRegDWORD HKCU "Software\Classes\mailto" "EditFlags" 0x00000002
+   WriteRegDWORD HKLM "Software\Classes\mailto" "EditFlags" 0x00000002
    WriteRegStr HKLM "Software\Classes\mailto" "FriendlyTypeName" "Sylpheed MailTo"
    WriteRegStr HKLM "Software\Classes\mailto" "URL Protocol" ""
+   WriteRegStr HKLM "Software\Classes\mailto\DefaultIcon" "" "$INSTDIR\sylpheed.exe,0"
    WriteRegStr HKLM "Software\Classes\mailto\shell\open\command" "" "$\"$INSTDIR\sylpheed.exe$\" --compose $\"%1$\""
 
    WriteRegStr HKLM "Software\Classes\Sylpheed.Url.MailTo" "" "URL:MailTo Protocol"
