@@ -22,7 +22,8 @@ EXTRA_DIST = config.rpath  \
 	autogen.sh \
 	makewin32.sh \
 	mime.types \
-	sylpheed-mailto-protocol.reg
+	sylpheed-mailto-protocol_admin.reg \
+	sylpheed-mailto-protocol_user.reg
 
 BZIP2_ENV =
 
