@@ -140,8 +140,7 @@ INCLUDES = \
 	-I$(top_srcdir)/libsylph \
 	$(GTK_CFLAGS) \
 	$(GDK_PIXBUF_CFLAGS) \
-	$(GPGME_CFLAGS) \
-	-I$(includedir)
+	$(GPGME_CFLAGS)
 
 if NATIVE_WIN32
 SYLPHEED_RES = sylpheed.res

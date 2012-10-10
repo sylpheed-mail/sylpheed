@@ -4,7 +4,7 @@ AM_CPPFLAGS = \
 	-DSYSCONFDIR=\""$(sysconfdir)"\" \
 	-DLOCALEDIR=\""$(localedir)"\"
 
-INCLUDES = -I$(top_srcdir) $(GLIB_CFLAGS) -I$(includedir)
+INCLUDES = -I$(top_srcdir) $(GLIB_CFLAGS)
 
 lib_LTLIBRARIES = libsylph-0.la
 #noinst_LTLIBRARIES = libsylph.la

@@ -9,8 +9,7 @@ INCLUDES = \
 	-I$(top_srcdir) \
 	-I$(top_srcdir)/libsylph \
 	-I$(top_srcdir)/src \
-	$(GTK_CFLAGS) \
-	-I$(includedir)
+	$(GTK_CFLAGS)
 
 attachment_tool_la_LIBADD = \
 	$(GTK_LIBS) \
