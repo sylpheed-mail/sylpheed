@@ -2930,6 +2930,9 @@ static SockInfo *imap_open(const gchar *server, gushort port,
 	SockInfo *sock = NULL;
 	const gchar *server_;
 	gushort port_;
+#if USE_THREADS
+	gint conn_id;
+#endif
 
 	if (socks_info) {
 		server_ = socks_info->proxy_host;
@@ -2940,8 +2943,6 @@ static SockInfo *imap_open(const gchar *server, gushort port,
 	}
 
 #if USE_THREADS
-	gint conn_id;
-
 	if ((conn_id = sock_connect_async_thread(server_, port_)) < 0 ||
 	    sock_connect_async_thread_wait(conn_id, &sock) < 0) {
 		log_warning(_("Can't connect to IMAP4 server: %s:%d\n"),
