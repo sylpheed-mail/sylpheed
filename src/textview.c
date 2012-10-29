@@ -249,6 +249,9 @@ static void textview_set_cursor			(TextView	*textview,
 static gboolean textview_uri_security_check	(TextView	*textview,
 						 RemoteURI	*uri);
 static void textview_uri_list_remove_all	(GSList		*uri_list);
+static void textview_uri_list_update_offsets	(TextView	*textview,
+						 gint		 start,
+						 gint		 add);
 
 
 TextView *textview_create(void)
@@ -509,6 +512,8 @@ void textview_show_message(TextView *textview, MimeInfo *mimeinfo,
 
 		gtk_text_buffer_get_end_iter(buffer, &iter);
 		textview->body_pos = gtk_text_iter_get_offset(&iter);
+		debug_print("textview_show_message: body_pos: %d\n",
+			    textview->body_pos);
 	} else {
 		gtk_text_buffer_get_end_iter(buffer, &iter);
 		mark = gtk_text_buffer_get_mark(buffer, "attach-file-pos");
@@ -627,6 +632,8 @@ void textview_show_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 
 		gtk_text_buffer_get_end_iter(buffer, &iter);
 		textview->body_pos = gtk_text_iter_get_offset(&iter);
+		debug_print("textview_show_part: body_pos: %d\n",
+			    textview->body_pos);
 		if (!mimeinfo->main)
 			gtk_text_buffer_insert(buffer, &iter, "\n", 1);
 	} else {
@@ -1045,10 +1052,12 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 			g_free(filename);
 		} else if (prefs_common.show_attached_files_first) {
 			gint count;
+			gint prev_pos, new_pos;
 
 			mark = gtk_text_buffer_get_mark(buffer, "attach-file-pos");
 
 			gtk_text_buffer_get_iter_at_mark(buffer, &iter, mark);
+			prev_pos = gtk_text_iter_get_offset(&iter);
 			count = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(mark), "attach-file-count"));
 			if (count == 0) {
 				textview_insert_pad(textview, &iter, 4);
@@ -1056,6 +1065,8 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 			}
 			textview_add_part_widget(textview, &iter, mimeinfo, buf);
 			gtk_text_buffer_move_mark(buffer, mark, &iter);
+			new_pos = gtk_text_iter_get_offset(&iter);
+			textview_uri_list_update_offsets(textview, new_pos, new_pos - prev_pos);
 			g_object_set_data(G_OBJECT(mark), "attach-file-count", GINT_TO_POINTER(count + 1));
 			gtk_text_buffer_get_end_iter(buffer, &iter);
 		} else {
@@ -2202,6 +2213,8 @@ static RemoteURI *textview_get_uri(TextView *textview, GtkTextIter *start,
 		RemoteURI *uri_ = (RemoteURI *)cur->data;
 
 		if (start_pos == uri_->start && end_pos == uri_->end) {
+			debug_print("uri found: (%d, %d): %s\n",
+				    start_pos, end_pos, uri_->uri);
 			uri = uri_;
 			break;
 		}
@@ -2699,4 +2712,21 @@ static void textview_uri_list_remove_all(GSList *uri_list)
 	}
 
 	g_slist_free(uri_list);
+}
+
+static void textview_uri_list_update_offsets(TextView *textview, gint start, gint add)
+{
+	GSList *cur;
+
+	debug_print("textview_uri_list_update_offsets: from %d: add %d\n", start, add);
+
+	for (cur = textview->uri_list; cur != NULL; cur = cur->next) {
+		RemoteURI *uri = (RemoteURI *)cur->data;
+
+		if (uri->start >= start) {
+			debug_print("textview_uri_list_update_offsets: update: (%d, %d) -> (%d, %d)\n", uri->start, uri->end, uri->start + add, uri->end + add);
+			uri->start += add;
+			uri->end += add;
+		}
+	}
 }
