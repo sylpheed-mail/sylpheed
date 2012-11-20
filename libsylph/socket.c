@@ -670,13 +670,72 @@ static gint sock_connect_with_timeout(gint sock,
 {
 	gint ret;
 
-#ifdef G_OS_UNIX
-	set_nonblocking_mode(sock, TRUE);
-#endif
+#ifdef G_OS_WIN32
+	WSAEVENT hevent;
+	gint err;
+	DWORD dwret;
+	WSANETWORKEVENTS events;
+
+	errno = 0;
+
+	hevent = WSACreateEvent();
+	if (hevent == WSA_INVALID_EVENT)
+		return -1;
+
+	ret = WSAEventSelect(sock, hevent, FD_CONNECT);
+	if (ret == SOCKET_ERROR) {
+		g_warning("sock_connect_with_timeout: WSAEventSelect");
+		WSACloseEvent(hevent);
+		return -1;
+	}
 
 	ret = connect(sock, serv_addr, addrlen);
 
-#ifdef G_OS_UNIX
+	if (ret == SOCKET_ERROR) {
+		err = WSAGetLastError();
+		if (err != WSAEWOULDBLOCK) {
+			g_warning("sock_connect_with_timeout: connect (%d)", err);
+			ret = -1;
+			goto end;
+		}
+	}
+
+	dwret = WSAWaitForMultipleEvents(1, &hevent, FALSE, timeout_secs * 1000, FALSE);
+	if (dwret == WSA_WAIT_TIMEOUT) {
+		g_warning("sock_connect_with_timeout: timeout");
+		errno = WSAETIMEDOUT;
+		ret = -1;
+		goto end;
+	} else if (dwret != WSA_WAIT_EVENT_0) {
+		g_warning("sock_connect_with_timeout: WSAWaitForMultipleEvents (%d)", dwret);
+		ret = -1;
+		goto end;
+	}
+
+	ret = WSAEnumNetworkEvents(sock, hevent, &events);
+	if (ret == SOCKET_ERROR) {
+		g_warning("sock_connect_with_timeout: WSAEnumNetworkEvents (%d)", ret);
+		ret = -1;
+		goto end;
+	}
+
+	if ((events.lNetworkEvents & FD_CONNECT) &&
+	     events.iErrorCode[FD_CONNECT_BIT] == 0) {
+		ret = 0;
+		errno = 0;
+	} else
+		ret = -1;
+
+end:
+	WSAEventSelect(sock, NULL, 0);
+	WSACloseEvent(hevent);
+
+	set_nonblocking_mode(sock, FALSE);
+#else
+	set_nonblocking_mode(sock, TRUE);
+
+	ret = connect(sock, serv_addr, addrlen);
+
 	if (ret < 0) {
 		if (EINPROGRESS == errno) {
 			fd_set fds;
