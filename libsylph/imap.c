@@ -2021,7 +2021,7 @@ static gint imap_scan_tree_recursive(IMAPSession *session, FolderItem *item,
 			folder_item_append(item, new_item);
 		}
 
-		if (!strcmp(new_item->path, "INBOX")) {
+		if (!g_ascii_strcasecmp(new_item->path, "INBOX")) {
 			new_item->stype = F_INBOX;
 			folder->inbox = new_item;
 		} else if (!item->parent || item->stype == F_INBOX) {
@@ -2170,7 +2170,7 @@ static GSList *imap_parse_list(IMAPSession *session, const gchar *real_path,
 		new_item = folder_item_new(loc_name, loc_path);
 		if (strcasestr(flags, "\\Noinferiors") != NULL)
 			new_item->no_sub = TRUE;
-		if (strcmp(buf, "INBOX") != 0 &&
+		if (g_ascii_strcasecmp(buf, "INBOX") != 0 &&
 		    strcasestr(flags, "\\Noselect") != NULL)
 			new_item->no_select = TRUE;
 
@@ -2391,7 +2391,7 @@ static FolderItem *imap_create_folder(Folder *folder, FolderItem *parent,
 	session = imap_session_get(folder);
 	if (!session) return NULL;
 
-	if (!parent->parent && strcmp(name, "INBOX") == 0)
+	if (!parent->parent && g_ascii_strcasecmp(name, "INBOX") == 0)
 		dirpath = g_strdup(name);
 	else if (parent->path)
 		dirpath = g_strconcat(parent->path, "/", name, NULL);
@@ -2416,7 +2416,7 @@ static FolderItem *imap_create_folder(Folder *folder, FolderItem *parent,
 	imap_path_separator_subst(imap_path, separator);
 	subst_char(new_name, '/', separator);
 
-	if (strcmp(name, "INBOX") != 0) {
+	if (g_ascii_strcasecmp(name, "INBOX") != 0) {
 		GPtrArray *argbuf;
 		gint i;
 		gboolean exist = FALSE;
