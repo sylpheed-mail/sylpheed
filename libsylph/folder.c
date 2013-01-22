@@ -1145,21 +1145,25 @@ gchar *folder_get_path(Folder *folder)
 			path = path_;
 		}
 	} else if (FOLDER_TYPE(folder) == F_IMAP) {
+		gchar *server;
 		gchar *uid;
 
 		g_return_val_if_fail(folder->account != NULL, NULL);
+		server = uriencode_for_filename(folder->account->recv_server);
 		uid = uriencode_for_filename(folder->account->userid);
 		path = g_strconcat(get_imap_cache_dir(),
-				   G_DIR_SEPARATOR_S,
-				   folder->account->recv_server,
+				   G_DIR_SEPARATOR_S, server,
 				   G_DIR_SEPARATOR_S, uid, NULL);
 		g_free(uid);
+		g_free(server);
 	} else if (FOLDER_TYPE(folder) == F_NEWS) {
+		gchar *server;
+
 		g_return_val_if_fail(folder->account != NULL, NULL);
+		server = uriencode_for_filename(folder->account->nntp_server);
 		path = g_strconcat(get_news_cache_dir(),
-				   G_DIR_SEPARATOR_S,
-				   folder->account->nntp_server,
-				   NULL);
+				   G_DIR_SEPARATOR_S, server, NULL);
+		g_free(server);
 	} else
 		path = NULL;
 
