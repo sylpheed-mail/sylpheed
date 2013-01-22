@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2012 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2013 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -132,6 +132,7 @@ static struct RemoteCmd {
 	GPtrArray *status_full_folders;
 	gchar *open_msg;
 	gboolean configdir;
+	gboolean safe_mode;
 	gboolean exit;
 	gboolean restart;
 	gchar *argv0;
@@ -607,6 +608,8 @@ static void parse_cmd_opt(int argc, char *argv[])
 					(argv[i + 1], -1, NULL, NULL, NULL);
 				i++;
 			}
+		} else if (!strncmp(argv[i], "--safemode", 10)) {
+			cmd.safe_mode = TRUE;
 		} else if (!strncmp(argv[i], "--exit", 6)) {
 			cmd.exit = TRUE;
 		} else if (!strncmp(argv[i], "--help", 6)) {
@@ -633,6 +636,7 @@ static void parse_cmd_opt(int argc, char *argv[])
 #endif
 			g_print("%s\n", _("  --exit                 exit Sylpheed"));
 			g_print("%s\n", _("  --debug                debug mode"));
+			g_print("%s\n", _("  --safemode             safe mode"));
 			g_print("%s\n", _("  --help                 display this help and exit"));
 			g_print("%s\n", _("  --version              output version information and exit"));
 
@@ -1245,6 +1249,11 @@ static void plugin_init(void)
 	STATUSBAR_PUSH(mainwin, _("Loading plug-ins..."));
 
 	if (syl_plugin_init_lib() != 0) {
+		STATUSBAR_POP(mainwin);
+		return;
+	}
+
+	if (cmd.safe_mode) {
 		STATUSBAR_POP(mainwin);
 		return;
 	}

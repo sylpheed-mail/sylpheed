@@ -299,17 +299,23 @@ static void syl_plugin_class_init(SylPluginClass *klass)
 void syl_plugin_signal_connect(const gchar *name, GCallback callback,
 			       gpointer data)
 {
+	g_return_if_fail(plugin_obj != NULL);
+
 	g_signal_connect(plugin_obj, name, callback, data);
 }
 
 void syl_plugin_signal_disconnect(gpointer func, gpointer data)
 {
+	g_return_if_fail(plugin_obj != NULL);
+
 	g_signal_handlers_disconnect_by_func(plugin_obj, func, data);
 }
 
 void syl_plugin_signal_emit(const gchar *name, ...)
 {
 	guint signal_id;
+
+	g_return_if_fail(plugin_obj != NULL);
 
 	if (g_signal_parse_name(name, G_TYPE_FROM_INSTANCE(plugin_obj), &signal_id, NULL, FALSE)) {
 		 \
@@ -345,6 +351,7 @@ gint syl_plugin_load(const gchar *name)
 	SylPluginLoadFunc load_func = NULL;
 	gchar *file;
 
+	g_return_val_if_fail(plugin_obj != NULL, -1);
 	g_return_val_if_fail(name != NULL, -1);
 
 	debug_print("syl_plugin_load: loading %s\n", name);
@@ -424,6 +431,8 @@ gint syl_plugin_load_all(const gchar *dir)
 void syl_plugin_unload_all(void)
 {
 	GSList *cur;
+
+	g_return_if_fail(plugin_obj != NULL);
 
 	for (cur = module_list; cur != NULL; cur = cur->next) {
 		GModule *module = (GModule *)cur->data;
