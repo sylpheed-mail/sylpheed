@@ -844,7 +844,10 @@ static gint pop3_session_recv_msg(Session *session, const gchar *msg)
 		}
 		break;
 	case POP3_LOGOUT:
-		pop3_session->state = POP3_DONE;
+		if (val == PS_SUCCESS)
+			pop3_session->state = POP3_DONE;
+		else
+			pop3_session->state = POP3_ERROR;
 		session_disconnect(session);
 		break;
 	case POP3_ERROR:
