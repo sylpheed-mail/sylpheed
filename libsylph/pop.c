@@ -116,7 +116,7 @@ gint pop3_stls_recv(Pop3Session *session)
 {
 	if (session_start_tls(SESSION(session)) < 0) {
 		session->error_val = PS_SOCKET;
-		return -1;
+		return PS_SOCKET;
 	}
 	return PS_SUCCESS;
 }
@@ -156,13 +156,13 @@ gint pop3_getauth_apop_send(Pop3Session *session)
 		log_warning(_("Required APOP timestamp not found "
 			      "in greeting\n"));
 		session->error_val = PS_PROTOCOL;
-		return -1;
+		return PS_PROTOCOL;
 	}
 
 	if ((end = strchr(start, '>')) == NULL || end == start + 1) {
 		log_warning(_("Timestamp syntax error in greeting\n"));
 		session->error_val = PS_PROTOCOL;
-		return -1;
+		return PS_PROTOCOL;
 	}
 
 	*(end + 1) = '\0';
@@ -170,7 +170,7 @@ gint pop3_getauth_apop_send(Pop3Session *session)
 	if (!is_ascii_str(start) || strchr(start, '@') == NULL) {
 		log_warning(_("Invalid timestamp in greeting\n"));
 		session->error_val = PS_PROTOCOL;
-		return -1;
+		return PS_PROTOCOL;
 	}
 
 	apop_str = g_strconcat(start, session->pass, NULL);
@@ -198,7 +198,7 @@ gint pop3_getrange_stat_recv(Pop3Session *session, const gchar *msg)
 	if (sscanf(msg, "%d %lld", &session->count, &session->total_bytes) != 2) {
 		log_warning(_("POP3 protocol error\n"));
 		session->error_val = PS_PROTOCOL;
-		return -1;
+		return PS_PROTOCOL;
 	} else {
 		if (session->count == 0) {
 			session->uidl_is_valid = TRUE;
@@ -225,7 +225,7 @@ gint pop3_getrange_last_recv(Pop3Session *session, const gchar *msg)
 	if (sscanf(msg, "%d", &last) == 0) {
 		log_warning(_("POP3 protocol error\n"));
 		session->error_val = PS_PROTOCOL;
-		return -1;
+		return PS_PROTOCOL;
 	} else {
 		if (session->count > last) {
 			session->new_msg_exist = TRUE;
@@ -257,7 +257,7 @@ gint pop3_getrange_uidl_recv(Pop3Session *session, const gchar *data, guint len)
 
 	while (p < lastp) {
 		if ((newline = memchr(p, '\r', lastp - p)) == NULL)
-			return -1;
+			return PS_PROTOCOL;
 		buf_len = MIN(newline - p, sizeof(buf) - 1);
 		memcpy(buf, p, buf_len);
 		buf[buf_len] = '\0';
@@ -309,7 +309,7 @@ gint pop3_getsize_list_recv(Pop3Session *session, const gchar *data, guint len)
 
 	while (p < lastp) {
 		if ((newline = memchr(p, '\r', lastp - p)) == NULL)
-			return -1;
+			return PS_PROTOCOL;
 		buf_len = MIN(newline - p, sizeof(buf) - 1);
 		memcpy(buf, p, buf_len);
 		buf[buf_len] = '\0';
@@ -319,7 +319,7 @@ gint pop3_getsize_list_recv(Pop3Session *session, const gchar *data, guint len)
 
 		if (sscanf(buf, "%u %u", &num, &size) != 2) {
 			session->error_val = PS_PROTOCOL;
-			return -1;
+			return PS_PROTOCOL;
 		}
 
 		if (num > 0 && num <= session->count)
@@ -347,7 +347,7 @@ gint pop3_retr_recv(Pop3Session *session, FILE *fp, guint len)
 	if (pop3_write_msg_to_file(file, fp, len) < 0) {
 		g_free(file);
 		session->error_val = PS_IOERR;
-		return -1;
+		return PS_IOERR;
 	}
 
 	drop_ok = session->drop_message(session, file);
@@ -355,7 +355,7 @@ gint pop3_retr_recv(Pop3Session *session, FILE *fp, guint len)
 	g_free(file);
 	if (drop_ok < 0) {
 		session->error_val = PS_IOERR;
-		return -1;
+		return PS_IOERR;
 	}
 
 	session->cur_total_bytes += session->msg[session->cur_msg].size;
@@ -723,7 +723,10 @@ Pop3ErrorValue pop3_ok(Pop3Session *session, const gchar *msg)
 	} else
 		ok = PS_PROTOCOL;
 
-	session->error_val = ok;
+	/* don't overwrite previous error on logout */
+	if (session->state != POP3_LOGOUT)
+		session->error_val = ok;
+
 	return ok;
 }
 
@@ -738,9 +741,17 @@ static gint pop3_session_recv_msg(Session *session, const gchar *msg)
 	    pop3_session->state != POP3_GETSIZE_LIST_RECV) {
 		val = pop3_ok(pop3_session, msg);
 		if (val != PS_SUCCESS) {
-			if (val != PS_NOTSUPPORTED) {
+			if (val == PS_SOCKET) {
 				pop3_session->state = POP3_ERROR;
 				return -1;
+			}
+			if (val != PS_NOTSUPPORTED) {
+				if (pop3_session->state != POP3_LOGOUT) {
+					if (pop3_logout_send(pop3_session) == PS_SUCCESS)
+						return 0;
+					else
+						return -1;
+				}
 			}
 		}
 

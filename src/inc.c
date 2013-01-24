@@ -1038,6 +1038,10 @@ static IncState inc_pop3_session_do(IncSession *session)
 	}
 	log_window_flush();
 
+	debug_print("inc_state: %d\n", session->inc_state);
+	debug_print("pop3_session.error_val: %d\n", pop3_session->error_val);
+	debug_print("pop3_session.error_msg: %s\n", pop3_session->error_msg ? pop3_session->error_msg : "(empty)");
+
 	if (session->inc_state == INC_SUCCESS) {
 		switch (pop3_session->error_val) {
 		case PS_SUCCESS:
