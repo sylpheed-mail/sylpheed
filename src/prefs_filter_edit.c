@@ -1850,6 +1850,24 @@ FilterCond *prefs_filter_edit_cond_hbox_to_cond(CondHBox *hbox,
 	return cond;
 }
 
+static gboolean check_dest_folder(const gchar *dest, gchar **error_msg)
+{
+	FolderItem *item;
+
+	if (!dest || *dest == '\0') {
+		*error_msg = _("Destination folder is not specified.");
+		return FALSE;
+	}
+
+	item = folder_find_item_from_identifier(dest);
+	if (!item || !item->path || !item->parent) {
+		*error_msg = _("The specified destination folder does not exist.");
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
 FilterAction *prefs_filter_edit_action_hbox_to_action(ActionHBox *hbox,
 						      gchar **error_msg)
 {
@@ -1864,18 +1882,13 @@ FilterAction *prefs_filter_edit_action_hbox_to_action(ActionHBox *hbox,
 	switch (action_menu_type) {
 	case PF_ACTION_MOVE:
 		str = gtk_entry_get_text(GTK_ENTRY(hbox->folder_entry));
-		if (str && *str)
-			action = filter_action_new(FLT_ACTION_MOVE,
-						   str);
-		else
-			error_msg_ = _("Destination folder is not specified.");
+		if (check_dest_folder(str, &error_msg_))
+			action = filter_action_new(FLT_ACTION_MOVE, str);
 		break;
 	case PF_ACTION_COPY:
 		str = gtk_entry_get_text(GTK_ENTRY(hbox->folder_entry));
-		if (str && *str)
+		if (check_dest_folder(str, &error_msg_))
 			action = filter_action_new(FLT_ACTION_COPY, str);
-		else
-			error_msg_ = _("Destination folder is not specified.");
 		break;
 	case PF_ACTION_NOT_RECEIVE:
 		action = filter_action_new(FLT_ACTION_NOT_RECEIVE, NULL);
