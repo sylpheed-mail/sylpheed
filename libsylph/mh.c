@@ -1665,6 +1665,8 @@ static void mh_remove_missing_folder_items(Folder *folder)
 			mh_remove_missing_folder_items_func, folder);
 }
 
+#define MAX_RECURSION_LEVEL	64
+
 static void mh_scan_tree_recursive(FolderItem *item)
 {
 	Folder *folder;
@@ -1691,6 +1693,32 @@ static void mh_scan_tree_recursive(FolderItem *item)
 
 	folder = item->folder;
 
+	debug_print("scanning %s ...\n",
+		    item->path ? item->path : LOCAL_FOLDER(folder)->rootpath);
+	if (folder->ui_func)
+		folder->ui_func(folder, item, folder->ui_func_data);
+
+	if (item->path) {
+		gint new, unread, total, min, max;
+
+		procmsg_get_mark_sum
+			(item, &new, &unread, &total, &min, &max, 0);
+		if (n_msg > total) {
+			new += n_msg - total;
+			unread += n_msg - total;
+		}
+		item->new = new;
+		item->unread = unread;
+		item->total = n_msg;
+		item->updated = TRUE;
+		item->mtime = 0;
+	}
+
+	if (g_node_depth(item->node) >= MAX_RECURSION_LEVEL) {
+		g_warning("mh_scan_tree_recursive(): max recursion level (%u) reached.", MAX_RECURSION_LEVEL);
+		return;
+	}
+
 	fs_path = item->path ?
 		g_filename_from_utf8(item->path, -1, NULL, NULL, NULL)
 		: g_strdup(".");
@@ -1712,12 +1740,6 @@ static void mh_scan_tree_recursive(FolderItem *item)
 	}
 #endif
 	g_free(fs_path);
-
-	debug_print("scanning %s ...\n",
-		    item->path ? item->path
-		    : LOCAL_FOLDER(item->folder)->rootpath);
-	if (folder->ui_func)
-		folder->ui_func(folder, item, folder->ui_func_data);
 
 #ifdef G_OS_WIN32
 	do {
@@ -1845,22 +1867,6 @@ static void mh_scan_tree_recursive(FolderItem *item)
 #else
 	closedir(dp);
 #endif
-
-	if (item->path) {
-		gint new, unread, total, min, max;
-
-		procmsg_get_mark_sum
-			(item, &new, &unread, &total, &min, &max, 0);
-		if (n_msg > total) {
-			new += n_msg - total;
-			unread += n_msg - total;
-		}
-		item->new = new;
-		item->unread = unread;
-		item->total = n_msg;
-		item->updated = TRUE;
-		item->mtime = 0;
-	}
 }
 
 static gboolean mh_rename_folder_func(GNode *node, gpointer data)
