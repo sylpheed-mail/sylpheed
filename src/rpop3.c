@@ -1079,7 +1079,8 @@ static gint rpop3_session_recv_data_as_file_finished(Session *session,
 					(rpop3_window.delete_btn, TRUE);
 				if (pop3_session->cur_msg == 1)
 					gtk_widget_set_sensitive(rpop3_window.stop_btn, FALSE);
-				gtk_button_set_label(GTK_BUTTON(rpop3_window.stop_btn), GTK_STOCK_REFRESH);
+				else
+					gtk_button_set_label(GTK_BUTTON(rpop3_window.stop_btn), GTK_STOCK_REFRESH);
 				g_object_set(rpop3_window.recv_action,
 					     "sensitive", TRUE, NULL);
 				g_object_set(rpop3_window.open_action,
@@ -1273,7 +1274,10 @@ static void rpop3_read_next(GtkButton *button, gpointer data)
 	rpop3_window.session->cur_msg = i;
 
 	rpop3_window.stop_load = FALSE;
-	
+
+	gtk_widget_set_sensitive(rpop3_window.recv_btn, FALSE);
+	gtk_widget_set_sensitive(rpop3_window.open_btn, FALSE);
+	gtk_widget_set_sensitive(rpop3_window.delete_btn, FALSE);
 	gtk_button_set_label(GTK_BUTTON(rpop3_window.stop_btn), GTK_STOCK_STOP);
 	gtk_widget_set_sensitive(rpop3_window.stop_btn, TRUE);
 	g_object_set(rpop3_window.update_action, "sensitive", FALSE, NULL);
