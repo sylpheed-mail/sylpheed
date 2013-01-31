@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-29 17:43+0900\n"
+"POT-Creation-Date: 2013-01-31 11:34+0900\n"
 "PO-Revision-Date: 2003-01-24 20:39CET\n"
 "Last-Translator: Jernej Kovacic <jkovacic@email.si>\n"
 "Language-Team: Slovenian <translator-team-sl@lists.sourceforge.net>\n"
@@ -3090,7 +3090,7 @@ msgstr "Povezujem se s strežnikom POP: %s"
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Ne morem se povezati s strežnikom POP: %s%d\n"
 
-#: src/inc.c:1115 src/rpop3.c:862 src/send_message.c:846
+#: src/inc.c:1115 src/rpop3.c:873 src/send_message.c:846
 #, c-format
 msgid "Authenticating..."
 msgstr "Overovljam..."
@@ -3307,7 +3307,7 @@ msgstr "  --debug                razhroščevalni način"
 
 #: src/main.c:639
 #, fuzzy
-msgid "  --safemode             safe mode"
+msgid "  --safe-mode            safe mode"
 msgstr "  --debug                razhroščevalni način"
 
 #: src/main.c:640
@@ -3369,16 +3369,16 @@ msgid "Loading plug-ins..."
 msgstr ""
 
 #. remote command mode
-#: src/main.c:1450
+#: src/main.c:1451
 msgid "another Sylpheed is already running.\n"
 msgstr "Sylpheed že teče.\n"
 
-#: src/main.c:1738
+#: src/main.c:1739
 #, fuzzy
 msgid "Migration of configuration"
 msgstr "Pišem nastavitve dejanj..\n"
 
-#: src/main.c:1739
+#: src/main.c:1740
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -7068,6 +7068,11 @@ msgstr "/_Datoteka"
 msgid "_Get"
 msgstr "Poberi"
 
+#: src/rpop3.c:251 src/rpop3.c:1097
+#, fuzzy
+msgid "_Resume"
+msgstr "/_Odstrani"
+
 #: src/rpop3.c:254
 #, fuzzy
 msgid "_Help"
@@ -7114,58 +7119,58 @@ msgstr "Med preverjanjem istovetnosti je prišlo do napake\n"
 msgid "Retrieving message headers (%d / %d) ..."
 msgstr "Pošiljam sporočilo (%d / %d zlogov)"
 
-#: src/rpop3.c:888
+#: src/rpop3.c:899
 #, fuzzy
 msgid "Getting the number of messages..."
 msgstr "Ugotavljam število novih sporočil (STAT)..."
 
-#: src/rpop3.c:897 src/rpop3.c:910
+#: src/rpop3.c:908 src/rpop3.c:921
 #, fuzzy
 msgid "No message"
 msgstr "Ni novih sporočil."
 
-#: src/rpop3.c:943
+#: src/rpop3.c:954
 #, fuzzy, c-format
 msgid "Deleted %d messages"
 msgstr "Izbriši sporočilo/a"
 
-#: src/rpop3.c:986 src/rpop3.c:998 src/rpop3.c:1059 src/rpop3.c:1298
+#: src/rpop3.c:1000 src/rpop3.c:1012 src/rpop3.c:1073 src/rpop3.c:1316
 #: src/send_message.c:863
 #, c-format
 msgid "Quitting..."
 msgstr "Zapuščam..."
 
-#: src/rpop3.c:1044
+#: src/rpop3.c:1058
 #, fuzzy, c-format
 msgid "Retrieved %d messages"
 msgstr "Prenašam nova sporočila"
 
-#: src/rpop3.c:1051
+#: src/rpop3.c:1065
 #, fuzzy, c-format
 msgid "Opened message %d"
 msgstr "Pošlji sporočilo"
 
-#: src/rpop3.c:1068
+#: src/rpop3.c:1082
 #, fuzzy, c-format
 msgid "Retrieved %d (of %d) message headers"
 msgstr "Prenašam nova sporočila"
 
-#: src/rpop3.c:1072
+#: src/rpop3.c:1086
 #, fuzzy, c-format
 msgid "Retrieved %d message headers"
 msgstr "Prenašam nova sporočila"
 
-#: src/rpop3.c:1193
+#: src/rpop3.c:1208
 #, fuzzy, c-format
 msgid "Retrieving message %d ..."
 msgstr "Sprejemam sporočila iz %s v %s...\n"
 
-#: src/rpop3.c:1219
+#: src/rpop3.c:1234
 #, fuzzy
 msgid "Delete messages"
 msgstr "Izbriši sporočilo/a"
 
-#: src/rpop3.c:1220
+#: src/rpop3.c:1235
 msgid ""
 "Really delete selected messages from server?\n"
 "This operation cannot be reverted."

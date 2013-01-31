@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-29 17:43+0900\n"
+"POT-Creation-Date: 2013-01-31 11:34+0900\n"
 "PO-Revision-Date: 2005-06-09 13:51+0300\n"
 "Last-Translator: Vitalijus Valantiejus <vitalijus@users.sf.net>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -3000,7 +3000,7 @@ msgstr "Jungiuosi prie POP3 serverio: %s..."
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Negaliu prisijungti prie POP3 serverio: %s:%d\n"
 
-#: src/inc.c:1115 src/rpop3.c:862 src/send_message.c:846
+#: src/inc.c:1115 src/rpop3.c:873 src/send_message.c:846
 #, c-format
 msgid "Authenticating..."
 msgstr "Patvirtinamas autentiškumas..."
@@ -3220,7 +3220,7 @@ msgstr "  --debug                derinimo rėžimas"
 
 #: src/main.c:639
 #, fuzzy
-msgid "  --safemode             safe mode"
+msgid "  --safe-mode            safe mode"
 msgstr "  --debug                derinimo rėžimas"
 
 #: src/main.c:640
@@ -3289,15 +3289,15 @@ msgid "Loading plug-ins..."
 msgstr ""
 
 #. remote command mode
-#: src/main.c:1450
+#: src/main.c:1451
 msgid "another Sylpheed is already running.\n"
 msgstr "Sylpheed jau paleistas.\n"
 
-#: src/main.c:1738
+#: src/main.c:1739
 msgid "Migration of configuration"
 msgstr "Konfigūracijos atnaujinimas"
 
-#: src/main.c:1739
+#: src/main.c:1740
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -6849,6 +6849,11 @@ msgstr "/_Failas"
 msgid "_Get"
 msgstr "Gauti"
 
+#: src/rpop3.c:251 src/rpop3.c:1097
+#, fuzzy
+msgid "_Resume"
+msgstr "/_Pašalinti"
+
 #: src/rpop3.c:254
 #, fuzzy
 msgid "_Help"
@@ -6895,58 +6900,58 @@ msgstr "klaida POP3 sesijoje\n"
 msgid "Retrieving message headers (%d / %d) ..."
 msgstr "Gaunamos laiškų antraštės (%d / %d)"
 
-#: src/rpop3.c:888
+#: src/rpop3.c:899
 #, fuzzy
 msgid "Getting the number of messages..."
 msgstr "Gaunamas naujų laiškų skaičius (STAT)..."
 
-#: src/rpop3.c:897 src/rpop3.c:910
+#: src/rpop3.c:908 src/rpop3.c:921
 #, fuzzy
 msgid "No message"
 msgstr "Nėra naujų laiškų."
 
-#: src/rpop3.c:943
+#: src/rpop3.c:954
 #, fuzzy, c-format
 msgid "Deleted %d messages"
 msgstr "Ištrinti laišką(-us)"
 
-#: src/rpop3.c:986 src/rpop3.c:998 src/rpop3.c:1059 src/rpop3.c:1298
+#: src/rpop3.c:1000 src/rpop3.c:1012 src/rpop3.c:1073 src/rpop3.c:1316
 #: src/send_message.c:863
 #, c-format
 msgid "Quitting..."
 msgstr "Išeinu..."
 
-#: src/rpop3.c:1044
+#: src/rpop3.c:1058
 #, fuzzy, c-format
 msgid "Retrieved %d messages"
 msgstr "Gaunami nauji laiškai"
 
-#: src/rpop3.c:1051
+#: src/rpop3.c:1065
 #, fuzzy, c-format
 msgid "Opened message %d"
 msgstr "Siųsti laišką"
 
-#: src/rpop3.c:1068
+#: src/rpop3.c:1082
 #, fuzzy, c-format
 msgid "Retrieved %d (of %d) message headers"
 msgstr "Gaunami nauji laiškai"
 
-#: src/rpop3.c:1072
+#: src/rpop3.c:1086
 #, fuzzy, c-format
 msgid "Retrieved %d message headers"
 msgstr "Gaunami nauji laiškai"
 
-#: src/rpop3.c:1193
+#: src/rpop3.c:1208
 #, fuzzy, c-format
 msgid "Retrieving message %d ..."
 msgstr "Gaunami laiškai iš %s..."
 
-#: src/rpop3.c:1219
+#: src/rpop3.c:1234
 #, fuzzy
 msgid "Delete messages"
 msgstr "Ištrinti laišką(-us)"
 
-#: src/rpop3.c:1220
+#: src/rpop3.c:1235
 msgid ""
 "Really delete selected messages from server?\n"
 "This operation cannot be reverted."

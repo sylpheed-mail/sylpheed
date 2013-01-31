@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-29 17:43+0900\n"
+"POT-Creation-Date: 2013-01-31 11:34+0900\n"
 "PO-Revision-Date: 2010-06-15 15:18+0400\n"
 "Last-Translator: \n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -2991,7 +2991,7 @@ msgstr "Соединение с сервером POP3: %s..."
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Не удалось соединиться с сервером POP3: %s:%d\n"
 
-#: src/inc.c:1115 src/rpop3.c:862 src/send_message.c:846
+#: src/inc.c:1115 src/rpop3.c:873 src/send_message.c:846
 #, c-format
 msgid "Authenticating..."
 msgstr "Аутентификация..."
@@ -3216,7 +3216,7 @@ msgstr "  --debug                режим отладки"
 
 #: src/main.c:639
 #, fuzzy
-msgid "  --safemode             safe mode"
+msgid "  --safe-mode            safe mode"
 msgstr "  --debug                режим отладки"
 
 #: src/main.c:640
@@ -3285,15 +3285,15 @@ msgid "Loading plug-ins..."
 msgstr "Загрузка модулей..."
 
 #. remote command mode
-#: src/main.c:1450
+#: src/main.c:1451
 msgid "another Sylpheed is already running.\n"
 msgstr "другая копия Sylpheed уже запущена.\n"
 
-#: src/main.c:1738
+#: src/main.c:1739
 msgid "Migration of configuration"
 msgstr "Импорт предыдущей конфигурации"
 
-#: src/main.c:1739
+#: src/main.c:1740
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -6829,6 +6829,11 @@ msgstr "/Файл"
 msgid "_Get"
 msgstr "Принять"
 
+#: src/rpop3.c:251 src/rpop3.c:1097
+#, fuzzy
+msgid "_Resume"
+msgstr "/Удалить"
+
 #: src/rpop3.c:254
 msgid "_Help"
 msgstr "/Справка"
@@ -6874,55 +6879,55 @@ msgstr ""
 msgid "Retrieving message headers (%d / %d) ..."
 msgstr "Получение заголовков сообщений (%d / %d)"
 
-#: src/rpop3.c:888
+#: src/rpop3.c:899
 msgid "Getting the number of messages..."
 msgstr "Получение количества новых сообщений (STAT)..."
 
-#: src/rpop3.c:897 src/rpop3.c:910
+#: src/rpop3.c:908 src/rpop3.c:921
 msgid "No message"
 msgstr "Нет новых сообщений."
 
-#: src/rpop3.c:943
+#: src/rpop3.c:954
 #, c-format
 msgid "Deleted %d messages"
 msgstr "Удалено %d сообщений"
 
-#: src/rpop3.c:986 src/rpop3.c:998 src/rpop3.c:1059 src/rpop3.c:1298
+#: src/rpop3.c:1000 src/rpop3.c:1012 src/rpop3.c:1073 src/rpop3.c:1316
 #: src/send_message.c:863
 #, c-format
 msgid "Quitting..."
 msgstr "Завершение..."
 
-#: src/rpop3.c:1044
+#: src/rpop3.c:1058
 #, c-format
 msgid "Retrieved %d messages"
 msgstr "Получено %d сообщений"
 
-#: src/rpop3.c:1051
+#: src/rpop3.c:1065
 #, c-format
 msgid "Opened message %d"
 msgstr "Открыть сообщение %d"
 
-#: src/rpop3.c:1068
+#: src/rpop3.c:1082
 #, fuzzy, c-format
 msgid "Retrieved %d (of %d) message headers"
 msgstr "Получено %d заголовков сообщений"
 
-#: src/rpop3.c:1072
+#: src/rpop3.c:1086
 #, c-format
 msgid "Retrieved %d message headers"
 msgstr "Получено %d заголовков сообщений"
 
-#: src/rpop3.c:1193
+#: src/rpop3.c:1208
 #, c-format
 msgid "Retrieving message %d ..."
 msgstr "Получение сообщений с %d..."
 
-#: src/rpop3.c:1219
+#: src/rpop3.c:1234
 msgid "Delete messages"
 msgstr "Удаление сообщений"
 
-#: src/rpop3.c:1220
+#: src/rpop3.c:1235
 msgid ""
 "Really delete selected messages from server?\n"
 "This operation cannot be reverted."

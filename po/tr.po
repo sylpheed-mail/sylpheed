@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-29 17:43+0900\n"
+"POT-Creation-Date: 2013-01-31 11:34+0900\n"
 "PO-Revision-Date: 2012-06-18 19:03+0300\n"
 "Last-Translator: Doruk Fisek <dfisek@ozguryazilim.com.tr>\n"
 "Language-Team: Turkish <gnu-tr-u12a@lists.sourceforge.net>\n"
@@ -2974,7 +2974,7 @@ msgstr "POP3 sunucusuna bağlantı kuruluyor: %s ..."
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "POP3 sunucuya bağlantı kurulamadı: %s:%d\n"
 
-#: src/inc.c:1115 src/rpop3.c:862 src/send_message.c:846
+#: src/inc.c:1115 src/rpop3.c:873 src/send_message.c:846
 #, c-format
 msgid "Authenticating..."
 msgstr "Kimlik denetimi yapılıyor..."
@@ -3197,7 +3197,7 @@ msgstr "  --debug                hata ayıklama modu"
 
 #: src/main.c:639
 #, fuzzy
-msgid "  --safemode             safe mode"
+msgid "  --safe-mode            safe mode"
 msgstr "  --debug                hata ayıklama modu"
 
 #: src/main.c:640
@@ -3266,15 +3266,15 @@ msgid "Loading plug-ins..."
 msgstr "Eklentiler yükleniyor..."
 
 #. remote command mode
-#: src/main.c:1450
+#: src/main.c:1451
 msgid "another Sylpheed is already running.\n"
 msgstr "Başka bir Sylpheed sistemde çalışıyor.\n"
 
-#: src/main.c:1738
+#: src/main.c:1739
 msgid "Migration of configuration"
 msgstr "Ayarların göç ettirilmesi"
 
-#: src/main.c:1739
+#: src/main.c:1740
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -6787,6 +6787,11 @@ msgstr "_Dosya"
 msgid "_Get"
 msgstr "_Al"
 
+#: src/rpop3.c:251 src/rpop3.c:1097
+#, fuzzy
+msgid "_Resume"
+msgstr "/_Sil"
+
 #: src/rpop3.c:254
 msgid "_Help"
 msgstr "_Yardım"
@@ -6832,55 +6837,55 @@ msgstr ""
 msgid "Retrieving message headers (%d / %d) ..."
 msgstr "İleti başlıkları alınıyor (%d / %d) ..."
 
-#: src/rpop3.c:888
+#: src/rpop3.c:899
 msgid "Getting the number of messages..."
 msgstr "İleti sayısı alınıyor..."
 
-#: src/rpop3.c:897 src/rpop3.c:910
+#: src/rpop3.c:908 src/rpop3.c:921
 msgid "No message"
 msgstr "İleti yok"
 
-#: src/rpop3.c:943
+#: src/rpop3.c:954
 #, c-format
 msgid "Deleted %d messages"
 msgstr "%d ileti silindi"
 
-#: src/rpop3.c:986 src/rpop3.c:998 src/rpop3.c:1059 src/rpop3.c:1298
+#: src/rpop3.c:1000 src/rpop3.c:1012 src/rpop3.c:1073 src/rpop3.c:1316
 #: src/send_message.c:863
 #, c-format
 msgid "Quitting..."
 msgstr "Çıkılıyor..."
 
-#: src/rpop3.c:1044
+#: src/rpop3.c:1058
 #, c-format
 msgid "Retrieved %d messages"
 msgstr "%d ileti alınıdı"
 
-#: src/rpop3.c:1051
+#: src/rpop3.c:1065
 #, c-format
 msgid "Opened message %d"
 msgstr "%d iletisi açıldı"
 
-#: src/rpop3.c:1068
+#: src/rpop3.c:1082
 #, c-format
 msgid "Retrieved %d (of %d) message headers"
 msgstr "%d/%d ileti başlığı alındı"
 
-#: src/rpop3.c:1072
+#: src/rpop3.c:1086
 #, c-format
 msgid "Retrieved %d message headers"
 msgstr "%d ileti başlığı alındı"
 
-#: src/rpop3.c:1193
+#: src/rpop3.c:1208
 #, c-format
 msgid "Retrieving message %d ..."
 msgstr "İleti alınıyor %d ..."
 
-#: src/rpop3.c:1219
+#: src/rpop3.c:1234
 msgid "Delete messages"
 msgstr "İletileri sil"
 
-#: src/rpop3.c:1220
+#: src/rpop3.c:1235
 msgid ""
 "Really delete selected messages from server?\n"
 "This operation cannot be reverted."

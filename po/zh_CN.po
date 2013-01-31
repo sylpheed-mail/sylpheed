@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-29 17:43+0900\n"
+"POT-Creation-Date: 2013-01-31 11:34+0900\n"
 "PO-Revision-Date: 2005-03-17 09:22+0800\n"
 "Last-Translator: Wang Jian <lark@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -3035,7 +3035,7 @@ msgstr "正在连接POP3服务器：%s..."
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "无法连接POP3服务器：%s:%d\n"
 
-#: src/inc.c:1115 src/rpop3.c:862 src/send_message.c:846
+#: src/inc.c:1115 src/rpop3.c:873 src/send_message.c:846
 #, c-format
 msgid "Authenticating..."
 msgstr "正在验证..."
@@ -3255,7 +3255,7 @@ msgstr "  --debug                调试模式"
 
 #: src/main.c:639
 #, fuzzy
-msgid "  --safemode             safe mode"
+msgid "  --safe-mode            safe mode"
 msgstr "  --debug                调试模式"
 
 #: src/main.c:640
@@ -3317,15 +3317,15 @@ msgid "Loading plug-ins..."
 msgstr ""
 
 #. remote command mode
-#: src/main.c:1450
+#: src/main.c:1451
 msgid "another Sylpheed is already running.\n"
 msgstr "另外一个 Sylpheed 正在运行。\n"
 
-#: src/main.c:1738
+#: src/main.c:1739
 msgid "Migration of configuration"
 msgstr "正在迁移配置"
 
-#: src/main.c:1739
+#: src/main.c:1740
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -6945,6 +6945,11 @@ msgstr "/文件(_F)"
 msgid "_Get"
 msgstr "接收"
 
+#: src/rpop3.c:251 src/rpop3.c:1097
+#, fuzzy
+msgid "_Resume"
+msgstr "/删除(_R)"
+
 #: src/rpop3.c:254
 #, fuzzy
 msgid "_Help"
@@ -6991,58 +6996,58 @@ msgstr "POP3 会话发生错误\n"
 msgid "Retrieving message headers (%d / %d) ..."
 msgstr "正在发送邮件 (%d / %d 字节)"
 
-#: src/rpop3.c:888
+#: src/rpop3.c:899
 #, fuzzy
 msgid "Getting the number of messages..."
 msgstr "正在获取新邮件数量(STAT)..."
 
-#: src/rpop3.c:897 src/rpop3.c:910
+#: src/rpop3.c:908 src/rpop3.c:921
 #, fuzzy
 msgid "No message"
 msgstr "没有新邮件"
 
-#: src/rpop3.c:943
+#: src/rpop3.c:954
 #, fuzzy, c-format
 msgid "Deleted %d messages"
 msgstr "删除邮件"
 
-#: src/rpop3.c:986 src/rpop3.c:998 src/rpop3.c:1059 src/rpop3.c:1298
+#: src/rpop3.c:1000 src/rpop3.c:1012 src/rpop3.c:1073 src/rpop3.c:1316
 #: src/send_message.c:863
 #, c-format
 msgid "Quitting..."
 msgstr "正在退出..."
 
-#: src/rpop3.c:1044
+#: src/rpop3.c:1058
 #, fuzzy, c-format
 msgid "Retrieved %d messages"
 msgstr "正在获取新邮件"
 
-#: src/rpop3.c:1051
+#: src/rpop3.c:1065
 #, fuzzy, c-format
 msgid "Opened message %d"
 msgstr "立即发送邮件"
 
-#: src/rpop3.c:1068
+#: src/rpop3.c:1082
 #, fuzzy, c-format
 msgid "Retrieved %d (of %d) message headers"
 msgstr "正在获取新邮件"
 
-#: src/rpop3.c:1072
+#: src/rpop3.c:1086
 #, fuzzy, c-format
 msgid "Retrieved %d message headers"
 msgstr "正在获取新邮件"
 
-#: src/rpop3.c:1193
+#: src/rpop3.c:1208
 #, fuzzy, c-format
 msgid "Retrieving message %d ..."
 msgstr "正在从 %s 获取邮件..."
 
-#: src/rpop3.c:1219
+#: src/rpop3.c:1234
 #, fuzzy
 msgid "Delete messages"
 msgstr "删除邮件"
 
-#: src/rpop3.c:1220
+#: src/rpop3.c:1235
 msgid ""
 "Really delete selected messages from server?\n"
 "This operation cannot be reverted."

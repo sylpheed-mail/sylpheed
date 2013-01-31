@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-29 17:43+0900\n"
+"POT-Creation-Date: 2013-01-31 11:34+0900\n"
 "PO-Revision-Date: 2002-11-29 21:08+0100\n"
 "Last-Translator: garret <garret@garrets.tk>\n"
 "Language-Team: Serbian\n"
@@ -3084,7 +3084,7 @@ msgstr "Povezujem se na POP3 server: %s ..."
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Ne mogu se povezati na POP3 server: %s:%d\n"
 
-#: src/inc.c:1115 src/rpop3.c:862 src/send_message.c:846
+#: src/inc.c:1115 src/rpop3.c:873 src/send_message.c:846
 #, c-format
 msgid "Authenticating..."
 msgstr "Prijavljujem se..."
@@ -3301,7 +3301,7 @@ msgstr "  --debug                debug način"
 
 #: src/main.c:639
 #, fuzzy
-msgid "  --safemode             safe mode"
+msgid "  --safe-mode            safe mode"
 msgstr "  --debug                debug način"
 
 #: src/main.c:640
@@ -3363,16 +3363,16 @@ msgid "Loading plug-ins..."
 msgstr ""
 
 #. remote command mode
-#: src/main.c:1450
+#: src/main.c:1451
 msgid "another Sylpheed is already running.\n"
 msgstr "drugi Sylpheed već radi.\n"
 
-#: src/main.c:1738
+#: src/main.c:1739
 #, fuzzy
 msgid "Migration of configuration"
 msgstr "Pisanje konfiguracije za akcije...\n"
 
-#: src/main.c:1739
+#: src/main.c:1740
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -7063,6 +7063,11 @@ msgstr "/_Datoteka"
 msgid "_Get"
 msgstr "Primi"
 
+#: src/rpop3.c:251 src/rpop3.c:1097
+#, fuzzy
+msgid "_Resume"
+msgstr "/_Skloni"
+
 #: src/rpop3.c:254
 #, fuzzy
 msgid "_Help"
@@ -7109,58 +7114,58 @@ msgstr "greška prilikom provere identiteta\n"
 msgid "Retrieving message headers (%d / %d) ..."
 msgstr "Šaljem poruku (%d / %d bajtova)"
 
-#: src/rpop3.c:888
+#: src/rpop3.c:899
 #, fuzzy
 msgid "Getting the number of messages..."
 msgstr "Preuzimam broj novih poruka (STAT)..."
 
-#: src/rpop3.c:897 src/rpop3.c:910
+#: src/rpop3.c:908 src/rpop3.c:921
 #, fuzzy
 msgid "No message"
 msgstr "Nema novih poruka."
 
-#: src/rpop3.c:943
+#: src/rpop3.c:954
 #, fuzzy, c-format
 msgid "Deleted %d messages"
 msgstr "Obriši poruku/e"
 
-#: src/rpop3.c:986 src/rpop3.c:998 src/rpop3.c:1059 src/rpop3.c:1298
+#: src/rpop3.c:1000 src/rpop3.c:1012 src/rpop3.c:1073 src/rpop3.c:1316
 #: src/send_message.c:863
 #, c-format
 msgid "Quitting..."
 msgstr "Završavnje..."
 
-#: src/rpop3.c:1044
+#: src/rpop3.c:1058
 #, fuzzy, c-format
 msgid "Retrieved %d messages"
 msgstr "Primam nove poruke"
 
-#: src/rpop3.c:1051
+#: src/rpop3.c:1065
 #, fuzzy, c-format
 msgid "Opened message %d"
 msgstr "Pošalji poruku"
 
-#: src/rpop3.c:1068
+#: src/rpop3.c:1082
 #, fuzzy, c-format
 msgid "Retrieved %d (of %d) message headers"
 msgstr "Primam nove poruke"
 
-#: src/rpop3.c:1072
+#: src/rpop3.c:1086
 #, fuzzy, c-format
 msgid "Retrieved %d message headers"
 msgstr "Primam nove poruke"
 
-#: src/rpop3.c:1193
+#: src/rpop3.c:1208
 #, fuzzy, c-format
 msgid "Retrieving message %d ..."
 msgstr "Primam poruke sa %s u %s...\n"
 
-#: src/rpop3.c:1219
+#: src/rpop3.c:1234
 #, fuzzy
 msgid "Delete messages"
 msgstr "Obriši poruku/e"
 
-#: src/rpop3.c:1220
+#: src/rpop3.c:1235
 msgid ""
 "Really delete selected messages from server?\n"
 "This operation cannot be reverted."

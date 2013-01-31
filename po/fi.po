@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 3.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-29 17:43+0900\n"
+"POT-Creation-Date: 2013-01-31 11:34+0900\n"
 "PO-Revision-Date: 2011-03-07 23:37+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <foo@bar.example>\n"
@@ -2949,7 +2949,7 @@ msgstr "Yhdistetään POP3-palvelimeen: %s..."
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "POP3-palvelimeen ei voida yhdistää: %s:%d\n"
 
-#: src/inc.c:1115 src/rpop3.c:862 src/send_message.c:846
+#: src/inc.c:1115 src/rpop3.c:873 src/send_message.c:846
 #, c-format
 msgid "Authenticating..."
 msgstr "Tunnistaudutaan..."
@@ -3173,7 +3173,7 @@ msgstr "  --debug                vianjäljitystila"
 
 #: src/main.c:639
 #, fuzzy
-msgid "  --safemode             safe mode"
+msgid "  --safe-mode            safe mode"
 msgstr "  --debug                vianjäljitystila"
 
 #: src/main.c:640
@@ -3241,15 +3241,15 @@ msgid "Loading plug-ins..."
 msgstr "Ladataan liitännäisiä..."
 
 #. remote command mode
-#: src/main.c:1450
+#: src/main.c:1451
 msgid "another Sylpheed is already running.\n"
 msgstr "Toinen Sylpheed on jo käynnissä.\n"
 
-#: src/main.c:1738
+#: src/main.c:1739
 msgid "Migration of configuration"
 msgstr "Asetusten siirto"
 
-#: src/main.c:1739
+#: src/main.c:1740
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -6764,6 +6764,11 @@ msgstr "_Tiedosto"
 msgid "_Get"
 msgstr "_Nouda"
 
+#: src/rpop3.c:251 src/rpop3.c:1097
+#, fuzzy
+msgid "_Resume"
+msgstr "/_Poista"
+
 #: src/rpop3.c:254
 msgid "_Help"
 msgstr "_Ohje"
@@ -6809,55 +6814,55 @@ msgstr ""
 msgid "Retrieving message headers (%d / %d) ..."
 msgstr "Noudetaan viestiotsakkeita (%d / %d)..."
 
-#: src/rpop3.c:888
+#: src/rpop3.c:899
 msgid "Getting the number of messages..."
 msgstr "Noudetaan viestien määrää..."
 
-#: src/rpop3.c:897 src/rpop3.c:910
+#: src/rpop3.c:908 src/rpop3.c:921
 msgid "No message"
 msgstr "Ei viestiä"
 
-#: src/rpop3.c:943
+#: src/rpop3.c:954
 #, c-format
 msgid "Deleted %d messages"
 msgstr "Poistettu %d viestiä"
 
-#: src/rpop3.c:986 src/rpop3.c:998 src/rpop3.c:1059 src/rpop3.c:1298
+#: src/rpop3.c:1000 src/rpop3.c:1012 src/rpop3.c:1073 src/rpop3.c:1316
 #: src/send_message.c:863
 #, c-format
 msgid "Quitting..."
 msgstr "Lopetetaan..."
 
-#: src/rpop3.c:1044
+#: src/rpop3.c:1058
 #, c-format
 msgid "Retrieved %d messages"
 msgstr "Noudettu %d viestiä"
 
-#: src/rpop3.c:1051
+#: src/rpop3.c:1065
 #, c-format
 msgid "Opened message %d"
 msgstr "Avattu viesti %d"
 
-#: src/rpop3.c:1068
+#: src/rpop3.c:1082
 #, fuzzy, c-format
 msgid "Retrieved %d (of %d) message headers"
 msgstr "Noudettu %d viestiotsaketta"
 
-#: src/rpop3.c:1072
+#: src/rpop3.c:1086
 #, c-format
 msgid "Retrieved %d message headers"
 msgstr "Noudettu %d viestiotsaketta"
 
-#: src/rpop3.c:1193
+#: src/rpop3.c:1208
 #, c-format
 msgid "Retrieving message %d ..."
 msgstr "Noudetaan viestiä %d..."
 
-#: src/rpop3.c:1219
+#: src/rpop3.c:1234
 msgid "Delete messages"
 msgstr "Poista viestejä"
 
-#: src/rpop3.c:1220
+#: src/rpop3.c:1235
 msgid ""
 "Really delete selected messages from server?\n"
 "This operation cannot be reverted."
