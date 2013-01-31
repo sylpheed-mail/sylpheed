@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2011 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2013 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -840,10 +840,21 @@ static gint rpop3_session_recv_msg(Session *session, const gchar *msg)
 	    pop3_session->state != POP3_GETSIZE_LIST_RECV) {
 		val = pop3_ok(pop3_session, msg);
 		if (val != PS_SUCCESS) {
-			if (val != PS_NOTSUPPORTED) {
+			if (val == PS_SOCKET) {
 				pop3_session->state = POP3_ERROR;
 				gdk_threads_leave();
 				return -1;
+			}
+			if (val != PS_NOTSUPPORTED) {
+				if (pop3_session->state != POP3_LOGOUT) {
+					if (pop3_logout_send(pop3_session) == PS_SUCCESS) {
+						gdk_threads_leave();
+						return 0;
+					} else {
+						gdk_threads_leave();
+						return -1;
+					}
+				}
 			}
 		}
 
@@ -952,7 +963,10 @@ static gint rpop3_session_recv_msg(Session *session, const gchar *msg)
 		rpop3_idle(TRUE);
 		break;
 	case POP3_LOGOUT:
-		pop3_session->state = POP3_DONE;
+		if (val == PS_SUCCESS)
+			pop3_session->state = POP3_DONE;
+		else
+			pop3_session->state = POP3_ERROR;
 		session_disconnect(session);
 		break;
 	case POP3_ERROR:
@@ -984,7 +998,7 @@ static gint rpop3_session_recv_data_finished(Session *session, guchar *data,
                 if (val == PS_SUCCESS) {
 			if (rpop3_window.cancelled) {
 				rpop3_status_label_set(_("Quitting..."));
-				pop3_logout_send(rpop3_window.session);
+				pop3_logout_send(pop3_session);
 			} else
 				pop3_getsize_list_send(pop3_session);
 		} else
@@ -996,7 +1010,7 @@ static gint rpop3_session_recv_data_finished(Session *session, guchar *data,
 			pop3_session->cur_msg = 1;
 			if (rpop3_window.cancelled || pop3_session->count == 0) {
 				rpop3_status_label_set(_("Quitting..."));
-				pop3_logout_send(rpop3_window.session);
+				pop3_logout_send(pop3_session);
 			} else {
 				pop3_session->cur_msg = pop3_session->count;
 				gtk_widget_set_sensitive(rpop3_window.stop_btn,
@@ -1057,7 +1071,7 @@ static gint rpop3_session_recv_data_as_file_finished(Session *session,
 		if (rpop3_top_recv(pop3_session, fp, len) == PS_SUCCESS) {
 			if (rpop3_window.cancelled) {
 				rpop3_status_label_set(_("Quitting..."));
-				pop3_logout_send(rpop3_window.session);
+				pop3_logout_send(pop3_session);
 			} else if (!rpop3_window.stop_load &&
 				 (pop3_session->cur_msg > 1)) {
 				pop3_session->cur_msg--;
