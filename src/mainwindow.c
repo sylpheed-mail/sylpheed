@@ -4106,9 +4106,11 @@ static void help_command_line_show(void)
 				"--status [folder]...\n"
 				"--status-full [folder]...\n"
 				"--open folderid/msgnum\n"
+				"--open <file URL>\n"
 				"--configdir dirname\n"
 				"--exit\n"
 				"--debug\n"
+				"--safe-mode\n"
 				"--help\n"
 				"--version"));
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
@@ -4123,9 +4125,11 @@ static void help_command_line_show(void)
 				"show the total number of messages\n"
 				"show the status of each folder\n"
 				"open message in new window\n"
+				"open an rfc822 message file in a new window\n"
 				"specify directory which stores configuration files\n"
 				"exit Sylpheed\n"
 				"debug mode\n"
+				"safe mode\n"
 				"display this help and exit\n"
 				"output version information and exit"));
 	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
