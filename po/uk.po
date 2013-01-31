@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed 3.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-31 11:34+0900\n"
+"POT-Creation-Date: 2013-01-31 14:03+0900\n"
 "PO-Revision-Date: 2012-12-11 03:12+0300\n"
 "Last-Translator: Vladimir Smolyar <v_2e@ukr.net>\n"
 "Language-Team: Ukrainian\n"
@@ -2456,12 +2456,12 @@ msgstr "Встановлення інформації папки...\n"
 msgid "Setting folder info..."
 msgstr "Встановлення інформації папки..."
 
-#: src/folderview.c:911 src/mainwindow.c:4200 src/setup.c:305
+#: src/folderview.c:911 src/mainwindow.c:4204 src/setup.c:305
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Перегляд папки %s%c%s ..."
 
-#: src/folderview.c:915 src/mainwindow.c:4205 src/setup.c:310
+#: src/folderview.c:915 src/mainwindow.c:4209 src/setup.c:310
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Перегляд папки %s ..."
@@ -4072,6 +4072,7 @@ msgid "Usage: sylpheed [OPTION]..."
 msgstr "Використання: sylpheed [ОПЦІЯ]..."
 
 #: src/mainwindow.c:4101
+#, fuzzy
 msgid ""
 "--compose [address]\n"
 "--attach file1 [file2]...\n"
@@ -4081,9 +4082,11 @@ msgid ""
 "--status [folder]...\n"
 "--status-full [folder]...\n"
 "--open folderid/msgnum\n"
+"--open <file URL>\n"
 "--configdir dirname\n"
 "--exit\n"
 "--debug\n"
+"--safe-mode\n"
 "--help\n"
 "--version"
 msgstr ""
@@ -4101,7 +4104,8 @@ msgstr ""
 "--help\n"
 "--version"
 
-#: src/mainwindow.c:4118
+#: src/mainwindow.c:4120
+#, fuzzy
 msgid ""
 "open composition window\n"
 "open composition window with specified files attached\n"
@@ -4111,9 +4115,11 @@ msgid ""
 "show the total number of messages\n"
 "show the status of each folder\n"
 "open message in new window\n"
+"open an rfc822 message file in a new window\n"
 "specify directory which stores configuration files\n"
 "exit Sylpheed\n"
 "debug mode\n"
+"safe mode\n"
 "display this help and exit\n"
 "output version information and exit"
 msgstr ""
@@ -4131,15 +4137,15 @@ msgstr ""
 "показати цю довідку і вийти\n"
 "показати інформацію про версію і вийти"
 
-#: src/mainwindow.c:4136
+#: src/mainwindow.c:4140
 msgid "Windows-only option:"
 msgstr "Опція тільки для Windows:"
 
-#: src/mainwindow.c:4144
+#: src/mainwindow.c:4148
 msgid "--ipcport portnum"
 msgstr "--ipcport порт"
 
-#: src/mainwindow.c:4149
+#: src/mainwindow.c:4153
 msgid "specify port for IPC remote commands"
 msgstr "  --ipcport порт      вказати порт для віддалених команд IPC"
 
