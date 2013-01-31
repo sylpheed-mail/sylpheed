@@ -608,7 +608,7 @@ static void parse_cmd_opt(int argc, char *argv[])
 					(argv[i + 1], -1, NULL, NULL, NULL);
 				i++;
 			}
-		} else if (!strncmp(argv[i], "--safemode", 10)) {
+		} else if (!strncmp(argv[i], "--safe-mode", 11)) {
 			cmd.safe_mode = TRUE;
 		} else if (!strncmp(argv[i], "--exit", 6)) {
 			cmd.exit = TRUE;
@@ -636,7 +636,7 @@ static void parse_cmd_opt(int argc, char *argv[])
 #endif
 			g_print("%s\n", _("  --exit                 exit Sylpheed"));
 			g_print("%s\n", _("  --debug                debug mode"));
-			g_print("%s\n", _("  --safemode             safe mode"));
+			g_print("%s\n", _("  --safe-mode            safe mode"));
 			g_print("%s\n", _("  --help                 display this help and exit"));
 			g_print("%s\n", _("  --version              output version information and exit"));
 
@@ -1254,6 +1254,7 @@ static void plugin_init(void)
 	}
 
 	if (cmd.safe_mode) {
+		debug_print("plugin_init: safe mode enabled, skipping plug-in loading.\n");
 		STATUSBAR_POP(mainwin);
 		return;
 	}
