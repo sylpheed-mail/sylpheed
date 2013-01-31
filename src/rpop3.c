@@ -117,7 +117,7 @@ static const gchar *ui_def =
 	"      <menuitem name='Open' action='OpenAction'/>"
 	"      <menuitem name='Delete' action='DeleteAction'/>"
 	"      <separator />"
-	"      <menuitem name='Update' action='UpdateAction'/>"
+	"      <menuitem name='Resume' action='ResumeAction'/>"
 	"      <menuitem name='Stop' action='StopAction'/>"
 	"      <separator />"
 	"      <menuitem name='Close' action='CloseAction'/>"
@@ -225,7 +225,7 @@ static void rpop3_close		(GtkButton	*button,
 static void rpop3_recv_cb	(void);
 static void rpop3_open_cb	(void);
 static void rpop3_delete_cb	(void);
-static void rpop3_update_cb	(void);
+static void rpop3_resume_cb	(void);
 static void rpop3_stop_cb	(void);
 static void rpop3_close_cb	(void);
 static void rpop3_about_cb	(void);
@@ -248,7 +248,7 @@ static GtkActionEntry action_entries[] = {
 	{"ReceiveAction", NULL, N_("_Get"), "<Control>G", NULL, rpop3_recv_cb},
 	{"OpenAction", GTK_STOCK_OPEN, NULL, NULL, NULL, rpop3_open_cb},
 	{"DeleteAction", GTK_STOCK_DELETE, NULL, "<Shift>Delete", NULL, rpop3_delete_cb},
-	{"UpdateAction", GTK_STOCK_REFRESH, NULL, NULL, NULL, rpop3_update_cb},
+	{"ResumeAction", GTK_STOCK_REFRESH, N_("_Resume"), NULL, NULL, rpop3_resume_cb},
 	{"StopAction", GTK_STOCK_STOP, NULL, NULL, NULL, rpop3_stop_cb},
 	{"CloseAction", GTK_STOCK_CLOSE, NULL, NULL, NULL, rpop3_close_cb},
 	{"HelpAction", NULL, N_("_Help"), NULL, NULL, NULL},
@@ -473,7 +473,7 @@ static void rpop3_window_create(PrefsAccount *account)
 	g_object_set(action, "sensitive", FALSE, NULL);
 	rpop3_window.delete_action = action;
 
-	action = gtk_ui_manager_get_action(ui, "/RPop3Menu/File/Update");
+	action = gtk_ui_manager_get_action(ui, "/RPop3Menu/File/Resume");
 	g_object_set(action, "sensitive", FALSE, NULL);
 	rpop3_window.update_action = action;
 
@@ -1094,7 +1094,7 @@ static gint rpop3_session_recv_data_as_file_finished(Session *session,
 				if (pop3_session->cur_msg == 1)
 					gtk_widget_set_sensitive(rpop3_window.stop_btn, FALSE);
 				else
-					gtk_button_set_label(GTK_BUTTON(rpop3_window.stop_btn), GTK_STOCK_REFRESH);
+					gtk_button_set_label(GTK_BUTTON(rpop3_window.stop_btn), _("_Resume"));
 				g_object_set(rpop3_window.recv_action,
 					     "sensitive", TRUE, NULL);
 				g_object_set(rpop3_window.open_action,
@@ -1336,7 +1336,7 @@ static void rpop3_delete_cb(void)
 	rpop3_delete(NULL, NULL);
 }
 
-static void rpop3_update_cb(void)
+static void rpop3_resume_cb(void)
 {
 	rpop3_stop(NULL, NULL);
 }
