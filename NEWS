@@ -1,5 +1,21 @@
 Changes of Sylpheed
 
+* 3.4.0beta1 (development)
+
+    * Safe mode (which does not load plug-ins) was added (--safe-mode).
+    * The existence of destination folders are checked when creating a filter
+      rule.
+    * The recursion level is restricted up to 64 when scanning local mailbox
+      (prevents infinite loop with symlink. Note: Linux automatically limits
+      the symlink loop up to 40)
+    * The labels used in POP3 remote mailbox dialog was modified.
+    * POP3: do not disconnect immediately but send QUIT command on normal
+      POP3 errors (prevents deleted messages appear again).
+    * IMAP: "INBOX" folder became case insensitive as specified in RFC 3501.
+    * IMAP: server name for cache directory is escaped now
+      (fixes cache creation when using IPv6 address for server name on Windows).
+    * Win32: socket timeout setting now works on Windows.
+
 * 3.3.0
 
 * 3.3.0rc (release candidate)
