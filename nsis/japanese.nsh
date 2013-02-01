@@ -28,6 +28,14 @@ LangString delete_caution ${LANG_JAPANESE} "${PRODUCT_NAME} がすでにインストール
 インストールされているバージョンを削除し、 キャンセル をクリックするとインストールを中止します。"
 LangString app_running ${LANG_JAPANESE} "${PRODUCT_NAME} が起動中です。インストールの前に ${PRODUCT_NAME} を終了してください。"
 LangString app_running_uninst ${LANG_JAPANESE} "${PRODUCT_NAME} が起動中です。アンインストールの前に ${PRODUCT_NAME} を終了してください。"
+
+LangString sylpheed_manual_lnk ${LANG_JAPANESE} "Sylpheed マニュアル"
+LangString sylpheed_debug_mode_lnk ${LANG_JAPANESE} "Sylpheed (デバッグモード)"
+LangString sylpheed_safe_mode_lnk ${LANG_JAPANESE} "Sylpheed (セーフモード)"
+LangString sylpheed_all_quit_lnk ${LANG_JAPANESE} "Sylpheed 全終了"
+LangString sylpheed_homepage_lnk ${LANG_JAPANESE} "Sylpheed ホームページ"
+LangString uninstall_lnk ${LANG_JAPANESE} "アンインストール"
+
 LangString downloading  ${LANG_JAPANESE}  "%sをダウンロード中"
 LangString connecting  ${LANG_JAPANESE}  "接続中 ..."
 LangString second  ${LANG_JAPANESE}  " (残り 1 秒)"

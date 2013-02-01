@@ -87,25 +87,28 @@ ${MementoSection} "!Sylpheed" sec_sylpheed
   SetOutPath "$INSTDIR"
   File /r "Sylpheed\"
   CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}"
+
   ${If} $LANGUAGE = "${LANG_JAPANESE}"
-    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Sylpheed Manual.lnk" "$INSTDIR\doc\manual\ja\Sylpheed.html"
+    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(sylpheed_manual_lnk).lnk" "$INSTDIR\doc\manual\ja\Sylpheed.html"
     CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\README.lnk" "$INSTDIR\README-win32-ja.txt"
     File /oname=README.txt "Sylpheed\README-win32-ja.txt"
   ${ElseIf} $LANGUAGE = "${LANG_SPANISH}"
-    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Sylpheed Manual.lnk" "$INSTDIR\doc\manual\en\Sylpheed.html"
+    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(sylpheed_manual_lnk).lnk" "$INSTDIR\doc\manual\en\Sylpheed.html"
     CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\README.lnk" "$INSTDIR\README-win32-es.txt"
     File /oname=README.txt "Sylpheed\README-win32-es.txt"
   ${Else}
-    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Sylpheed Manual.lnk" "$INSTDIR\doc\manual\en\Sylpheed.html"
+    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(sylpheed_manual_lnk).lnk" "$INSTDIR\doc\manual\en\Sylpheed.html"
     CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\README.lnk" "$INSTDIR\README-win32.txt"
     File /oname=README.txt "Sylpheed\README-win32.txt"
   ${EndIf}
+
   CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Sylpheed.lnk" "$INSTDIR\sylpheed.exe"
-  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Sylpheed (debug mode).lnk" "$INSTDIR\sylpheed.exe" "--debug"
-  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Sylpheed All Quit.lnk" "$INSTDIR\sylpheed.exe" "--exit"
+  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(sylpheed_debug_mode_lnk).lnk" "$INSTDIR\sylpheed.exe" "--debug"
+  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(sylpheed_safe_mode_lnk).lnk" "$INSTDIR\sylpheed.exe" "--safe-mode"
+  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(sylpheed_all_quit_lnk).lnk" "$INSTDIR\sylpheed.exe" "--exit"
   WriteIniStr "$INSTDIR\${PRODUCT_NAME}.url" "InternetShortcut" "URL" "${ORIG_WEB_SITE}"
-  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Sylpheed Homepage.lnk" "$INSTDIR\${PRODUCT_NAME}.url"
-  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Uninstall.lnk" "$INSTDIR\uninst.exe"
+  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(sylpheed_homepage_lnk).lnk" "$INSTDIR\${PRODUCT_NAME}.url"
+  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(uninstall_lnk).lnk" "$INSTDIR\uninst.exe"
 ${MementoSectionEnd}
 
 SectionGroup /e "$(plugins)" sec_plugins
@@ -238,13 +241,14 @@ SectionEnd
 
 Section "!un.Sylpheed" sec_un_sylpheed
   SetShellVarContext all
-  Delete "$SMPROGRAMS\${PRODUCT_NAME}\Sylpheed Manual.lnk"
+  Delete "$SMPROGRAMS\${PRODUCT_NAME}\$(sylpheed_manual_lnk).lnk"
   Delete "$SMPROGRAMS\${PRODUCT_NAME}\README.lnk"
   Delete "$SMPROGRAMS\${PRODUCT_NAME}\Sylpheed.lnk"
-  Delete "$SMPROGRAMS\${PRODUCT_NAME}\Sylpheed (debug mode).lnk"
-  Delete "$SMPROGRAMS\${PRODUCT_NAME}\Sylpheed All Quit.lnk"
-  Delete "$SMPROGRAMS\${PRODUCT_NAME}\Sylpheed Homepage.lnk"
-  Delete "$SMPROGRAMS\${PRODUCT_NAME}\Uninstall.lnk"
+  Delete "$SMPROGRAMS\${PRODUCT_NAME}\$(sylpheed_debug_mode_lnk).lnk"
+  Delete "$SMPROGRAMS\${PRODUCT_NAME}\$(sylpheed_safe_mode_lnk).lnk"
+  Delete "$SMPROGRAMS\${PRODUCT_NAME}\$(sylpheed_all_quit_lnk).lnk"
+  Delete "$SMPROGRAMS\${PRODUCT_NAME}\$(sylpheed_homepage_lnk).lnk"
+  Delete "$SMPROGRAMS\${PRODUCT_NAME}\$(uninstall_lnk).lnk"
   SetShellVarContext current
 
   Delete "$INSTDIR\plugin-updater.exe"

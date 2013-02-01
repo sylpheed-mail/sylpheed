@@ -28,6 +28,14 @@ LangString delete_caution ${LANG_ENGLISH} "Sylpheed is already installed. $\n$\n
  previous version or `Cancel` to cancel this upgrade."
 LangString app_running ${LANG_ENGLISH} "Sylpheed is running. Please quit Sylpheed before installing."
 LangString app_running_uninst ${LANG_ENGLISH} "Sylpheed is running. Please quit Sylpheed before uninstalling."
+
+LangString sylpheed_manual_lnk ${LANG_ENGLISH} "Sylpheed Manual"
+LangString sylpheed_debug_mode_lnk ${LANG_ENGLISH} "Sylpheed (debug mode)"
+LangString sylpheed_safe_mode_lnk ${LANG_ENGLISH} "Sylpheed (safe mode)"
+LangString sylpheed_all_quit_lnk ${LANG_ENGLISH} "Sylpheed All Quit"
+LangString sylpheed_homepage_lnk ${LANG_ENGLISH} "Sylpheed Homepage"
+LangString uninstall_lnk ${LANG_ENGLISH} "Uninstall"
+
 LangString downloading  ${LANG_ENGLISH}  "Downloading %s"
 LangString connecting  ${LANG_ENGLISH}  "Connecting ..."
 LangString second  ${LANG_ENGLISH}  " (1 second remaining)"
