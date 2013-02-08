@@ -32,6 +32,7 @@
 #include "session.h"
 #include "pop.h"
 
+typedef struct _IncResult		IncResult;
 typedef struct _IncProgressDialog	IncProgressDialog;
 typedef struct _IncSession		IncSession;
 
@@ -64,6 +65,8 @@ struct _IncProgressDialog
 
 	GList *queue_list;	/* list of IncSession */
 	gint cur_row;
+
+	IncResult *result;
 };
 
 struct _IncSession

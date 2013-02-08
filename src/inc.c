@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2012 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2013 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,6 +58,7 @@
 #include "progressdialog.h"
 #include "alertpanel.h"
 #include "trayicon.h"
+#include "notificationwindow.h"
 #include "filter.h"
 #include "folder.h"
 #include "procheader.h"
@@ -69,6 +70,18 @@ typedef struct _IncAccountNewMsgCount
 	PrefsAccount *account;
 	gint new_messages;
 } IncAccountNewMsgCount;
+
+typedef struct _IncMsgSummary
+{
+	gchar *subject;
+	gchar *from;
+} IncMsgSummary;
+
+struct _IncResult
+{
+	GSList *count_list;
+	GSList *msg_summaries;
+};
 
 
 static GList *inc_dialog_list = NULL;
@@ -84,15 +97,18 @@ static GdkPixbuf *ok_pixbuf;
 
 
 static void inc_finished		(MainWindow		*mainwin,
-					 GSList			*msg_counts);
+					 IncResult		*result);
 static GSList *inc_add_message_count	(GSList			*list,
 					 PrefsAccount		*account,
 					 gint			 new_messages);
+static void inc_result_free		(IncResult		*result,
+					 gboolean		 free_self);
 
 static gint inc_remote_account_mail	(MainWindow		*mainwin,
 					 PrefsAccount		*account);
 static gint inc_account_mail_real	(MainWindow		*mainwin,
-					 PrefsAccount		*account);
+					 PrefsAccount		*account,
+					 IncResult		*result);
 
 static IncProgressDialog *inc_progress_dialog_create
 					(gboolean		 autocheck);
@@ -101,8 +117,7 @@ static void inc_progress_dialog_destroy	(IncProgressDialog	*inc_dialog);
 
 static IncSession *inc_session_new	(PrefsAccount		*account);
 static void inc_session_destroy		(IncSession		*session);
-static gint inc_start			(IncProgressDialog	*inc_dialog,
-					 GSList		       **count_list);
+static gint inc_start			(IncProgressDialog	*inc_dialog);
 static IncState inc_pop3_session_do	(IncSession		*session);
 
 static void inc_progress_dialog_update	(IncProgressDialog	*inc_dialog,
@@ -161,14 +176,14 @@ static gint inc_autocheck_func			(gpointer	 data);
 /**
  * inc_finished:
  * @mainwin: Main window.
- * @msg_counts: GSList of Number of received messages for each account.
+ * @result: Information of incorporation result.
  * @new_messages: Number of received messages.
  * 
  * Update the folder view and the summary view after receiving
  * messages.  If @new_messages is 0, this function avoids unneeded
  * updating.
  **/
-static void inc_finished(MainWindow *mainwin, GSList *msg_counts)
+static void inc_finished(MainWindow *mainwin, IncResult *result)
 {
 	FolderItem *item;
 	gint new_messages = 0;
@@ -176,10 +191,12 @@ static void inc_finished(MainWindow *mainwin, GSList *msg_counts)
 	IncAccountNewMsgCount *count;
 	GSList *cur;
 
-	for (cur = msg_counts; cur != NULL; cur = cur->next) {
-		count = cur->data;
-		if (count->new_messages > 0)
-			new_messages += count->new_messages;
+	if (result) {
+		for (cur = result->count_list; cur != NULL; cur = cur->next) {
+			count = cur->data;
+			if (count->new_messages > 0)
+				new_messages += count->new_messages;
+		}
 	}
 
 	debug_print("inc_finished: %d new message(s)\n", new_messages);
@@ -190,14 +207,15 @@ static void inc_finished(MainWindow *mainwin, GSList *msg_counts)
 	}
 
 	if (new_messages > 0 && !block_notify) {
+		gchar buf[1024];
 		GString *str;
 		gint c = 0;
 
 		str = g_string_new("");
 		g_string_printf(str, _("Sylpheed: %d new messages"),
 				new_messages);
-		if (msg_counts) {
-			for (cur = msg_counts; cur != NULL; cur = cur->next) {
+		if (result) {
+			for (cur = result->count_list; cur != NULL; cur = cur->next) {
 				count = cur->data;
 				if (count->new_messages > 0) {
 					if (c == 0)
@@ -214,6 +232,24 @@ static void inc_finished(MainWindow *mainwin, GSList *msg_counts)
 		debug_print("inc_finished: %s\n", str->str);
 		trayicon_set_tooltip(str->str);
 		trayicon_set_notify(TRUE);
+
+		g_snprintf(buf, sizeof(buf), _("Sylpheed: %d new messages"), new_messages);
+		g_string_truncate(str, 0);
+		if (result) {
+			for (cur = result->msg_summaries; cur != NULL; cur = cur->next) {
+				IncMsgSummary *summary = cur->data;
+				gchar *markup;
+
+				if (str->len > 0)
+					g_string_append_c(str, '\n');
+				markup = g_markup_printf_escaped("<b>%s</b>  %s", summary->subject, summary->from);
+				g_string_append(str, markup);
+				g_free(markup);
+			}
+		}
+
+		notification_window_create(buf, str->str, 5);
+
 		g_string_free(str, TRUE);
 	}
 
@@ -271,10 +307,28 @@ static GSList *inc_add_message_count(GSList *list, PrefsAccount *account,
 	return g_slist_append(list, count);
 }
 
+static void inc_result_free(IncResult *result, gboolean free_self)
+{
+	GSList *cur;
+
+	slist_free_strings(result->count_list);
+	g_slist_free(result->count_list);
+	for (cur = result->msg_summaries; cur != NULL; cur = cur->next) {
+		IncMsgSummary *sum = cur->data;
+		g_free(sum->subject);
+		g_free(sum->from);
+		g_free(sum);
+	}
+	g_slist_free(result->msg_summaries);
+
+	if (free_self)
+		g_free(result);
+}
+
 void inc_mail(MainWindow *mainwin)
 {
+	IncResult result = {NULL, NULL};
 	gint new_msgs = 0;
-	GSList *list = NULL;
 
 	if (inc_lock_count) return;
 	if (inc_is_active()) return;
@@ -301,23 +355,21 @@ void inc_mail(MainWindow *mainwin)
 
 		if (prefs_common.inc_local) {
 			new_msgs = inc_spool();
-			list = inc_add_message_count(list, NULL, new_msgs);
+			result.count_list = inc_add_message_count(result.count_list, NULL, new_msgs);
 		}
 	} else {
 		if (prefs_common.inc_local) {
 			new_msgs = inc_spool();
 			if (new_msgs < 0)
 				new_msgs = 0;
-			list = inc_add_message_count(list, NULL, new_msgs);
+			result.count_list = inc_add_message_count(result.count_list, NULL, new_msgs);
 		}
 
-		new_msgs = inc_account_mail_real(mainwin, cur_account);
-		list = inc_add_message_count(list, cur_account, new_msgs);
+		new_msgs = inc_account_mail_real(mainwin, cur_account, &result);
 	}
 
-	inc_finished(mainwin, list);
-	slist_free_strings(list);
-	g_slist_free(list);
+	inc_finished(mainwin, &result);
+	inc_result_free(&result, FALSE);
 
 	inc_is_running = FALSE;
 
@@ -455,7 +507,8 @@ static gint inc_remote_account_mail(MainWindow *mainwin, PrefsAccount *account)
 	return new_msgs;
 }
 
-static gint inc_account_mail_real(MainWindow *mainwin, PrefsAccount *account)
+static gint inc_account_mail_real(MainWindow *mainwin, PrefsAccount *account,
+				  IncResult *result)
 {
 	IncProgressDialog *inc_dialog;
 	IncSession *session;
@@ -471,18 +524,19 @@ static gint inc_account_mail_real(MainWindow *mainwin, PrefsAccount *account)
 	inc_dialog = inc_progress_dialog_create(FALSE);
 	inc_dialog->queue_list = g_list_append(inc_dialog->queue_list, session);
 	inc_dialog->mainwin = mainwin;
+	inc_dialog->result = result;
 	inc_progress_dialog_set_list(inc_dialog);
 
 	main_window_set_toolbar_sensitive(mainwin);
 	main_window_set_menu_sensitive(mainwin);
 
-	return inc_start(inc_dialog, NULL);
+	return inc_start(inc_dialog);
 }
 
 gint inc_account_mail(MainWindow *mainwin, PrefsAccount *account)
 {
+	IncResult result = {NULL, NULL};
 	gint new_msgs;
-	GSList *list;
 
 	if (inc_lock_count) return 0;
 	if (inc_is_active()) return 0;
@@ -498,12 +552,10 @@ gint inc_account_mail(MainWindow *mainwin, PrefsAccount *account)
 
 	syl_plugin_signal_emit("inc-mail-start", account);
 
-	new_msgs = inc_account_mail_real(mainwin, account);
+	new_msgs = inc_account_mail_real(mainwin, account, &result);
 
-	list = inc_add_message_count(NULL, account, new_msgs);
-	inc_finished(mainwin, list);
-	slist_free_strings(list);
-	g_slist_free(list);
+	inc_finished(mainwin, &result);
+	inc_result_free(&result, FALSE);
 
 	inc_is_running = FALSE;
 
@@ -517,7 +569,7 @@ void inc_all_account_mail(MainWindow *mainwin, gboolean autocheck)
 {
 	GList *list, *queue_list = NULL;
 	IncProgressDialog *inc_dialog;
-	GSList *count_list = NULL;
+	IncResult result = {NULL, NULL};
 	gint new_msgs = 0;
 
 	if (inc_lock_count) return;
@@ -538,7 +590,7 @@ void inc_all_account_mail(MainWindow *mainwin, gboolean autocheck)
 		new_msgs = inc_spool();
 		if (new_msgs < 0)
 			new_msgs = 0;
-		count_list = inc_add_message_count(count_list, NULL, new_msgs);
+		result.count_list = inc_add_message_count(result.count_list, NULL, new_msgs);
 	}
 
 	/* check IMAP4 / News folders */
@@ -547,7 +599,7 @@ void inc_all_account_mail(MainWindow *mainwin, gboolean autocheck)
 		if ((account->protocol == A_IMAP4 ||
 		     account->protocol == A_NNTP) && account->recv_at_getall) {
 			new_msgs = inc_remote_account_mail(mainwin, account);
-			count_list = inc_add_message_count(count_list, account, new_msgs);
+			result.count_list = inc_add_message_count(result.count_list, account, new_msgs);
 		}
 	}
 
@@ -567,17 +619,17 @@ void inc_all_account_mail(MainWindow *mainwin, gboolean autocheck)
 		inc_dialog = inc_progress_dialog_create(autocheck);
 		inc_dialog->queue_list = queue_list;
 		inc_dialog->mainwin = mainwin;
+		inc_dialog->result = &result;
 		inc_progress_dialog_set_list(inc_dialog);
 
 		main_window_set_toolbar_sensitive(mainwin);
 		main_window_set_menu_sensitive(mainwin);
 
-		inc_start(inc_dialog, &count_list);
+		inc_start(inc_dialog);
 	}
 
-	inc_finished(mainwin, count_list);
-	slist_free_strings(count_list);
-	g_slist_free(count_list);
+	inc_finished(mainwin, &result);
+	inc_result_free(&result, FALSE);
 
 	inc_is_running = FALSE;
 
@@ -612,13 +664,14 @@ gint inc_pop_before_smtp(PrefsAccount *account)
 			     _("Authenticating with POP3"));
 	inc_dialog->queue_list = g_list_append(inc_dialog->queue_list, session);
 	inc_dialog->mainwin = mainwin;
+	inc_dialog->result = NULL;
 	inc_progress_dialog_set_list(inc_dialog);
 	inc_dialog->show_dialog = TRUE;
 
 	main_window_set_toolbar_sensitive(mainwin);
 	main_window_set_menu_sensitive(mainwin);
 
-	inc_start(inc_dialog, NULL);
+	inc_start(inc_dialog);
 
 	inc_is_running = FALSE;
 
@@ -776,7 +829,7 @@ static void inc_update_folder_foreach(GHashTable *table)
 	folderview_update_item_foreach(table, TRUE);
 }
 
-static gint inc_start(IncProgressDialog *inc_dialog, GSList **count_list)
+static gint inc_start(IncProgressDialog *inc_dialog)
 {
 	IncSession *session;
 	GList *qlist;
@@ -903,8 +956,8 @@ static gint inc_start(IncProgressDialog *inc_dialog, GSList **count_list)
 			break;
 		}
 
-		if (count_list)
-			*count_list = inc_add_message_count(*count_list, pop3_session->ac_prefs, session->new_msgs);
+		if (inc_dialog->result)
+			inc_dialog->result->count_list = inc_add_message_count(inc_dialog->result->count_list, pop3_session->ac_prefs, session->new_msgs);
 		new_msgs += session->new_msgs;
 
 		if (!prefs_common.scan_all_after_inc) {
@@ -1394,6 +1447,17 @@ static gint inc_recv_message(Session *session, const gchar *msg, gpointer data)
 	return 0;
 }
 
+/**
+ * inc_drop_message:
+ * @session: Current Pop3Session.
+ * @file: Received message file.
+ * 
+ * Callback function to drop received message into local mailbox.
+ *
+ * Return value: DROP_OK if succeeded. DROP_ERROR if error occurred.
+ *   DROP_DONT_RECEIVE if the message should be skipped.
+ *   DROP_DELETE if the message should be deleted.
+ **/
 static gint inc_drop_message(Pop3Session *session, const gchar *file)
 {
 	FolderItem *inbox;
@@ -1404,10 +1468,13 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 	gint val;
 	gboolean is_junk = FALSE;
 	gboolean is_counted = FALSE;
+	IncProgressDialog *inc_dialog;
 
 	g_return_val_if_fail(inc_session != NULL, DROP_ERROR);
 
 	gdk_threads_enter();
+
+	inc_dialog = (IncProgressDialog *)inc_session->data;
 
 	if (session->ac_prefs->inbox) {
 		inbox = folder_find_item_from_identifier
@@ -1521,8 +1588,17 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 	else {
 		val = DROP_OK;
 		if (!is_junk && is_counted &&
-		    fltinfo->actions[FLT_ACTION_MARK_READ] == FALSE)
+		    fltinfo->actions[FLT_ACTION_MARK_READ] == FALSE) {
 			inc_session->new_msgs++;
+
+			if (inc_dialog->result && msginfo->subject && g_slist_length(inc_dialog->result->msg_summaries) < 5) {
+				IncMsgSummary *summary;
+				summary = g_new(IncMsgSummary, 1);
+				summary->subject = g_strdup(msginfo->subject);
+				summary->from = g_strdup(msginfo->fromname);
+				inc_dialog->result->msg_summaries = g_slist_append(inc_dialog->result->msg_summaries, summary);
+			}
+		}
 	}
 
 	procmsg_msginfo_free(msginfo);

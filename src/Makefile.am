@@ -93,7 +93,8 @@ sylpheed_SOURCES = \
 	update_check.c update_check.h \
 	quote_fmt_lex.l quote_fmt_lex.h \
 	quote_fmt_parse.y quote_fmt.h \
-	sylpheed-marshal.c sylpheed-marshal.h
+	sylpheed-marshal.c sylpheed-marshal.h \
+	notificationwindow.c notificationwindow.h
 
 BUILT_SOURCES = \
 	quote_fmt_lex.c \
