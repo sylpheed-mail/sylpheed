@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2012 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2013 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -68,6 +68,8 @@ static struct Receive {
 
 	GtkWidget *checkbtn_chkonstartup;
 	GtkWidget *checkbtn_scan_after_inc;
+
+	GtkWidget *checkbtn_newmsg_notify_window;
 #ifdef G_OS_WIN32
 	GtkWidget *checkbtn_newmsg_sound;
 	GtkWidget *entry_newmsg_sound;
@@ -323,6 +325,8 @@ static PrefsUIData ui_data[] = {
 	{"newmsg_notify_sound", &receive.entry_newmsg_sound,
 	 prefs_set_data_from_entry, prefs_set_entry},
 #endif
+	{"enable_newmsg_notify_window", &receive.checkbtn_newmsg_notify_window,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
 
 #ifndef G_OS_WIN32
 	{"inc_local", &receive.checkbtn_local,
@@ -830,6 +834,7 @@ static void prefs_receive_create(void)
 	GtkWidget *vbox1;
 	GtkWidget *vbox2;
 	GtkWidget *vbox3;
+	GtkWidget *vbox4;
 	GtkWidget *hbox;
 
 	GtkWidget *hbox_autochk;
@@ -842,6 +847,7 @@ static void prefs_receive_create(void)
 	GtkWidget *checkbtn_scan_after_inc;
 
 	GtkWidget *frame_notify;
+	GtkWidget *checkbtn_newmsg_notify_window;
 	GtkWidget *checkbtn_newmsg_notify;
 	GtkWidget *label_newmsg_notify;
 	GtkWidget *entry_newmsg_notify;
@@ -911,9 +917,17 @@ static void prefs_receive_create(void)
 	gtk_container_add (GTK_CONTAINER (frame_notify), vbox3);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox3), 8);
 
+	vbox4 = gtk_vbox_new (FALSE, 0);
+	gtk_widget_show (vbox4);
+	gtk_box_pack_start (GTK_BOX (vbox3), vbox4, FALSE, FALSE, 0);
+
+	PACK_CHECK_BUTTON
+		(vbox4, checkbtn_newmsg_notify_window,
+		 _("Show notification window when new messages arrive"));
+
 #ifdef G_OS_WIN32
 	PACK_CHECK_BUTTON
-		(vbox3, checkbtn_newmsg_sound,
+		(vbox4, checkbtn_newmsg_sound,
 		 _("Play sound when new messages arrive"));
 
 	hbox = gtk_hbox_new (FALSE, 8);
@@ -936,11 +950,15 @@ static void prefs_receive_create(void)
 			 entry_newmsg_sound);
 
 	SET_TOGGLE_SENSITIVITY (checkbtn_newmsg_sound, hbox);
-#endif
 
 	PACK_CHECK_BUTTON
 		(vbox3, checkbtn_newmsg_notify,
 		 _("Execute command when new messages arrive"));
+#else
+	PACK_CHECK_BUTTON
+		(vbox4, checkbtn_newmsg_notify,
+		 _("Execute command when new messages arrive"));
+#endif
 
 	hbox = gtk_hbox_new (FALSE, 8);
 	gtk_widget_show (hbox);
@@ -998,6 +1016,7 @@ static void prefs_receive_create(void)
 	receive.checkbtn_chkonstartup   = checkbtn_chkonstartup;
 	receive.checkbtn_scan_after_inc = checkbtn_scan_after_inc;
 
+	receive.checkbtn_newmsg_notify_window = checkbtn_newmsg_notify_window;
 #ifdef G_OS_WIN32
 	receive.checkbtn_newmsg_sound   = checkbtn_newmsg_sound;
 	receive.entry_newmsg_sound      = entry_newmsg_sound;

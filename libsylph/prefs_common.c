@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2012 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2013 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -51,6 +51,8 @@ static PrefParam param[] = {
 	 &prefs_common.enable_newmsg_notify_sound, P_BOOL},
 	{"newmsg_notify_sound", NULL, &prefs_common.newmsg_notify_sound,
 	 P_STRING},
+	{"enable_newmsg_notify_window", "TRUE",
+	 &prefs_common.enable_newmsg_notify_window, P_BOOL},
 
 	{"inc_local", "FALSE", &prefs_common.inc_local, P_BOOL},
 	{"filter_on_inc_local", "TRUE", &prefs_common.filter_on_inc, P_BOOL},

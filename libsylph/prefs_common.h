@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2012 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2013 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -341,6 +341,8 @@ struct _PrefsCommon
 	gboolean show_attach_tab;            /* Message - Attachment */
 	gboolean show_attached_files_first;  /* Message - Attachment */
 	gint attach_toolbutton_pos;          /* Message - Attachment */
+
+	gboolean enable_newmsg_notify_window; /* Receive */
 };
 
 extern PrefsCommon prefs_common;

@@ -207,7 +207,6 @@ static void inc_finished(MainWindow *mainwin, IncResult *result)
 	}
 
 	if (new_messages > 0 && !block_notify) {
-		gchar buf[1024];
 		GString *str;
 		gint c = 0;
 
@@ -233,22 +232,26 @@ static void inc_finished(MainWindow *mainwin, IncResult *result)
 		trayicon_set_tooltip(str->str);
 		trayicon_set_notify(TRUE);
 
-		g_snprintf(buf, sizeof(buf), _("Sylpheed: %d new messages"), new_messages);
-		g_string_truncate(str, 0);
-		if (result) {
-			for (cur = result->msg_summaries; cur != NULL; cur = cur->next) {
-				IncMsgSummary *summary = cur->data;
-				gchar *markup;
+		if (prefs_common.enable_newmsg_notify_window) {
+			gchar buf[1024];
 
-				if (str->len > 0)
-					g_string_append_c(str, '\n');
-				markup = g_markup_printf_escaped("<b>%s</b>  %s", summary->subject, summary->from);
-				g_string_append(str, markup);
-				g_free(markup);
+			g_snprintf(buf, sizeof(buf), _("Sylpheed: %d new messages"), new_messages);
+			g_string_truncate(str, 0);
+			if (result) {
+				for (cur = result->msg_summaries; cur != NULL; cur = cur->next) {
+					IncMsgSummary *summary = cur->data;
+					gchar *markup;
+
+					if (str->len > 0)
+						g_string_append_c(str, '\n');
+					markup = g_markup_printf_escaped("<b>%s</b>  %s", summary->subject, summary->from);
+					g_string_append(str, markup);
+					g_free(markup);
+				}
 			}
-		}
 
-		notification_window_create(buf, str->str, 5);
+			notification_window_create(buf, str->str, 5);
+		}
 
 		g_string_free(str, TRUE);
 	}
@@ -1591,7 +1594,9 @@ static gint inc_drop_message(Pop3Session *session, const gchar *file)
 		    fltinfo->actions[FLT_ACTION_MARK_READ] == FALSE) {
 			inc_session->new_msgs++;
 
-			if (inc_dialog->result && msginfo->subject && g_slist_length(inc_dialog->result->msg_summaries) < 5) {
+			if (inc_dialog->result &&
+			    msginfo->subject && msginfo->fromname &&
+			    g_slist_length(inc_dialog->result->msg_summaries) < 5) {
 				IncMsgSummary *summary;
 				summary = g_new(IncMsgSummary, 1);
 				summary->subject = g_strdup(msginfo->subject);
