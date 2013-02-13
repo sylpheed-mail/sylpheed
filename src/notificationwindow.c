@@ -114,7 +114,7 @@ gint notification_window_open(const gchar *message, const gchar *submessage,
 	window = gtk_window_new(GTK_WINDOW_POPUP);
 	gtk_window_set_title(GTK_WINDOW(window), _("Notification"));
 	gtk_window_set_wmclass(GTK_WINDOW(window), "notification", "Sylpheed");
-	gtk_container_set_border_width(GTK_CONTAINER(window), 4);
+	gtk_container_set_border_width(GTK_CONTAINER(window), 8);
 	gtk_widget_set_events(window, GDK_EXPOSURE_MASK|GDK_BUTTON_MOTION_MASK|GDK_POINTER_MOTION_MASK|GDK_POINTER_MOTION_HINT_MASK|GDK_BUTTON_PRESS_MASK|GDK_BUTTON_RELEASE_MASK|GDK_ENTER_NOTIFY_MASK|GDK_LEAVE_NOTIFY_MASK);
 	gtk_window_set_skip_taskbar_hint(GTK_WINDOW(window), TRUE);
 	gtk_window_set_gravity(GTK_WINDOW(window), GDK_GRAVITY_SOUTH_EAST);
@@ -139,7 +139,7 @@ gint notification_window_open(const gchar *message, const gchar *submessage,
 	g_signal_connect(G_OBJECT(window), "motion_notify_event",
 			 G_CALLBACK(nwin_motion_notify), NULL);
 
-	vbox = gtk_vbox_new(FALSE, 4);
+	vbox = gtk_vbox_new(FALSE, 0);
 	gtk_container_add(GTK_CONTAINER(window), vbox);
 
 	msglabel = gtk_label_new(message);
@@ -149,6 +149,8 @@ gint notification_window_open(const gchar *message, const gchar *submessage,
 	gtk_label_set_ellipsize(GTK_LABEL(sublabel), PANGO_ELLIPSIZE_END);
 	gtk_label_set_markup(GTK_LABEL(sublabel), submessage);
 	gtk_box_pack_start(GTK_BOX(vbox), sublabel, FALSE, FALSE, 4);
+	gtk_label_set_justify(GTK_LABEL(sublabel), GTK_JUSTIFY_LEFT);
+	gtk_misc_set_alignment(GTK_MISC(sublabel), 0.0, 0.5);
 
 	gtk_widget_show_all(window);
 
