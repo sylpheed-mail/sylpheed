@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2012 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2013 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1372,4 +1372,31 @@ gint syl_plugin_send_message_set_forward_flags(const gchar *forward_targets)
 
 	GETFUNC("send_message_set_forward_flags");
 	return SAFE_CALL_ARG1_RET_VAL(func, forward_targets, -1);
+}
+
+gint syl_plugin_notification_window_open(const gchar *message,
+					 const gchar *submessage,
+					 guint timeout)
+{
+	gint (*func)(const gchar *, const gchar *, guint);
+
+	GETFUNC("notification_window_open");
+	return SAFE_CALL_ARG3_RET_VAL(func, message, submessage, timeout, -1);
+}
+
+void syl_plugin_notification_window_set_message(const gchar *message,
+						const gchar *submessage)
+{
+	void (*func)(const gchar *, const gchar *);
+
+	GETFUNC("notification_window_set_message");
+	SAFE_CALL_ARG2(func, message, submessage);
+}
+
+void syl_plugin_notification_window_close(void)
+{
+	void (*func)(void);
+
+	GETFUNC("notification_window_close");
+	SAFE_CALL(func);
 }

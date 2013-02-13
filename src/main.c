@@ -81,6 +81,7 @@
 #include "socket.h"
 #include "stock_pixmap.h"
 #include "trayicon.h"
+#include "notificationwindow.h"
 #include "plugin.h"
 #include "plugin_manager.h"
 #include "foldersel.h"
@@ -1367,6 +1368,10 @@ static void plugin_init(void)
 	ADD_SYM(send_message_queue_all);
 	ADD_SYM(send_message_set_reply_flag);
 	ADD_SYM(send_message_set_forward_flags);
+
+	ADD_SYM(notification_window_open);
+	ADD_SYM(notification_window_set_message);
+	ADD_SYM(notification_window_close);
 
 	syl_plugin_signal_connect("plugin-load", G_CALLBACK(load_cb), NULL);
 

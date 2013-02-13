@@ -28,7 +28,7 @@
 
 static SylPluginInfo info = {
 	"Test Plugin",
-	"3.2.0",
+	"3.4.0",
 	"Hiroyuki Yamamoto",
 	"Test plug-in for Sylpheed plug-in system"
 };
@@ -146,6 +146,9 @@ static void init_done_cb(GObject *obj, gpointer data)
 	syl_plugin_update_check_set_jump_url("http://localhost/index.html");
 	syl_plugin_update_check_set_check_plugin_url("http://localhost/plugin_version.txt");
 	syl_plugin_update_check_set_jump_plugin_url("http://localhost/plugin.html");
+
+	syl_plugin_notification_window_open("Sylpheed app init done", "Normal text\n<b>Bold</b>\n<s>Strikethrough</s>", 5);
+
 	g_print("test: %p: app init done\n", obj);
 }
 

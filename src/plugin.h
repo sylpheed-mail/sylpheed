@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2012 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2013 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -330,5 +330,13 @@ gint syl_plugin_send_message_queue_all		(FolderItem	*queue,
 gint syl_plugin_send_message_set_reply_flag	(const gchar	*reply_target,
 						 const gchar	*msgid);
 gint syl_plugin_send_message_set_forward_flags	(const gchar	*forward_targets);
+
+/* Notification window */
+gint syl_plugin_notification_window_open	(const gchar	*message,
+						 const gchar	*submessage,
+						 guint		 timeout);
+void syl_plugin_notification_window_set_message	(const gchar	*message,
+						 const gchar	*submessage);
+void syl_plugin_notification_window_close	(void);
 
 #endif /* __PLUGIN_H__ */

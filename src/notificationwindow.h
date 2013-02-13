@@ -23,8 +23,6 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
-typedef struct _NotificationWindow	NotificationWindow;
-
 gint notification_window_open		(const gchar		*message,
 					 const gchar		*submessage,
 					 guint			 timeout);

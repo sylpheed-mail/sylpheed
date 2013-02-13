@@ -39,7 +39,7 @@
 #define FADE_REFRESH_RATE			50
 #define FADE_SPEED				5
 
-struct _NotificationWindow
+typedef struct _NotificationWindow
 {
 	GtkWidget *window;
 
@@ -56,7 +56,7 @@ struct _NotificationWindow
 	gint fade_count;
 	gint notify_event_count;
 	guint timeout;
-};
+} NotificationWindow;
 
 static NotificationWindow notify_window;
 
@@ -161,6 +161,8 @@ gint notification_window_open(const gchar *message, const gchar *submessage,
 	if (y < 0) y = 0;
 	gtk_window_move(GTK_WINDOW(window), x, y);
 
+	if (timeout == 0)
+		timeout = 1;
 	notify_window.notify_tag = g_timeout_add(timeout * 1000,
 						 notify_timeout_cb, NULL);
 
