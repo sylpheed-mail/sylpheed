@@ -139,7 +139,7 @@ gint notification_window_open(const gchar *message, const gchar *submessage,
 	g_signal_connect(G_OBJECT(window), "motion_notify_event",
 			 G_CALLBACK(nwin_motion_notify), NULL);
 
-	vbox = gtk_vbox_new(FALSE, 0);
+	vbox = gtk_vbox_new(FALSE, 4);
 	gtk_container_add(GTK_CONTAINER(window), vbox);
 
 	msglabel = gtk_label_new(message);
