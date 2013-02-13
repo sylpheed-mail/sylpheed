@@ -25,7 +25,7 @@
 
 typedef struct _NotificationWindow	NotificationWindow;
 
-gint notification_window_create		(const gchar		*message,
+gint notification_window_open		(const gchar		*message,
 					 const gchar		*submessage,
 					 guint			 timeout);
 void notification_window_set_message	(const gchar		*message,

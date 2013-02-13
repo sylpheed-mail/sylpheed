@@ -34,8 +34,8 @@
 #include "utils.h"
 
 #define NOTIFICATIONWINDOW_NOTIFY_PERIOD	10000
-#define NOTIFICATIONWINDOW_WIDTH		280
-#define NOTIFICATIONWINDOW_HEIGHT		96
+#define NOTIFICATIONWINDOW_WIDTH		300
+#define NOTIFICATIONWINDOW_HEIGHT		64
 #define FADE_REFRESH_RATE			50
 #define FADE_SPEED				5
 
@@ -54,6 +54,7 @@ struct _NotificationWindow
 	gint height;
 	gint fade_length;
 	gint fade_count;
+	gint notify_event_count;
 	guint timeout;
 };
 
@@ -95,8 +96,8 @@ static void get_work_area(GdkRectangle *rect)
 #endif
 }
 
-gint notification_window_create(const gchar *message, const gchar *submessage,
-				guint timeout)
+gint notification_window_open(const gchar *message, const gchar *submessage,
+			      guint timeout)
 {
 	GtkWidget *window;
 	GtkWidget *vbox;
@@ -172,6 +173,7 @@ gint notification_window_create(const gchar *message, const gchar *submessage,
 	notify_window.y = y;
 	notify_window.fade_length = 0;
 	notify_window.fade_count = 0;
+	notify_window.notify_event_count = 0;
 	notify_window.timeout = timeout;
 
 	return 0;
@@ -258,11 +260,18 @@ static gboolean nwin_entered(GtkWidget *widget, GdkEventCrossing *event,
 static gboolean nwin_motion_notify(GtkWidget *widget, GdkEventMotion *event,
 				   gpointer data)
 {
+	if (notify_window.fade_count > 0 &&
+	    notify_window.notify_event_count == 0) {
+		notify_window.notify_event_count++;
+		return FALSE;
+	}
+
 	if (notify_window.notify_tag > 0) {
 		g_source_remove(notify_window.notify_tag);
 		notify_window.notify_tag = 0;
 	}
 	notify_window.fade_count = 0;
+	notify_window.notify_event_count = 0;
 	gtk_window_move(GTK_WINDOW(notify_window.window),
 			notify_window.x, notify_window.y);
 	notify_window.notify_tag = g_timeout_add(notify_window.timeout * 1000,

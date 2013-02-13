@@ -250,7 +250,7 @@ static void inc_finished(MainWindow *mainwin, IncResult *result)
 				}
 			}
 
-			notification_window_create(buf, str->str, 5);
+			notification_window_open(buf, str->str, 5);
 		}
 
 		g_string_free(str, TRUE);
