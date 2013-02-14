@@ -139,16 +139,16 @@ gint notification_window_open(const gchar *message, const gchar *submessage,
 	g_signal_connect(G_OBJECT(window), "motion_notify_event",
 			 G_CALLBACK(nwin_motion_notify), NULL);
 
-	vbox = gtk_vbox_new(FALSE, 4);
+	vbox = gtk_vbox_new(FALSE, 8);
 	gtk_container_add(GTK_CONTAINER(window), vbox);
 
 	msglabel = gtk_label_new(message);
-	gtk_box_pack_start(GTK_BOX(vbox), msglabel, FALSE, FALSE, 4);
+	gtk_box_pack_start(GTK_BOX(vbox), msglabel, FALSE, FALSE, 0);
 
 	sublabel = gtk_label_new("");
 	gtk_label_set_ellipsize(GTK_LABEL(sublabel), PANGO_ELLIPSIZE_END);
 	gtk_label_set_markup(GTK_LABEL(sublabel), submessage);
-	gtk_box_pack_start(GTK_BOX(vbox), sublabel, FALSE, FALSE, 4);
+	gtk_box_pack_start(GTK_BOX(vbox), sublabel, FALSE, FALSE, 0);
 	gtk_label_set_justify(GTK_LABEL(sublabel), GTK_JUSTIFY_LEFT);
 	gtk_misc_set_alignment(GTK_MISC(sublabel), 0.0, 0.5);
 

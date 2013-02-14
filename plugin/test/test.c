@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2011 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2013 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -147,7 +147,7 @@ static void init_done_cb(GObject *obj, gpointer data)
 	syl_plugin_update_check_set_check_plugin_url("http://localhost/plugin_version.txt");
 	syl_plugin_update_check_set_jump_plugin_url("http://localhost/plugin.html");
 
-	syl_plugin_notification_window_open("Sylpheed app init done", "Normal text\n<b>Bold</b>\n<s>Strikethrough</s>", 5);
+	syl_plugin_notification_window_open("Sylpheed app init done", "Normal text\n<b>Bold</b>\n<s>Strikethrough</s>\n<b>This is a long text and will be truncated:</b> ABCDEFGHIJKLMNOPQRSTUVWXYZ", 5);
 
 	g_print("test: %p: app init done\n", obj);
 }
