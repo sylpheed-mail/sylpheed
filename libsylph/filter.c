@@ -1586,9 +1586,16 @@ FilterRule *filter_junk_rule_create(PrefsAccount *account,
 	debug_print("filter_junk_rule_create: junk folder: %s\n",
 		    junk_id);
 
+	if (prefs_common.nofilter_junk_sender_in_book) {
+		cond = filter_cond_new(FLT_COND_HEADER, FLT_IN_ADDRESSBOOK,
+				       FLT_NOT_MATCH, "From", NULL);
+		cond_list = g_slist_append(cond_list, cond);
+	}
+
 	cond = filter_cond_new(FLT_COND_CMD_TEST, 0, 0, NULL,
 			       prefs_common.junk_classify_cmd);
-	cond_list = g_slist_append(NULL, cond);
+	cond_list = g_slist_append(cond_list, cond);
+
 	if (prefs_common.delete_junk_on_recv && !is_manual) {
 		action = filter_action_new(FLT_ACTION_COPY, junk_id);
 		action_list = g_slist_append(NULL, action);
@@ -1605,10 +1612,10 @@ FilterRule *filter_junk_rule_create(PrefsAccount *account,
 	}
 
 	if (is_manual)
-		rule = filter_rule_new(_("Junk mail filter (manual)"), FLT_OR,
+		rule = filter_rule_new(_("Junk mail filter (manual)"), FLT_AND,
 				       cond_list, action_list);
 	else
-		rule = filter_rule_new(_("Junk mail filter"), FLT_OR,
+		rule = filter_rule_new(_("Junk mail filter"), FLT_AND,
 				       cond_list, action_list);
 
 	g_free(junk_id);

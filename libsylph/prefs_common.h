@@ -343,6 +343,8 @@ struct _PrefsCommon
 	gint attach_toolbutton_pos;          /* Message - Attachment */
 
 	gboolean enable_newmsg_notify_window; /* Receive */
+
+	gboolean nofilter_junk_sender_in_book; /* Junk Mail */
 };
 
 extern PrefsCommon prefs_common;

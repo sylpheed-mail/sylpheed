@@ -393,6 +393,8 @@ static PrefParam param[] = {
 	 P_BOOL},
 	{"delete_junk_on_receive", "TRUE", &prefs_common.delete_junk_on_recv,
 	 P_BOOL},
+	{"nofilter_junk_sender_in_book", "TRUE",
+	 &prefs_common.nofilter_junk_sender_in_book, P_BOOL},
 	{"mark_junk_as_read", "FALSE", &prefs_common.mark_junk_as_read, P_BOOL},
 
 	/* Privacy */

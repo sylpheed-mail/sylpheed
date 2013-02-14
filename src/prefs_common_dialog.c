@@ -194,6 +194,7 @@ static struct JunkMail {
 	GtkWidget *chkbtn_filter_on_recv;
 	GtkWidget *chkbtn_filter_before;
 	GtkWidget *chkbtn_delete_on_recv;
+	GtkWidget *chkbtn_nofilter_in_book;
 	GtkWidget *chkbtn_mark_as_read;
 } junk;
 
@@ -514,6 +515,8 @@ static PrefsUIData ui_data[] = {
 	{"filter_junk_before", &junk.chkbtn_filter_before,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"delete_junk_on_receive", &junk.chkbtn_delete_on_recv,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"nofilter_junk_sender_in_book", &junk.chkbtn_nofilter_in_book,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"mark_junk_as_read", &junk.chkbtn_mark_as_read,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
@@ -2246,6 +2249,7 @@ static void prefs_junk_create(void)
 	GtkWidget *chkbtn_filter_on_recv;
 	GtkWidget *chkbtn_filter_before;
 	GtkWidget *chkbtn_delete_on_recv;
+	GtkWidget *chkbtn_nofilter_in_book;
 	GtkWidget *chkbtn_mark_as_read;
 
 	vbox1 = gtk_vbox_new (FALSE, VSPACING);
@@ -2379,18 +2383,22 @@ static void prefs_junk_create(void)
 	SET_TOGGLE_SENSITIVITY (chkbtn_filter_on_recv, chkbtn_filter_before);
 	SET_TOGGLE_SENSITIVITY (chkbtn_filter_on_recv, chkbtn_delete_on_recv);
 
+	PACK_CHECK_BUTTON
+		(vbox3, chkbtn_nofilter_in_book,
+		 _("Do not classify message as junk if sender is in the address book"));
 	PACK_CHECK_BUTTON (vbox3, chkbtn_mark_as_read,
 			   _("Mark filtered junk mails as read"));
 
-	junk.chkbtn_enable_junk    = chkbtn_enable_junk;
-	junk.entry_junk_learncmd   = entry_junk_learncmd;
-	junk.entry_nojunk_learncmd = entry_nojunk_learncmd;
-	junk.entry_classify_cmd    = entry_classify_cmd;
-	junk.entry_junkfolder      = entry_junkfolder;
-	junk.chkbtn_filter_on_recv = chkbtn_filter_on_recv;
-	junk.chkbtn_filter_before  = chkbtn_filter_before;
-	junk.chkbtn_delete_on_recv = chkbtn_delete_on_recv;
-	junk.chkbtn_mark_as_read   = chkbtn_mark_as_read;
+	junk.chkbtn_enable_junk      = chkbtn_enable_junk;
+	junk.entry_junk_learncmd     = entry_junk_learncmd;
+	junk.entry_nojunk_learncmd   = entry_nojunk_learncmd;
+	junk.entry_classify_cmd      = entry_classify_cmd;
+	junk.entry_junkfolder        = entry_junkfolder;
+	junk.chkbtn_filter_on_recv   = chkbtn_filter_on_recv;
+	junk.chkbtn_filter_before    = chkbtn_filter_before;
+	junk.chkbtn_delete_on_recv   = chkbtn_delete_on_recv;
+	junk.chkbtn_nofilter_in_book = chkbtn_nofilter_in_book;
+	junk.chkbtn_mark_as_read     = chkbtn_mark_as_read;
 }
 
 #if USE_GPGME
