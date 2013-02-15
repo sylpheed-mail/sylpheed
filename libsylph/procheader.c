@@ -840,6 +840,10 @@ static gint procheader_scan_date_string(const gchar *str,
 	if (result == 6) return 0;
 
 	*zone = '\0';
+	result = sscanf(str, "%d-%2s-%2d %2d:%2d:%2d",
+			year, month, day, hh, mm, ss);
+	if (result == 6) return 0;
+
 	result = sscanf(str, "%10s %d %9s %d %2d:%2d",
 			weekday, day, month, year, hh, mm);
 	if (result == 6) return 0;
@@ -882,10 +886,14 @@ time_t procheader_date_parse(gchar *dest, const gchar *src, gint len)
 	}
 
 	month[3] = '\0';
-	for (p = monthstr; *p != '\0'; p += 3) {
-		if (!g_ascii_strncasecmp(p, month, 3)) {
-			dmonth = (gint)(p - monthstr) / 3 + 1;
-			break;
+	if (g_ascii_isdigit(month[0])) {
+		dmonth = atoi(month);
+	} else {
+		for (p = monthstr; *p != '\0'; p += 3) {
+			if (!g_ascii_strncasecmp(p, month, 3)) {
+				dmonth = (gint)(p - monthstr) / 3 + 1;
+				break;
+			}
 		}
 	}
 
@@ -901,14 +909,22 @@ time_t procheader_date_parse(gchar *dest, const gchar *src, gint len)
 
 	timer = mktime(&t);
 	if (timer == -1) {
-		if (dest)
-			dest[0] = '\0';
-		return 0;
+		if (year >= 2038) {
+			g_warning("mktime: date overflow: %s", src);
+			timer = G_MAXINT - 12 * 3600;
+		} else {
+			g_warning("mktime: can't convert date: %s", src);
+			if (dest)
+				dest[0] = '\0';
+			return 0;
+		}
 	}
 
-	tz_offset = remote_tzoffset_sec(zone);
-	if (tz_offset != -1)
-		timer += tzoffset_sec(&timer) - tz_offset;
+	if (timer < G_MAXINT - 12 * 3600) {
+		tz_offset = remote_tzoffset_sec(zone);
+		if (tz_offset != -1)
+			timer += tzoffset_sec(&timer) - tz_offset;
+	}
 
 	if (dest)
 		procheader_date_get_localtime(dest, len, timer);
