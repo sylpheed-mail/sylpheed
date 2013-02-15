@@ -186,8 +186,10 @@ gint notification_window_open(const gchar *message, const gchar *submessage,
 void notification_window_set_message(const gchar *message,
 				     const gchar *submessage)
 {
-	gtk_label_set_text(GTK_LABEL(notify_window.msglabel), message);
-	gtk_label_set_markup(GTK_LABEL(notify_window.sublabel), submessage);
+	if (notify_window.window) {
+		gtk_label_set_text(GTK_LABEL(notify_window.msglabel), message);
+		gtk_label_set_markup(GTK_LABEL(notify_window.sublabel), submessage);
+	}
 }
 
 void notification_window_close(void)
