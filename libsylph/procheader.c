@@ -809,34 +809,26 @@ static gint procheader_scan_date_string(const gchar *str,
 {
 	gint result;
 
+	*zone = '\0';
 	result = sscanf(str, "%10s %d %9s %d %2d:%2d:%2d %5s",
 			weekday, day, month, year, hh, mm, ss, zone);
-	if (result == 8) return 0;
+	if (result >= 7) return 0;
 
 	result = sscanf(str, "%3s,%d %9s %d %2d:%2d:%2d %5s",
 			weekday, day, month, year, hh, mm, ss, zone);
-	if (result == 8) return 0;
+	if (result >= 7) return 0;
 
 	result = sscanf(str, "%3s,%d %9s %d %2d.%2d.%2d %5s",
 			weekday, day, month, year, hh, mm, ss, zone);
-	if (result == 8) return 0;
+	if (result >= 7) return 0;
 
 	result = sscanf(str, "%3s %d, %9s %d %2d:%2d:%2d %5s",
 			weekday, day, month, year, hh, mm, ss, zone);
-	if (result == 8) return 0;
+	if (result >= 7) return 0;
 
 	result = sscanf(str, "%d %9s %d %2d:%2d:%2d %5s",
 			day, month, year, hh, mm, ss, zone);
-	if (result == 7) return 0;
-
-	*zone = '\0';
-	result = sscanf(str, "%10s %d %9s %d %2d:%2d:%2d",
-			weekday, day, month, year, hh, mm, ss);
-	if (result == 7) return 0;
-
-	result = sscanf(str, "%d %9s %d %2d:%2d:%2d",
-			day, month, year, hh, mm, ss);
-	if (result == 6) return 0;
+	if (result >= 6) return 0;
 
 	result = sscanf(str, "%d-%2s-%2d %2d:%2d:%2d",
 			year, month, day, hh, mm, ss);
@@ -845,19 +837,11 @@ static gint procheader_scan_date_string(const gchar *str,
 	*ss = 0;
 	result = sscanf(str, "%10s %d %9s %d %2d:%2d %5s",
 			weekday, day, month, year, hh, mm, zone);
-	if (result == 7) return 0;
+	if (result >= 6) return 0;
 
 	result = sscanf(str, "%d %9s %d %2d:%2d %5s",
 			day, month, year, hh, mm, zone);
-	if (result == 6) return 0;
-
-	result = sscanf(str, "%10s %d %9s %d %2d:%2d",
-			weekday, day, month, year, hh, mm);
-	if (result == 6) return 0;
-
-	result = sscanf(str, "%d %9s %d %2d:%2d",
-			day, month, year, hh, mm);
-	if (result == 5) return 0;
+	if (result >= 5) return 0;
 
 	return -1;
 }
