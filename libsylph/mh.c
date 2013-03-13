@@ -1693,31 +1693,15 @@ static void mh_scan_tree_recursive(FolderItem *item)
 
 	folder = item->folder;
 
-	debug_print("scanning %s ...\n",
-		    item->path ? item->path : LOCAL_FOLDER(folder)->rootpath);
-	if (folder->ui_func)
-		folder->ui_func(folder, item, folder->ui_func_data);
-
-	if (item->path) {
-		gint new, unread, total, min, max;
-
-		procmsg_get_mark_sum
-			(item, &new, &unread, &total, &min, &max, 0);
-		if (n_msg > total) {
-			new += n_msg - total;
-			unread += n_msg - total;
-		}
-		item->new = new;
-		item->unread = unread;
-		item->total = n_msg;
-		item->updated = TRUE;
-		item->mtime = 0;
-	}
-
 	if (g_node_depth(item->node) >= MAX_RECURSION_LEVEL) {
 		g_warning("mh_scan_tree_recursive(): max recursion level (%u) reached.", MAX_RECURSION_LEVEL);
 		return;
 	}
+
+	debug_print("scanning %s ...\n",
+		    item->path ? item->path : LOCAL_FOLDER(folder)->rootpath);
+	if (folder->ui_func)
+		folder->ui_func(folder, item, folder->ui_func_data);
 
 	fs_path = item->path ?
 		g_filename_from_utf8(item->path, -1, NULL, NULL, NULL)
@@ -1867,6 +1851,22 @@ static void mh_scan_tree_recursive(FolderItem *item)
 #else
 	closedir(dp);
 #endif
+
+	if (item->path) {
+		gint new, unread, total, min, max;
+
+		procmsg_get_mark_sum
+			(item, &new, &unread, &total, &min, &max, 0);
+		if (n_msg > total) {
+			new += n_msg - total;
+			unread += n_msg - total;
+		}
+		item->new = new;
+		item->unread = unread;
+		item->total = n_msg;
+		item->updated = TRUE;
+		item->mtime = 0;
+	}
 }
 
 static gboolean mh_rename_folder_func(GNode *node, gpointer data)
