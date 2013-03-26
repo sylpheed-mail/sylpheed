@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2012 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2013 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -63,13 +63,25 @@
 
 #define QUOTE_IF_REQUIRED(out, str)					\
 {									\
-	if (*str != '"' && strpbrk(str, " \t(){}[]%&*") != NULL) {	\
+	if (!str || *str == '\0') {					\
+		Xstrdup_a(out, "\"\"", return IMAP_ERROR);		\
+	} else if (strpbrk(str, " \t(){}[]%&*\"\\") != NULL) {		\
 		gchar *__tmp;						\
 		gint len;						\
+		const gchar *p;						\
+		gchar *tp;						\
 									\
-		len = strlen(str) + 3;					\
+		len = strlen(str) * 2 + 3;				\
 		Xalloca(__tmp, len, return IMAP_ERROR);			\
-		g_snprintf(__tmp, len, "\"%s\"", str);			\
+		tp = __tmp;						\
+		*tp++ = '\"';						\
+		for (p = str; *p != '\0'; p++) {			\
+			if (*p == '\"' || *p == '\\')			\
+				*tp++ = '\\';				\
+			*tp++ = *p;					\
+		}							\
+		*tp++ = '\"';						\
+		*tp = '\0';						\
 		out = __tmp;						\
 	} else {							\
 		Xstrdup_a(out, str, return IMAP_ERROR);			\
@@ -3984,8 +3996,8 @@ static gint imap_cmd_list(IMAPSession *session, const gchar *ref,
 {
 	gchar *ref_, *mailbox_;
 
-	if (!ref) ref = "\"\"";
-	if (!mailbox) mailbox = "\"\"";
+	if (!ref) ref = "";
+	if (!mailbox) mailbox = "";
 
 	QUOTE_IF_REQUIRED(ref_, ref);
 	QUOTE_IF_REQUIRED(mailbox_, mailbox);
