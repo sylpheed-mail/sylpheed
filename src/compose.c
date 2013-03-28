@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2012 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2013 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -6208,7 +6208,7 @@ static void compose_template_apply(Compose *compose, Template *tmpl,
 	GtkTextBuffer *buffer;
 	GtkTextMark *mark;
 	GtkTextIter iter;
-	gchar *parsed_str;
+	gchar *parsed_str = NULL;
 
 	if (!tmpl || !tmpl->value) return;
 
@@ -6233,22 +6233,57 @@ static void compose_template_apply(Compose *compose, Template *tmpl,
 	mark = gtk_text_buffer_get_insert(buffer);
 	gtk_text_buffer_get_iter_at_mark(buffer, &iter, mark);
 
-	if (compose->reply_target == NULL) {
-		parsed_str = compose_quote_fmt(compose, NULL, tmpl->value,
-					       NULL, NULL);
-	} else {
+	if (compose->reply_target) {
 		FolderItem *item;
 		gint num;
 		MsgInfo *msginfo = NULL;
+		MsgInfo *full_msginfo;
 
 		item = folder_find_item_and_num_from_id(compose->reply_target,
 							&num);
-		if (item && num > 0)
+		if (item && num > 0) {
 			msginfo = folder_item_get_msginfo(item, num);
+			if (msginfo) {
+				full_msginfo = procmsg_msginfo_get_full_info(msginfo);
+				if (full_msginfo) {
+					procmsg_msginfo_free(msginfo);
+					msginfo = full_msginfo;
+				}
+			}
+		}
 		parsed_str = compose_quote_fmt(compose, msginfo,
 					       tmpl->value,
 					       prefs_common.quotemark, NULL);
 		procmsg_msginfo_free(msginfo);
+	} else if (compose->forward_targets) {
+		FolderItem *item;
+		gint num;
+		gchar **targets;
+		gint i;
+		MsgInfo *msginfo;
+		MsgInfo *full_msginfo;
+
+		targets = g_strsplit(compose->forward_targets, "\n", 0);
+
+		for (i = 0; targets[i] != NULL; i++) {
+			g_strstrip(targets[i]);
+			item = folder_find_item_and_num_from_id(targets[i], &num);
+			if (!item || num <= 0)
+				continue;
+			msginfo = procmsg_get_msginfo(item, num);
+			if (!msginfo)
+				continue;
+			full_msginfo = procmsg_msginfo_get_full_info(msginfo);
+			parsed_str = compose_quote_fmt(compose, full_msginfo ? full_msginfo : msginfo,
+						       tmpl->value,
+						       prefs_common.fw_quotemark, NULL);
+			procmsg_msginfo_free(full_msginfo);
+			procmsg_msginfo_free(msginfo);
+		}
+		g_strfreev(targets);
+	} else {
+		parsed_str = compose_quote_fmt(compose, NULL, tmpl->value,
+					       NULL, NULL);
 	}
 
 	if (replace && parsed_str && prefs_common.auto_sig)
