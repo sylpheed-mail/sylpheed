@@ -898,17 +898,9 @@ void compose_reply(MsgInfo *msginfo, FolderItem *item, ComposeMode mode,
 	}
 
 	if (quote) {
-		gchar *qmark;
-		gchar *quote_str;
-
-		if (prefs_common.quotemark && *prefs_common.quotemark)
-			qmark = prefs_common.quotemark;
-		else
-			qmark = "> ";
-
-		quote_str = compose_quote_fmt(compose, replyinfo,
-					      prefs_common.quotefmt,
-					      qmark, body);
+		compose_quote_fmt(compose, replyinfo,
+				  prefs_common.quotefmt,
+				  prefs_common.quotemark, body);
 	}
 
 	if (!account->sig_before_quote && prefs_common.auto_sig)
@@ -1030,8 +1022,6 @@ void compose_forward(GSList *mlist, FolderItem *item, gboolean as_attach,
 
 			g_free(msgfile);
 		} else {
-			gchar *qmark;
-			gchar *quote_str;
 			MsgInfo *full_msginfo;
 
 			full_msginfo = procmsg_msginfo_get_full_info(msginfo);
@@ -1047,15 +1037,9 @@ void compose_forward(GSList *mlist, FolderItem *item, gboolean as_attach,
 					(buffer, &iter, "\n\n", 2);
 			}
 
-			if (prefs_common.fw_quotemark &&
-			    *prefs_common.fw_quotemark)
-				qmark = prefs_common.fw_quotemark;
-			else
-				qmark = "> ";
-
-			quote_str = compose_quote_fmt(compose, full_msginfo,
-						      prefs_common.fw_quotefmt,
-						      qmark, body);
+			compose_quote_fmt(compose, full_msginfo,
+					  prefs_common.fw_quotefmt,
+					  prefs_common.fw_quotemark, body);
 			compose_attach_parts(compose, msginfo);
 
 			procmsg_msginfo_free(full_msginfo);
@@ -1746,17 +1730,18 @@ static gchar *compose_quote_fmt(Compose *compose, MsgInfo *msginfo,
 	if (!msginfo)
 		msginfo = &dummyinfo;
 
-	if (qmark != NULL) {
-		quote_fmt_init(msginfo, NULL, NULL);
-		quote_fmt_scan_string(qmark);
-		quote_fmt_parse();
+	if (qmark == NULL || *qmark == '\0')
+		qmark = "> ";
 
-		buf = quote_fmt_get_buffer();
-		if (buf == NULL)
-			alertpanel_error(_("Quote mark format error."));
-		else
-			quote_str = g_strdup(buf);
-	}
+	quote_fmt_init(msginfo, NULL, NULL);
+	quote_fmt_scan_string(qmark);
+	quote_fmt_parse();
+
+	buf = quote_fmt_get_buffer();
+	if (buf == NULL)
+		alertpanel_error(_("Quote mark format error."));
+	else
+		quote_str = g_strdup(buf);
 
 	if (fmt && *fmt != '\0') {
 		quote_fmt_init(msginfo, quote_str, body);
@@ -6223,7 +6208,6 @@ static void compose_template_apply(Compose *compose, Template *tmpl,
 	GtkTextBuffer *buffer;
 	GtkTextMark *mark;
 	GtkTextIter iter;
-	gchar *qmark;
 	gchar *parsed_str;
 
 	if (!tmpl || !tmpl->value) return;
@@ -6257,17 +6241,13 @@ static void compose_template_apply(Compose *compose, Template *tmpl,
 		gint num;
 		MsgInfo *msginfo = NULL;
 
-		if (prefs_common.quotemark && *prefs_common.quotemark)
-			qmark = prefs_common.quotemark;
-		else
-			qmark = "> ";
-
 		item = folder_find_item_and_num_from_id(compose->reply_target,
 							&num);
 		if (item && num > 0)
 			msginfo = folder_item_get_msginfo(item, num);
 		parsed_str = compose_quote_fmt(compose, msginfo,
-					       tmpl->value, qmark, NULL);
+					       tmpl->value,
+					       prefs_common.quotemark, NULL);
 		procmsg_msginfo_free(msginfo);
 	}
 
@@ -7706,7 +7686,6 @@ static void compose_paste_as_quote_cb(Compose *compose)
 	GtkTextMark *mark;
 	GtkClipboard *clipboard;
 	gchar *str = NULL;
-	const gchar *qmark;
 
 	if (!compose->focused_editable ||
 	    !GTK_WIDGET_HAS_FOCUS(compose->focused_editable) ||
@@ -7720,11 +7699,7 @@ static void compose_paste_as_quote_cb(Compose *compose)
 	if (!str)
 		return;
 
-	if (prefs_common.quotemark && *prefs_common.quotemark)
-		qmark = prefs_common.quotemark;
-	else
-		qmark = "> ";
-	compose_quote_fmt(compose, NULL, "%Q", qmark, str);
+	compose_quote_fmt(compose, NULL, "%Q", prefs_common.quotemark, str);
 
 	g_free(str);
 
