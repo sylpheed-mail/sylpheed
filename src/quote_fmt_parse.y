@@ -266,16 +266,17 @@ special:
 	| SHOW_MESSAGE
 	{
 		gchar buf[BUFFSIZE];
-		FILE *fp;
+		FILE *fp = NULL;
 
 		if (body)
 			fp = str_open_as_stream(body);
-		else
+		else if (msginfo->size > 0) {
 			fp = procmime_get_first_text_content(msginfo, NULL);
+			if (fp == NULL)
+				g_warning("quote_fmt_parse.y: Can't get text part\n");
+		}
 
-		if (fp == NULL)
-			g_warning("Can't get text part\n");
-		else {
+		if (fp) {
 			while (fgets(buf, sizeof(buf), fp) != NULL) {
 				strcrchomp(buf);
 				INSERT(buf);
@@ -286,16 +287,17 @@ special:
 	| SHOW_QUOTED_MESSAGE
 	{
 		gchar buf[BUFFSIZE];
-		FILE *fp;
+		FILE *fp = NULL;
 
 		if (body)
 			fp = str_open_as_stream(body);
-		else
+		else if (msginfo->size > 0) {
 			fp = procmime_get_first_text_content(msginfo, NULL);
+			if (fp == NULL)
+				g_warning("quote_fmt_parse.y: Can't get text part\n");
+		}
 
-		if (fp == NULL)
-			g_warning("Can't get text part\n");
-		else {
+		if (fp) {
 			while (fgets(buf, sizeof(buf), fp) != NULL) {
 				strcrchomp(buf);
 				if (quote_str)
@@ -308,16 +310,17 @@ special:
 	| SHOW_MESSAGE_NO_SIGNATURE
 	{
 		gchar buf[BUFFSIZE];
-		FILE *fp;
+		FILE *fp = NULL;
 
 		if (body)
 			fp = str_open_as_stream(body);
-		else
+		else if (msginfo->size > 0) {
 			fp = procmime_get_first_text_content(msginfo, NULL);
+			if (fp == NULL)
+				g_warning("quote_fmt_parse.y: Can't get text part\n");
+		}
 
-		if (fp == NULL)
-			g_warning("Can't get text part\n");
-		else {
+		if (fp) {
 			while (fgets(buf, sizeof(buf), fp) != NULL) {
 				strcrchomp(buf);
 				if (strncmp(buf, "-- \n", 4) == 0)
@@ -330,16 +333,17 @@ special:
 	| SHOW_QUOTED_MESSAGE_NO_SIGNATURE
 	{
 		gchar buf[BUFFSIZE];
-		FILE *fp;
+		FILE *fp = NULL;
 
 		if (body)
 			fp = str_open_as_stream(body);
-		else
+		else if (msginfo->size > 0) {
 			fp = procmime_get_first_text_content(msginfo, NULL);
+			if (fp == NULL)
+				g_warning("Can't get text part\n");
+		}
 
-		if (fp == NULL)
-			g_warning("Can't get text part\n");
-		else {
+		if (fp) {
 			while (fgets(buf, sizeof(buf), fp) != NULL) {
 				strcrchomp(buf);
 				if (strncmp(buf, "-- \n", 4) == 0)
