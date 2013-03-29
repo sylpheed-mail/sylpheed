@@ -187,6 +187,94 @@ uri: URI string if the menu popups on an URI
 selected_text: string if a string is selected on the text view
 msginfo: the MsgInfo message object displayed in the text view
 -------------------------------------------------------------------------
+gboolean (* compose_send)       (GObject        *obj,
+                                 gpointer        compose,
+                                 gint            compose_mode,
+                                 gint            send_mode,
+                                 const gchar    *msg_file,
+                                 GSList         *to_list);
+
+Emitted on a composed message is being sent.
+If FALSE is returned, the message is sent normally.
+If TRUE is returned, sending is cancelled.
+
+compose: the Compose object
+compose_mode: ComposeMode enum
+send_mode: 0: send immediately 1: queue and send later
+msg_file: path to the created message file
+to_list: list of recipients
+-------------------------------------------------------------------------
+void (* messageview_show)       (GObject        *obj,
+                                 gpointer        msgview,
+                                 MsgInfo        *msginfo,
+                                 gboolean        all_headers);
+
+Emitted on displaying a message.
+
+msgview: the MessageView object
+msginfo: the MsgInfo message object displayed
+all_headers: TRUE if all headers are displayed. FALSE if not.
+-------------------------------------------------------------------------
+void (* inc_mail_start)         (GObject        *obj,
+                                 PrefsAccount   *account);
+
+Emitted on the start of receiving.
+
+account: receive target account (PrefsAccount)
+-------------------------------------------------------------------------
+void (* inc_mail_finished)      (GObject        *obj,
+                                 gint            new_messages);
+
+Emitted on the end of receiving.
+
+new_messages: number of received messages
+-------------------------------------------------------------------------
+void (* prefs_common_open)      (GObject        *obj,
+                                 GtkWidget      *window);
+
+Emitted on opening common preferences dialog.
+
+window: dialog window (GtkWindow)
+-------------------------------------------------------------------------
+void (* prefs_account_open)     (GObject        *obj,
+                                 PrefsAccount   *account,
+                                 GtkWidget      *window);
+
+Emitted on opening account preferences dialog.
+
+window: dialog window (GtkWindow)
+-------------------------------------------------------------------------
+void (* prefs_filter_open)      (GObject        *obj,
+                                 GtkWidget      *window);
+
+Emitted on opening filter rule preferences dialog.
+
+window: dialog window (GtkWindow)
+-------------------------------------------------------------------------
+void (* prefs_filter_edit_open) (GObject        *obj,
+                                 FilterRule     *rule,
+                                 const gchar    *header,
+                                 const gchar    *key,
+                                 GtkWidget      *window);
+
+Emitted on opening filter rule edit dialog.
+
+window: dialog window (GtkWindow)
+-------------------------------------------------------------------------
+void (* prefs_template_open)    (GObject        *obj,
+                                 GtkWidget      *window);
+
+Emitted on opening template dialog.
+
+window: dialog window (GtkWindow)
+-------------------------------------------------------------------------
+void (* plugin_manager_open)    (GObject        *obj,
+                                 GtkWidget      *window);
+
+Emitted on opening plug-in manager dialog.
+
+window: dialog window (GtkWindow)
+-------------------------------------------------------------------------
 
 * libsylph-0
 
