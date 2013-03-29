@@ -178,8 +178,14 @@ special:
 	}
 	| SHOW_DATE
 	{
-		if (msginfo->date)
+		if (msginfo->date) {
 			INSERT(msginfo->date);
+		} else if (msginfo->size == 0) {
+			gchar buf[64];
+
+			get_rfc822_date(buf, sizeof(buf));
+			INSERT(buf);
+		}
 	}
 	| SHOW_FROM
 	{
