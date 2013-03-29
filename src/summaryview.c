@@ -5060,22 +5060,29 @@ static void summary_not_junk_func(GtkTreeModel *model, GtkTreePath *path,
 
 void summary_junk(SummaryView *summaryview)
 {
-	FolderItem *junk;
+	FolderItem *junk = NULL;
 
 	if (!prefs_common.enable_junk)
 		return;
 	if (!prefs_common.junk_learncmd)
 		return;
 
-	summary_lock(summaryview);
-
-	debug_print("Set mail as junk\n");
+	debug_print("summary_junk: setting selected mails as junk\n");
 
 	if (prefs_common.junk_folder)
 		junk = folder_find_item_from_identifier
 			(prefs_common.junk_folder);
-	else
+	if (!junk &&
+	    summaryview->folder_item && summaryview->folder_item->folder)
+		junk = folder_get_junk(summaryview->folder_item->folder);
+	if (!junk)
 		junk = folder_get_default_junk();
+	if (!junk) {
+		g_warning("summary_junk: junk folder not found");
+		return;
+	}
+
+	summary_lock(summaryview);
 
 	summaryview->to_folder = junk;
 	gtk_tree_selection_selected_foreach(summaryview->selection,
