@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2011 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2013 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -1725,13 +1725,74 @@ static gint print_command_exec(const gchar *file, const gchar *cmdline)
 	return 0;
 }
 
+static void procmsg_write_headers(MsgInfo *msginfo, MimeInfo *partinfo,
+				  FILE *fp, FILE *dest_fp,
+				  const gchar *encoding, gboolean all_headers)
+{
+	GPtrArray *headers;
+	gint i;
+
+	if (all_headers)
+		headers = procheader_get_header_array_asis(fp, NULL);
+	else
+		headers = procheader_get_header_array_for_display(fp, NULL);
+
+	for (i = 0; i < headers->len; i++) {
+		Header *hdr;
+		gchar *file_str;
+		const gchar *body;
+
+		hdr = g_ptr_array_index(headers, i);
+
+		if (partinfo) {
+			if (!g_ascii_strcasecmp(hdr->name, "Subject") ||
+			    !g_ascii_strcasecmp(hdr->name, "From") ||
+			    !g_ascii_strcasecmp(hdr->name, "To") ||
+			    !g_ascii_strcasecmp(hdr->name, "Cc")) {
+				unfold_line(hdr->body);
+			}
+
+			body = hdr->body;
+			while (g_ascii_isspace(*body))
+				body++;
+		} else {
+			if (!g_ascii_strcasecmp(hdr->name, "Subject"))
+				body = msginfo->subject;
+			else if (!g_ascii_strcasecmp(hdr->name, "From"))
+				body = msginfo->from;
+			else if (!g_ascii_strcasecmp(hdr->name, "To"))
+				body = msginfo->to;
+			else if (!g_ascii_strcasecmp(hdr->name, "Cc")) {
+				unfold_line(hdr->body);
+				body = hdr->body;
+				while (g_ascii_isspace(*body))
+					body++;
+			} else {
+				body = hdr->body;
+				while (g_ascii_isspace(*body))
+					body++;
+			}
+		}
+
+		if (body && *body != '\0') {
+			file_str = conv_codeset_strdup
+				(body, CS_INTERNAL, encoding);
+			fprintf(dest_fp, "%s: %s\n", hdr->name,
+				file_str ? file_str : body);
+			g_free(file_str);
+		} else {
+			fprintf(dest_fp, "%s: (none)\n", hdr->name);
+		}
+	}
+
+	procheader_header_array_destroy(headers);
+}
+
 void procmsg_print_message(MsgInfo *msginfo, const gchar *cmdline,
 			   gboolean all_headers)
 {
 	gchar *prtmp;
 	FILE *msgfp, *tmpfp, *prfp;
-	GPtrArray *headers;
-	gint i;
 	gchar buf[BUFFSIZE];
 
 	g_return_if_fail(msginfo != NULL);
@@ -1760,50 +1821,10 @@ void procmsg_print_message(MsgInfo *msginfo, const gchar *cmdline,
 		return;
 	}
 
-	if (all_headers)
-		headers = procheader_get_header_array_asis(msgfp, NULL);
-	else
-		headers = procheader_get_header_array_for_display(msgfp, NULL);
+	procmsg_write_headers(msginfo, NULL, msgfp, prfp,
+			      conv_get_locale_charset_str(), all_headers);
 
 	fclose(msgfp);
-
-	for (i = 0; i < headers->len; i++) {
-		Header *hdr;
-		gchar *locale_str;
-		const gchar *body;
-
-		hdr = g_ptr_array_index(headers, i);
-
-		if (!g_ascii_strcasecmp(hdr->name, "Subject"))
-			body = msginfo->subject;
-		else if (!g_ascii_strcasecmp(hdr->name, "From"))
-			body = msginfo->from;
-		else if (!g_ascii_strcasecmp(hdr->name, "To"))
-			body = msginfo->to;
-		else if (!g_ascii_strcasecmp(hdr->name, "Cc")) {
-			unfold_line(hdr->body);
-			body = hdr->body;
-			while (g_ascii_isspace(*body))
-				body++;
-		} else {
-			body = hdr->body;
-			while (g_ascii_isspace(*body))
-				body++;
-		}
-
-		if (body && *body != '\0') {
-			locale_str = conv_codeset_strdup
-				(body, CS_INTERNAL,
-				 conv_get_locale_charset_str());
-			fprintf(prfp, "%s: %s\n", hdr->name,
-				locale_str ? locale_str : body);
-			g_free(locale_str);
-		} else {
-			fprintf(prfp, "%s: (none)\n", hdr->name);
-		}
-	}
-
-	procheader_header_array_destroy(headers);
 
 	fputc('\n', prfp);
 
@@ -1855,6 +1876,91 @@ void procmsg_print_message_part(MsgInfo *msginfo, MimeInfo *partinfo,
 	print_command_exec(prtmp, cmdline);
 
 	g_free(prtmp);
+}
+
+gint procmsg_save_message_as_text(MsgInfo *msginfo, const gchar *dest,
+				  const gchar *encoding, gboolean all_headers)
+{
+	MimeInfo *mimeinfo, *partinfo;
+	FILE *fp;
+	FILE *tmpfp;
+	FILE *destfp;
+	gchar buf[BUFFSIZE];
+
+	g_return_val_if_fail(msginfo != NULL, -1);
+	g_return_val_if_fail(dest != NULL, -1);
+
+	mimeinfo = procmime_scan_message(msginfo);
+	if (!mimeinfo)
+		return -1;
+	if ((fp = procmsg_open_message(msginfo)) == NULL) {
+		procmime_mimeinfo_free_all(mimeinfo);
+		return -1;
+	}
+	if ((destfp = g_fopen(dest, "wb")) == NULL) {
+		fclose(fp);
+		procmime_mimeinfo_free_all(mimeinfo);
+		return -1;
+	}
+	procmsg_write_headers(msginfo, mimeinfo, fp, destfp, encoding, all_headers);
+	fputc('\n', destfp);
+
+	partinfo = mimeinfo;
+
+	while (partinfo != NULL) {
+		if (fseek(fp, partinfo->fpos, SEEK_SET) < 0)
+			break;
+
+		if (partinfo->filename || partinfo->name)
+			g_snprintf(buf, sizeof(buf), "\n[%s  %s (%s)]\n",
+				   partinfo->filename ? partinfo->filename :
+				   partinfo->name,
+				   partinfo->content_type,
+				   to_human_readable(partinfo->content_size));
+		else
+			g_snprintf(buf, sizeof(buf), "\n[%s (%s)]\n",
+				   partinfo->content_type,
+				   to_human_readable(partinfo->content_size));
+
+		if (partinfo->mime_type == MIME_TEXT ||
+		    partinfo->mime_type == MIME_TEXT_HTML) {
+			if (!partinfo->main &&
+			    partinfo->parent &&
+			    partinfo->parent->children != partinfo) {
+				fputs(buf, destfp);
+			}
+
+			if ((tmpfp = procmime_get_text_content(partinfo, fp, encoding)) == NULL)
+				break;
+			if (copy_file_stream(tmpfp, destfp) < 0) {
+				fclose(tmpfp);
+				break;
+			}
+
+			fclose(tmpfp);
+		} else if (partinfo->mime_type == MIME_MESSAGE_RFC822) {
+			fputs(buf, destfp);
+			while (fgets(buf, sizeof(buf), fp) != NULL)
+				if (buf[0] == '\r' || buf[0] == '\n') break;
+			procmsg_write_headers(msginfo, partinfo, fp, destfp, encoding, all_headers);
+			fputc('\n', destfp);
+		} else if (partinfo->mime_type != MIME_MULTIPART) {
+			fputs(buf, destfp);
+		}
+
+		if (partinfo->parent && partinfo->parent->content_type &&
+		    !g_ascii_strcasecmp(partinfo->parent->content_type,
+					"multipart/alternative"))
+			partinfo = partinfo->parent->next;
+		else
+			partinfo = procmime_mimeinfo_next(partinfo);
+	}
+
+	fclose(destfp);
+	fclose(fp);
+	procmime_mimeinfo_free_all(mimeinfo);
+
+	return 0;
 }
 
 /**

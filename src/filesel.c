@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2012 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2013 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
 #include <gtk/gtkversion.h>
 #include <gtk/gtkfilechooserdialog.h>
 #include <gtk/gtkexpander.h>
+#include <gtk/gtkcombobox.h>
 #include <gtk/gtkstock.h>
 
 #ifdef G_OS_WIN32
@@ -45,7 +46,10 @@
 static GSList *filesel_select_file_full	(const gchar		*title,
 					 const gchar		*file,
 					 GtkFileChooserAction	 action,
-					 gboolean		 multiple);
+					 gboolean		 multiple,
+					 GSList			*types,
+					 gint			 default_type,
+					 gint			*selected_type);
 
 static GtkWidget *filesel_create	(const gchar		*title,
 					 GtkFileChooserAction	 action);
@@ -74,7 +78,7 @@ gchar *filesel_select_file(const gchar *title, const gchar *file,
 	GSList *list;
 	gchar *selected = NULL;
 
-	list = filesel_select_file_full(title, file, action, FALSE);
+	list = filesel_select_file_full(title, file, action, FALSE, NULL, 0, NULL);
 	if (list) {
 		selected = (gchar *)list->data;
 		slist_free_strings(list->next);
@@ -87,7 +91,7 @@ gchar *filesel_select_file(const gchar *title, const gchar *file,
 GSList *filesel_select_files(const gchar *title, const gchar *file,
 			     GtkFileChooserAction action)
 {
-	return filesel_select_file_full(title, file, action, TRUE);
+	return filesel_select_file_full(title, file, action, TRUE, NULL, 0, NULL);
 }
 
 static void filesel_change_dir_for_action(GtkFileChooserAction action)
@@ -155,13 +159,16 @@ static void filesel_save_dir_for_action(GtkFileChooserAction action,
 
 static GSList *filesel_select_file_full(const gchar *title, const gchar *file,
 					GtkFileChooserAction action,
-					gboolean multiple)
+					gboolean multiple,
+					GSList *types,
+					gint default_type, gint *selected_type)
 {
 	gchar *cwd;
 	GtkWidget *dialog;
 	gchar *prev_dir;
 	static gboolean save_expander_expanded = FALSE;
 	GSList *list = NULL;
+	GtkWidget *combo = NULL;
 
 	prev_dir = g_get_current_dir();
 
@@ -192,6 +199,27 @@ static GSList *filesel_select_file_full(const gchar *title, const gchar *file,
 				 NULL);
 	}
 #endif
+
+	/* create types combo box */
+	if (types) {
+		GSList *cur;
+		GtkWidget *hbox;
+		GtkWidget *label;
+
+		hbox = gtk_hbox_new(FALSE, 12);
+		label = gtk_label_new(_("File type:"));
+		gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+
+		combo = gtk_combo_box_new_text();
+		for (cur = types; cur != NULL; cur = cur->next) {
+			gtk_combo_box_append_text(GTK_COMBO_BOX(combo), (const gchar *)cur->data);
+		}
+		gtk_box_pack_start(GTK_BOX(hbox), combo, FALSE, FALSE, 0);
+
+		gtk_widget_show_all(hbox);
+		gtk_file_chooser_set_extra_widget(GTK_FILE_CHOOSER(dialog), hbox);
+		gtk_combo_box_set_active(GTK_COMBO_BOX(combo), default_type);
+	}
 
 	gtk_widget_show(dialog);
 
@@ -230,6 +258,10 @@ again:
 
 	inc_unlock();
 
+	if (combo && selected_type) {
+		*selected_type = gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
+	}
+
 	if (action == GTK_FILE_CHOOSER_ACTION_SAVE)
 		save_expander_expanded =
 			filesel_save_expander_get_expanded(dialog);
@@ -264,6 +296,38 @@ gchar *filesel_save_as(const gchar *file)
 	return filename;
 }
 
+gchar *filesel_save_as_type(const gchar *file, GSList *types,
+			    gint default_type, gint *selected_type)
+{
+	GSList *list;
+	gchar *filename = NULL;
+
+	list = filesel_select_file_full(_("Save as"), file,
+					GTK_FILE_CHOOSER_ACTION_SAVE, FALSE,
+					types, default_type, selected_type);
+	if (list) {
+		filename = (gchar *)list->data;
+		slist_free_strings(list->next);
+	}
+	g_slist_free(list);
+
+#if !GTK_CHECK_VERSION(2, 8, 0)
+	if (filename && is_file_exist(filename)) {
+		AlertValue aval;
+
+		aval = alertpanel(_("Overwrite existing file"),
+				  _("The file already exists. Do you want to replace it?"),
+				  GTK_STOCK_YES, GTK_STOCK_NO, NULL);
+		if (G_ALERTDEFAULT != aval) {
+			g_free(filename);
+			filename = NULL;
+		}
+	}
+#endif
+
+	return filename;
+}
+
 gchar *filesel_select_dir(const gchar *dir)
 {
 	GSList *list;
@@ -271,7 +335,7 @@ gchar *filesel_select_dir(const gchar *dir)
 
 	list = filesel_select_file_full(_("Select folder"), dir,
 					GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
-					FALSE);
+					FALSE, NULL, 0, NULL);
 	if (list) {
 		selected = (gchar *)list->data;
 		slist_free_strings(list->next);

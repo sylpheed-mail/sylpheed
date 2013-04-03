@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2012 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2013 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -3891,6 +3891,10 @@ void summary_save_as(SummaryView *summaryview)
 	MsgInfo *msginfo = NULL;
 	gchar *filename;
 	gchar *src, *dest;
+	GSList *types;
+	gint selected_type = 0;
+	gint result;
+	gboolean all_headers;
 
 	if (!summaryview->selected) return;
 	if (!gtkut_tree_row_reference_get_iter
@@ -3908,14 +3912,31 @@ void summary_save_as(SummaryView *summaryview)
 	}
 	subst_for_filename(filename);
 
-	dest = filesel_save_as(filename);
+	types = g_slist_append(NULL, _("Original (EML/RFC 822)"));
+	types = g_slist_append(types, _("Text"));
+	types = g_slist_append(types, _("Text (UTF-8)"));
+	dest = filesel_save_as_type(filename, types, 0, &selected_type);
+	g_slist_free(types);
 
 	g_free(filename);
 	if (!dest)
 		return;
 
-	src = procmsg_get_message_file(msginfo);
-	if (copy_file(src, dest, TRUE) < 0) {
+	debug_print("summary_save_as: selected_type: %d\n", selected_type);
+
+	all_headers = summaryview->messageview->textview->show_all_headers;
+
+	if (selected_type == 1) {
+		result = procmsg_save_message_as_text(msginfo, dest, conv_get_locale_charset_str(), all_headers);
+	} else if (selected_type == 2) {
+		result = procmsg_save_message_as_text(msginfo, dest, NULL, all_headers);
+	} else {
+		src = procmsg_get_message_file(msginfo);
+		result = copy_file(src, dest, TRUE);
+		g_free(src);
+	}
+
+	if (result < 0) {
 		gchar *utf8_dest;
 
 		utf8_dest = conv_filename_to_utf8(dest);
@@ -3923,7 +3944,6 @@ void summary_save_as(SummaryView *summaryview)
 				 g_basename(utf8_dest));
 		g_free(utf8_dest);
 	}
-	g_free(src);
 
 	g_free(dest);
 }

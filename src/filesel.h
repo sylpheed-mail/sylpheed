@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2012 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2013 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,10 @@ GSList *filesel_select_files	(const gchar		*title,
 				 GtkFileChooserAction	 action);
 
 gchar *filesel_save_as		(const gchar		*file);
+gchar *filesel_save_as_type	(const gchar		*file,
+				 GSList			*types,
+				 gint			 default_type,
+				 gint			*selected_type);
 gchar *filesel_select_dir	(const gchar		*dir);
 
 #endif /* __FILESEL_H__ */

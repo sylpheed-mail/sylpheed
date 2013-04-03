@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2012 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2013 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -453,6 +453,7 @@ gint copy_dir			(const gchar	*src,
 gint move_file			(const gchar	*src,
 				 const gchar	*dest,
 				 gboolean	 overwrite);
+
 gint append_file_part		(FILE		*fp,
 				 off_t		 offset,
 				 size_t		 length,
@@ -461,6 +462,9 @@ gint copy_file_part		(FILE		*fp,
 				 off_t		 offset,
 				 size_t		 length,
 				 const gchar	*dest);
+
+gint copy_file_stream		(FILE		*fp,
+				 FILE		*dest_fp);
 
 gchar *canonicalize_str		(const gchar	*str);
 gint canonicalize_file		(const gchar	*src,

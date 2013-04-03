@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2012 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2013 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -3117,6 +3117,35 @@ gint copy_file_part(FILE *fp, off_t offset, size_t length, const gchar *dest)
 	if (fclose(dest_fp) == EOF) {
 		FILE_OP_ERROR(dest, "fclose");
 		g_unlink(dest);
+		return -1;
+	}
+
+	return 0;
+}
+
+gint copy_file_stream(FILE *fp, FILE *dest_fp)
+{
+	gint n_read;
+	gchar buf[BUFFSIZE];
+
+	g_return_val_if_fail(fp != NULL, -1);
+	g_return_val_if_fail(dest_fp != NULL, -1);
+
+	while ((n_read = fread(buf, sizeof(gchar), sizeof(buf), fp)) > 0) {
+		if (n_read < sizeof(buf) && ferror(fp))
+			break;
+		if (fwrite(buf, n_read, 1, dest_fp) < 1) {
+			g_warning("copy_file_stream: writing to file failed.\n");
+			return -1;
+		}
+	}
+
+	if (ferror(fp)) {
+		perror("fread");
+		return -1;
+	}
+	if (fflush(dest_fp) == EOF) {
+		FILE_OP_ERROR("copy_file_stream", "fflush");
 		return -1;
 	}
 
