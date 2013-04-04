@@ -1807,7 +1807,7 @@ void procmsg_print_message(MsgInfo *msginfo, const gchar *cmdline,
 				get_mime_tmp_dir(), G_DIR_SEPARATOR,
 				print_id++);
 
-	if ((prfp = g_fopen(prtmp, "wb")) == NULL) {
+	if ((prfp = g_fopen(prtmp, "w")) == NULL) {
 		FILE_OP_ERROR(prtmp, "procmsg_print_message: fopen");
 		g_free(prtmp);
 		fclose(tmpfp);
@@ -1860,7 +1860,7 @@ void procmsg_print_message_part(MsgInfo *msginfo, MimeInfo *partinfo,
 	prtmp = g_strdup_printf("%s%cprinttmp-%08x.txt",
 				get_mime_tmp_dir(), G_DIR_SEPARATOR,
 				print_id++);
-	if ((prfp = g_fopen(prtmp, "wb")) == NULL) {
+	if ((prfp = g_fopen(prtmp, "w")) == NULL) {
 		FILE_OP_ERROR(prtmp, "procmsg_print_message_part: fopen");
 		g_free(prtmp);
 		fclose(tmpfp);
@@ -1886,6 +1886,8 @@ gint procmsg_save_message_as_text(MsgInfo *msginfo, const gchar *dest,
 	FILE *tmpfp;
 	FILE *destfp;
 	gchar buf[BUFFSIZE];
+	gchar *part_str;
+	gint ret = 0;
 
 	g_return_val_if_fail(msginfo != NULL, -1);
 	g_return_val_if_fail(dest != NULL, -1);
@@ -1897,7 +1899,7 @@ gint procmsg_save_message_as_text(MsgInfo *msginfo, const gchar *dest,
 		procmime_mimeinfo_free_all(mimeinfo);
 		return -1;
 	}
-	if ((destfp = g_fopen(dest, "wb")) == NULL) {
+	if ((destfp = g_fopen(dest, "w")) == NULL) {
 		fclose(fp);
 		procmime_mimeinfo_free_all(mimeinfo);
 		return -1;
@@ -1921,32 +1923,35 @@ gint procmsg_save_message_as_text(MsgInfo *msginfo, const gchar *dest,
 			g_snprintf(buf, sizeof(buf), "\n[%s (%s)]\n",
 				   partinfo->content_type,
 				   to_human_readable(partinfo->content_size));
+		part_str = conv_codeset_strdup(buf, CS_INTERNAL, encoding);
 
 		if (partinfo->mime_type == MIME_TEXT ||
 		    partinfo->mime_type == MIME_TEXT_HTML) {
 			if (!partinfo->main &&
 			    partinfo->parent &&
 			    partinfo->parent->children != partinfo) {
-				fputs(buf, destfp);
+				fputs(part_str, destfp);
 			}
 
-			if ((tmpfp = procmime_get_text_content(partinfo, fp, encoding)) == NULL)
-				break;
-			if (copy_file_stream(tmpfp, destfp) < 0) {
-				fclose(tmpfp);
+			if ((tmpfp = procmime_get_text_content(partinfo, fp, encoding)) == NULL) {
+				g_free(part_str);
 				break;
 			}
+			while (fgets(buf, sizeof(buf), tmpfp) != NULL)
+				fputs(buf, destfp);
 
 			fclose(tmpfp);
 		} else if (partinfo->mime_type == MIME_MESSAGE_RFC822) {
-			fputs(buf, destfp);
+			fputs(part_str, destfp);
 			while (fgets(buf, sizeof(buf), fp) != NULL)
 				if (buf[0] == '\r' || buf[0] == '\n') break;
 			procmsg_write_headers(msginfo, partinfo, fp, destfp, encoding, all_headers);
 			fputc('\n', destfp);
 		} else if (partinfo->mime_type != MIME_MULTIPART) {
-			fputs(buf, destfp);
+			fputs(part_str, destfp);
 		}
+
+		g_free(part_str);
 
 		if (partinfo->parent && partinfo->parent->content_type &&
 		    !g_ascii_strcasecmp(partinfo->parent->content_type,
@@ -1956,11 +1961,16 @@ gint procmsg_save_message_as_text(MsgInfo *msginfo, const gchar *dest,
 			partinfo = procmime_mimeinfo_next(partinfo);
 	}
 
-	fclose(destfp);
+	if (fclose(destfp) == EOF) {
+		FILE_OP_ERROR(dest, "fclose");
+		g_unlink(dest);
+		ret = -1;
+	}
+
 	fclose(fp);
 	procmime_mimeinfo_free_all(mimeinfo);
 
-	return 0;
+	return ret;
 }
 
 /**
