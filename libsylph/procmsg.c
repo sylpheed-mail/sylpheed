@@ -1924,6 +1924,8 @@ gint procmsg_save_message_as_text(MsgInfo *msginfo, const gchar *dest,
 				   partinfo->content_type,
 				   to_human_readable(partinfo->content_size));
 		part_str = conv_codeset_strdup(buf, CS_INTERNAL, encoding);
+		if (!part_str)
+			part_str = g_strdup(buf);
 
 		if (partinfo->mime_type == MIME_TEXT ||
 		    partinfo->mime_type == MIME_TEXT_HTML) {
