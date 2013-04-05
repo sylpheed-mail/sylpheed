@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2013 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,6 +48,7 @@ typedef struct
 	MsgInfo *msginfo;
 	gint n_pages;
 	gchar *hdr_data;
+	gchar *msg_text_file;
 	FILE *fp;
 } MsgPrintInfo;
 
@@ -173,7 +174,7 @@ static gint message_count_page(MsgPrintInfo *mpinfo, GtkPrintContext *context,
 	gint n_pages = 1;
 	PageInfo *pinfo;
 	gint i;
-	FILE *fp;
+	FILE *fp = NULL;
 	gchar buf[BUFFSIZE];
 	glong pos = 0;
 
@@ -229,7 +230,14 @@ static gint message_count_page(MsgPrintInfo *mpinfo, GtkPrintContext *context,
 					       NULL);
 		fclose(msgfp);
 	} else {
-		fp = procmime_get_first_text_content(mpinfo->msginfo, NULL);
+		mpinfo->msg_text_file = get_tmp_file();
+		if (procmsg_save_message_as_text(mpinfo->msginfo, mpinfo->msg_text_file, NULL, print_data->all_headers) == 0) {
+			if ((fp = g_fopen(mpinfo->msg_text_file, "rb")) != NULL) {
+				while (fgets(buf, sizeof(buf), fp) != NULL)
+					if (buf[0] == '\r' || buf[0] == '\n')
+						break;
+			}
+		}
 	}
 	if (!fp) {
 		g_warning("Can't get text part\n");
@@ -486,6 +494,10 @@ gint printing_print_messages_gtk(GSList *mlist, MimeInfo *partinfo,
 		g_free(print_data->msgs[i].hdr_data);
 		if (print_data->msgs[i].fp)
 			fclose(print_data->msgs[i].fp);
+		if (print_data->msgs[i].msg_text_file) {
+			g_unlink(print_data->msgs[i].msg_text_file);
+			g_free(print_data->msgs[i].msg_text_file);
+		}
 	}
 	g_free(print_data);
 
