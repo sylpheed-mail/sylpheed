@@ -1720,7 +1720,8 @@ static gint print_command_exec(const gchar *file, const gchar *cmdline)
 	if (buf[strlen(buf) - 1] != '&')
 		strcat(buf, "&");
 
-	system(buf);
+	if (system(buf) != 0)
+		return -1;
 
 	return 0;
 }
@@ -1792,49 +1793,17 @@ void procmsg_print_message(MsgInfo *msginfo, const gchar *cmdline,
 			   gboolean all_headers)
 {
 	gchar *prtmp;
-	FILE *msgfp, *tmpfp, *prfp;
-	gchar buf[BUFFSIZE];
 
 	g_return_if_fail(msginfo != NULL);
-
-	if ((tmpfp = procmime_get_first_text_content
-		(msginfo, conv_get_locale_charset_str())) == NULL) {
-		g_warning("Can't get text part\n");
-		return;
-	}
 
 	prtmp = g_strdup_printf("%s%cprinttmp-%08x.txt",
 				get_mime_tmp_dir(), G_DIR_SEPARATOR,
 				print_id++);
 
-	if ((prfp = g_fopen(prtmp, "w")) == NULL) {
-		FILE_OP_ERROR(prtmp, "procmsg_print_message: fopen");
-		g_free(prtmp);
-		fclose(tmpfp);
-		return;
-	}
-
-	if ((msgfp = procmsg_open_message(msginfo)) == NULL) {
-		fclose(prfp);
-		g_free(prtmp);
-		fclose(tmpfp);
-		return;
-	}
-
-	procmsg_write_headers(msginfo, NULL, msgfp, prfp,
-			      conv_get_locale_charset_str(), all_headers);
-
-	fclose(msgfp);
-
-	fputc('\n', prfp);
-
-	while (fgets(buf, sizeof(buf), tmpfp) != NULL)
-		fputs(buf, prfp);
-
-	fclose(prfp);
-	fclose(tmpfp);
-
-	print_command_exec(prtmp, cmdline);
+	if (procmsg_save_message_as_text(msginfo, prtmp,
+					 conv_get_locale_charset_str(),
+					 all_headers) == 0)
+		print_command_exec(prtmp, cmdline);
 
 	g_free(prtmp);
 }
