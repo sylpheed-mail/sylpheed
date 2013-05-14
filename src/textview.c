@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2012 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2013 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1076,9 +1076,9 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 	} else {
 		/* text part */
 		gtk_text_buffer_insert(buffer, &iter, "\n", 1);
-		if (!mimeinfo->main &&
-		    mimeinfo->parent &&
-		    mimeinfo->parent->children != mimeinfo)
+		if (mimeinfo->mime_type == MIME_TEXT_HTML ||
+		    (!mimeinfo->main && mimeinfo->parent &&
+		     mimeinfo->parent->children != mimeinfo))
 			textview_add_part_widget(textview, &iter, mimeinfo, buf);
 		textview_write_body(textview, mimeinfo, fp, charset);
 	}
@@ -1142,13 +1142,34 @@ static void textview_add_parts(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 	level = mimeinfo->level;
 
 	for (;;) {
-		textview_add_part(textview, mimeinfo, fp);
-		if (mimeinfo->parent && mimeinfo->parent->content_type &&
-		    !g_ascii_strcasecmp(mimeinfo->parent->content_type,
-					"multipart/alternative"))
-			mimeinfo = mimeinfo->parent->next;
-		else
-			mimeinfo = procmime_mimeinfo_next(mimeinfo);
+		if (mimeinfo->mime_type == MIME_MULTIPART &&
+		    mimeinfo->content_type &&
+		    !g_ascii_strcasecmp(mimeinfo->content_type,
+					"multipart/alternative")) {
+			MimeInfo *preferred_part = mimeinfo->children;
+			MimeInfo *child;
+
+			if (prefs_common.alt_prefer_html) {
+				for (child = mimeinfo->children; child != NULL; child = child->next) {
+					if (child->mime_type == MIME_TEXT_HTML) {
+						preferred_part = child;
+						break;
+					}
+				}
+			}
+
+			if (preferred_part) {
+				textview_add_part(textview, preferred_part, fp);
+				mimeinfo = preferred_part;
+				while (mimeinfo->next)
+					mimeinfo = mimeinfo->next;
+			}
+		} else {
+			textview_add_part(textview, mimeinfo, fp);
+		}
+
+		mimeinfo = procmime_mimeinfo_next(mimeinfo);
+
 		if (!mimeinfo || mimeinfo->level <= level)
 			break;
 	}

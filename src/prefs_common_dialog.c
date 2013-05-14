@@ -162,6 +162,7 @@ static struct Message {
 	GtkWidget *chkbtn_disphdrpane;
 	GtkWidget *chkbtn_disphdr;
 	GtkWidget *chkbtn_html;
+	GtkWidget *chkbtn_prefer_html;
 	GtkWidget *chkbtn_htmlonly;
 	GtkWidget *spinbtn_linespc;
 	GtkObject *spinbtn_linespc_adj;
@@ -462,6 +463,8 @@ static PrefsUIData ui_data[] = {
 	{"display_header", &message.chkbtn_disphdr,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"render_html", &message.chkbtn_html,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"alt_prefer_html", &message.chkbtn_prefer_html,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"html_only_as_attach", &message.chkbtn_htmlonly,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
@@ -1873,6 +1876,7 @@ static GtkWidget *prefs_message_create(void)
 	GtkWidget *chkbtn_disphdr;
 	GtkWidget *button_edit_disphdr;
 	GtkWidget *chkbtn_html;
+	GtkWidget *chkbtn_prefer_html;
 	GtkWidget *chkbtn_htmlonly;
 	GtkWidget *hbox_linespc;
 	GtkWidget *label_linespc;
@@ -1942,6 +1946,8 @@ static GtkWidget *prefs_message_create(void)
 
 	PACK_CHECK_BUTTON(vbox2, chkbtn_html,
 			  _("Render HTML messages as text"));
+	PACK_CHECK_BUTTON(vbox2, chkbtn_prefer_html,
+			  _("Prefer HTML in multipart/alternative for display"));
 	PACK_CHECK_BUTTON(vbox2, chkbtn_htmlonly,
 			  _("Treat HTML only messages as attachment"));
 
@@ -2023,6 +2029,7 @@ static GtkWidget *prefs_message_create(void)
 	message.chkbtn_disphdrpane = chkbtn_disphdrpane;
 	message.chkbtn_disphdr     = chkbtn_disphdr;
 	message.chkbtn_html        = chkbtn_html;
+	message.chkbtn_prefer_html = chkbtn_prefer_html;
 	message.chkbtn_htmlonly    = chkbtn_htmlonly;
 	message.spinbtn_linespc    = spinbtn_linespc;
 

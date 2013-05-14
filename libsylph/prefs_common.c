@@ -337,6 +337,7 @@ static PrefParam param[] = {
 	 P_INT},
 	{"display_header", "TRUE", &prefs_common.display_header, P_BOOL},
 	{"render_html", "TRUE", &prefs_common.render_html, P_BOOL},
+	{"alt_prefer_html", "FALSE", &prefs_common.alt_prefer_html, P_BOOL},
 	{"html_only_as_attach", "FALSE", &prefs_common.html_only_as_attach,
 	 P_BOOL},
 	{"line_space", "2", &prefs_common.line_space, P_INT},

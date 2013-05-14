@@ -345,6 +345,8 @@ struct _PrefsCommon
 	gboolean enable_newmsg_notify_window; /* Receive */
 
 	gboolean nofilter_junk_sender_in_book; /* Junk Mail */
+
+	gboolean alt_prefer_html;            /* Message */
 };
 
 extern PrefsCommon prefs_common;
