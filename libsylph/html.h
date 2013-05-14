@@ -38,7 +38,8 @@ typedef enum
 	HTML_UNKNOWN,
 	HTML_CONV_FAILED,
 	HTML_ERR,
-	HTML_EOF
+	HTML_EOF,
+	HTML_BLOCKQUOTE
 } HTMLState;
 
 typedef struct _HTMLParser	HTMLParser;
@@ -65,6 +66,7 @@ struct _HTMLParser
 	gboolean empty_line;
 	gboolean space;
 	gboolean pre;
+	gint blockquote;
 };
 
 struct _HTMLAttr

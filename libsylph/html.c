@@ -211,6 +211,7 @@ HTMLParser *html_parser_new(FILE *fp, CodeConverter *conv)
 	parser->empty_line = TRUE;
 	parser->space = FALSE;
 	parser->pre = FALSE;
+	parser->blockquote = 0;
 
 #define SYMBOL_TABLE_ADD(table, list) \
 { \
@@ -326,26 +327,36 @@ static HTMLState html_read_line(HTMLParser *parser)
 static void html_append_char(HTMLParser *parser, gchar ch)
 {
 	GString *str = parser->str;
+	const gchar *bq_prefix = NULL;
 
 	if (!parser->pre && parser->space) {
 		g_string_append_c(str, ' ');
 		parser->space = FALSE;
 	}
 
-	g_string_append_c(str, ch);
+	if (parser->newline && parser->blockquote > 0)
+		bq_prefix = "  ";
 
 	parser->empty_line = FALSE;
 	if (ch == '\n') {
 		parser->newline = TRUE;
-		if (str->len > 1 && str->str[str->len - 2] == '\n')
+		if (str->len > 0 && str->str[str->len - 1] == '\n')
 			parser->empty_line = TRUE;
 	} else
 		parser->newline = FALSE;
+
+	if (bq_prefix) {
+		gint i;
+		for (i = 0; i < parser->blockquote; i++)
+			g_string_append(str, bq_prefix);
+	}
+	g_string_append_c(str, ch);
 }
 
 static void html_append_str(HTMLParser *parser, const gchar *str, gint len)
 {
 	GString *string = parser->str;
+	const gchar *bq_prefix = NULL;
 
 	if (!parser->pre && parser->space) {
 		g_string_append_c(string, ' ');
@@ -353,6 +364,16 @@ static void html_append_str(HTMLParser *parser, const gchar *str, gint len)
 	}
 
 	if (len == 0) return;
+
+	if (parser->newline && parser->blockquote > 0)
+		bq_prefix = "  ";
+
+	if (bq_prefix) {
+		gint i;
+		for (i = 0; i < parser->blockquote; i++)
+			g_string_append(string, bq_prefix);
+	}
+
 	if (len < 0)
 		g_string_append(string, str);
 	else
@@ -554,6 +575,14 @@ static HTMLState html_parse_tag(HTMLParser *parser)
 		parser->state = HTML_PRE;
 	} else if (!strcmp(tag->name, "/pre")) {
 		parser->pre = FALSE;
+		parser->state = HTML_NORMAL;
+	} else if (!strcmp(tag->name, "blockquote")) {
+		parser->blockquote++;
+		parser->state = HTML_BLOCKQUOTE;
+	} else if (!strcmp(tag->name, "/blockquote")) {
+		parser->blockquote--;
+		if (parser->blockquote < 0)
+			parser->blockquote = 0;
 		parser->state = HTML_NORMAL;
 	} else if (!strcmp(tag->name, "hr")) {
 		if (!parser->newline) {
