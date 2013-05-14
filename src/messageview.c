@@ -597,6 +597,10 @@ gint messageview_show(MessageView *messageview, MsgInfo *msginfo,
 		if (!messageview->msginfo)
 			messageview->msginfo = procmsg_msginfo_copy(msginfo);
 	}
+	procmime_mimeinfo_free_all(messageview->mimeinfo);
+	messageview->mimeinfo = mimeinfo;
+	g_free(messageview->file);
+	messageview->file = file;
 
 	if (messageview->window && msginfo->subject) {
 		gchar *title;
@@ -619,7 +623,6 @@ gint messageview_show(MessageView *messageview, MsgInfo *msginfo,
 	} else {
 		messageview_change_view_type(messageview, MVIEW_TEXT);
 		textview_show_message(messageview->textview, mimeinfo, file);
-		procmime_mimeinfo_free_all(mimeinfo);
 	}
 
 	if (messageview->new_window)
@@ -627,8 +630,6 @@ gint messageview_show(MessageView *messageview, MsgInfo *msginfo,
 
 	syl_plugin_signal_emit("messageview-show", messageview, msginfo,
 			       all_headers);
-
-	g_free(file);
 
 	return 0;
 }
@@ -780,6 +781,10 @@ static void messageview_set_encoding_menu(MessageView *messageview)
 void messageview_clear(MessageView *messageview)
 {
 	messageview_set_tool_menu(messageview, NULL);
+	g_free(messageview->file);
+	messageview->file = NULL;
+	procmime_mimeinfo_free_all(messageview->mimeinfo);
+	messageview->mimeinfo = NULL;
 	procmsg_msginfo_free(messageview->msginfo);
 	messageview->msginfo = NULL;
 	messageview_change_view_type(messageview, MVIEW_TEXT);

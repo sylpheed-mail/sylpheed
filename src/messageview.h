@@ -74,6 +74,9 @@ struct _MessageView
 
 	gboolean visible;
 	gint current_page;
+
+	MimeInfo *mimeinfo;
+	gchar *file;
 };
 
 MessageView *messageview_create			(void);

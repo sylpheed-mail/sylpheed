@@ -300,7 +300,7 @@ static gboolean mimeview_is_signed(MimeView *mimeview)
 
         debug_print("mimeview_is_signed: open\n" );
 
-	if (!mimeview->file) return FALSE;
+	if (!mimeview->messageview->file) return FALSE;
 
         debug_print("mimeview_is_signed: file\n" );
 
@@ -350,10 +350,6 @@ void mimeview_show_message(MimeView *mimeview, MimeInfo *mimeinfo,
 
 	g_return_if_fail(file != NULL);
 	g_return_if_fail(mimeinfo != NULL);
-
-	mimeview->mimeinfo = mimeinfo;
-
-	mimeview->file = g_strdup(file);
 
 #if USE_GPGME
 	if (rfc2015_is_available() && prefs_common.auto_check_signatures) {
@@ -410,8 +406,6 @@ void mimeview_show_message(MimeView *mimeview, MimeInfo *mimeinfo,
 
 void mimeview_clear(MimeView *mimeview)
 {
-	procmime_mimeinfo_free_all(mimeview->mimeinfo);
-	mimeview->mimeinfo = NULL;
 	mimeview->has_attach_file = FALSE;
 
 	gtk_tree_store_clear(mimeview->store);
@@ -421,9 +415,6 @@ void mimeview_clear(MimeView *mimeview)
 	gtk_tree_path_free(mimeview->opened);
 	mimeview->opened = NULL;
 
-	g_free(mimeview->file);
-	mimeview->file = NULL;
-
 	g_free(mimeview->drag_file);
 	mimeview->drag_file = NULL;
 }
@@ -432,9 +423,7 @@ void mimeview_destroy(MimeView *mimeview)
 {
 	textview_destroy(mimeview->textview);
 	imageview_destroy(mimeview->imageview);
-	procmime_mimeinfo_free_all(mimeview->mimeinfo);
 	g_object_unref(mimeview->popupfactory);
-	g_free(mimeview->file);
 	g_free(mimeview->drag_file);
 	g_free(mimeview);
 }
@@ -557,7 +546,7 @@ static void mimeview_show_message_part(MimeView *mimeview, MimeInfo *partinfo)
 
 	if (!partinfo) return;
 
-	fname = mimeview->file;
+	fname = mimeview->messageview->file;
 	if (!fname) return;
 
 	if ((fp = g_fopen(fname, "rb")) == NULL) {
@@ -566,7 +555,7 @@ static void mimeview_show_message_part(MimeView *mimeview, MimeInfo *partinfo)
 	}
 
 	if (fseek(fp, partinfo->fpos, SEEK_SET) < 0) {
-		FILE_OP_ERROR(mimeview->file, "fseek");
+		FILE_OP_ERROR(fname, "fseek");
 		fclose(fp);
 		return;
 	}
@@ -585,7 +574,7 @@ static void mimeview_show_image_part(MimeView *mimeview, MimeInfo *partinfo)
 
 	filename = procmime_get_tmp_file_name(partinfo);
 
-	if (procmime_get_part(filename, mimeview->file, partinfo) < 0)
+	if (procmime_get_part(filename, mimeview->messageview->file, partinfo) < 0)
 		alertpanel_error
 			(_("Can't get the part of multipart message."));
 	else {
@@ -1003,7 +992,7 @@ static void mimeview_drag_begin(GtkWidget *widget, GdkDragContext *drag_context,
 	MimeInfo *partinfo;
 
 	if (!mimeview->opened) return;
-	if (!mimeview->file) return;
+	if (!mimeview->messageview->file) return;
 
 	partinfo = mimeview_get_selected_part(mimeview);
 	if (!partinfo) return;
@@ -1022,7 +1011,7 @@ static void mimeview_drag_begin(GtkWidget *widget, GdkDragContext *drag_context,
 		filename = g_strconcat(get_mime_tmp_dir(), G_DIR_SEPARATOR_S,
 				       bname, NULL);
 
-	if (procmime_get_part(filename, mimeview->file, partinfo) < 0) {
+	if (procmime_get_part(filename, mimeview->messageview->file, partinfo) < 0) {
 		g_warning(_("Can't save the part of multipart message."));
 	} else
 		mimeview->drag_file = encode_uri(filename);
@@ -1071,7 +1060,7 @@ void mimeview_save_as(MimeView *mimeview)
 	MimeInfo *partinfo;
 
 	if (!mimeview->opened) return;
-	if (!mimeview->file) return;
+	if (!mimeview->messageview->file) return;
 
 	partinfo = mimeview_get_selected_part(mimeview);
 	g_return_if_fail(partinfo != NULL);
@@ -1086,7 +1075,7 @@ void mimeview_save_all(MimeView *mimeview)
 	dir = filesel_select_dir(NULL);
 	if (!dir) return;
 
-	if (procmime_get_all_parts(dir, mimeview->file, mimeview->mimeinfo) < 0)
+	if (procmime_get_all_parts(dir, mimeview->messageview->file, mimeview->messageview->mimeinfo) < 0)
 		alertpanel_error(_("Can't save the attachments."));
 
 	g_free(dir);
@@ -1097,7 +1086,7 @@ void mimeview_print(MimeView *mimeview)
 	MimeInfo *partinfo;
 
 	if (!mimeview->opened) return;
-	if (!mimeview->file) return;
+	if (!mimeview->messageview->file) return;
 
 	partinfo = mimeview_get_selected_part(mimeview);
 	g_return_if_fail(partinfo != NULL);
@@ -1109,7 +1098,7 @@ void mimeview_print_part(MimeView *mimeview, MimeInfo *partinfo)
 {
 	g_return_if_fail(partinfo != NULL);
 
-	if (!mimeview->file) return;
+	if (!mimeview->messageview->file) return;
 
 	if (partinfo->mime_type == MIME_MESSAGE_RFC822) {
 		gchar *filename;
@@ -1117,7 +1106,7 @@ void mimeview_print_part(MimeView *mimeview, MimeInfo *partinfo)
 		MsgFlags flags = {0, 0};
 
 		filename = procmime_get_tmp_file_name(partinfo);
-		if (procmime_get_part(filename, mimeview->file, partinfo) < 0) {
+		if (procmime_get_part(filename, mimeview->messageview->file, partinfo) < 0) {
 			alertpanel_error
 				(_("Can't save the part of multipart message."));
 			g_free(filename);
@@ -1143,11 +1132,11 @@ void mimeview_launch_part(MimeView *mimeview, MimeInfo *partinfo)
 
 	g_return_if_fail(partinfo != NULL);
 
-	if (!mimeview->file) return;
+	if (!mimeview->messageview->file) return;
 
 	filename = procmime_get_tmp_file_name(partinfo);
 
-	if (procmime_get_part(filename, mimeview->file, partinfo) < 0)
+	if (procmime_get_part(filename, mimeview->messageview->file, partinfo) < 0)
 		alertpanel_error
 			(_("Can't save the part of multipart message."));
 	else
@@ -1163,11 +1152,11 @@ void mimeview_open_part_with(MimeView *mimeview, MimeInfo *partinfo)
 
 	g_return_if_fail(partinfo != NULL);
 
-	if (!mimeview->file) return;
+	if (!mimeview->messageview->file) return;
 
 	filename = procmime_get_tmp_file_name(partinfo);
 
-	if (procmime_get_part(filename, mimeview->file, partinfo) < 0) {
+	if (procmime_get_part(filename, mimeview->messageview->file, partinfo) < 0) {
 		alertpanel_error
 			(_("Can't save the part of multipart message."));
 		g_free(filename);
@@ -1202,7 +1191,7 @@ void mimeview_save_part_as(MimeView *mimeview, MimeInfo *partinfo)
 
 	g_return_if_fail(partinfo != NULL);
 
-	if (!mimeview->file) return;
+	if (!mimeview->messageview->file) return;
 
 	if (partinfo->filename) {
 		filename = filesel_save_as(partinfo->filename);
@@ -1216,9 +1205,10 @@ void mimeview_save_part_as(MimeView *mimeview, MimeInfo *partinfo)
 	} else
 		filename = filesel_save_as(NULL);
 
-	if (!filename) return;
+	if (!filename)
+		return;
 
-	if (procmime_get_part(filename, mimeview->file, partinfo) < 0)
+	if (procmime_get_part(filename, mimeview->messageview->file, partinfo) < 0)
 		alertpanel_error
 			(_("Can't save the part of multipart message."));
 
@@ -1230,7 +1220,7 @@ static void mimeview_launch(MimeView *mimeview)
 	MimeInfo *partinfo;
 
 	if (!mimeview->opened) return;
-	if (!mimeview->file) return;
+	if (!mimeview->messageview->file) return;
 
 	partinfo = mimeview_get_selected_part(mimeview);
 	g_return_if_fail(partinfo != NULL);
@@ -1243,7 +1233,7 @@ static void mimeview_open_with(MimeView *mimeview)
 	MimeInfo *partinfo;
 
 	if (!mimeview->opened) return;
-	if (!mimeview->file) return;
+	if (!mimeview->messageview->file) return;
 
 	partinfo = mimeview_get_selected_part(mimeview);
 	g_return_if_fail(partinfo != NULL);
@@ -1336,7 +1326,7 @@ static void mimeview_reply(MimeView *mimeview, guint action)
 	ComposeMode mode = action;
 
 	if (!mimeview->opened) return;
-	if (!mimeview->file) return;
+	if (!mimeview->messageview->file) return;
 
 	partinfo = mimeview_get_selected_part(mimeview);
 	g_return_if_fail(partinfo != NULL);
@@ -1345,7 +1335,7 @@ static void mimeview_reply(MimeView *mimeview, guint action)
 		return;
 
 	filename = procmime_get_tmp_file_name(partinfo);
-	if (procmime_get_part(filename, mimeview->file, partinfo) < 0) {
+	if (procmime_get_part(filename, mimeview->messageview->file, partinfo) < 0) {
 		alertpanel_error
 			(_("Can't save the part of multipart message."));
 			g_free(filename);
@@ -1419,13 +1409,13 @@ static void mimeview_check_signature(MimeView *mimeview)
 
 	mimeinfo = mimeview_get_selected_part(mimeview);
 	g_return_if_fail(mimeinfo != NULL);
-	g_return_if_fail(mimeview->file != NULL);
+	g_return_if_fail(mimeview->messageview->file != NULL);
 
 	while (mimeinfo->parent)
 		mimeinfo = mimeinfo->parent;
 
-	if ((fp = g_fopen(mimeview->file, "rb")) == NULL) {
-		FILE_OP_ERROR(mimeview->file, "fopen");
+	if ((fp = g_fopen(mimeview->messageview->file, "rb")) == NULL) {
+		FILE_OP_ERROR(mimeview->messageview->file, "fopen");
 		return;
 	}
 
@@ -1436,6 +1426,6 @@ static void mimeview_check_signature(MimeView *mimeview)
 	mimeview_update_signature_info(mimeview);
 
 	textview_show_message(mimeview->messageview->textview, mimeinfo,
-			      mimeview->file);
+			      mimeview->messageview->file);
 }
 #endif /* USE_GPGME */
