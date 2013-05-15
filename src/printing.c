@@ -218,8 +218,10 @@ static gint message_count_page(MsgPrintInfo *mpinfo, GtkPrintContext *context,
 		body_h = 0.0;
 	lines_left = body_h / line_h;
 
-	g_print("layout_h = %d, line_h = %g, lines_per_page = %d\n", layout_h, line_h, lines_per_page);
-	g_print("hdr_h = %g, body_h = %g, lines_left = %d\n", hdr_h, body_h, lines_left);
+	debug_print("width = %g, height = %g\n", width, height);
+	debug_print("dpi_x = %g, dpi_y = %g\n", gtk_print_context_get_dpi_x(context), gtk_print_context_get_dpi_y(context));
+	debug_print("layout_h = %d, line_h = %g, lines_per_page = %d\n", layout_h, line_h, lines_per_page);
+	debug_print("hdr_h = %g, body_h = %g, lines_left = %d\n", hdr_h, body_h, lines_left);
 
 	if (print_data->partinfo) {
 		FILE *msgfp;
@@ -264,7 +266,7 @@ static gint message_count_page(MsgPrintInfo *mpinfo, GtkPrintContext *context,
 		while (lines_left < lines) {
 			PangoLayoutLine *line;
 
-			g_print("page increment: %d: lines_left = %d, lines = %d\n", i, lines_left, lines);
+			debug_print("page increment: %d: lines_left = %d, lines = %d\n", i, lines_left, lines);
 			line_offset += lines_left;
 			line = pango_layout_get_line(layout, line_offset);
 			lines -= lines_left;
@@ -288,7 +290,7 @@ static gint message_count_page(MsgPrintInfo *mpinfo, GtkPrintContext *context,
 	g_object_unref(layout);
 
 	n_pages = i + 1;
-	g_print("n_pages = %d\n", n_pages);
+	debug_print("n_pages = %d\n", n_pages);
 
 	return n_pages;
 }
@@ -413,7 +415,7 @@ static void draw_page(GtkPrintOperation *operation, GtkPrintContext *context,
 		cairo_move_to(cr, 0,
 			      y + (gdouble)layout_h / PANGO_SCALE + SPACING);
 	}
-	g_print("count = %d\n", count);
+	debug_print("count = %d\n", count);
 
 	desc = gtkut_get_default_font_desc();
 	pango_font_description_set_size(desc, font_size);
@@ -476,7 +478,7 @@ gint printing_print_messages_gtk(GSList *mlist, MimeInfo *partinfo,
 		 GTK_WINDOW(main_window_get()->window), NULL);
 
 	if (res == GTK_PRINT_OPERATION_RESULT_APPLY) {
-		g_print("save settings\n");
+		debug_print("save settings\n");
 		if (settings)
 			g_object_unref(settings);
 		settings = g_object_ref
