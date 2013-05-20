@@ -1615,6 +1615,9 @@ static void textview_write_link(TextView *textview, const gchar *str,
 	if (bufp > buf)
 		gtk_text_buffer_insert(buffer, &iter, buf, bufp - buf);
 
+	if (gtk_text_iter_ends_tag(&iter, textview->link_tag))
+		gtk_text_buffer_insert(buffer, &iter, " ", 1);
+
 	r_uri = g_new(RemoteURI, 1);
 	r_uri->uri = g_strstrip(g_strdup(uri));
 	r_uri->filename = NULL;
