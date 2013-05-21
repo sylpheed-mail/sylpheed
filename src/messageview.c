@@ -913,7 +913,7 @@ void messageview_save_as(MessageView *messageview)
 	gchar *filename = NULL;
 	MsgInfo *msginfo;
 	gchar *src, *dest;
-	GSList *types;
+	FileselFileType types[4] = {{NULL, NULL}};
 	gint selected_type = 0;
 	gint result;
 	gboolean all_headers;
@@ -928,11 +928,13 @@ void messageview_save_as(MessageView *messageview)
 	}
 	subst_for_filename(filename);
 
-	types = g_slist_append(NULL, _("Original (EML/RFC 822)"));
-	types = g_slist_append(types, _("Text"));
-	types = g_slist_append(types, _("Text (UTF-8)"));
+	types[0].type = _("Original (EML/RFC 822)");
+	types[0].ext = "eml";
+	types[1].type = _("Text");
+	types[1].ext = "txt";
+	types[2].type = _("Text (UTF-8)");
+	types[2].ext = "txt";
 	dest = filesel_save_as_type(filename, types, 0, &selected_type);
-	g_slist_free(types);
 
 	g_free(filename);
 	if (!dest)

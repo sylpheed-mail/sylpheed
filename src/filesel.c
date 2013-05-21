@@ -47,7 +47,7 @@ static GSList *filesel_select_file_full	(const gchar		*title,
 					 const gchar		*file,
 					 GtkFileChooserAction	 action,
 					 gboolean		 multiple,
-					 GSList			*types,
+					 FileselFileType	*types,
 					 gint			 default_type,
 					 gint			*selected_type);
 
@@ -57,6 +57,9 @@ static GtkWidget *filesel_create	(const gchar		*title,
 static void filesel_save_expander_set_expanded	   (GtkWidget	*dialog,
 						    gboolean	 expanded);
 static gboolean filesel_save_expander_get_expanded (GtkWidget	*dialog);
+
+static void filesel_combo_changed_cb	(GtkComboBox		*combo_box,
+					 gpointer		 data);
 
 #if GTK_CHECK_VERSION(2, 8, 0)
 static GtkFileChooserConfirmation filesel_confirm_overwrite_cb
@@ -160,7 +163,7 @@ static void filesel_save_dir_for_action(GtkFileChooserAction action,
 static GSList *filesel_select_file_full(const gchar *title, const gchar *file,
 					GtkFileChooserAction action,
 					gboolean multiple,
-					GSList *types,
+					FileselFileType *types,
 					gint default_type, gint *selected_type)
 {
 	gchar *cwd;
@@ -202,23 +205,27 @@ static GSList *filesel_select_file_full(const gchar *title, const gchar *file,
 
 	/* create types combo box */
 	if (types) {
-		GSList *cur;
 		GtkWidget *hbox;
 		GtkWidget *label;
+		gint i;
 
 		hbox = gtk_hbox_new(FALSE, 12);
 		label = gtk_label_new(_("File type:"));
 		gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
 
 		combo = gtk_combo_box_new_text();
-		for (cur = types; cur != NULL; cur = cur->next) {
-			gtk_combo_box_append_text(GTK_COMBO_BOX(combo), (const gchar *)cur->data);
+		for (i = 0; types[i].type != NULL; i++) {
+			gtk_combo_box_append_text(GTK_COMBO_BOX(combo), types[i].type);
 		}
 		gtk_box_pack_start(GTK_BOX(hbox), combo, FALSE, FALSE, 0);
 
 		gtk_widget_show_all(hbox);
 		gtk_file_chooser_set_extra_widget(GTK_FILE_CHOOSER(dialog), hbox);
 		gtk_combo_box_set_active(GTK_COMBO_BOX(combo), default_type);
+
+		g_object_set_data(G_OBJECT(combo), "types", types);
+		g_signal_connect(GTK_COMBO_BOX(combo), "changed",
+				 G_CALLBACK(filesel_combo_changed_cb), dialog);
 	}
 
 	gtk_widget_show(dialog);
@@ -296,7 +303,7 @@ gchar *filesel_save_as(const gchar *file)
 	return filename;
 }
 
-gchar *filesel_save_as_type(const gchar *file, GSList *types,
+gchar *filesel_save_as_type(const gchar *file, FileselFileType *types,
 			    gint default_type, gint *selected_type)
 {
 	GSList *list;
@@ -304,7 +311,8 @@ gchar *filesel_save_as_type(const gchar *file, GSList *types,
 
 	list = filesel_select_file_full(_("Save as"), file,
 					GTK_FILE_CHOOSER_ACTION_SAVE, FALSE,
-					types, default_type, selected_type);
+					types,
+					default_type, selected_type);
 	if (list) {
 		filename = (gchar *)list->data;
 		slist_free_strings(list->next);
@@ -413,6 +421,33 @@ static gboolean filesel_save_expander_get_expanded(GtkWidget *dialog)
 		return gtk_expander_get_expanded(GTK_EXPANDER(expander));
 	else
 		return FALSE;
+}
+
+static void filesel_combo_changed_cb(GtkComboBox *combo_box, gpointer data)
+{
+	GtkFileChooser *chooser = data;
+	gint active;
+	gchar *filename;
+	gchar *base;
+	gchar *new_filename;
+	gchar *p;
+	FileselFileType *types;
+
+	active = gtk_combo_box_get_active(combo_box);
+	filename = gtk_file_chooser_get_filename(chooser);
+	types = g_object_get_data(G_OBJECT(combo_box), "types");
+	g_print("active: %d filename: %s\n", active, filename);
+	g_print("type ext: %s\n", types[active].ext);
+	base = g_path_get_basename(filename);
+	p = strrchr(base, '.');
+	if (p)
+		*p = '\0';
+	new_filename = g_strconcat(base, ".", types[active].ext, NULL);
+	g_print("new_filename: %s\n", new_filename);
+	gtk_file_chooser_set_current_name(chooser, new_filename);
+	g_free(new_filename);
+	g_free(base);
+	g_free(filename);
 }
 
 #if GTK_CHECK_VERSION(2, 8, 0)

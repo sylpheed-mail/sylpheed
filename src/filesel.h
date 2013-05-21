@@ -23,6 +23,14 @@
 #include <glib.h>
 #include <gtk/gtkfilechooser.h>
 
+typedef struct _FileselFileType	FileselFileType;
+
+struct _FileselFileType
+{
+	gchar *type;
+	gchar *ext;
+};
+
 gchar *filesel_select_file	(const gchar		*title,
 				 const gchar		*file,
 				 GtkFileChooserAction	 action);
@@ -32,7 +40,7 @@ GSList *filesel_select_files	(const gchar		*title,
 
 gchar *filesel_save_as		(const gchar		*file);
 gchar *filesel_save_as_type	(const gchar		*file,
-				 GSList			*types,
+				 FileselFileType	*types,
 				 gint			 default_type,
 				 gint			*selected_type);
 gchar *filesel_select_dir	(const gchar		*dir);
