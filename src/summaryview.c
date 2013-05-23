@@ -3919,7 +3919,7 @@ void summary_save_as(SummaryView *summaryview)
 	types[2].type = _("Text (UTF-8)");
 	types[2].ext = "txt";
 	
-	dest = filesel_save_as_type(filename, types, 0, &selected_type);
+	dest = filesel_save_as_type(filename, types, prefs_common.save_file_type, &selected_type);
 
 	g_free(filename);
 	if (!dest)
@@ -3949,6 +3949,8 @@ void summary_save_as(SummaryView *summaryview)
 	}
 
 	g_free(dest);
+
+	prefs_common.save_file_type = selected_type;
 }
 
 void summary_print(SummaryView *summaryview)

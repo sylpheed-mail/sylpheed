@@ -58,6 +58,9 @@ static void filesel_save_expander_set_expanded	   (GtkWidget	*dialog,
 						    gboolean	 expanded);
 static gboolean filesel_save_expander_get_expanded (GtkWidget	*dialog);
 
+static gchar *filesel_get_filename_with_ext	(const gchar	*filename,
+						 const gchar	*ext);
+
 static void filesel_combo_changed_cb	(GtkComboBox		*combo_box,
 					 gpointer		 data);
 
@@ -221,11 +224,22 @@ static GSList *filesel_select_file_full(const gchar *title, const gchar *file,
 
 		gtk_widget_show_all(hbox);
 		gtk_file_chooser_set_extra_widget(GTK_FILE_CHOOSER(dialog), hbox);
+		if (default_type < 0 || default_type >= i)
+			default_type = 0;
 		gtk_combo_box_set_active(GTK_COMBO_BOX(combo), default_type);
-
 		g_object_set_data(G_OBJECT(combo), "types", types);
 		g_signal_connect(GTK_COMBO_BOX(combo), "changed",
 				 G_CALLBACK(filesel_combo_changed_cb), dialog);
+
+		if (file) {
+			gchar *newfile;
+
+			newfile = filesel_get_filename_with_ext
+				(file, types[default_type].ext);
+			gtk_file_chooser_set_current_name
+				(GTK_FILE_CHOOSER(dialog), newfile);
+			g_free(newfile);
+		}
 	}
 
 	gtk_widget_show(dialog);
@@ -423,30 +437,41 @@ static gboolean filesel_save_expander_get_expanded(GtkWidget *dialog)
 		return FALSE;
 }
 
+static gchar *filesel_get_filename_with_ext(const gchar *filename, const gchar *ext)
+{
+	gchar *base;
+	gchar *new_filename;
+	gchar *p;
+
+	base = g_path_get_basename(filename);
+	p = strrchr(base, '.');
+	if (p)
+		*p = '\0';
+	new_filename = g_strconcat(base, ".", ext, NULL);
+	debug_print("new_filename: %s\n", new_filename);
+	g_free(base);
+
+	return new_filename;
+}
+
 static void filesel_combo_changed_cb(GtkComboBox *combo_box, gpointer data)
 {
 	GtkFileChooser *chooser = data;
 	gint active;
 	gchar *filename;
-	gchar *base;
 	gchar *new_filename;
-	gchar *p;
 	FileselFileType *types;
 
 	active = gtk_combo_box_get_active(combo_box);
 	filename = gtk_file_chooser_get_filename(chooser);
+	if (!filename)
+		return;
 	types = g_object_get_data(G_OBJECT(combo_box), "types");
-	g_print("active: %d filename: %s\n", active, filename);
-	g_print("type ext: %s\n", types[active].ext);
-	base = g_path_get_basename(filename);
-	p = strrchr(base, '.');
-	if (p)
-		*p = '\0';
-	new_filename = g_strconcat(base, ".", types[active].ext, NULL);
-	g_print("new_filename: %s\n", new_filename);
+	debug_print("active: %d filename: %s\n", active, filename);
+	debug_print("type ext: %s\n", types[active].ext);
+	new_filename = filesel_get_filename_with_ext(filename, types[active].ext);
 	gtk_file_chooser_set_current_name(chooser, new_filename);
 	g_free(new_filename);
-	g_free(base);
 	g_free(filename);
 }
 

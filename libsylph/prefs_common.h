@@ -347,6 +347,8 @@ struct _PrefsCommon
 	gboolean nofilter_junk_sender_in_book; /* Junk Mail */
 
 	gboolean alt_prefer_html;            /* Message */
+
+	gint save_file_type;
 };
 
 extern PrefsCommon prefs_common;

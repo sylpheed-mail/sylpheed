@@ -515,6 +515,7 @@ static PrefParam param[] = {
 	{"filesel_prev_open_dir", NULL, &prefs_common.prev_open_dir, P_STRING},
 	{"filesel_prev_save_dir", NULL, &prefs_common.prev_save_dir, P_STRING},
 	{"filesel_prev_folder_dir", NULL, &prefs_common.prev_folder_dir, P_STRING},
+	{"filesel_save_file_type", "0", &prefs_common.save_file_type, P_INT},
 
 	{NULL, NULL, NULL, P_OTHER}
 };
