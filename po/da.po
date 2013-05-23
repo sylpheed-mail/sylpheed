@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed    \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-29 13:31+0900\n"
+"POT-Creation-Date: 2013-05-23 16:10+0900\n"
 "PO-Revision-Date: 2003-07-29 09:05+0200\n"
 "Last-Translator: Andreas Hinz <news3@acci.dk>\n"
 "Language-Team: \n"
@@ -1027,7 +1027,7 @@ msgstr "/_Kopier..."
 msgid "/_Paste"
 msgstr "/_Redigér/_Sæt ind"
 
-#: src/addressbook.c:614 src/prefs_common_dialog.c:2762 src/prefs_toolbar.c:90
+#: src/addressbook.c:614 src/prefs_common_dialog.c:2769 src/prefs_toolbar.c:90
 msgid "Address book"
 msgstr "Adressebog"
 
@@ -1225,7 +1225,7 @@ msgstr "Adressebog konverterings fejl"
 msgid "Address Book Conversion"
 msgstr "Adressebog konvertering"
 
-#: src/addressbook.c:4179 src/prefs_common_dialog.c:2561
+#: src/addressbook.c:4179 src/prefs_common_dialog.c:2568
 msgid "Interface"
 msgstr "Brugerflade"
 
@@ -1317,7 +1317,7 @@ msgstr "Brun"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:300 src/prefs_folder_item.c:317 src/summaryview.c:5333
+#: src/colorlabel.c:300 src/prefs_folder_item.c:317 src/summaryview.c:5358
 msgid "None"
 msgstr "Ingen"
 
@@ -1693,7 +1693,7 @@ msgstr "kan ikke læse %s"
 msgid "Message: %s"
 msgstr "Meddelelse: %s"
 
-#: src/compose.c:2373 src/mimeview.c:590
+#: src/compose.c:2373 src/mimeview.c:579
 msgid "Can't get the part of multipart message."
 msgstr "Kan ikke hente del af multipart meddelese."
 
@@ -1895,7 +1895,7 @@ msgstr "Dato"
 #. S_COL_DATE
 #: src/compose.c:5386 src/mimeview.c:217 src/prefs_filter_edit.c:512
 #: src/prefs_summary_column.c:72 src/rpop3.c:437 src/select-keys.c:309
-#: src/summaryview.c:5482
+#: src/summaryview.c:5507
 msgid "Size"
 msgstr "Størrelse"
 
@@ -1916,8 +1916,8 @@ msgid "MIME type"
 msgstr "MIME type"
 
 #. Encoding
-#: src/compose.c:6617 src/prefs_common_dialog.c:1137
-#: src/prefs_common_dialog.c:1804
+#: src/compose.c:6617 src/prefs_common_dialog.c:1140
+#: src/prefs_common_dialog.c:1807
 msgid "Encoding"
 msgstr "Tegnsæt kodning"
 
@@ -1934,11 +1934,11 @@ msgstr "Fil navn"
 msgid "File not exist."
 msgstr "%s: fil findes ikke\n"
 
-#: src/compose.c:6740 src/mimeview.c:1269 src/mimeview.c:1284
+#: src/compose.c:6740 src/mimeview.c:1259 src/mimeview.c:1274
 msgid "Opening executable file"
 msgstr ""
 
-#: src/compose.c:6741 src/mimeview.c:1270 src/mimeview.c:1285
+#: src/compose.c:6741 src/mimeview.c:1260 src/mimeview.c:1275
 msgid ""
 "This is an executable file. Opening executable file is restricted for "
 "security.\n"
@@ -1974,7 +1974,7 @@ msgstr "Meddelelse kan ikke lægges i kø."
 msgid "Select files"
 msgstr "Vælg fil"
 
-#: src/compose.c:7506 src/inputdialog.c:372 src/prefs_common_dialog.c:4587
+#: src/compose.c:7506 src/inputdialog.c:372 src/prefs_common_dialog.c:4594
 msgid "Select file"
 msgstr "Vælg fil"
 
@@ -2189,7 +2189,7 @@ msgstr "Redigér JPilot indtastning"
 
 #: src/editjpilot.c:289 src/editldap.c:349 src/editvcard.c:202
 #: src/importcsv.c:696 src/importldif.c:498 src/prefs_account_dialog.c:2021
-#: src/prefs_common_dialog.c:2354
+#: src/prefs_common_dialog.c:2361
 msgid " ... "
 msgstr " ... "
 
@@ -2371,23 +2371,28 @@ msgstr "Vælg fil til export"
 
 #: src/filesel.c:216
 #, fuzzy
+msgid "File type:"
+msgstr "Fil navn :"
+
+#: src/filesel.c:265
+#, fuzzy
 msgid "The link target not found."
 msgstr "Markéret fil ikke fundet.\n"
 
-#: src/filesel.c:247
+#: src/filesel.c:300 src/filesel.c:326
 msgid "Save as"
 msgstr "Gem som"
 
-#: src/filesel.c:254 src/filesel.c:382
+#: src/filesel.c:307 src/filesel.c:340 src/filesel.c:506
 #, fuzzy
 msgid "Overwrite existing file"
 msgstr "Overskrive eksisterende fil?"
 
-#: src/filesel.c:255 src/filesel.c:383
+#: src/filesel.c:308 src/filesel.c:341 src/filesel.c:507
 msgid "The file already exists. Do you want to replace it?"
 msgstr ""
 
-#: src/filesel.c:272 src/foldersel.c:256
+#: src/filesel.c:358 src/foldersel.c:256
 msgid "Select folder"
 msgstr "Vælg mappe"
 
@@ -2411,7 +2416,7 @@ msgstr "Slettet"
 msgid "Drafts"
 msgstr "Kladde"
 
-#: src/foldersel.c:423 src/folderview.c:1280 src/prefs_common_dialog.c:2298
+#: src/foldersel.c:423 src/folderview.c:1280 src/prefs_common_dialog.c:2305
 #: src/prefs_folder_item.c:240 src/prefs_toolbar.c:68
 msgid "Junk"
 msgstr ""
@@ -2512,18 +2517,18 @@ msgstr "/_Slet nyhedsgruppe"
 msgid "Creating folder view...\n"
 msgstr "Opretter mappe træ...\n"
 
-#: src/folderview.c:425 src/prefs_common_dialog.c:1714
+#: src/folderview.c:425 src/prefs_common_dialog.c:1717
 msgid "New"
 msgstr "Ny"
 
 #. S_COL_MARK
-#: src/folderview.c:441 src/prefs_common_dialog.c:1715
+#: src/folderview.c:441 src/prefs_common_dialog.c:1718
 #: src/prefs_filter_edit.c:516 src/prefs_summary_column.c:67
 #: src/quick_search.c:108
 msgid "Unread"
 msgstr "Ulæst"
 
-#: src/folderview.c:457 src/prefs_common_dialog.c:1716
+#: src/folderview.c:457 src/prefs_common_dialog.c:1719
 msgid "Total"
 msgstr ""
 
@@ -3119,8 +3124,8 @@ msgstr "Afslutter"
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "Modtager meddelelse (%d / %d) (%s / %s)"
 
-#: src/inc.c:1522 src/inc.c:1549 src/summaryview.c:4811 src/summaryview.c:5001
-#: src/summaryview.c:5052
+#: src/inc.c:1522 src/inc.c:1549 src/summaryview.c:4836 src/summaryview.c:5026
+#: src/summaryview.c:5077
 msgid ""
 "Execution of the junk filter command failed.\n"
 "Please check the junk mail control setting."
@@ -4077,7 +4082,7 @@ msgid "MainWindow: color allocation %d failed\n"
 msgstr "HovedVindue: fejl i farve %d\n"
 
 #: src/mainwindow.c:1224 src/summaryview.c:2668 src/summaryview.c:2755
-#: src/summaryview.c:4375 src/summaryview.c:4504 src/summaryview.c:4893
+#: src/summaryview.c:4400 src/summaryview.c:4529 src/summaryview.c:4918
 msgid "done.\n"
 msgstr "Afsluttet.\n"
 
@@ -4328,7 +4333,7 @@ msgstr "/_Funktioner/Tilføj afsender til adressebog"
 msgid "Creating message view...\n"
 msgstr "Opretter meddelelses vindue...\n"
 
-#: src/messageview.c:368
+#: src/messageview.c:368 src/messageview.c:933 src/summaryview.c:3917
 msgid "Text"
 msgstr "Tekst"
 
@@ -4349,7 +4354,16 @@ msgstr "Vedhæftet"
 msgid "Message View - Sylpheed"
 msgstr ""
 
-#: src/messageview.c:933 src/summaryview.c:3922
+#: src/messageview.c:931 src/summaryview.c:3915
+msgid "Original (EML/RFC 822)"
+msgstr ""
+
+#: src/messageview.c:935 src/summaryview.c:3919
+#, fuzzy
+msgid "Text (UTF-8)"
+msgstr "Unicode (UTF-8)"
+
+#: src/messageview.c:959 src/summaryview.c:3946
 #, c-format
 msgid "Can't save the file `%s'."
 msgstr "Kan ikke gemme fil `%s'."
@@ -4407,52 +4421,52 @@ msgstr "Opretter MIME visning...\n"
 msgid "Select \"Check signature\" to check"
 msgstr "Vælg \"Check signatur\""
 
-#: src/mimeview.c:648
+#: src/mimeview.c:637
 msgid "Select an action for the attached file:\n"
 msgstr ""
 
-#: src/mimeview.c:670 src/textview.c:849
+#: src/mimeview.c:659 src/textview.c:849
 #, fuzzy
 msgid "Open _with..."
 msgstr "/Åbn _med..."
 
-#: src/mimeview.c:674
+#: src/mimeview.c:663
 #, fuzzy
 msgid "_Display as text"
 msgstr "/_Vis som tekst"
 
-#: src/mimeview.c:678 src/textview.c:852
+#: src/mimeview.c:667 src/textview.c:852
 #, fuzzy
 msgid "_Save as..."
 msgstr "/_Gem som..."
 
-#: src/mimeview.c:724
+#: src/mimeview.c:713
 #, fuzzy
 msgid ""
 "This signature has not been checked yet.\n"
 "\n"
 msgstr "Signaturen er endnu ikke undersøgt.\n"
 
-#: src/mimeview.c:730
+#: src/mimeview.c:719
 #, fuzzy
 msgid "_Check signature"
 msgstr "/_Check signatur"
 
-#: src/mimeview.c:1026 src/mimeview.c:1122 src/mimeview.c:1152
-#: src/mimeview.c:1172 src/mimeview.c:1223 src/mimeview.c:1350
+#: src/mimeview.c:1015 src/mimeview.c:1111 src/mimeview.c:1141
+#: src/mimeview.c:1161 src/mimeview.c:1213 src/mimeview.c:1340
 msgid "Can't save the part of multipart message."
 msgstr "Kan ikke gemme del af multipart meddelelse."
 
-#: src/mimeview.c:1090
+#: src/mimeview.c:1079
 #, fuzzy
 msgid "Can't save the attachments."
 msgstr "Kan ikke gemme fil `%s'."
 
-#: src/mimeview.c:1182
+#: src/mimeview.c:1171
 msgid "Open with"
 msgstr "Åbn med"
 
-#: src/mimeview.c:1183
+#: src/mimeview.c:1172
 #, c-format
 msgid ""
 "Enter the command line to open file:\n"
@@ -4543,21 +4557,21 @@ msgstr "Konto opsæt"
 msgid "Creating account preferences window...\n"
 msgstr "Opretter konto egenskaber...\n"
 
-#: src/prefs_account_dialog.c:595 src/prefs_common_dialog.c:816
+#: src/prefs_account_dialog.c:595 src/prefs_common_dialog.c:819
 msgid "Receive"
 msgstr "Modtag"
 
-#: src/prefs_account_dialog.c:597 src/prefs_common_dialog.c:818
+#: src/prefs_account_dialog.c:597 src/prefs_common_dialog.c:821
 #: src/prefs_toolbar.c:50 src/prefs_toolbar.c:102
 msgid "Send"
 msgstr "Send"
 
-#: src/prefs_account_dialog.c:599 src/prefs_common_dialog.c:820
+#: src/prefs_account_dialog.c:599 src/prefs_common_dialog.c:823
 #: src/prefs_folder_item.c:140 src/prefs_toolbar.c:53
 msgid "Compose"
 msgstr "Opret"
 
-#: src/prefs_account_dialog.c:602 src/prefs_common_dialog.c:827
+#: src/prefs_account_dialog.c:602 src/prefs_common_dialog.c:830
 msgid "Privacy"
 msgstr "Privat"
 
@@ -4569,7 +4583,7 @@ msgstr "SSL"
 msgid "Proxy"
 msgstr ""
 
-#: src/prefs_account_dialog.c:611 src/prefs_common_dialog.c:2670
+#: src/prefs_account_dialog.c:611 src/prefs_common_dialog.c:2677
 msgid "Advanced"
 msgstr "Avanceret"
 
@@ -4697,8 +4711,8 @@ msgid "Authentication method"
 msgstr "Godkendelses metode"
 
 #: src/prefs_account_dialog.c:1032 src/prefs_account_dialog.c:1191
-#: src/prefs_common_dialog.c:1157 src/prefs_common_dialog.c:2788
-#: src/prefs_common_dialog.c:3156
+#: src/prefs_common_dialog.c:1160 src/prefs_common_dialog.c:2795
+#: src/prefs_common_dialog.c:3163
 msgid "Automatic"
 msgstr "Automatisk"
 
@@ -4745,8 +4759,8 @@ msgstr "Opret meddelelses ID"
 msgid "Add user-defined header"
 msgstr "Tilføj bruger defineret hoved"
 
-#: src/prefs_account_dialog.c:1148 src/prefs_common_dialog.c:1907
-#: src/prefs_common_dialog.c:1934
+#: src/prefs_account_dialog.c:1148 src/prefs_common_dialog.c:1911
+#: src/prefs_common_dialog.c:1938
 msgid " Edit... "
 msgstr " Redigér... "
 
@@ -4772,7 +4786,7 @@ msgid "Authenticate with POP3 before sending"
 msgstr "Godkend med POP3 før afsendelse"
 
 #. signature
-#: src/prefs_account_dialog.c:1294 src/prefs_common_dialog.c:1275
+#: src/prefs_account_dialog.c:1294 src/prefs_common_dialog.c:1278
 #: src/prefs_toolbar.c:117
 msgid "Signature"
 msgstr "Underskrift"
@@ -5123,143 +5137,143 @@ msgstr "Slet handling"
 msgid "Do you really want to delete this action?"
 msgstr "Vil du virkelig slette denne handling?"
 
-#: src/prefs_common_dialog.c:796
+#: src/prefs_common_dialog.c:799
 msgid "Creating common preferences window...\n"
 msgstr "Opretter generelt opsæt vindue...\n"
 
-#: src/prefs_common_dialog.c:800
+#: src/prefs_common_dialog.c:803
 msgid "Common Preferences"
 msgstr "Generelt opsæt"
 
-#: src/prefs_common_dialog.c:822
+#: src/prefs_common_dialog.c:825
 msgid "Display"
 msgstr "Vis"
 
-#: src/prefs_common_dialog.c:824
+#: src/prefs_common_dialog.c:827
 #, fuzzy
 msgid "Junk mail"
 msgstr "Mappe"
 
-#: src/prefs_common_dialog.c:830
+#: src/prefs_common_dialog.c:833
 msgid "Details"
 msgstr ""
 
-#: src/prefs_common_dialog.c:888
+#: src/prefs_common_dialog.c:891
 msgid "Auto-check new mail"
 msgstr "Automatisk hentning af ny post"
 
-#: src/prefs_common_dialog.c:890 src/prefs_common_dialog.c:1393
+#: src/prefs_common_dialog.c:893 src/prefs_common_dialog.c:1396
 msgid "every"
 msgstr "hver"
 
-#: src/prefs_common_dialog.c:902 src/prefs_common_dialog.c:1407
+#: src/prefs_common_dialog.c:905 src/prefs_common_dialog.c:1410
 msgid "minute(s)"
 msgstr "minut(er)"
 
-#: src/prefs_common_dialog.c:911
+#: src/prefs_common_dialog.c:914
 msgid "Check new mail on startup"
 msgstr "Hent e-post ved programstart"
 
-#: src/prefs_common_dialog.c:913
+#: src/prefs_common_dialog.c:916
 msgid "Update all local folders after incorporation"
 msgstr "Opdater alle mapper efter modtagelse"
 
 #. New message notify
-#: src/prefs_common_dialog.c:916
+#: src/prefs_common_dialog.c:919
 #, fuzzy
 msgid "New message notification"
 msgstr "Godkendelse"
 
-#: src/prefs_common_dialog.c:929
+#: src/prefs_common_dialog.c:932
 #, fuzzy
 msgid "Show notification window when new messages arrive"
 msgstr "Udfør straks ved flyt eller slet af meddelelse(r)"
 
-#: src/prefs_common_dialog.c:934
+#: src/prefs_common_dialog.c:937
 #, fuzzy
 msgid "Play sound when new messages arrive"
 msgstr "Udfør straks ved flyt eller slet af meddelelse(r)"
 
-#: src/prefs_common_dialog.c:940
+#: src/prefs_common_dialog.c:943
 #, fuzzy
 msgid "Sound file"
 msgstr "Kunne ikke læse fil."
 
-#: src/prefs_common_dialog.c:959 src/prefs_common_dialog.c:963
+#: src/prefs_common_dialog.c:962 src/prefs_common_dialog.c:966
 #, fuzzy
 msgid "Execute command when new messages arrive"
 msgstr "Udfør straks ved flyt eller slet af meddelelse(r)"
 
-#: src/prefs_common_dialog.c:970 src/prefs_common_dialog.c:2963
-#: src/prefs_common_dialog.c:2985 src/prefs_common_dialog.c:3007
+#: src/prefs_common_dialog.c:973 src/prefs_common_dialog.c:2970
+#: src/prefs_common_dialog.c:2992 src/prefs_common_dialog.c:3014
 msgid "Command"
 msgstr "Kommando"
 
-#: src/prefs_common_dialog.c:983
+#: src/prefs_common_dialog.c:986
 #, fuzzy, c-format
 msgid "`%d' will be replaced with the number of new messages."
 msgstr "Modtager antal nye meddelelser (STAT)..."
 
-#: src/prefs_common_dialog.c:987
+#: src/prefs_common_dialog.c:990
 #, fuzzy
 msgid "Incorporate from local spool"
 msgstr "Modtager fra lokal spool"
 
-#: src/prefs_common_dialog.c:1000
+#: src/prefs_common_dialog.c:1003
 msgid "Filter on incorporation"
 msgstr "Filter ved modtagelse"
 
-#: src/prefs_common_dialog.c:1006
+#: src/prefs_common_dialog.c:1009
 msgid "Spool path"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1074 src/prefs_common_dialog.c:1271
-#: src/prefs_common_dialog.c:1669 src/prefs_folder_item.c:139
+#: src/prefs_common_dialog.c:1077 src/prefs_common_dialog.c:1274
+#: src/prefs_common_dialog.c:1672 src/prefs_folder_item.c:139
 msgid "General"
 msgstr "Generel"
 
-#: src/prefs_common_dialog.c:1081
+#: src/prefs_common_dialog.c:1084
 msgid "Save sent messages to outbox"
 msgstr "Gem sendte meddelelser i Sendt"
 
-#: src/prefs_common_dialog.c:1083
+#: src/prefs_common_dialog.c:1086
 msgid "Apply filter rules to sent messages"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1086
+#: src/prefs_common_dialog.c:1089
 #, fuzzy
 msgid "Automatically add recipients to address book"
 msgstr "Udfyld automatisk følgende adresser"
 
-#: src/prefs_common_dialog.c:1089
+#: src/prefs_common_dialog.c:1092
 #, fuzzy
 msgid "Display send dialog"
 msgstr "Viste oplysninger"
 
-#: src/prefs_common_dialog.c:1096
+#: src/prefs_common_dialog.c:1099
 msgid ""
 "Notify for missing attachments when the following strings (comma-separated) "
 "are found in the message body"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1107
+#: src/prefs_common_dialog.c:1110
 msgid "(Ex: attach)"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1118
+#: src/prefs_common_dialog.c:1121
 #, fuzzy
 msgid "Confirm recipients before sending"
 msgstr "Del linier før afsendelse"
 
-#: src/prefs_common_dialog.c:1124
+#: src/prefs_common_dialog.c:1127
 msgid "Excluded addresses/domains (comma-separated):"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1143
+#: src/prefs_common_dialog.c:1146
 msgid "Transfer encoding"
 msgstr "Kodning af overførsel"
 
-#: src/prefs_common_dialog.c:1166
+#: src/prefs_common_dialog.c:1169
 #, fuzzy
 msgid ""
 "Specify Content-Transfer-Encoding used when message body contains non-ASCII "
@@ -5268,206 +5282,206 @@ msgstr ""
 "Angiv Content-Transfer-Encoding anvendt hvis\n"
 "besked inholder andet end ASCII tegn."
 
-#: src/prefs_common_dialog.c:1173
+#: src/prefs_common_dialog.c:1176
 #, fuzzy
 msgid "MIME filename encoding"
 msgstr "Udgående tegnsæt"
 
-#: src/prefs_common_dialog.c:1184
+#: src/prefs_common_dialog.c:1187
 #, fuzzy
 msgid "MIME header"
 msgstr "Udgående tegnsæt"
 
-#: src/prefs_common_dialog.c:1194
+#: src/prefs_common_dialog.c:1197
 msgid ""
 "Specify encoding method for MIME filename with non-ASCII characters.\n"
 "MIME header: most popular, but violates RFC 2047\n"
 "RFC 2231: conforms to standard, but not popular"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1286
+#: src/prefs_common_dialog.c:1289
 msgid "Signature separator"
 msgstr "Underskriftsdeling"
 
-#: src/prefs_common_dialog.c:1295
+#: src/prefs_common_dialog.c:1298
 msgid "Insert automatically"
 msgstr "Tilføj automatisk"
 
-#: src/prefs_common_dialog.c:1297 src/prefs_toolbar.c:56
+#: src/prefs_common_dialog.c:1300 src/prefs_toolbar.c:56
 msgid "Reply"
 msgstr "Besvar"
 
-#: src/prefs_common_dialog.c:1305
+#: src/prefs_common_dialog.c:1308
 msgid "Automatically select account for replies"
 msgstr "Vælg automatisk konto ved besvarelse"
 
-#: src/prefs_common_dialog.c:1307
+#: src/prefs_common_dialog.c:1310
 msgid "Quote message when replying"
 msgstr "Citat af meddelelse i svar"
 
-#: src/prefs_common_dialog.c:1309
+#: src/prefs_common_dialog.c:1312
 #, fuzzy
 msgid "Reply to mailing list by Reply button"
 msgstr "/_Svar til/_Mail liste"
 
-#: src/prefs_common_dialog.c:1311
+#: src/prefs_common_dialog.c:1314
 msgid "Inherit recipients on reply to self messages"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1313
+#: src/prefs_common_dialog.c:1316
 msgid "Set only mail address of recipients when replying"
 msgstr ""
 
 #. editor
-#: src/prefs_common_dialog.c:1317 src/prefs_common_dialog.c:2924
+#: src/prefs_common_dialog.c:1320 src/prefs_common_dialog.c:2931
 #: src/prefs_toolbar.c:120
 msgid "Editor"
 msgstr "Editor"
 
-#: src/prefs_common_dialog.c:1324
+#: src/prefs_common_dialog.c:1327
 msgid "Automatically launch the external editor"
 msgstr "Start automatisk ekstern editor"
 
-#: src/prefs_common_dialog.c:1334
+#: src/prefs_common_dialog.c:1337
 msgid "Undo level"
 msgstr "Fortryd niveauer"
 
-#: src/prefs_common_dialog.c:1354
+#: src/prefs_common_dialog.c:1357
 msgid "Wrap messages at"
 msgstr "Del linier ved"
 
-#: src/prefs_common_dialog.c:1366
+#: src/prefs_common_dialog.c:1369
 msgid "characters"
 msgstr "tegn"
 
-#: src/prefs_common_dialog.c:1376
+#: src/prefs_common_dialog.c:1379
 msgid "Wrap quotation"
 msgstr "Del citat linier"
 
-#: src/prefs_common_dialog.c:1382
+#: src/prefs_common_dialog.c:1385
 msgid "Wrap on input"
 msgstr "Del ved indtastning"
 
-#: src/prefs_common_dialog.c:1391
+#: src/prefs_common_dialog.c:1394
 #, fuzzy
 msgid "Auto-save to draft"
 msgstr "Gem i Kladde"
 
-#: src/prefs_common_dialog.c:1416
+#: src/prefs_common_dialog.c:1419
 #, fuzzy
 msgid "Format"
 msgstr "Normal"
 
-#: src/prefs_common_dialog.c:1421
+#: src/prefs_common_dialog.c:1424
 msgid "Spell checking"
 msgstr ""
 
 #. reply
-#: src/prefs_common_dialog.c:1474
+#: src/prefs_common_dialog.c:1477
 msgid "Reply format"
 msgstr "Svar format"
 
-#: src/prefs_common_dialog.c:1489 src/prefs_common_dialog.c:1531
+#: src/prefs_common_dialog.c:1492 src/prefs_common_dialog.c:1534
 msgid "Quotation mark"
 msgstr "Citat tegn"
 
 #. forward
-#: src/prefs_common_dialog.c:1516
+#: src/prefs_common_dialog.c:1519
 msgid "Forward format"
 msgstr "Videresend format"
 
-#: src/prefs_common_dialog.c:1563
+#: src/prefs_common_dialog.c:1566
 msgid " Description of symbols "
 msgstr " Beskrivelse af symboler "
 
-#: src/prefs_common_dialog.c:1592
+#: src/prefs_common_dialog.c:1595
 msgid "Enable Spell checking"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1604
+#: src/prefs_common_dialog.c:1607
 #, fuzzy
 msgid "Default language:"
 msgstr "Standard underskriftsnøgle"
 
-#: src/prefs_common_dialog.c:1677
+#: src/prefs_common_dialog.c:1680
 #, fuzzy
 msgid "Text font"
 msgstr "Tekst"
 
 #. ---- Folder View ----
-#: src/prefs_common_dialog.c:1689
+#: src/prefs_common_dialog.c:1692
 #, fuzzy
 msgid "Folder View"
 msgstr "Mappe"
 
-#: src/prefs_common_dialog.c:1697
+#: src/prefs_common_dialog.c:1700
 msgid "Display unread number next to folder name"
 msgstr "Vis antal ulæste ved siden af mappe navn"
 
-#: src/prefs_common_dialog.c:1701
+#: src/prefs_common_dialog.c:1704
 #, fuzzy
 msgid "Displaying message number columns in the folder view:"
 msgstr "Vis antal ulæste ved siden af mappe navn"
 
-#: src/prefs_common_dialog.c:1725
+#: src/prefs_common_dialog.c:1728
 msgid "Abbreviate newsgroups longer than"
 msgstr "Forkort nyhedsgruppe længere end"
 
-#: src/prefs_common_dialog.c:1740
+#: src/prefs_common_dialog.c:1743
 msgid "letters"
 msgstr "bogstaver"
 
 #. ---- Summary ----
-#: src/prefs_common_dialog.c:1746
+#: src/prefs_common_dialog.c:1749
 msgid "Summary View"
 msgstr "Meddelelses visning"
 
-#: src/prefs_common_dialog.c:1755
+#: src/prefs_common_dialog.c:1758
 msgid "Display recipient on `From' column if sender is yourself"
 msgstr "Vis modtager i `Fra' hvis du er afsender"
 
-#: src/prefs_common_dialog.c:1757
+#: src/prefs_common_dialog.c:1760
 msgid "Expand threads"
 msgstr "Åbn tråde"
 
-#: src/prefs_common_dialog.c:1765 src/prefs_common_dialog.c:3399
-#: src/prefs_common_dialog.c:3437
+#: src/prefs_common_dialog.c:1768 src/prefs_common_dialog.c:3406
+#: src/prefs_common_dialog.c:3444
 msgid "Date format"
 msgstr "Dato format"
 
-#: src/prefs_common_dialog.c:1786
+#: src/prefs_common_dialog.c:1789
 msgid " Set display item of summary... "
 msgstr " Vælg oplysninger i oversigt... "
 
-#: src/prefs_common_dialog.c:1792
+#: src/prefs_common_dialog.c:1795
 msgid "Message"
 msgstr "Meddelelse"
 
 #. S_COL_UNREAD
-#: src/prefs_common_dialog.c:1796 src/prefs_summary_column.c:68
+#: src/prefs_common_dialog.c:1799 src/prefs_summary_column.c:68
 msgid "Attachment"
 msgstr "Vedhæftet"
 
-#: src/prefs_common_dialog.c:1800
+#: src/prefs_common_dialog.c:1803
 #, fuzzy
 msgid "Color label"
 msgstr "/Farve la_bel"
 
-#: src/prefs_common_dialog.c:1810
+#: src/prefs_common_dialog.c:1813
 #, fuzzy
 msgid "Default character encoding"
 msgstr "/_Vis/_Sortere/Faldende"
 
-#: src/prefs_common_dialog.c:1824
+#: src/prefs_common_dialog.c:1827
 msgid "This is used when displaying messages with missing character encoding."
 msgstr ""
 
-#: src/prefs_common_dialog.c:1830
+#: src/prefs_common_dialog.c:1833
 #, fuzzy
 msgid "Outgoing character encoding"
 msgstr "/_Vis/_Sortere/Faldende"
 
-#: src/prefs_common_dialog.c:1844
+#: src/prefs_common_dialog.c:1847
 #, fuzzy
 msgid ""
 "If `Automatic' is selected, the optimal encoding for the current locale will "
@@ -5476,11 +5490,11 @@ msgstr ""
 "Hvis `Automatisk' er valgt benyttes det optimale\n"
 "tegnsæt for den valgte locale."
 
-#: src/prefs_common_dialog.c:1903
+#: src/prefs_common_dialog.c:1907
 msgid "Enable coloration of message"
 msgstr "Benyt farver i meddelelser"
 
-#: src/prefs_common_dialog.c:1918
+#: src/prefs_common_dialog.c:1922
 msgid ""
 "Display multi-byte alphabet and numeric as\n"
 "ASCII character (Japanese only)"
@@ -5488,674 +5502,678 @@ msgstr ""
 "Vis 2-byte alfabet og tal som ASCII\n"
 "tegn (kun japansk)"
 
-#: src/prefs_common_dialog.c:1925
+#: src/prefs_common_dialog.c:1929
 msgid "Display header pane above message view"
 msgstr "Vis hoved linier over meddelelses vindue"
 
-#: src/prefs_common_dialog.c:1932
+#: src/prefs_common_dialog.c:1936
 msgid "Display short headers on message view"
 msgstr "Vis korte hoved linier i meddelelses vindue"
 
-#: src/prefs_common_dialog.c:1944
+#: src/prefs_common_dialog.c:1948
 msgid "Render HTML messages as text"
 msgstr ""
 
-#: src/prefs_common_dialog.c:1946
+#: src/prefs_common_dialog.c:1950
+msgid "Prefer HTML in multipart/alternative for display"
+msgstr ""
+
+#: src/prefs_common_dialog.c:1952
 #, fuzzy
 msgid "Treat HTML only messages as attachment"
 msgstr "/_Meddelelse/Videresend som _vedhæftet"
 
-#: src/prefs_common_dialog.c:1950
+#: src/prefs_common_dialog.c:1956
 #, fuzzy
 msgid "Display cursor in message view"
 msgstr "Vis korte hoved linier i meddelelses vindue"
 
-#: src/prefs_common_dialog.c:1963
+#: src/prefs_common_dialog.c:1969
 msgid "Line space"
 msgstr "Linie afstand"
 
-#: src/prefs_common_dialog.c:1977 src/prefs_common_dialog.c:2015
+#: src/prefs_common_dialog.c:1983 src/prefs_common_dialog.c:2021
 msgid "pixel(s)"
 msgstr "punkter"
 
-#: src/prefs_common_dialog.c:1982
+#: src/prefs_common_dialog.c:1988
 msgid "Scroll"
 msgstr "Scrol"
 
-#: src/prefs_common_dialog.c:1989
+#: src/prefs_common_dialog.c:1995
 msgid "Half page"
 msgstr "Halv side"
 
-#: src/prefs_common_dialog.c:1995
+#: src/prefs_common_dialog.c:2001
 msgid "Smooth scroll"
 msgstr "Blød scroll"
 
-#: src/prefs_common_dialog.c:2001
+#: src/prefs_common_dialog.c:2007
 msgid "Step"
 msgstr "Skrift"
 
-#: src/prefs_common_dialog.c:2063
+#: src/prefs_common_dialog.c:2070
 msgid "Position of attachment tool button:"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2068
+#: src/prefs_common_dialog.c:2075
 msgid "Left"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2076
+#: src/prefs_common_dialog.c:2083
 msgid "Right"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2084
+#: src/prefs_common_dialog.c:2091
 msgid "Toggle attachment list view with tab"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2088
+#: src/prefs_common_dialog.c:2095
 #, fuzzy
 msgid "Show attached files first on message view"
 msgstr "Vis korte hoved linier i meddelelses vindue"
 
-#: src/prefs_common_dialog.c:2090
+#: src/prefs_common_dialog.c:2097
 msgid "Images"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2098
+#: src/prefs_common_dialog.c:2105
 #, fuzzy
 msgid "Resize attached large images to fit in the window"
 msgstr "Ændre størrelse på vedhæftede billeder"
 
-#: src/prefs_common_dialog.c:2100
+#: src/prefs_common_dialog.c:2107
 #, fuzzy
 msgid "Display images as inline"
 msgstr "Hoved opsæt"
 
-#: src/prefs_common_dialog.c:2130
+#: src/prefs_common_dialog.c:2137
 msgid "You can specify label names for each color (Work, TODO etc.)."
 msgstr ""
 
-#: src/prefs_common_dialog.c:2261
+#: src/prefs_common_dialog.c:2268
 #, fuzzy
 msgid "Enable Junk mail control"
 msgstr "Mappe"
 
-#: src/prefs_common_dialog.c:2273
+#: src/prefs_common_dialog.c:2280
 #, fuzzy
 msgid "Learning command:"
 msgstr "Udfør"
 
-#: src/prefs_common_dialog.c:2282
+#: src/prefs_common_dialog.c:2289
 #, fuzzy
 msgid "(Select preset)"
 msgstr "Vælg nøgle"
 
-#: src/prefs_common_dialog.c:2310
+#: src/prefs_common_dialog.c:2317
 msgid "Not Junk"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2325
+#: src/prefs_common_dialog.c:2332
 #, fuzzy
 msgid "Classifying command"
 msgstr "Udfør"
 
-#: src/prefs_common_dialog.c:2336
+#: src/prefs_common_dialog.c:2343
 msgid ""
 "To classify junk mails automatically, both junk and not junk mails must be "
 "learned manually to a certain extent."
 msgstr ""
 
-#: src/prefs_common_dialog.c:2346
+#: src/prefs_common_dialog.c:2353
 #, fuzzy
 msgid "Junk folder"
 msgstr "Mappe"
 
-#: src/prefs_common_dialog.c:2364
+#: src/prefs_common_dialog.c:2371
 #, fuzzy
 msgid ""
 "The messages which are set as junk mail will be moved to this folder. If "
 "empty, the default junk folder will be used."
 msgstr "(Ufiltrerede meddelelser gemmes i denne mappe)"
 
-#: src/prefs_common_dialog.c:2376
+#: src/prefs_common_dialog.c:2383
 #, fuzzy
 msgid "Filter messages classified as junk on receiving"
 msgstr "Filtrere meddelelse ved modtagelse"
 
-#: src/prefs_common_dialog.c:2379
+#: src/prefs_common_dialog.c:2386
 #, fuzzy
 msgid "Filter junk mails before normal filtering"
 msgstr "Slet mappe"
 
-#: src/prefs_common_dialog.c:2382
+#: src/prefs_common_dialog.c:2389
 #, fuzzy
 msgid "Delete junk mails from server on receiving"
 msgstr "Slet mappe"
 
-#: src/prefs_common_dialog.c:2388
+#: src/prefs_common_dialog.c:2395
 msgid "Do not classify message as junk if sender is in the address book"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2390
+#: src/prefs_common_dialog.c:2397
 msgid "Mark filtered junk mails as read"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2433
+#: src/prefs_common_dialog.c:2440
 msgid "Automatically check signatures"
 msgstr "Check signatur automatisk"
 
-#: src/prefs_common_dialog.c:2436
+#: src/prefs_common_dialog.c:2443
 msgid "Show signature check result in a popup window"
 msgstr "Vis signatur check resultat i separat vindue"
 
-#: src/prefs_common_dialog.c:2439
+#: src/prefs_common_dialog.c:2446
 msgid "Store passphrase in memory temporarily"
 msgstr "Gem  adgangssætning midlertidigt i hukommelsen"
 
-#: src/prefs_common_dialog.c:2454
+#: src/prefs_common_dialog.c:2461
 msgid "Expired after"
 msgstr "Udløb efter"
 
-#: src/prefs_common_dialog.c:2467
+#: src/prefs_common_dialog.c:2474
 msgid "minute(s) "
 msgstr "minut(er)"
 
-#: src/prefs_common_dialog.c:2481
+#: src/prefs_common_dialog.c:2488
 #, fuzzy
 msgid "Setting to '0' will store the passphrase for the whole session."
 msgstr ""
 "(Sæt til '0' vil gemme adgangssætningen\n"
 " for hele sessionen)"
 
-#: src/prefs_common_dialog.c:2490
+#: src/prefs_common_dialog.c:2497
 msgid "Grab input while entering a passphrase"
 msgstr "Overtag indtastning mens adgangssætning indtastes"
 
-#: src/prefs_common_dialog.c:2495
+#: src/prefs_common_dialog.c:2502
 msgid "Display warning on startup if GnuPG doesn't work"
 msgstr "Advarsel ved start hvis GnuPG ikke virker"
 
-#: src/prefs_common_dialog.c:2569
+#: src/prefs_common_dialog.c:2576
 msgid "Always open messages in summary when selected"
 msgstr "Åbn altid besked i oversigtsbilledet hvis valgt"
 
-#: src/prefs_common_dialog.c:2573
+#: src/prefs_common_dialog.c:2580
 #, fuzzy
 msgid "Always mark as read when a message is opened"
 msgstr "Markér kun meddelelser som læst hvis åbnet i nyt vindue"
 
-#: src/prefs_common_dialog.c:2579
+#: src/prefs_common_dialog.c:2586
 #, fuzzy
 msgid "Open first unread message when a folder is opened"
 msgstr "Åbn første ulæste meddelelse ved indgang til mappe"
 
-#: src/prefs_common_dialog.c:2585
+#: src/prefs_common_dialog.c:2592
 #, fuzzy
 msgid "Remember last selected message"
 msgstr "Ikke flere markérede eddelelser"
 
-#: src/prefs_common_dialog.c:2590
+#: src/prefs_common_dialog.c:2597
 msgid "Only mark message as read when opened in new window"
 msgstr "Markér kun meddelelser som læst hvis åbnet i nyt vindue"
 
-#: src/prefs_common_dialog.c:2598
+#: src/prefs_common_dialog.c:2605
 #, fuzzy
 msgid "Open inbox after receiving new mail"
 msgstr "Gå til Indbakke efter modtagelse af ny post"
 
-#: src/prefs_common_dialog.c:2600
+#: src/prefs_common_dialog.c:2607
 #, fuzzy
 msgid "Open inbox on startup"
 msgstr "Hent e-post ved programstart"
 
-#: src/prefs_common_dialog.c:2604
+#: src/prefs_common_dialog.c:2611
 msgid "Change current account on folder open"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2612
+#: src/prefs_common_dialog.c:2619
 msgid "Execute immediately when moving or deleting messages"
 msgstr "Udfør straks ved flyt eller slet af meddelelse(r)"
 
-#: src/prefs_common_dialog.c:2624
+#: src/prefs_common_dialog.c:2631
 #, fuzzy
 msgid "Messages will be marked until execution if this is turned off."
 msgstr "(Ellers markéres meddelelese indtil der vælges 'Udfør')"
 
-#: src/prefs_common_dialog.c:2633
+#: src/prefs_common_dialog.c:2640
 msgid "Make the order of buttons comply with GNOME HIG"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2636
+#: src/prefs_common_dialog.c:2643
 #, fuzzy
 msgid "Display tray icon"
 msgstr "Vis navn"
 
-#: src/prefs_common_dialog.c:2638
+#: src/prefs_common_dialog.c:2645
 msgid "Minimize to tray icon"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2640
+#: src/prefs_common_dialog.c:2647
 msgid "Toggle window on trayicon click"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2650
+#: src/prefs_common_dialog.c:2657
 msgid " Set key bindings... "
 msgstr " Vælg tast bindinger... "
 
-#: src/prefs_common_dialog.c:2656 src/select-keys.c:337
+#: src/prefs_common_dialog.c:2663 src/select-keys.c:337
 msgid "Other"
 msgstr "Anden"
 
-#: src/prefs_common_dialog.c:2660
+#: src/prefs_common_dialog.c:2667
 #, fuzzy
 msgid "External commands"
 msgstr "Udfør"
 
-#: src/prefs_common_dialog.c:2665
+#: src/prefs_common_dialog.c:2672
 #, fuzzy
 msgid "Update"
 msgstr "Dato"
 
-#: src/prefs_common_dialog.c:2729
+#: src/prefs_common_dialog.c:2736
 msgid "Receive dialog"
 msgstr "Vis modtag billede"
 
-#: src/prefs_common_dialog.c:2739
+#: src/prefs_common_dialog.c:2746
 msgid "Show receive dialog"
 msgstr "Vis modtag billede"
 
-#: src/prefs_common_dialog.c:2749
+#: src/prefs_common_dialog.c:2756
 msgid "Always"
 msgstr "Altid"
 
-#: src/prefs_common_dialog.c:2750
+#: src/prefs_common_dialog.c:2757
 msgid "Only on manual receiving"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2752
+#: src/prefs_common_dialog.c:2759
 msgid "Never"
 msgstr "Aldrig"
 
-#: src/prefs_common_dialog.c:2757
+#: src/prefs_common_dialog.c:2764
 msgid "Don't popup error dialog on receive error"
 msgstr "Vis ikke fejlmeddelelse ved fejl"
 
-#: src/prefs_common_dialog.c:2760
+#: src/prefs_common_dialog.c:2767
 msgid "Close receive dialog when finished"
 msgstr "Luk modtag vindue efter overførsel"
 
-#: src/prefs_common_dialog.c:2771
+#: src/prefs_common_dialog.c:2778
 msgid "Add address to destination when double-clicked"
 msgstr "Tilføj adresse til 'Til' ved dobbeltklik"
 
-#: src/prefs_common_dialog.c:2775
+#: src/prefs_common_dialog.c:2782
 #, fuzzy
 msgid "Set only mail address when entering recipient from address book"
 msgstr "Udfyld automatisk følgende adresser"
 
-#: src/prefs_common_dialog.c:2783
+#: src/prefs_common_dialog.c:2790
 #, fuzzy
 msgid "Auto-completion:"
 msgstr "Adressebog konvertering"
 
-#: src/prefs_common_dialog.c:2796
+#: src/prefs_common_dialog.c:2803
 msgid "Start with Tab"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2804
+#: src/prefs_common_dialog.c:2811
 msgid "Disable"
 msgstr ""
 
-#: src/prefs_common_dialog.c:2811
+#: src/prefs_common_dialog.c:2818
 msgid "On exit"
 msgstr "Ved afslut"
 
-#: src/prefs_common_dialog.c:2819
+#: src/prefs_common_dialog.c:2826
 msgid "Confirm on exit"
 msgstr "Spørg ved afslut"
 
-#: src/prefs_common_dialog.c:2826
+#: src/prefs_common_dialog.c:2833
 msgid "Empty trash on exit"
 msgstr "Tøm Slettet ved afslut"
 
-#: src/prefs_common_dialog.c:2828
+#: src/prefs_common_dialog.c:2835
 msgid "Ask before emptying"
 msgstr "Spørg før tømning"
 
-#: src/prefs_common_dialog.c:2832
+#: src/prefs_common_dialog.c:2839
 msgid "Warn if there are queued messages"
 msgstr "Advar ved meddelelser i kø"
 
-#: src/prefs_common_dialog.c:2889
+#: src/prefs_common_dialog.c:2896
 #, c-format
 msgid "External commands (%s will be replaced with file name / URI)"
 msgstr "Ekstern editor (%s erstattes af filnavn / URI)"
 
-#: src/prefs_common_dialog.c:2898
+#: src/prefs_common_dialog.c:2905
 msgid "Web browser"
 msgstr "Web browser"
 
-#: src/prefs_common_dialog.c:2910 src/prefs_common_dialog.c:4412
-#: src/prefs_common_dialog.c:4433
+#: src/prefs_common_dialog.c:2917 src/prefs_common_dialog.c:4419
+#: src/prefs_common_dialog.c:4440
 #, fuzzy
 msgid "(Default browser)"
 msgstr "Standard indbakke"
 
-#: src/prefs_common_dialog.c:2951
+#: src/prefs_common_dialog.c:2958
 #, fuzzy
 msgid "Use external program for printing"
 msgstr "Benyt eksternt program for afsendelse"
 
-#: src/prefs_common_dialog.c:2973
+#: src/prefs_common_dialog.c:2980
 msgid "Use external program for incorporation"
 msgstr "Benyt eksternt program til modtagelse af e-post"
 
-#: src/prefs_common_dialog.c:2995
+#: src/prefs_common_dialog.c:3002
 msgid "Use external program for sending"
 msgstr "Benyt eksternt program for afsendelse"
 
-#: src/prefs_common_dialog.c:3047
+#: src/prefs_common_dialog.c:3054
 msgid "Update check requires 'curl' command."
 msgstr ""
 
-#: src/prefs_common_dialog.c:3058
+#: src/prefs_common_dialog.c:3065
 msgid "Enable auto update check"
 msgstr ""
 
-#: src/prefs_common_dialog.c:3060
+#: src/prefs_common_dialog.c:3067
 msgid "Use HTTP proxy"
 msgstr ""
 
-#: src/prefs_common_dialog.c:3062
+#: src/prefs_common_dialog.c:3069
 msgid "HTTP proxy host (hostname:port):"
 msgstr ""
 
-#: src/prefs_common_dialog.c:3103
+#: src/prefs_common_dialog.c:3110
 #, fuzzy
 msgid "Enable strict checking of the integrity of summary caches"
 msgstr "Skriver oversigt (%s)..."
 
-#: src/prefs_common_dialog.c:3106
+#: src/prefs_common_dialog.c:3113
 msgid ""
 "Enable this if the contents of folders have the possibility of modification "
 "by other applications.\n"
 "This option will degrade the performance of displaying summary."
 msgstr ""
 
-#: src/prefs_common_dialog.c:3113
+#: src/prefs_common_dialog.c:3120
 msgid "Socket I/O timeout:"
 msgstr "Socket I/O timeout:"
 
-#: src/prefs_common_dialog.c:3126
+#: src/prefs_common_dialog.c:3133
 msgid "second(s)"
 msgstr "sekund(er)"
 
-#: src/prefs_common_dialog.c:3154
+#: src/prefs_common_dialog.c:3161
 msgid "Automatic (Recommended)"
 msgstr "Automatisk (Anbefalet)"
 
-#: src/prefs_common_dialog.c:3159
+#: src/prefs_common_dialog.c:3166
 msgid "7bit ascii (US-ASCII)"
 msgstr "7bit ascii (US-ASCII)"
 
-#: src/prefs_common_dialog.c:3161
+#: src/prefs_common_dialog.c:3168
 msgid "Unicode (UTF-8)"
 msgstr "Unicode (UTF-8)"
 
-#: src/prefs_common_dialog.c:3163
+#: src/prefs_common_dialog.c:3170
 msgid "Western European (ISO-8859-1)"
 msgstr "Western European (ISO-8859-1)"
 
-#: src/prefs_common_dialog.c:3164
+#: src/prefs_common_dialog.c:3171
 msgid "Western European (ISO-8859-15)"
 msgstr "Western European (ISO-8859-15)"
 
-#: src/prefs_common_dialog.c:3166
+#: src/prefs_common_dialog.c:3173
 #, fuzzy
 msgid "Western European (Windows-1252)"
 msgstr "Western European (ISO-8859-15)"
 
-#: src/prefs_common_dialog.c:3170
+#: src/prefs_common_dialog.c:3177
 msgid "Central European (ISO-8859-2)"
 msgstr "Central European (ISO-8859-2)"
 
-#: src/prefs_common_dialog.c:3172
+#: src/prefs_common_dialog.c:3179
 msgid "Baltic (ISO-8859-13)"
 msgstr "Baltic (ISO-8859-13)"
 
-#: src/prefs_common_dialog.c:3173
+#: src/prefs_common_dialog.c:3180
 msgid "Baltic (ISO-8859-4)"
 msgstr "Baltic (ISO-8859-4)"
 
-#: src/prefs_common_dialog.c:3174
+#: src/prefs_common_dialog.c:3181
 #, fuzzy
 msgid "Baltic (Windows-1257)"
 msgstr "Cyrillic (Windows-1251)"
 
-#: src/prefs_common_dialog.c:3176
+#: src/prefs_common_dialog.c:3183
 msgid "Greek (ISO-8859-7)"
 msgstr "Greek (ISO-8859-7)"
 
-#: src/prefs_common_dialog.c:3178
+#: src/prefs_common_dialog.c:3185
 #, fuzzy
 msgid "Arabic (ISO-8859-6)"
 msgstr "Baltic (ISO-8859-4)"
 
-#: src/prefs_common_dialog.c:3179
+#: src/prefs_common_dialog.c:3186
 #, fuzzy
 msgid "Arabic (Windows-1256)"
 msgstr "Cyrillic (Windows-1251)"
 
-#: src/prefs_common_dialog.c:3181
+#: src/prefs_common_dialog.c:3188
 #, fuzzy
 msgid "Hebrew (ISO-8859-8)"
 msgstr "Greek (ISO-8859-7)"
 
-#: src/prefs_common_dialog.c:3182
+#: src/prefs_common_dialog.c:3189
 #, fuzzy
 msgid "Hebrew (Windows-1255)"
 msgstr "Cyrillic (Windows-1251)"
 
-#: src/prefs_common_dialog.c:3184
+#: src/prefs_common_dialog.c:3191
 msgid "Turkish (ISO-8859-9)"
 msgstr "Turkish (ISO-8859-9)"
 
-#: src/prefs_common_dialog.c:3186
+#: src/prefs_common_dialog.c:3193
 msgid "Cyrillic (ISO-8859-5)"
 msgstr "Cyrillic (ISO-8859-5)"
 
-#: src/prefs_common_dialog.c:3187
+#: src/prefs_common_dialog.c:3194
 msgid "Cyrillic (KOI8-R)"
 msgstr "Cyrillic (KOI8-R)"
 
-#: src/prefs_common_dialog.c:3188
+#: src/prefs_common_dialog.c:3195
 msgid "Cyrillic (KOI8-U)"
 msgstr "Cyrillic (KOI8-U)"
 
-#: src/prefs_common_dialog.c:3189
+#: src/prefs_common_dialog.c:3196
 msgid "Cyrillic (Windows-1251)"
 msgstr "Cyrillic (Windows-1251)"
 
-#: src/prefs_common_dialog.c:3191
+#: src/prefs_common_dialog.c:3198
 msgid "Japanese (ISO-2022-JP)"
 msgstr "Japanese (ISO-2022-JP)"
 
-#: src/prefs_common_dialog.c:3193
+#: src/prefs_common_dialog.c:3200
 msgid "Japanese (EUC-JP)"
 msgstr "Japanese (EUC-JP)"
 
-#: src/prefs_common_dialog.c:3194
+#: src/prefs_common_dialog.c:3201
 msgid "Japanese (Shift_JIS)"
 msgstr "Japanese (Shift_JIS)"
 
-#: src/prefs_common_dialog.c:3197
+#: src/prefs_common_dialog.c:3204
 msgid "Simplified Chinese (GB2312)"
 msgstr "Simplified Chinese (GB2312)"
 
-#: src/prefs_common_dialog.c:3198
+#: src/prefs_common_dialog.c:3205
 #, fuzzy
 msgid "Simplified Chinese (GBK)"
 msgstr "Simplified Chinese (GB2312)"
 
-#: src/prefs_common_dialog.c:3199
+#: src/prefs_common_dialog.c:3206
 msgid "Traditional Chinese (Big5)"
 msgstr "Traditional Chinese (Big5)"
 
-#: src/prefs_common_dialog.c:3201
+#: src/prefs_common_dialog.c:3208
 msgid "Traditional Chinese (EUC-TW)"
 msgstr "Traditional Chinese (EUC-TW)"
 
-#: src/prefs_common_dialog.c:3202
+#: src/prefs_common_dialog.c:3209
 msgid "Chinese (ISO-2022-CN)"
 msgstr "Chinese (ISO-2022-CN)"
 
-#: src/prefs_common_dialog.c:3205
+#: src/prefs_common_dialog.c:3212
 msgid "Korean (EUC-KR)"
 msgstr "Korean (EUC-KR)"
 
-#: src/prefs_common_dialog.c:3207
+#: src/prefs_common_dialog.c:3214
 msgid "Thai (TIS-620)"
 msgstr "Thai (TIS-620)"
 
-#: src/prefs_common_dialog.c:3208
+#: src/prefs_common_dialog.c:3215
 msgid "Thai (Windows-874)"
 msgstr "Thai (Windows-874)"
 
-#: src/prefs_common_dialog.c:3375
+#: src/prefs_common_dialog.c:3382
 msgid "the full abbreviated weekday name"
 msgstr "kort ugedags navn"
 
-#: src/prefs_common_dialog.c:3376
+#: src/prefs_common_dialog.c:3383
 msgid "the full weekday name"
 msgstr "Ugedags navn"
 
-#: src/prefs_common_dialog.c:3377
+#: src/prefs_common_dialog.c:3384
 msgid "the abbreviated month name"
 msgstr "kort måneds navn"
 
-#: src/prefs_common_dialog.c:3378
+#: src/prefs_common_dialog.c:3385
 msgid "the full month name"
 msgstr "måneds navn"
 
-#: src/prefs_common_dialog.c:3379
+#: src/prefs_common_dialog.c:3386
 msgid "the preferred date and time for the current locale"
 msgstr "ønsket dato format for nuværende locale"
 
-#: src/prefs_common_dialog.c:3380
+#: src/prefs_common_dialog.c:3387
 msgid "the century number (year/100)"
 msgstr "århundrede (år/100)"
 
-#: src/prefs_common_dialog.c:3381
+#: src/prefs_common_dialog.c:3388
 msgid "the day of the month as a decimal number"
 msgstr "dag i måned som tal"
 
-#: src/prefs_common_dialog.c:3382
+#: src/prefs_common_dialog.c:3389
 msgid "the hour as a decimal number using a 24-hour clock"
 msgstr "time som tal (24 timers visning)"
 
-#: src/prefs_common_dialog.c:3383
+#: src/prefs_common_dialog.c:3390
 msgid "the hour as a decimal number using a 12-hour clock"
 msgstr "time som tal (12 timers visning)"
 
-#: src/prefs_common_dialog.c:3384
+#: src/prefs_common_dialog.c:3391
 msgid "the day of the year as a decimal number"
 msgstr "århundrede som tal"
 
-#: src/prefs_common_dialog.c:3385
+#: src/prefs_common_dialog.c:3392
 msgid "the month as a decimal number"
 msgstr "måned som tal"
 
-#: src/prefs_common_dialog.c:3386
+#: src/prefs_common_dialog.c:3393
 msgid "the minute as a decimal number"
 msgstr "minut som tal"
 
-#: src/prefs_common_dialog.c:3387
+#: src/prefs_common_dialog.c:3394
 msgid "either AM or PM"
 msgstr "enten AM eller PM"
 
-#: src/prefs_common_dialog.c:3388
+#: src/prefs_common_dialog.c:3395
 msgid "the second as a decimal number"
 msgstr "sekund som tal"
 
-#: src/prefs_common_dialog.c:3389
+#: src/prefs_common_dialog.c:3396
 msgid "the day of the week as a decimal number"
 msgstr "ugedag som tal"
 
-#: src/prefs_common_dialog.c:3390
+#: src/prefs_common_dialog.c:3397
 msgid "the preferred date for the current locale"
 msgstr "ønsket dato format for nuværende locale"
 
-#: src/prefs_common_dialog.c:3391
+#: src/prefs_common_dialog.c:3398
 msgid "the last two digits of a year"
 msgstr "de sidste to cifre i året"
 
-#: src/prefs_common_dialog.c:3392
+#: src/prefs_common_dialog.c:3399
 msgid "the year as a decimal number"
 msgstr "året som tal"
 
-#: src/prefs_common_dialog.c:3393
+#: src/prefs_common_dialog.c:3400
 msgid "the time zone or name or abbreviation"
 msgstr "tidszone som navn eller forkortelse"
 
-#: src/prefs_common_dialog.c:3414
+#: src/prefs_common_dialog.c:3421
 msgid "Specifier"
 msgstr "Vælger"
 
-#: src/prefs_common_dialog.c:3415
+#: src/prefs_common_dialog.c:3422
 msgid "Description"
 msgstr "Beskrivelse"
 
-#: src/prefs_common_dialog.c:3455
+#: src/prefs_common_dialog.c:3462
 msgid "Example"
 msgstr "Eksempel"
 
-#: src/prefs_common_dialog.c:3536
+#: src/prefs_common_dialog.c:3543
 msgid "Set message colors"
 msgstr "Angiv meddelelses farve"
 
-#: src/prefs_common_dialog.c:3544
+#: src/prefs_common_dialog.c:3551
 msgid "Colors"
 msgstr "Farve"
 
-#: src/prefs_common_dialog.c:3578
+#: src/prefs_common_dialog.c:3585
 msgid "Quoted Text - First Level"
 msgstr "Citeret tekst - 1. niveau"
 
-#: src/prefs_common_dialog.c:3584
+#: src/prefs_common_dialog.c:3591
 msgid "Quoted Text - Second Level"
 msgstr "Citeret tekst - 2. niveau"
 
-#: src/prefs_common_dialog.c:3590
+#: src/prefs_common_dialog.c:3597
 msgid "Quoted Text - Third Level"
 msgstr "Citeret tekst - 3. nivaur"
 
-#: src/prefs_common_dialog.c:3596
+#: src/prefs_common_dialog.c:3603
 msgid "URI link"
 msgstr "URI-Link"
 
-#: src/prefs_common_dialog.c:3603
+#: src/prefs_common_dialog.c:3610
 msgid "Recycle quote colors"
 msgstr "Genbrug citat farver"
 
-#: src/prefs_common_dialog.c:3670
+#: src/prefs_common_dialog.c:3677
 msgid "Pick color for quotation level 1"
 msgstr "Vælg farve for nivau 1"
 
-#: src/prefs_common_dialog.c:3673
+#: src/prefs_common_dialog.c:3680
 msgid "Pick color for quotation level 2"
 msgstr "Vælg farve for nivau 2"
 
-#: src/prefs_common_dialog.c:3676
+#: src/prefs_common_dialog.c:3683
 msgid "Pick color for quotation level 3"
 msgstr "Vælg farve for nivau 3"
 
-#: src/prefs_common_dialog.c:3679
+#: src/prefs_common_dialog.c:3686
 msgid "Pick color for URI"
 msgstr "Vælg farve for URI"
 
-#: src/prefs_common_dialog.c:3819
+#: src/prefs_common_dialog.c:3826
 msgid "Description of symbols"
 msgstr "Beskrivelse af symboler"
 
-#: src/prefs_common_dialog.c:3875
+#: src/prefs_common_dialog.c:3882
 msgid ""
 "Date\n"
 "From\n"
@@ -6179,11 +6197,11 @@ msgstr ""
 "Nyhedsgrupper\n"
 "Meddelelses ID"
 
-#: src/prefs_common_dialog.c:3888
+#: src/prefs_common_dialog.c:3895
 msgid "If x is set, displays expr"
 msgstr "Hvis x er valgt vises expr"
 
-#: src/prefs_common_dialog.c:3892
+#: src/prefs_common_dialog.c:3899
 msgid ""
 "Message body\n"
 "Quoted message body\n"
@@ -6197,7 +6215,7 @@ msgstr ""
 "Citeret meddelelses krop uden signatur\n"
 "%"
 
-#: src/prefs_common_dialog.c:3900
+#: src/prefs_common_dialog.c:3907
 msgid ""
 "Literal backslash\n"
 "Literal question mark\n"
@@ -6209,20 +6227,20 @@ msgstr ""
 "{\n"
 "}"
 
-#: src/prefs_common_dialog.c:3954
+#: src/prefs_common_dialog.c:3961
 msgid "Key bindings"
 msgstr "Tast bindinger"
 
-#: src/prefs_common_dialog.c:3967
+#: src/prefs_common_dialog.c:3974
 #, fuzzy
 msgid "Select the preset of key bindings."
 msgstr " Vælg tast bindinger... "
 
-#: src/prefs_common_dialog.c:3977 src/prefs_common_dialog.c:4301
+#: src/prefs_common_dialog.c:3984 src/prefs_common_dialog.c:4308
 msgid "Default"
 msgstr "Standard"
 
-#: src/prefs_common_dialog.c:3980 src/prefs_common_dialog.c:4310
+#: src/prefs_common_dialog.c:3987 src/prefs_common_dialog.c:4317
 msgid "Old Sylpheed"
 msgstr "Gl. Sylpheed"
 
@@ -6638,19 +6656,19 @@ msgstr "Markér"
 
 #. S_COL_MIME
 #: src/prefs_summary_column.c:69 src/query_search.c:402 src/rpop3.c:434
-#: src/summaryview.c:5475
+#: src/summaryview.c:5500
 msgid "Subject"
 msgstr "Emne"
 
 #. S_COL_SUBJECT
 #: src/prefs_summary_column.c:70 src/query_search.c:403 src/rpop3.c:435
-#: src/summaryview.c:5478
+#: src/summaryview.c:5503
 msgid "From"
 msgstr "Fra"
 
 #. S_COL_FROM
 #: src/prefs_summary_column.c:71 src/query_search.c:404 src/rpop3.c:436
-#: src/summaryview.c:5480
+#: src/summaryview.c:5505
 msgid "Date"
 msgstr "Dato"
 
@@ -6660,7 +6678,7 @@ msgid "Number"
 msgstr "Nummer"
 
 #. S_COL_NUMBER
-#: src/prefs_summary_column.c:74 src/summaryview.c:5486
+#: src/prefs_summary_column.c:74 src/summaryview.c:5511
 #, fuzzy
 msgid "To"
 msgstr "Til:"
@@ -6826,7 +6844,7 @@ msgstr "Næste ulæste"
 msgid "Search messages"
 msgstr "Søg meddelelse"
 
-#: src/prefs_toolbar.c:83 src/printing.c:526
+#: src/prefs_toolbar.c:83 src/printing.c:540
 msgid "Print"
 msgstr "Udskriv"
 
@@ -6928,16 +6946,16 @@ msgstr ""
 "Vælg de oplysninger, der skal vises i oversigts vindue. Du kan ændre\n"
 "rækkefølgen ved at benytte Op / Ned knapperne eller ved at trække med musen."
 
-#: src/printing.c:523
+#: src/printing.c:537
 msgid "The message will be printed with the following command:"
 msgstr ""
 
-#: src/printing.c:524
+#: src/printing.c:538
 #, fuzzy
 msgid "(Default print command)"
 msgstr "Udfør"
 
-#: src/printing.c:534
+#: src/printing.c:548
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -7099,7 +7117,7 @@ msgstr "Om"
 msgid "%s - POP3 Remote mailbox"
 msgstr "Slet mappe"
 
-#: src/rpop3.c:433 src/summaryview.c:5484
+#: src/rpop3.c:433 src/summaryview.c:5509
 msgid "No."
 msgstr "Nr."
 
@@ -8058,35 +8076,35 @@ msgstr "Fra og til mappe er ens."
 msgid "Select folder to copy"
 msgstr "Vælg mappe"
 
-#: src/summaryview.c:3965
+#: src/summaryview.c:3990
 #, fuzzy
 msgid "Error occurred while processing messages."
 msgstr ""
 "Fejl ved bearbejdning af e-post:\n"
 "%s"
 
-#: src/summaryview.c:4282 src/summaryview.c:4283
+#: src/summaryview.c:4307 src/summaryview.c:4308
 msgid "Building threads..."
 msgstr "Opretter tråde"
 
-#: src/summaryview.c:4433 src/summaryview.c:4434
+#: src/summaryview.c:4458 src/summaryview.c:4459
 msgid "Unthreading..."
 msgstr "Fjerner tråde"
 
-#: src/summaryview.c:4727 src/summaryview.c:4788
+#: src/summaryview.c:4752 src/summaryview.c:4813
 #, fuzzy, c-format
 msgid "Filtering (%d / %d)..."
 msgstr "Filtrering..."
 
-#: src/summaryview.c:4854
+#: src/summaryview.c:4879
 msgid "filtering..."
 msgstr "filtrering..."
 
-#: src/summaryview.c:4855
+#: src/summaryview.c:4880
 msgid "Filtering..."
 msgstr "Filtrering..."
 
-#: src/summaryview.c:4900
+#: src/summaryview.c:4925
 #, fuzzy, c-format
 msgid "%d message(s) have been filtered."
 msgstr "meddelelse %d er allerede gemt.\n"
@@ -8109,52 +8127,52 @@ msgstr ""
 msgid "_Copy file name"
 msgstr "Fil navn"
 
-#: src/textview.c:1172
+#: src/textview.c:1193
 #, fuzzy
 msgid "This message can't be displayed.\n"
 msgstr "en meddelelse vil ikke blive modtaget\n"
 
-#: src/textview.c:1196
+#: src/textview.c:1217
 msgid ""
 "The body text couldn't be displayed because writing to temporary file "
 "failed.\n"
 msgstr ""
 
-#: src/textview.c:2444
+#: src/textview.c:2468
 #, fuzzy
 msgid "Sa_ve this image as..."
 msgstr "/_Gem som..."
 
-#: src/textview.c:2464 src/trayicon.c:160
+#: src/textview.c:2488 src/trayicon.c:160
 #, fuzzy
 msgid "Compose _new message"
 msgstr "Opret ny meddelelse"
 
-#: src/textview.c:2466
+#: src/textview.c:2490
 #, fuzzy
 msgid "R_eply to this address"
 msgstr "Normale adresser"
 
-#: src/textview.c:2469
+#: src/textview.c:2493
 #, fuzzy
 msgid "Add to address _book..."
 msgstr "/Tilføj afsender til adressebo_g"
 
-#: src/textview.c:2471
+#: src/textview.c:2495
 #, fuzzy
 msgid "Copy this add_ress"
 msgstr "Normale adresser"
 
-#: src/textview.c:2474
+#: src/textview.c:2498
 #, fuzzy
 msgid "_Open with Web browser"
 msgstr "Web browser"
 
-#: src/textview.c:2476
+#: src/textview.c:2500
 msgid "Copy this _link"
 msgstr ""
 
-#: src/textview.c:2682
+#: src/textview.c:2706
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"
@@ -8163,7 +8181,7 @@ msgid ""
 "Open it anyway?"
 msgstr ""
 
-#: src/textview.c:2687
+#: src/textview.c:2711
 msgid "Fake URL warning"
 msgstr ""
 
