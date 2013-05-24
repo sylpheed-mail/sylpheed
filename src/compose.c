@@ -6917,6 +6917,7 @@ static void compose_ext_editor_child_exit(GPid pid, gint status, gpointer data)
 		FILE_OP_ERROR(compose->exteditor_file, "unlink");
 
 	compose_set_ext_editor_sensitive(compose, TRUE);
+	gtk_window_present(GTK_WINDOW(compose->window));
 
 	g_free(compose->exteditor_file);
 	compose->exteditor_file = NULL;
