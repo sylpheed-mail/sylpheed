@@ -4,7 +4,7 @@
     <author>Yoichi Imai &lt;yoichi@silver-forest.com&gt;,
             Hiroyuki Yamamoto &lt;hiro-y@kcn.ne.jp&gt;
     <abstract>
-       Sylpheed User's Manual for Sylpheed 3.4 - version 0.16.0
+       Sylpheed User's Manual for Sylpheed 3.4 - version 0.17.0
     </abstract>
 
 <toc>
@@ -686,7 +686,12 @@ Sylpheedには削除、移動などリスクを伴なう操作を「目印のためのマーク」とは
 <p>
 メッセージをファイルとして保存するには、対象のメッセージを選択してから、メインメニューの「ファイル＞名前を付けて保存...」を選択します。
 
-保存したファイルはeml形式もしくはMH形式と呼ばれるもので、他のメールソフトで開くことができます。
+保存するファイルの形式は以下から選択できます。
+<itemize>
+<item>オリジナル (EML/RFC 822): eml形式もしくはMH形式と呼ばれるもので、他のメールソフトで開くことができます
+<item>テキスト: テキスト形式(標準の文字コード(Windowsの場合はShift JIS))
+<item>テキスト (UTF-8): テキスト形式(文字コードはUTF-8(Unicode))
+</itemize>
 </sect2>
 </sect1>
 
@@ -2203,6 +2208,10 @@ $ man strftime
 <p>
 HTMLメッセージのタグ等を解釈して、テキストとして見やすく整形して表示します。無効にした場合はHTMLタグがそのまま表示されます。
 </sect3>
+<sect3>multipart/alternative 内の HTML を優先して表示する
+<p>
+メッセージにテキスト形式とHTML形式の両方が含まれる場合、HTMLを優先して表示します。デフォルトはテキスト部分を優先して表示します。
+</sect3>
 <sect3>HTML のみのメッセージを添付として扱う
 <p>
 チェックを入れると、HTMLのみのメッセージを他の添付ファイル付きのメッセージと同様に表示し、HTMLを添付ファイルとして操作できます。チェックを外すと通常のテキストメッセージと同様に表示します。
@@ -3241,6 +3250,10 @@ to permit their use in free software.
 2013-02-14	Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
 	* Version 0.16.0
 	* 迷惑メールの説明を更新し、オプションを追加
+2013-05-24	Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
+	* Version 0.17.0
+	* メッセージの保存の説明を更新
+	* HTMLメールの設定項目を追加
 </verb>
 </sect1> 
 </sect>
