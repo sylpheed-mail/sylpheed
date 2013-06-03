@@ -26,6 +26,8 @@
 typedef struct _Template	Template;
 
 struct _Template {
+	guint tmplid;
+
 	gchar *name;
 	gchar *to;
 	gchar *cc;

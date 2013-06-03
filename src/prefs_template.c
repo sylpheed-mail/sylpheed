@@ -512,6 +512,7 @@ static GSList *prefs_template_get_list(void)
 
 	while ((tmpl = gtk_clist_get_row_data
 		(GTK_CLIST(templates.clist_tmpls), row)) != NULL) {
+		tmpl->tmplid = row;
 		tmpl_list = g_slist_append(tmpl_list, tmpl);
 		row++;
 	}

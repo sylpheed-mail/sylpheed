@@ -32,7 +32,7 @@
 
 static GSList *template_list;
 
-static Template *template_load(gchar *filename)
+static Template *template_load(gchar *filename, guint tmplid)
 {
 	Template *tmpl;
 	FILE *fp;
@@ -44,6 +44,7 @@ static Template *template_load(gchar *filename)
 	}
 
 	tmpl = g_new(Template, 1);
+	tmpl->tmplid = tmplid;
 	tmpl->name = NULL;
 	tmpl->to = NULL;
 	tmpl->cc = NULL;
@@ -108,6 +109,15 @@ void template_clear_config(GSList *tmpl_list)
 	g_slist_free(tmpl_list);
 }
 
+static gint template_compare_id(gconstpointer a, gconstpointer b)
+{
+	Template *ta, *tb;
+
+	ta = a;
+	tb = b;
+	return (ta->tmplid - tb->tmplid);
+}
+
 GSList *template_read_config(void)
 {
 	const gchar *path;
@@ -116,6 +126,7 @@ GSList *template_read_config(void)
 	const gchar *dir_name;
 	struct stat s;
 	Template *tmpl;
+	guint tmplid;
 	GSList *tmpl_list = NULL;
 
 	path = get_template_dir();
@@ -133,18 +144,25 @@ GSList *template_read_config(void)
 	}
 
 	while ((dir_name = g_dir_read_name(dir)) != NULL) {
+		tmplid = atoi(dir_name);
+		if (tmplid <= 0) {
+			continue;
+		}
+
 		filename = g_strconcat(path, G_DIR_SEPARATOR_S,
 				       dir_name, NULL);
 
 		if (g_stat(filename, &s) != 0 || !S_ISREG(s.st_mode) ) {
 			debug_print("%s:%d %s is not an ordinary file\n",
 				    __FILE__, __LINE__, filename);
+			g_free(filename);
 			continue;
 		}
 
-		tmpl = template_load(filename);
+		tmpl = template_load(filename, tmplid);
 		if (tmpl)
-			tmpl_list = g_slist_append(tmpl_list, tmpl);
+			tmpl_list = g_slist_insert_sorted(tmpl_list, tmpl,
+							  template_compare_id);
 
 		g_free(filename);
 	}
@@ -160,7 +178,6 @@ void template_write_config(GSList *tmpl_list)
 	GSList *cur;
 	Template *tmpl;
 	FILE *fp;
-	gint tmpl_num;
 
 	debug_print("%s:%d writing templates\n", __FILE__, __LINE__);
 
@@ -177,14 +194,13 @@ void template_write_config(GSList *tmpl_list)
 
 	remove_all_files(path);
 
-	for (cur = tmpl_list, tmpl_num = 1; cur != NULL;
-	     cur = cur->next, tmpl_num++) {
+	for (cur = tmpl_list; cur != NULL; cur = cur->next) {
 		gchar *filename;
 
 		tmpl = cur->data;
 
 		filename = g_strconcat(path, G_DIR_SEPARATOR_S,
-				       itos(tmpl_num), NULL);
+				       itos(tmpl->tmplid), NULL);
 
 		if ((fp = g_fopen(filename, "wb")) == NULL) {
 			FILE_OP_ERROR(filename, "fopen");
