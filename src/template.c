@@ -111,7 +111,7 @@ void template_clear_config(GSList *tmpl_list)
 
 static gint template_compare_id(gconstpointer a, gconstpointer b)
 {
-	Template *ta, *tb;
+	const Template *ta, *tb;
 
 	ta = a;
 	tb = b;
