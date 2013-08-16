@@ -3726,7 +3726,7 @@ static gint imap_status(IMAPSession *session, IMAPFolder *folder,
 	str = search_array_str(argbuf, "STATUS");
 	if (!str) THROW(IMAP_ERROR);
 
-	str = strchr(str, '(');
+	str = strrchr_with_skip_quote(str, '"', '(');
 	if (!str) THROW(IMAP_ERROR);
 	str++;
 	while (*str != '\0' && *str != ')') {
