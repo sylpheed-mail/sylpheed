@@ -191,6 +191,9 @@ static void html_get_parenthesis	(HTMLParser	*parser,
 					 gchar		*buf,
 					 gint		 len);
 
+static gchar *html_unescape_str		(HTMLParser	*parser,
+					 const gchar	*str);
+
 
 HTMLParser *html_parser_new(FILE *fp, CodeConverter *conv)
 {
@@ -553,7 +556,7 @@ static HTMLState html_parse_tag(HTMLParser *parser)
 
 			if (attr && !strcmp(attr->name, "href")) {
 				g_free(parser->href);
-				parser->href = g_strdup(attr->value);
+				parser->href = html_unescape_str(parser, attr->value);
 				parser->state = HTML_HREF;
 				break;
 			}
@@ -718,4 +721,71 @@ static void html_get_parenthesis(HTMLParser *parser, gchar *buf, gint len)
 	strncpy2(buf, parser->bufp, MIN(p - parser->bufp + 1, len));
 	g_strstrip(buf);
 	parser->bufp = p + 1;
+}
+
+static gchar *html_unescape_str(HTMLParser *parser, const gchar *str)
+{
+	const gchar *p = str;
+	gchar symbol_name[9];
+	gint n;
+	const gchar *val;
+	gchar *unescape_str;
+	gchar *up;
+
+	if (!str)
+		return NULL;
+
+	up = unescape_str = g_malloc(strlen(str) + 1);
+
+	while (*p != '\0') {
+		switch (*p) {
+		case '&':
+			for (n = 0; p[n] != '\0' && p[n] != ';'; n++)
+				;
+			if (n > 7 || p[n] != ';') {
+				*up++ = *p++;
+				break;
+			}
+			strncpy2(symbol_name, p, n + 2);
+			p += n + 1;
+
+			if ((val = g_hash_table_lookup(parser->symbol_table, symbol_name)) != NULL) {
+				gint len = strlen(val);
+				if (len <= n + 1) {
+					strcpy(up, val);
+					up += len;
+				} else {
+					strcpy(up, symbol_name);
+					up += n + 1;
+				}
+			} else if (symbol_name[1] == '#' && g_ascii_isdigit(symbol_name[2])) {
+				gint ch;
+
+				ch = atoi(symbol_name + 2);
+				if (ch < 128 && g_ascii_isprint(ch)) {
+					*up++ = ch;
+				} else {
+					/* ISO 10646 to UTF-8 */
+					gchar buf[6];
+					gint len;
+
+					len = g_unichar_to_utf8((gunichar)ch, buf);
+					if (len > 0 && len <= n + 1) {
+						memcpy(up, buf, len);
+						up += len;
+					} else {
+						strcpy(up, symbol_name);
+						up += n + 1;
+					}
+				}
+			}
+
+			break;
+		default:
+			*up++ = *p++;
+		}
+	}
+
+	*up = '\0';
+	return unescape_str;
 }
