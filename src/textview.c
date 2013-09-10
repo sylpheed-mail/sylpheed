@@ -1025,6 +1025,13 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 				return;
 			}
 
+			{
+				GdkPixbuf *rotated;
+
+				rotated = imageview_get_rotated_pixbuf(pixbuf);
+				g_object_unref(pixbuf);
+				pixbuf = rotated;
+			}
 			if (prefs_common.resize_image) {
 				GdkPixbuf *scaled;
 

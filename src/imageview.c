@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2013 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@
 #include <gtk/gtkscrolledwindow.h>
 #include <gtk/gtkimage.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#include <stdlib.h>
 
 #include "mainwindow.h"
 #include "prefs_common.h"
@@ -86,6 +87,7 @@ void imageview_show_image(ImageView *imageview, MimeInfo *mimeinfo,
 			  const gchar *file, gboolean resize)
 {
 	GdkPixbuf *pixbuf;
+	GdkPixbuf *rotated;
 	GError *error = NULL;
 
 	g_return_if_fail(imageview != NULL);
@@ -112,11 +114,15 @@ void imageview_show_image(ImageView *imageview, MimeInfo *mimeinfo,
 
 	imageview->resize = resize;
 
+	pixbuf = rotated = imageview_get_rotated_pixbuf(pixbuf);
+
 	if (resize) {
 		pixbuf = imageview_get_resized_pixbuf
 			(pixbuf, imageview->scrolledwin->parent, 8);
 	} else
 		g_object_ref(pixbuf);
+
+	g_object_unref(rotated);
 
 	if (!imageview->image) {
 		imageview->image = gtk_image_new_from_pixbuf(pixbuf);
@@ -220,6 +226,60 @@ static gboolean get_resized_size(gint w, gint h, gint aw, gint ah,
 	}
 
 	return TRUE;
+}
+
+GdkPixbuf *imageview_get_rotated_pixbuf(GdkPixbuf *pixbuf)
+{
+#if GTK_CHECK_VERSION(2, 12, 0)
+	return gdk_pixbuf_apply_embedded_orientation(pixbuf);
+#else
+	const gchar *orientation_str;
+	gint orientation;
+	GdkPixbuf *rotated;
+	GdkPixbuf *new_pixbuf;
+
+	orientation_str = gdk_pixbuf_get_option(pixbuf, "orientation");
+	if (!orientation_str)
+		return g_object_ref(pixbuf);
+
+	orientation = strtol(orientation_str, NULL, 10);
+
+	switch (orientation) {
+	case 1:
+		new_pixbuf = g_object_ref(pixbuf);
+		break;
+	case 2:
+		new_pixbuf = gdk_pixbuf_flip(pixbuf, TRUE);
+		break;
+	case 3:
+		new_pixbuf = gdk_pixbuf_rotate_simple(pixbuf, GDK_PIXBUF_ROTATE_UPSIDEDOWN);
+		break;
+	case 4:
+		new_pixbuf = gdk_pixbuf_flip(pixbuf, FALSE);
+		break;
+	case 5:
+		rotated = gdk_pixbuf_rotate_simple(pixbuf, GDK_PIXBUF_ROTATE_CLOCKWISE);
+		new_pixbuf = gdk_pixbuf_flip(rotated, TRUE);
+		g_object_unref(rotated);
+		break;
+	case 6:
+		new_pixbuf = gdk_pixbuf_rotate_simple(pixbuf, GDK_PIXBUF_ROTATE_CLOCKWISE);
+		break;
+	case 7:
+		rotated = gdk_pixbuf_rotate_simple(pixbuf, GDK_PIXBUF_ROTATE_CLOCKWISE);
+		new_pixbuf = gdk_pixbuf_flip(rotated, FALSE);
+		g_object_unref(rotated);
+		break;
+	case 8:
+		new_pixbuf = gdk_pixbuf_rotate_simple(pixbuf, GDK_PIXBUF_ROTATE_COUNTERCLOCKWISE);
+		break;
+	default:
+		new_pixbuf = g_object_ref(pixbuf);
+		break;
+	}
+
+	return new_pixbuf;
+#endif
 }
 
 static gint button_press_cb(GtkWidget *widget, GdkEventButton *event,
