@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-28 11:19+0900\n"
+"POT-Creation-Date: 2013-09-11 16:03+0900\n"
 "PO-Revision-Date: 2011-01-07 12:00+0100\n"
 "Last-Translator: Jan Stępień <jstepien@users.sourceforge.net>\n"
 "Language-Team: Jan Stępień <jstepien@users.sourceforge.net>\n"
@@ -1023,7 +1023,7 @@ msgstr "Katalog"
 msgid "E-Mail address"
 msgstr "Adres e-mail"
 
-#: src/addressbook.c:866 src/quick_search.c:126
+#: src/addressbook.c:866 src/quick_search.c:128
 msgid "Search:"
 msgstr "Szukaj: "
 
@@ -2439,7 +2439,7 @@ msgstr "Nowy"
 #. S_COL_MARK
 #: src/folderview.c:441 src/prefs_common_dialog.c:1718
 #: src/prefs_filter_edit.c:516 src/prefs_summary_column.c:67
-#: src/quick_search.c:108
+#: src/quick_search.c:109
 msgid "Unread"
 msgstr "Nieprzeczytane"
 
@@ -2638,11 +2638,11 @@ msgstr "Tworzenie widoku nagłówków...\n"
 msgid "(No From)"
 msgstr "(Bez Od)"
 
-#: src/imageview.c:55
+#: src/imageview.c:56
 msgid "Creating image view...\n"
 msgstr "Tworzenie widoku obrazu...\n"
 
-#: src/imageview.c:109
+#: src/imageview.c:111
 msgid "Can't load the image."
 msgstr "Nie można załadować obrazu."
 
@@ -6237,7 +6237,7 @@ msgstr "Wynik polecenia"
 msgid "Age"
 msgstr "Wiek"
 
-#: src/prefs_filter_edit.c:517 src/quick_search.c:109
+#: src/prefs_filter_edit.c:517 src/quick_search.c:110
 #, fuzzy
 msgid "Marked"
 msgstr "Zaznacz"
@@ -6857,49 +6857,54 @@ msgstr "Miejsce:"
 msgid "Folder name:"
 msgstr "Nazwa pliku"
 
-#: src/quick_search.c:107
+#: src/quick_search.c:108
 #, fuzzy
 msgid "All"
 msgstr "Wszystkie"
 
-#: src/quick_search.c:110
+#: src/quick_search.c:111
 #, fuzzy
 msgid "Have color label"
 msgstr "/Kolor etykiety"
 
-#: src/quick_search.c:111
+#: src/quick_search.c:112
 #, fuzzy
 msgid "Have attachment"
 msgstr "Załącznik"
 
-#: src/quick_search.c:113
+#: src/quick_search.c:114
 msgid "Within 1 day"
 msgstr "Ostatnia doba"
 
-#: src/quick_search.c:114
+#: src/quick_search.c:115
 msgid "Last 5 days"
 msgstr "Ostatnie 5 dni"
 
-#: src/quick_search.c:115
+#: src/quick_search.c:116
 #, fuzzy
 msgid "Last 7 days"
 msgstr "Ostatnie 5 dni"
 
 #: src/quick_search.c:117
 #, fuzzy
+msgid "Last 30 days"
+msgstr "Ostatnie 5 dni"
+
+#: src/quick_search.c:119
+#, fuzzy
 msgid "In addressbook"
 msgstr "Książka adresowa"
 
-#: src/quick_search.c:148 src/quick_search.c:398
+#: src/quick_search.c:150 src/quick_search.c:407
 msgid "Search for Subject or From"
 msgstr "Przeszukuj pola Temat i Od"
 
-#: src/quick_search.c:359
+#: src/quick_search.c:368
 #, c-format
 msgid "%1$d in %2$d matched"
 msgstr ""
 
-#: src/quick_search.c:362
+#: src/quick_search.c:371
 #, fuzzy, c-format
 msgid "No messages matched"
 msgstr "Brak nowych wiadomości"
@@ -7389,7 +7394,7 @@ msgstr "Nie znaleziono podpisu"
 msgid "Good signature from \"%s\""
 msgstr "Poprawny podpis od \"%s\""
 
-#: src/sigstatus.c:244 src/textview.c:1116
+#: src/sigstatus.c:244 src/textview.c:1123
 msgid "Good signature"
 msgstr "Poprawny podpis"
 
@@ -7398,7 +7403,7 @@ msgstr "Poprawny podpis"
 msgid "Valid signature but the key for \"%s\" is not trusted"
 msgstr "Poprawny podpis, ale klucz dla \"%s\" nie jest zaufany"
 
-#: src/sigstatus.c:249 src/textview.c:1118
+#: src/sigstatus.c:249 src/textview.c:1125
 msgid "Valid signature (untrusted key)"
 msgstr "Poprawny podpis (niezaufany klucz)"
 
@@ -7434,7 +7439,7 @@ msgstr "Podpis poprawny, ale klucz został unieważniony"
 msgid "BAD signature from \"%s\""
 msgstr "NIEPOPRAWNY podpis od \"%s\""
 
-#: src/sigstatus.c:267 src/textview.c:1120
+#: src/sigstatus.c:267 src/textview.c:1127
 msgid "BAD signature"
 msgstr "ZŁY podpis"
 
@@ -7977,11 +7982,11 @@ msgstr ""
 msgid "_Copy file name"
 msgstr "Nazwa pliku"
 
-#: src/textview.c:1193
+#: src/textview.c:1200
 msgid "This message can't be displayed.\n"
 msgstr "Ta wiadomość nie może zostać wyświetlona.\n"
 
-#: src/textview.c:1217
+#: src/textview.c:1224
 msgid ""
 "The body text couldn't be displayed because writing to temporary file "
 "failed.\n"
@@ -7989,40 +7994,40 @@ msgstr ""
 "Nie można wyświetlić treści ze względu na błąd podczas zapisu do pliku "
 "tymczasowego.\n"
 
-#: src/textview.c:2468
+#: src/textview.c:2475
 msgid "Sa_ve this image as..."
 msgstr "Zapi_sz grafikę jako..."
 
-#: src/textview.c:2488 src/trayicon.c:160
+#: src/textview.c:2495 src/trayicon.c:160
 #, fuzzy
 msgid "Compose _new message"
 msgstr "Utwórz nową wiadomość"
 
-#: src/textview.c:2490
+#: src/textview.c:2497
 #, fuzzy
 msgid "R_eply to this address"
 msgstr "Kopiuj ten _link"
 
-#: src/textview.c:2493
+#: src/textview.c:2500
 #, fuzzy
 msgid "Add to address _book..."
 msgstr "/Dodaj nadawcę do _książki adresowej"
 
-#: src/textview.c:2495
+#: src/textview.c:2502
 #, fuzzy
 msgid "Copy this add_ress"
 msgstr "Kopiuj ten _link"
 
-#: src/textview.c:2498
+#: src/textview.c:2505
 #, fuzzy
 msgid "_Open with Web browser"
 msgstr "Przeglądarka Web"
 
-#: src/textview.c:2500
+#: src/textview.c:2507
 msgid "Copy this _link"
 msgstr "Kopiuj ten _link"
 
-#: src/textview.c:2706
+#: src/textview.c:2713
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"
@@ -8035,7 +8040,7 @@ msgstr ""
 "\n"
 "Otworzyć mimo to?"
 
-#: src/textview.c:2711
+#: src/textview.c:2718
 msgid "Fake URL warning"
 msgstr "Ostrzeżenie przed fałszywym URL"
 

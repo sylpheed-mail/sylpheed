@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 3.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-28 11:19+0900\n"
+"POT-Creation-Date: 2013-09-11 16:03+0900\n"
 "PO-Revision-Date: 2011-03-07 23:37+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <foo@bar.example>\n"
@@ -1008,7 +1008,7 @@ msgstr "Kansio"
 msgid "E-Mail address"
 msgstr "Sähköpostiosoite"
 
-#: src/addressbook.c:866 src/quick_search.c:126
+#: src/addressbook.c:866 src/quick_search.c:128
 msgid "Search:"
 msgstr "Etsi:"
 
@@ -2420,7 +2420,7 @@ msgstr "Uusi"
 #. S_COL_MARK
 #: src/folderview.c:441 src/prefs_common_dialog.c:1718
 #: src/prefs_filter_edit.c:516 src/prefs_summary_column.c:67
-#: src/quick_search.c:108
+#: src/quick_search.c:109
 msgid "Unread"
 msgstr "Lukematon"
 
@@ -2619,11 +2619,11 @@ msgstr "Luodaan otsakenäkymää...\n"
 msgid "(No From)"
 msgstr "(Ei lähettäjää)"
 
-#: src/imageview.c:55
+#: src/imageview.c:56
 msgid "Creating image view...\n"
 msgstr "Luodaan kuvanäkymää...\n"
 
-#: src/imageview.c:109
+#: src/imageview.c:111
 msgid "Can't load the image."
 msgstr "Kuvaa ei voi ladata."
 
@@ -6142,7 +6142,7 @@ msgstr "Komennon tulos"
 msgid "Age"
 msgstr "Ikä"
 
-#: src/prefs_filter_edit.c:517 src/quick_search.c:109
+#: src/prefs_filter_edit.c:517 src/quick_search.c:110
 msgid "Marked"
 msgstr "Merkitse"
 
@@ -6729,44 +6729,49 @@ msgstr "Sijainti:"
 msgid "Folder name:"
 msgstr "Kansion nimi:"
 
-#: src/quick_search.c:107
+#: src/quick_search.c:108
 msgid "All"
 msgstr "Kaikki"
 
-#: src/quick_search.c:110
+#: src/quick_search.c:111
 msgid "Have color label"
 msgstr "On värikoodattu"
 
-#: src/quick_search.c:111
+#: src/quick_search.c:112
 msgid "Have attachment"
 msgstr "SIsältävät liitteen"
 
-#: src/quick_search.c:113
+#: src/quick_search.c:114
 msgid "Within 1 day"
 msgstr "Vuorokauden kuluessa"
 
-#: src/quick_search.c:114
+#: src/quick_search.c:115
 msgid "Last 5 days"
 msgstr "Viiden vuorokauden aikana"
 
-#: src/quick_search.c:115
+#: src/quick_search.c:116
 msgid "Last 7 days"
 msgstr "Seitsemän vuorokauden aikana"
 
 #: src/quick_search.c:117
+#, fuzzy
+msgid "Last 30 days"
+msgstr "Viiden vuorokauden aikana"
+
+#: src/quick_search.c:119
 msgid "In addressbook"
 msgstr "Osoitekirjassa"
 
-#: src/quick_search.c:148 src/quick_search.c:398
+#: src/quick_search.c:150 src/quick_search.c:407
 msgid "Search for Subject or From"
 msgstr "Etsi aihetta tai lähettäjää"
 
-#: src/quick_search.c:359
+#: src/quick_search.c:368
 #, c-format
 msgid "%1$d in %2$d matched"
 msgstr "%1$d kohteessa %2$d täsmää"
 
-#: src/quick_search.c:362
+#: src/quick_search.c:371
 #, c-format
 msgid "No messages matched"
 msgstr "Yksikään viesti ei täsmännyt"
@@ -7250,7 +7255,7 @@ msgstr "Allekirjoitusta ei löytynyt"
 msgid "Good signature from \"%s\""
 msgstr "Kelvollinen allekirjoitus osoitteesta ”%s”"
 
-#: src/sigstatus.c:244 src/textview.c:1116
+#: src/sigstatus.c:244 src/textview.c:1123
 msgid "Good signature"
 msgstr "Kelvollinen allekirjoitus"
 
@@ -7259,7 +7264,7 @@ msgstr "Kelvollinen allekirjoitus"
 msgid "Valid signature but the key for \"%s\" is not trusted"
 msgstr "Kelvollinen allekirjoitus mutta lähettäjän ”%s” avain ei ole luotettu"
 
-#: src/sigstatus.c:249 src/textview.c:1118
+#: src/sigstatus.c:249 src/textview.c:1125
 msgid "Valid signature (untrusted key)"
 msgstr "Kelvollinen allekirjoitus (ei-luotettu avain)"
 
@@ -7299,7 +7304,7 @@ msgstr "Allekirjoitus kelvollinen mutta allekirjoitusavain on peruutettu"
 msgid "BAD signature from \"%s\""
 msgstr "KELVOTON allekirjoitus lähettäjältä ”%s”"
 
-#: src/sigstatus.c:267 src/textview.c:1120
+#: src/sigstatus.c:267 src/textview.c:1127
 msgid "BAD signature"
 msgstr "KELVOTON allekirjoitus"
 
@@ -7800,11 +7805,11 @@ msgstr "Viesti on salattu, mutta salauksen purku epäonnistui.\n"
 msgid "_Copy file name"
 msgstr "Tiedostonimi"
 
-#: src/textview.c:1193
+#: src/textview.c:1200
 msgid "This message can't be displayed.\n"
 msgstr "Tätä viestiä ei voi näyttää.\n"
 
-#: src/textview.c:1217
+#: src/textview.c:1224
 msgid ""
 "The body text couldn't be displayed because writing to temporary file "
 "failed.\n"
@@ -7812,35 +7817,35 @@ msgstr ""
 "Viestin runkoa ei voi näyttää, koska kirjoittaminen väliaikaistiedostoon "
 "epäonnistui.\n"
 
-#: src/textview.c:2468
+#: src/textview.c:2475
 msgid "Sa_ve this image as..."
 msgstr "Tallenna tämä kuva _nimellä..."
 
-#: src/textview.c:2488 src/trayicon.c:160
+#: src/textview.c:2495 src/trayicon.c:160
 msgid "Compose _new message"
 msgstr "Kirjoita _uusi viesti"
 
-#: src/textview.c:2490
+#: src/textview.c:2497
 msgid "R_eply to this address"
 msgstr "Vastaa t_ähän osoitteeseen"
 
-#: src/textview.c:2493
+#: src/textview.c:2500
 msgid "Add to address _book..."
 msgstr "Lisää _osoitekirjaan..."
 
-#: src/textview.c:2495
+#: src/textview.c:2502
 msgid "Copy this add_ress"
 msgstr "Kopioi tämä _osoite"
 
-#: src/textview.c:2498
+#: src/textview.c:2505
 msgid "_Open with Web browser"
 msgstr "Avaa _selaimeen"
 
-#: src/textview.c:2500
+#: src/textview.c:2507
 msgid "Copy this _link"
 msgstr "Kopioi tämä _linkki"
 
-#: src/textview.c:2706
+#: src/textview.c:2713
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"
@@ -7852,7 +7857,7 @@ msgstr ""
 "annetusta (%s).\n"
 "Avataanko silti?"
 
-#: src/textview.c:2711
+#: src/textview.c:2718
 msgid "Fake URL warning"
 msgstr "Varoitus valeosoitteesta"
 

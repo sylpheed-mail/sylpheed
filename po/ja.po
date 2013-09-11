@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-28 11:19+0900\n"
+"POT-Creation-Date: 2013-09-11 16:03+0900\n"
 "PO-Revision-Date: 1999-10-12\n"
 "Last-Translator: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -1027,7 +1027,7 @@ msgstr "フォルダ"
 msgid "E-Mail address"
 msgstr "電子メール アドレス"
 
-#: src/addressbook.c:866 src/quick_search.c:126
+#: src/addressbook.c:866 src/quick_search.c:128
 msgid "Search:"
 msgstr "検索:"
 
@@ -2441,7 +2441,7 @@ msgstr "新着"
 #. S_COL_MARK
 #: src/folderview.c:441 src/prefs_common_dialog.c:1718
 #: src/prefs_filter_edit.c:516 src/prefs_summary_column.c:67
-#: src/quick_search.c:108
+#: src/quick_search.c:109
 msgid "Unread"
 msgstr "未読"
 
@@ -2640,11 +2640,11 @@ msgstr "ヘッダビューを作成中...\n"
 msgid "(No From)"
 msgstr "(差出人不明)"
 
-#: src/imageview.c:55
+#: src/imageview.c:56
 msgid "Creating image view...\n"
 msgstr "イメージビューを作成中...\n"
 
-#: src/imageview.c:109
+#: src/imageview.c:111
 msgid "Can't load the image."
 msgstr "画像を読み込めません。"
 
@@ -6151,7 +6151,7 @@ msgstr "コマンドの実行結果"
 msgid "Age"
 msgstr "経過日数"
 
-#: src/prefs_filter_edit.c:517 src/quick_search.c:109
+#: src/prefs_filter_edit.c:517 src/quick_search.c:110
 msgid "Marked"
 msgstr "マーク付き"
 
@@ -6736,44 +6736,48 @@ msgstr "場所:"
 msgid "Folder name:"
 msgstr "フォルダ名:"
 
-#: src/quick_search.c:107
+#: src/quick_search.c:108
 msgid "All"
 msgstr "すべて"
 
-#: src/quick_search.c:110
+#: src/quick_search.c:111
 msgid "Have color label"
 msgstr "カラーラベル付き"
 
-#: src/quick_search.c:111
+#: src/quick_search.c:112
 msgid "Have attachment"
 msgstr "添付ファイル付き"
 
-#: src/quick_search.c:113
+#: src/quick_search.c:114
 msgid "Within 1 day"
 msgstr "1日以内"
 
-#: src/quick_search.c:114
+#: src/quick_search.c:115
 msgid "Last 5 days"
 msgstr "最近5日間"
 
-#: src/quick_search.c:115
+#: src/quick_search.c:116
 msgid "Last 7 days"
 msgstr "最近1週間"
 
 #: src/quick_search.c:117
+msgid "Last 30 days"
+msgstr "最近30日間"
+
+#: src/quick_search.c:119
 msgid "In addressbook"
 msgstr "アドレス帳にある"
 
-#: src/quick_search.c:148 src/quick_search.c:398
+#: src/quick_search.c:150 src/quick_search.c:407
 msgid "Search for Subject or From"
 msgstr "件名または差出人を検索"
 
-#: src/quick_search.c:359
+#: src/quick_search.c:368
 #, c-format
 msgid "%1$d in %2$d matched"
 msgstr "%2$d 通中 %1$d 通を表示"
 
-#: src/quick_search.c:362
+#: src/quick_search.c:371
 #, c-format
 msgid "No messages matched"
 msgstr "該当するメッセージがありません"
@@ -7256,7 +7260,7 @@ msgstr "署名がありません"
 msgid "Good signature from \"%s\""
 msgstr "差出人 \"%s\" の正当な署名"
 
-#: src/sigstatus.c:244 src/textview.c:1116
+#: src/sigstatus.c:244 src/textview.c:1123
 msgid "Good signature"
 msgstr "正当な署名"
 
@@ -7265,7 +7269,7 @@ msgstr "正当な署名"
 msgid "Valid signature but the key for \"%s\" is not trusted"
 msgstr "有効な署名ですが \"%s\" の鍵は信用されていません"
 
-#: src/sigstatus.c:249 src/textview.c:1118
+#: src/sigstatus.c:249 src/textview.c:1125
 msgid "Valid signature (untrusted key)"
 msgstr "有効な署名 (信用されていない鍵)"
 
@@ -7301,7 +7305,7 @@ msgstr "署名は有効ですが署名鍵が失効しています"
 msgid "BAD signature from \"%s\""
 msgstr "差出人 \"%s\" の不正な署名"
 
-#: src/sigstatus.c:267 src/textview.c:1120
+#: src/sigstatus.c:267 src/textview.c:1127
 msgid "BAD signature"
 msgstr "不正な署名"
 
@@ -7799,11 +7803,11 @@ msgstr "このメッセージは暗号化されていますが、復号できま
 msgid "_Copy file name"
 msgstr "ファイル名をコピー(_C)"
 
-#: src/textview.c:1193
+#: src/textview.c:1200
 msgid "This message can't be displayed.\n"
 msgstr "このメッセージは表示できません。\n"
 
-#: src/textview.c:1217
+#: src/textview.c:1224
 msgid ""
 "The body text couldn't be displayed because writing to temporary file "
 "failed.\n"
@@ -7811,35 +7815,35 @@ msgstr ""
 "一時ファイルへの書き込みが失敗したため、このメッセージ本文は表示できませんで"
 "した。\n"
 
-#: src/textview.c:2468
+#: src/textview.c:2475
 msgid "Sa_ve this image as..."
 msgstr "画像を保存(_V)..."
 
-#: src/textview.c:2488 src/trayicon.c:160
+#: src/textview.c:2495 src/trayicon.c:160
 msgid "Compose _new message"
 msgstr "新規メッセージを作成(_N)"
 
-#: src/textview.c:2490
+#: src/textview.c:2497
 msgid "R_eply to this address"
 msgstr "このアドレスに返信(_E)"
 
-#: src/textview.c:2493
+#: src/textview.c:2500
 msgid "Add to address _book..."
 msgstr "アドレス帳に追加(_B)..."
 
-#: src/textview.c:2495
+#: src/textview.c:2502
 msgid "Copy this add_ress"
 msgstr "アドレスをコピー(_R)"
 
-#: src/textview.c:2498
+#: src/textview.c:2505
 msgid "_Open with Web browser"
 msgstr "Webブラウザで開く(_O)"
 
-#: src/textview.c:2500
+#: src/textview.c:2507
 msgid "Copy this _link"
 msgstr "リンクをコピー(_L)"
 
-#: src/textview.c:2706
+#: src/textview.c:2713
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"
@@ -7852,7 +7856,7 @@ msgstr ""
 "\n"
 "とにかく開きますか?"
 
-#: src/textview.c:2711
+#: src/textview.c:2718
 msgid "Fake URL warning"
 msgstr "偽装URLの警告"
 

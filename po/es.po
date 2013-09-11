@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-28 11:19+0900\n"
+"POT-Creation-Date: 2013-09-11 16:03+0900\n"
 "PO-Revision-Date: 2012-06-21 19:45+0200\n"
 "Last-Translator: Ricardo Mones <ricardo@mones.org>\n"
 "Language-Team: Ricardo Mones <ricardo@mones.org>\n"
@@ -1028,7 +1028,7 @@ msgstr "Carpeta"
 msgid "E-Mail address"
 msgstr "Dirección e-mail"
 
-#: src/addressbook.c:866 src/quick_search.c:126
+#: src/addressbook.c:866 src/quick_search.c:128
 msgid "Search:"
 msgstr "Buscar:"
 
@@ -2451,7 +2451,7 @@ msgstr "Nuevos"
 #. S_COL_MARK
 #: src/folderview.c:441 src/prefs_common_dialog.c:1718
 #: src/prefs_filter_edit.c:516 src/prefs_summary_column.c:67
-#: src/quick_search.c:108
+#: src/quick_search.c:109
 msgid "Unread"
 msgstr "No leídos"
 
@@ -2650,11 +2650,11 @@ msgstr "Creando vista de cabeceras...\n"
 msgid "(No From)"
 msgstr "(Sin remitente)"
 
-#: src/imageview.c:55
+#: src/imageview.c:56
 msgid "Creating image view...\n"
 msgstr "Creando vista de imagen...\n"
 
-#: src/imageview.c:109
+#: src/imageview.c:111
 msgid "Can't load the image."
 msgstr "No se puede cargar la imagen."
 
@@ -6175,7 +6175,7 @@ msgstr "Resultado de una orden"
 msgid "Age"
 msgstr "Edad"
 
-#: src/prefs_filter_edit.c:517 src/quick_search.c:109
+#: src/prefs_filter_edit.c:517 src/quick_search.c:110
 msgid "Marked"
 msgstr "Marcado"
 
@@ -6761,44 +6761,49 @@ msgstr "Ubicación:"
 msgid "Folder name:"
 msgstr "Nombre de carpeta:"
 
-#: src/quick_search.c:107
+#: src/quick_search.c:108
 msgid "All"
 msgstr "Todos"
 
-#: src/quick_search.c:110
+#: src/quick_search.c:111
 msgid "Have color label"
 msgstr "Tiene etiqueta de color"
 
-#: src/quick_search.c:111
+#: src/quick_search.c:112
 msgid "Have attachment"
 msgstr "Tiene adjunto"
 
-#: src/quick_search.c:113
+#: src/quick_search.c:114
 msgid "Within 1 day"
 msgstr "En 1 día"
 
-#: src/quick_search.c:114
+#: src/quick_search.c:115
 msgid "Last 5 days"
 msgstr "Los últimos 5 días"
 
-#: src/quick_search.c:115
+#: src/quick_search.c:116
 msgid "Last 7 days"
 msgstr "Los últimos 7 días"
 
 #: src/quick_search.c:117
+#, fuzzy
+msgid "Last 30 days"
+msgstr "Los últimos 5 días"
+
+#: src/quick_search.c:119
 msgid "In addressbook"
 msgstr "En la agenda de direcciones"
 
-#: src/quick_search.c:148 src/quick_search.c:398
+#: src/quick_search.c:150 src/quick_search.c:407
 msgid "Search for Subject or From"
 msgstr "Buscar por Asunto o Desde"
 
-#: src/quick_search.c:359
+#: src/quick_search.c:368
 #, c-format
 msgid "%1$d in %2$d matched"
 msgstr "%1$d coincidencias en %2$d"
 
-#: src/quick_search.c:362
+#: src/quick_search.c:371
 #, c-format
 msgid "No messages matched"
 msgstr "No hay coincidencias en los mensajes"
@@ -7284,7 +7289,7 @@ msgstr "No se encontró firma"
 msgid "Good signature from \"%s\""
 msgstr "Firma válida de «%s»"
 
-#: src/sigstatus.c:244 src/textview.c:1116
+#: src/sigstatus.c:244 src/textview.c:1123
 msgid "Good signature"
 msgstr "Firma válida"
 
@@ -7293,7 +7298,7 @@ msgstr "Firma válida"
 msgid "Valid signature but the key for \"%s\" is not trusted"
 msgstr "Firma válida pero la clave para «%s» no es fiable"
 
-#: src/sigstatus.c:249 src/textview.c:1118
+#: src/sigstatus.c:249 src/textview.c:1125
 msgid "Valid signature (untrusted key)"
 msgstr "Firma válida (clave no fiable)"
 
@@ -7329,7 +7334,7 @@ msgstr "La firma es válida pero la clave usada ha sido revocada"
 msgid "BAD signature from \"%s\""
 msgstr "Firma INVÁLIDA de «%s»"
 
-#: src/sigstatus.c:267 src/textview.c:1120
+#: src/sigstatus.c:267 src/textview.c:1127
 msgid "BAD signature"
 msgstr "Firma INVÁLIDA"
 
@@ -7828,11 +7833,11 @@ msgstr "Este mensaje está cifrado, pero falló su descifrado.\n"
 msgid "_Copy file name"
 msgstr "_Copiar nombre de fichero"
 
-#: src/textview.c:1193
+#: src/textview.c:1200
 msgid "This message can't be displayed.\n"
 msgstr "Este mensaje no puede visualizarse.\n"
 
-#: src/textview.c:1217
+#: src/textview.c:1224
 msgid ""
 "The body text couldn't be displayed because writing to temporary file "
 "failed.\n"
@@ -7840,35 +7845,35 @@ msgstr ""
 "No se pudo mistrar el texto del cuerpo porque falló la escritura en el "
 "fichero temporal.\n"
 
-#: src/textview.c:2468
+#: src/textview.c:2475
 msgid "Sa_ve this image as..."
 msgstr "_Guardar esta imagen como..."
 
-#: src/textview.c:2488 src/trayicon.c:160
+#: src/textview.c:2495 src/trayicon.c:160
 msgid "Compose _new message"
 msgstr "Componer mensaje _nuevo"
 
-#: src/textview.c:2490
+#: src/textview.c:2497
 msgid "R_eply to this address"
 msgstr "R_esponder a esta dirección"
 
-#: src/textview.c:2493
+#: src/textview.c:2500
 msgid "Add to address _book..."
 msgstr "Añadir _remitente a la agenda..."
 
-#: src/textview.c:2495
+#: src/textview.c:2502
 msgid "Copy this add_ress"
 msgstr "Copiar esta di_rección"
 
-#: src/textview.c:2498
+#: src/textview.c:2505
 msgid "_Open with Web browser"
 msgstr "_Abrir con el navegador web"
 
-#: src/textview.c:2500
+#: src/textview.c:2507
 msgid "Copy this _link"
 msgstr "Copiar el en_lace"
 
-#: src/textview.c:2706
+#: src/textview.c:2713
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"
@@ -7880,7 +7885,7 @@ msgstr ""
 "URL aparente (%s).\n"
 "¿Quiere abrirla de todas maneras?"
 
-#: src/textview.c:2711
+#: src/textview.c:2718
 msgid "Fake URL warning"
 msgstr "Aviso de URL falsa"
 

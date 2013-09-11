@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed-3.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-28 11:19+0900\n"
+"POT-Creation-Date: 2013-09-11 16:03+0900\n"
 "PO-Revision-Date: 2013-03-01 20:15+0200\n"
 "Last-Translator: Németh Tamás <ntomasz@uhuklub.hu>\n"
 "Language-Team: Hungarian <NONE>\n"
@@ -1032,7 +1032,7 @@ msgstr "Mappa"
 msgid "E-Mail address"
 msgstr "Email cím"
 
-#: src/addressbook.c:866 src/quick_search.c:126
+#: src/addressbook.c:866 src/quick_search.c:128
 msgid "Search:"
 msgstr "Keresés:"
 
@@ -2449,7 +2449,7 @@ msgstr "Új"
 #. S_COL_MARK
 #: src/folderview.c:441 src/prefs_common_dialog.c:1718
 #: src/prefs_filter_edit.c:516 src/prefs_summary_column.c:67
-#: src/quick_search.c:108
+#: src/quick_search.c:109
 msgid "Unread"
 msgstr "Olvasatlan"
 
@@ -2648,11 +2648,11 @@ msgstr "Fejléc nézet létrehozása...\n"
 msgid "(No From)"
 msgstr "(Nincs Feladó)"
 
-#: src/imageview.c:55
+#: src/imageview.c:56
 msgid "Creating image view...\n"
 msgstr "Kép nézet létrehozása...\n"
 
-#: src/imageview.c:109
+#: src/imageview.c:111
 msgid "Can't load the image."
 msgstr "Nem lehet betölteni a képet."
 
@@ -6168,7 +6168,7 @@ msgstr "A parancs eredménye"
 msgid "Age"
 msgstr "Kor"
 
-#: src/prefs_filter_edit.c:517 src/quick_search.c:109
+#: src/prefs_filter_edit.c:517 src/quick_search.c:110
 msgid "Marked"
 msgstr "Megjelölt"
 
@@ -6754,44 +6754,49 @@ msgstr "Hely:"
 msgid "Folder name:"
 msgstr "Mappanév:"
 
-#: src/quick_search.c:107
+#: src/quick_search.c:108
 msgid "All"
 msgstr "Minden"
 
-#: src/quick_search.c:110
+#: src/quick_search.c:111
 msgid "Have color label"
 msgstr "Van színes címkéje"
 
-#: src/quick_search.c:111
+#: src/quick_search.c:112
 msgid "Have attachment"
 msgstr "Van csatolmánya"
 
-#: src/quick_search.c:113
+#: src/quick_search.c:114
 msgid "Within 1 day"
 msgstr "1 napon belüli"
 
-#: src/quick_search.c:114
+#: src/quick_search.c:115
 msgid "Last 5 days"
 msgstr "Elmúlt 5 napi"
 
-#: src/quick_search.c:115
+#: src/quick_search.c:116
 msgid "Last 7 days"
 msgstr "Elmúlt 7 napi"
 
 #: src/quick_search.c:117
+#, fuzzy
+msgid "Last 30 days"
+msgstr "Elmúlt 5 napi"
+
+#: src/quick_search.c:119
 msgid "In addressbook"
 msgstr "Címjegyzékben"
 
-#: src/quick_search.c:148 src/quick_search.c:398
+#: src/quick_search.c:150 src/quick_search.c:407
 msgid "Search for Subject or From"
 msgstr "Keresés Tárgyra vagy Feladóra"
 
-#: src/quick_search.c:359
+#: src/quick_search.c:368
 #, c-format
 msgid "%1$d in %2$d matched"
 msgstr "%1$d / %2$d találat"
 
-#: src/quick_search.c:362
+#: src/quick_search.c:371
 #, c-format
 msgid "No messages matched"
 msgstr "Nincs találat"
@@ -7274,7 +7279,7 @@ msgstr "Nem található digitális aláírás"
 msgid "Good signature from \"%s\""
 msgstr "Jó digitális aláírás \"%s\"-tól/től"
 
-#: src/sigstatus.c:244 src/textview.c:1116
+#: src/sigstatus.c:244 src/textview.c:1123
 msgid "Good signature"
 msgstr "Jó digitális aláírás"
 
@@ -7283,7 +7288,7 @@ msgstr "Jó digitális aláírás"
 msgid "Valid signature but the key for \"%s\" is not trusted"
 msgstr "Érvényes aláírás, de a(z) \"%s\" kulcs nem megbízható"
 
-#: src/sigstatus.c:249 src/textview.c:1118
+#: src/sigstatus.c:249 src/textview.c:1125
 msgid "Valid signature (untrusted key)"
 msgstr "Érvényes aláírás (megbízhatatlan kulcs)"
 
@@ -7319,7 +7324,7 @@ msgstr "Érvényes aláírás, de az aláíró kulcs vissza lett vonva"
 msgid "BAD signature from \"%s\""
 msgstr "\"%s\" digitális aláírás ROSSZ"
 
-#: src/sigstatus.c:267 src/textview.c:1120
+#: src/sigstatus.c:267 src/textview.c:1127
 msgid "BAD signature"
 msgstr "ROSSZ digitális aláírás"
 
@@ -7816,11 +7821,11 @@ msgstr "A levél titkosított, és nem sikerült visszafejteni.\n"
 msgid "_Copy file name"
 msgstr "Fájlnév _másolása"
 
-#: src/textview.c:1193
+#: src/textview.c:1200
 msgid "This message can't be displayed.\n"
 msgstr "Ez a levél nem jeleníthető meg.\n"
 
-#: src/textview.c:1217
+#: src/textview.c:1224
 msgid ""
 "The body text couldn't be displayed because writing to temporary file "
 "failed.\n"
@@ -7828,35 +7833,35 @@ msgstr ""
 "A szövegtest nem jeleníthető meg, mert az ideiglenes fájl írása nem "
 "sikerült.\n"
 
-#: src/textview.c:2468
+#: src/textview.c:2475
 msgid "Sa_ve this image as..."
 msgstr "A kép me_ntése mint..."
 
-#: src/textview.c:2488 src/trayicon.c:160
+#: src/textview.c:2495 src/trayicon.c:160
 msgid "Compose _new message"
 msgstr "Ú_j levél írása"
 
-#: src/textview.c:2490
+#: src/textview.c:2497
 msgid "R_eply to this address"
 msgstr "Vá_lasz erre a címre"
 
-#: src/textview.c:2493
+#: src/textview.c:2500
 msgid "Add to address _book..."
 msgstr "Hozzáadás a _címjegyzékhez..."
 
-#: src/textview.c:2495
+#: src/textview.c:2502
 msgid "Copy this add_ress"
 msgstr "A cí_m másolása"
 
-#: src/textview.c:2498
+#: src/textview.c:2505
 msgid "_Open with Web browser"
 msgstr "M_egnyitás webböngészővel"
 
-#: src/textview.c:2500
+#: src/textview.c:2507
 msgid "Copy this _link"
 msgstr "A _hivatkozás másolása"
 
-#: src/textview.c:2706
+#: src/textview.c:2713
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"
@@ -7868,7 +7873,7 @@ msgstr ""
 "látható URL-től (%s).\n"
 "Ennek ellenére megnyitja?"
 
-#: src/textview.c:2711
+#: src/textview.c:2718
 msgid "Fake URL warning"
 msgstr "Hamis URL figyelmeztetés"
 

@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-28 11:19+0900\n"
+"POT-Creation-Date: 2013-09-11 16:03+0900\n"
 "PO-Revision-Date: 2013-08-30 02:50+0100\n"
 "Last-Translator: TvY <mr.somewhere@yahoo.fr>\n"
 "Language-Team: French <gnomefr@traduc.org>\n"
@@ -1040,7 +1040,7 @@ msgstr "Dossier"
 msgid "E-Mail address"
 msgstr "Adresse électronique"
 
-#: src/addressbook.c:866 src/quick_search.c:126
+#: src/addressbook.c:866 src/quick_search.c:128
 msgid "Search:"
 msgstr "Rechercher :"
 
@@ -2463,7 +2463,7 @@ msgstr "Nouveau"
 #. S_COL_MARK
 #: src/folderview.c:441 src/prefs_common_dialog.c:1718
 #: src/prefs_filter_edit.c:516 src/prefs_summary_column.c:67
-#: src/quick_search.c:108
+#: src/quick_search.c:109
 msgid "Unread"
 msgstr "Non lu"
 
@@ -2663,11 +2663,11 @@ msgstr "Création de la vue des en-têtes...\n"
 msgid "(No From)"
 msgstr "(Pas d'expéditeur)"
 
-#: src/imageview.c:55
+#: src/imageview.c:56
 msgid "Creating image view...\n"
 msgstr "Création de la vue de l'image...\n"
 
-#: src/imageview.c:109
+#: src/imageview.c:111
 msgid "Can't load the image."
 msgstr "Impossible de charger l'image."
 
@@ -6215,7 +6215,7 @@ msgstr "Résultat de la commande"
 msgid "Age"
 msgstr "Age"
 
-#: src/prefs_filter_edit.c:517 src/quick_search.c:109
+#: src/prefs_filter_edit.c:517 src/quick_search.c:110
 msgid "Marked"
 msgstr "Marqué"
 
@@ -6802,44 +6802,48 @@ msgstr "Emplacement :"
 msgid "Folder name:"
 msgstr "Nom du dossier :"
 
-#: src/quick_search.c:107
+#: src/quick_search.c:108
 msgid "All"
 msgstr "Tous"
 
-#: src/quick_search.c:110
+#: src/quick_search.c:111
 msgid "Have color label"
 msgstr "Avec coloration"
 
-#: src/quick_search.c:111
+#: src/quick_search.c:112
 msgid "Have attachment"
 msgstr "Avec pièce(s) jointe(s)"
 
-#: src/quick_search.c:113
+#: src/quick_search.c:114
 msgid "Within 1 day"
 msgstr "Sur 1 jour"
 
-#: src/quick_search.c:114
+#: src/quick_search.c:115
 msgid "Last 5 days"
 msgstr "Sur 5 jours"
 
-#: src/quick_search.c:115
+#: src/quick_search.c:116
 msgid "Last 7 days"
 msgstr "Sur 7 jours"
 
 #: src/quick_search.c:117
+msgid "Last 30 days"
+msgstr "Sur 30 jours"
+
+#: src/quick_search.c:119
 msgid "In addressbook"
 msgstr "Dans le carnet d'adresses"
 
-#: src/quick_search.c:148 src/quick_search.c:398
+#: src/quick_search.c:150 src/quick_search.c:407
 msgid "Search for Subject or From"
 msgstr "Recherche dans les sujets ou expéditeurs"
 
-#: src/quick_search.c:359
+#: src/quick_search.c:368
 #, c-format
 msgid "%1$d in %2$d matched"
 msgstr "%1$d dans %2$d conrrespondant"
 
-#: src/quick_search.c:362
+#: src/quick_search.c:371
 #, c-format
 msgid "No messages matched"
 msgstr "Pas de message correspondant"
@@ -7327,7 +7331,7 @@ msgstr "Pas de signature trouvée"
 msgid "Good signature from \"%s\""
 msgstr "Signature correcte de \"%s\""
 
-#: src/sigstatus.c:244 src/textview.c:1116
+#: src/sigstatus.c:244 src/textview.c:1123
 msgid "Good signature"
 msgstr "Signature correcte"
 
@@ -7336,7 +7340,7 @@ msgstr "Signature correcte"
 msgid "Valid signature but the key for \"%s\" is not trusted"
 msgstr "Signature correcte mais la clé pour \"%s\" n'est pas de confiance"
 
-#: src/sigstatus.c:249 src/textview.c:1118
+#: src/sigstatus.c:249 src/textview.c:1125
 msgid "Valid signature (untrusted key)"
 msgstr "Signature correcte (clé suspecte)"
 
@@ -7374,7 +7378,7 @@ msgstr "La signature est correcte mais la clé de signature a été révoquée"
 msgid "BAD signature from \"%s\""
 msgstr "Mauvaise signature de \"%s\""
 
-#: src/sigstatus.c:267 src/textview.c:1120
+#: src/sigstatus.c:267 src/textview.c:1127
 msgid "BAD signature"
 msgstr "MAUVAISE signature"
 
@@ -7874,11 +7878,11 @@ msgstr "Ce message est chiffré mais le déchiffrement a échoué \n"
 msgid "_Copy file name"
 msgstr "_Copier le nom du fichier"
 
-#: src/textview.c:1193
+#: src/textview.c:1200
 msgid "This message can't be displayed.\n"
 msgstr "Impossible d'afficher ce message.\n"
 
-#: src/textview.c:1217
+#: src/textview.c:1224
 msgid ""
 "The body text couldn't be displayed because writing to temporary file "
 "failed.\n"
@@ -7886,35 +7890,35 @@ msgstr ""
 "Le corps du texte ne peut pas être affiché car la création du fichier "
 "temporaire a échoué.\n"
 
-#: src/textview.c:2468
+#: src/textview.c:2475
 msgid "Sa_ve this image as..."
 msgstr "Enregistrer cette _image sous..."
 
-#: src/textview.c:2488 src/trayicon.c:160
+#: src/textview.c:2495 src/trayicon.c:160
 msgid "Compose _new message"
 msgstr "Composer un _nouveau message"
 
-#: src/textview.c:2490
+#: src/textview.c:2497
 msgid "R_eply to this address"
 msgstr "Ré_pondre à cette adresse"
 
-#: src/textview.c:2493
+#: src/textview.c:2500
 msgid "Add to address _book..."
 msgstr "_Ajouter au carnet d'adresses..."
 
-#: src/textview.c:2495
+#: src/textview.c:2502
 msgid "Copy this add_ress"
 msgstr "Copier cette ad_resse"
 
-#: src/textview.c:2498
+#: src/textview.c:2505
 msgid "_Open with Web browser"
 msgstr "_Ouvrir dans le navigateur Web"
 
-#: src/textview.c:2500
+#: src/textview.c:2507
 msgid "Copy this _link"
 msgstr "Copier ce _lien"
 
-#: src/textview.c:2706
+#: src/textview.c:2713
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"
@@ -7926,7 +7930,7 @@ msgstr ""
 "\n"
 "Voulez-vous néanmoins l'ouvrir ?"
 
-#: src/textview.c:2711
+#: src/textview.c:2718
 msgid "Fake URL warning"
 msgstr "Localisateur (URL) suspect"
 
