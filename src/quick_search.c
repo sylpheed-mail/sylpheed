@@ -48,7 +48,8 @@ static const struct {
 	{QS_W1DAY,	-1},
 	{QS_LAST5,	-1},
 	{QS_LAST7,	-1},
-	{QS_IN_ADDRESSBOOK,	-1}
+	{QS_IN_ADDRESSBOOK,	-1},
+	{QS_LAST30,	-1}
 };
 
 static GdkColor dim_color = {0, COLOR_DIM, COLOR_DIM, COLOR_DIM};
@@ -113,6 +114,7 @@ QuickSearch *quick_search_create(SummaryView *summaryview)
 	COND_MENUITEM_ADD(_("Within 1 day"), QS_W1DAY);
 	COND_MENUITEM_ADD(_("Last 5 days"), QS_LAST5);
 	COND_MENUITEM_ADD(_("Last 7 days"), QS_LAST7);
+	COND_MENUITEM_ADD(_("Last 30 days"), QS_LAST30);
 	MENUITEM_ADD(menu, menuitem, NULL, 0);
 	COND_MENUITEM_ADD(_("In addressbook"), QS_IN_ADDRESSBOOK);
 	gtk_option_menu_set_menu(GTK_OPTION_MENU(optmenu), menu);
@@ -253,6 +255,13 @@ GSList *quick_search_filter(QuickSearch *qsearch, QSearchCondType type,
 	case QS_LAST7:
 		cond = filter_cond_new(FLT_COND_AGE_GREATER, 0, FLT_NOT_MATCH,
 				       NULL, "7");
+		cond_list = g_slist_append(cond_list, cond);
+		status_rule = filter_rule_new("Status filter rule", FLT_OR,
+					      cond_list, NULL);
+		break;
+	case QS_LAST30:
+		cond = filter_cond_new(FLT_COND_AGE_GREATER, 0, FLT_NOT_MATCH,
+				       NULL, "30");
 		cond_list = g_slist_append(cond_list, cond);
 		status_rule = filter_rule_new("Status filter rule", FLT_OR,
 					      cond_list, NULL);

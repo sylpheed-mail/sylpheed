@@ -36,7 +36,8 @@ typedef enum
 	QS_W1DAY,
 	QS_LAST5,
 	QS_LAST7,
-	QS_IN_ADDRESSBOOK
+	QS_IN_ADDRESSBOOK,
+	QS_LAST30
 } QSearchCondType;
 
 struct _QuickSearch
