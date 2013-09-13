@@ -139,6 +139,7 @@ static GdkPixbuf *replied_pixbuf;
 static GdkPixbuf *forwarded_pixbuf;
 
 static GdkPixbuf *clip_pixbuf;
+static GdkPixbuf *html_pixbuf;
 
 static void summary_clear_list_full	(SummaryView		*summaryview,
 					 gboolean		 is_refresh);
@@ -624,6 +625,8 @@ void summary_init(SummaryView *summaryview)
 			 &forwarded_pixbuf);
 	stock_pixbuf_gdk(summaryview->treeview, STOCK_PIXMAP_CLIP,
 			 &clip_pixbuf);
+	stock_pixbuf_gdk(summaryview->treeview, STOCK_PIXMAP_HTML,
+			 &html_pixbuf);
 
 	font_desc = pango_font_description_new();
 	size = pango_font_description_get_size
@@ -2473,8 +2476,12 @@ static void summary_set_row(SummaryView *summaryview, GtkTreeIter *iter,
 	else if (MSG_IS_FORWARDED(flags))
 		unread_pix = forwarded_pixbuf;
 
-	if (MSG_IS_MIME(flags))
+	if (MSG_IS_MIME(flags)) {
 		mime_pix = clip_pixbuf;
+	}
+	if (MSG_IS_MIME_HTML(flags)) {
+		mime_pix = html_pixbuf;
+	}
 
 	if (prefs_common.bold_unread) {
 		if (MSG_IS_UNREAD(flags))

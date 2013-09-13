@@ -32,7 +32,8 @@ BUILT_SOURCES = \
 	folder-open.h \
 	folder-noselect.h \
 	folder-search.h \
-	group.h
+	group.h \
+	html.h
 
 EXTRA_DIST = \
 	stock_addressbook.png \
@@ -69,6 +70,7 @@ EXTRA_DIST = \
 	folder-noselect.png \
 	folder-search.png \
 	group.png \
+	html.png \
 	clip.xpm \
 	deleted.xpm \
 	forwarded.xpm \

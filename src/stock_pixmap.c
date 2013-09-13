@@ -80,6 +80,7 @@
 #include "icons/folder-noselect.h"
 #include "icons/folder-search.h"
 #include "icons/group.h"
+#include "icons/html.h"
 
 typedef struct _StockPixmapData	StockPixmapData;
 
@@ -110,6 +111,7 @@ static StockPixmapData pixmaps[] =
 	{error_xpm	 , NULL, NULL},
 	{forwarded_xpm	 , NULL, NULL},
 	{NULL, NULL, NULL, NULL, group, sizeof(group), "group", 0},
+	{NULL, NULL, NULL, NULL, html, sizeof(html), "html", 0},
 	{interface_xpm	 , NULL, NULL},
 	{jpilot_xpm	 , NULL, NULL},
 	{ldap_xpm	 , NULL, NULL},

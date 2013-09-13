@@ -210,6 +210,34 @@ MimeInfo *procmime_scan_message(MsgInfo *msginfo)
 	return mimeinfo;
 }
 
+MimeInfo *procmime_scan_message_stream(FILE *fp)
+{
+	MimeInfo *mimeinfo;
+	glong fpos;
+
+	g_return_val_if_fail(fp != NULL, NULL);
+
+	if (fseek(fp, 0L, SEEK_SET) < 0) {
+		FILE_OP_ERROR("procmime_scan_message_stream()", "fseek");
+		return NULL;
+	}
+
+	mimeinfo = procmime_scan_mime_header(fp);
+
+	if (mimeinfo) {
+		fpos = ftell(fp);
+		mimeinfo->content_size = get_left_file_size(fp);
+		mimeinfo->size = fpos + mimeinfo->content_size;
+		if (mimeinfo->encoding_type == ENC_BASE64)
+			mimeinfo->content_size = mimeinfo->content_size / 4 * 3;
+		if (mimeinfo->mime_type == MIME_MULTIPART ||
+		    mimeinfo->mime_type == MIME_MESSAGE_RFC822)
+			procmime_scan_multipart_message(mimeinfo, fp);
+	}
+
+	return mimeinfo;
+}
+
 void procmime_scan_multipart_message(MimeInfo *mimeinfo, FILE *fp)
 {
 	gchar *p;

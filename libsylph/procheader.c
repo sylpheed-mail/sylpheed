@@ -688,9 +688,14 @@ MsgInfo *procheader_parse_stream(FILE *fp, MsgFlags flags, gboolean full)
 		case H_CONTENT_TYPE:
 			if (!g_ascii_strncasecmp(hp, "multipart", 9)) {
 				MSG_SET_TMP_FLAGS(msginfo->flags, MSG_MIME);
-			} else if (!charset) {
-				procmime_scan_content_type_str
-					(hp, NULL, &charset, NULL, NULL);
+			} else {
+				if (!g_ascii_strncasecmp(hp, "text/html", 9)) {
+					MSG_SET_TMP_FLAGS(msginfo->flags, MSG_MIME_HTML);
+				}
+				if (!charset) {
+					procmime_scan_content_type_str
+						(hp, NULL, &charset, NULL, NULL);
+				}
 			}
 			break;
 		case H_SEEN:
@@ -739,6 +744,28 @@ MsgInfo *procheader_parse_stream(FILE *fp, MsgFlags flags, gboolean full)
 	if (!msginfo->inreplyto && msginfo->references)
 		msginfo->inreplyto =
 			g_strdup((gchar *)msginfo->references->data);
+
+	if (MSG_IS_MIME(msginfo->flags)) {
+		MimeInfo *mimeinfo, *part;
+		gboolean has_html = FALSE;
+
+		part = mimeinfo = procmime_scan_message_stream(fp);
+		while (part) {
+			if (part->mime_type != MIME_TEXT &&
+			    part->mime_type != MIME_TEXT_HTML &&
+			    part->mime_type != MIME_MULTIPART)
+				break;
+			if (part->mime_type == MIME_TEXT_HTML)
+				has_html = TRUE;
+			part = procmime_mimeinfo_next(part);
+		}
+
+		if (has_html && !part) {
+			MSG_SET_TMP_FLAGS(msginfo->flags, MSG_MIME_HTML);
+		}
+
+		procmime_mimeinfo_free_all(mimeinfo);
+	}
 
 	g_free(charset);
 

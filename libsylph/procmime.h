@@ -142,6 +142,7 @@ void procmime_mimeinfo_replace		(MimeInfo	*old,
 MimeInfo *procmime_mimeinfo_next	(MimeInfo	*mimeinfo);
 
 MimeInfo *procmime_scan_message		(MsgInfo	*msginfo);
+MimeInfo *procmime_scan_message_stream	(FILE		*fp);
 void procmime_scan_multipart_message	(MimeInfo	*mimeinfo,
 					 FILE		*fp);
 
