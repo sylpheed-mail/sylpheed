@@ -40,8 +40,8 @@
 #include "utils.h"
 #include "prefs_common.h"
 
-//#undef MIME_DEBUG
-#define MIME_DEBUG
+#undef MIME_DEBUG
+/* #define MIME_DEBUG */
 #ifdef MIME_DEBUG
 #  define mime_debug_print	debug_print
 #else
