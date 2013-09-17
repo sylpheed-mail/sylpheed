@@ -226,6 +226,7 @@ int main(int argc, char *argv[])
 	GObject *syl_app;
 	PrefsAccount *new_account = NULL;
 	gboolean first_run = FALSE;
+	gchar *path;
 
 	app_init();
 	parse_cmd_opt(argc, argv);
@@ -295,6 +296,23 @@ int main(int argc, char *argv[])
 	sock_set_io_timeout(prefs_common.io_timeout_secs);
 
 	gtkut_widget_init();
+
+	path = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, "icons", NULL);
+	if (is_dir_exist(path)) {
+		debug_print("icon theme dir: %s\n", path);
+		stock_pixbuf_set_theme_dir(path);
+	} else {
+		g_free(path);
+		if (g_path_is_absolute(THEMEDIR))
+			path = g_strconcat(THEMEDIR, NULL);
+		else
+			path = g_strconcat(get_startup_dir(), G_DIR_SEPARATOR_S, THEMEDIR, NULL);
+		if (is_dir_exist(path)) {
+			debug_print("icon theme dir: %s\n", path);
+			stock_pixbuf_set_theme_dir(path);
+		}
+	}
+	g_free(path);
 
 #ifdef G_OS_WIN32
 	stock_pixbuf_gdk(NULL, STOCK_PIXMAP_SYLPHEED_32, &icon);

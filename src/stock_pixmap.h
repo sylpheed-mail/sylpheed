@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2009 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2013 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -100,5 +100,7 @@ gint stock_pixmap_gdk		(GtkWidget	 *window,
 gint stock_pixbuf_gdk		(GtkWidget	 *window,
 				 StockPixmap	  icon,
 				 GdkPixbuf	**pixbuf);
+
+gint stock_pixbuf_set_theme_dir	(const gchar	*dir);
 
 #endif /* __STOCK_PIXMAP_H__ */

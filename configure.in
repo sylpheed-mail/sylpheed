@@ -146,6 +146,12 @@ AC_ARG_WITH(plugindir,
 	[plugindir="$withval"])
 AC_SUBST(plugindir)
 
+themedir='${datadir}/${PACKAGE}/icons'
+AC_ARG_WITH(themedir,
+	[  --with-themedir=DIR     Icon theme directory],
+	[themedir="$withval"])
+AC_SUBST(themedir)
+
 dnl GPGME is used to support OpenPGP 
 AC_ARG_ENABLE(gpgme,
 	[  --disable-gpgme         Disable GnuPG support using GPGME],

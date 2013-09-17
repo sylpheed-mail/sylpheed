@@ -167,6 +167,7 @@ AM_CPPFLAGS = \
 	-DMANUALDIR=\""$(manualdir)"\" \
 	-DFAQDIR=\""$(faqdir)"\" \
 	-DPLUGINDIR=\""$(plugindir)"\" \
+	-DTHEMEDIR=\""$(themedir)"\" \
 	-DTARGET_ALIAS=\""$(target_triplet)"\" \
 	-DSYSCONFDIR=\""$(sysconfdir)"\"
 

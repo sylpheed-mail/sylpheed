@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2009 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2013 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@
 
 #include "stock_pixmap.h"
 #include "gtkutils.h"
+#include "utils.h"
 
 #include "icons/address.xpm"
 #include "icons/category.xpm"
@@ -89,72 +90,78 @@ struct _StockPixmapData
 	gchar **data;
 	GdkPixmap *pixmap;
 	GdkBitmap *mask;
+
 	GdkPixbuf *pixbuf;
 	const guint8 *pixbuf_data;
 	gint pixbuf_data_len;
+
 	gchar *icon_name;
 	gint size;
+
+	gchar *icon_file;
 };
 
 static StockPixmapData pixmaps[] =
 {
-	{address_xpm	 , NULL, NULL},
-	{NULL, NULL, NULL, NULL, stock_book, sizeof(stock_book), "stock_book", 16},
-	{category_xpm	 , NULL, NULL},
-	{clip_xpm	 , NULL, NULL},
-	{complete_xpm	 , NULL, NULL},
-	{continue_xpm	 , NULL, NULL},
-	{deleted_xpm	 , NULL, NULL},
-	{NULL, NULL, NULL, NULL, folder_close, sizeof(folder_close), "folder-close", 0},
-	{NULL, NULL, NULL, NULL, folder_open, sizeof(folder_open), "folder-open", 0},
-	{NULL, NULL, NULL, NULL, folder_noselect, sizeof(folder_noselect), "folder-noselect", 0},
-	{error_xpm	 , NULL, NULL},
-	{forwarded_xpm	 , NULL, NULL},
-	{NULL, NULL, NULL, NULL, group, sizeof(group), "group", 0},
-	{NULL, NULL, NULL, NULL, html, sizeof(html), "html", 0},
-	{interface_xpm	 , NULL, NULL},
-	{jpilot_xpm	 , NULL, NULL},
-	{ldap_xpm	 , NULL, NULL},
-	{linewrap_xpm	 , NULL, NULL},
-	{mark_xpm	 , NULL, NULL},
-	{new_xpm	 , NULL, NULL},
-	{replied_xpm	 , NULL, NULL},
-	{unread_xpm	 , NULL, NULL},
-	{vcard_xpm	 , NULL, NULL},
-	{online_xpm	 , NULL, NULL},
-	{offline_xpm	 , NULL, NULL},
-	{mail_xpm	 , NULL, NULL},
+	{address_xpm	 , NULL, NULL, NULL, NULL, 0, NULL, 0, "address.png"},
+	{NULL, NULL, NULL, NULL, stock_book, sizeof(stock_book), "stock_book", 16, "book.png"},
+	{category_xpm	 , NULL, NULL, NULL, NULL, 0, NULL, 0, "category.png"},
+	{clip_xpm	 , NULL, NULL, NULL, NULL, 0, NULL, 0, "clip.png"},
+	{complete_xpm	 , NULL, NULL, NULL, NULL, 0, NULL, 0, "complete.png"},
+	{continue_xpm	 , NULL, NULL, NULL, NULL, 0, NULL, 0, "continue.png"},
+	{deleted_xpm	 , NULL, NULL, NULL, NULL, 0, NULL, 0, "deleted.png"},
+	{NULL, NULL, NULL, NULL, folder_close, sizeof(folder_close), "folder-close", 0, "folder-close.png"},
+	{NULL, NULL, NULL, NULL, folder_open, sizeof(folder_open), "folder-open", 0, "folder-open.png"},
+	{NULL, NULL, NULL, NULL, folder_noselect, sizeof(folder_noselect), "folder-noselect", 0, "folder-noselect.png"},
+	{error_xpm	 , NULL, NULL, NULL, NULL, 0, NULL, 0, "error.png"},
+	{forwarded_xpm	 , NULL, NULL, NULL, NULL, 0, NULL, 0, "forwarded.png"},
+	{NULL, NULL, NULL, NULL, group, sizeof(group), "group", 0, "group.png"},
+	{NULL, NULL, NULL, NULL, html, sizeof(html), "html", 0, "html.png"},
+	{interface_xpm	 , NULL, NULL, NULL, NULL, 0, NULL, 0, "interface.png"},
+	{jpilot_xpm	 , NULL, NULL, NULL, NULL, 0, NULL, 0, "jpilot.png"},
+	{ldap_xpm	 , NULL, NULL, NULL, NULL, 0, NULL, 0, "ldap.png"},
+	{linewrap_xpm	 , NULL, NULL, NULL, NULL, 0, NULL, 0, "linewrap.png"},
+	{mark_xpm	 , NULL, NULL, NULL, NULL, 0, NULL, 0, "mark.png"},
+	{new_xpm	 , NULL, NULL, NULL, NULL, 0, NULL, 0, "new.png"},
+	{replied_xpm	 , NULL, NULL, NULL, NULL, 0, NULL, 0, "replied.png"},
+	{unread_xpm	 , NULL, NULL, NULL, NULL, 0, NULL, 0, "unread.png"},
+	{vcard_xpm	 , NULL, NULL, NULL, NULL, 0, NULL, 0, "vcard.png"},
+	{online_xpm	 , NULL, NULL, NULL, NULL, 0, NULL, 0, "online.png"},
+	{offline_xpm	 , NULL, NULL, NULL, NULL, 0, NULL, 0, "offline.png"},
+	{mail_xpm	 , NULL, NULL, NULL, NULL, 0, NULL, 0, "mail.png"},
 
-	{NULL, NULL, NULL, NULL, stock_inbox, sizeof(stock_inbox), "stock_inbox", 16},
-	{NULL, NULL, NULL, NULL, stock_outbox, sizeof(stock_outbox), "stock_outbox", 16},
-	{NULL, NULL, NULL, NULL, stock_mail_compose_16, sizeof(stock_mail_compose_16), "stock_mail-compose", 16},
-	{NULL, NULL, NULL, NULL, stock_delete_16, sizeof(stock_delete_16), GTK_STOCK_DELETE, 16},
-	{NULL, NULL, NULL, NULL, stock_mail, sizeof(stock_mail), "stock_mail", 24},
-	{NULL, NULL, NULL, NULL, stock_attach, sizeof(stock_attach), "stock_attach", 24},
-	{NULL, NULL, NULL, NULL, stock_mail_compose, sizeof(stock_mail_compose), "stock_mail-compose", 24},
-	{NULL, NULL, NULL, NULL, stock_mail_forward, sizeof(stock_mail_forward), "stock_mail-forward", 24},
-	{NULL, NULL, NULL, NULL, stock_mail_receive, sizeof(stock_mail_receive), "stock_mail-receive", 24},
-	{NULL, NULL, NULL, NULL, stock_mail_receive_all, sizeof(stock_mail_receive_all), NULL, 0},
-	{NULL, NULL, NULL, NULL, stock_mail_reply, sizeof(stock_mail_reply), "stock_mail-reply", 24},
-	{NULL, NULL, NULL, NULL, stock_mail_reply_to_all, sizeof(stock_mail_reply_to_all), "stock_mail-reply-to-all", 24},
-	{NULL, NULL, NULL, NULL, stock_mail_send, sizeof(stock_mail_send), "stock_mail-send", 24},
-	{NULL, NULL, NULL, NULL, stock_mail_send_queue, sizeof(stock_mail_send_queue), NULL, 0},
-	{NULL, NULL, NULL, NULL, stock_insert_file, sizeof(stock_insert_file), "stock_insert-file", 24},
-	{NULL, NULL, NULL, NULL, stock_addressbook, sizeof(stock_addressbook), "stock_addressbook", 24},
-	{NULL, NULL, NULL, NULL, stock_delete, sizeof(stock_delete), GTK_STOCK_DELETE, 24},
-	{NULL, NULL, NULL, NULL, stock_spam, sizeof(stock_spam), "stock_spam", 24},
-	{NULL, NULL, NULL, NULL, stock_notspam, sizeof(stock_notspam), "stock_notspam", 24},
-	{NULL, NULL, NULL, NULL, stock_hand_signed, sizeof(stock_hand_signed), "stock_hand-signed", 24},
-	{NULL, NULL, NULL, NULL, stock_sylpheed, sizeof(stock_sylpheed), NULL, 0},
-	{NULL, NULL, NULL, NULL, stock_sylpheed_16, sizeof(stock_sylpheed_16), NULL, 0},
-	{NULL, NULL, NULL, NULL, stock_sylpheed_32, sizeof(stock_sylpheed_32), NULL, 0},
-	{NULL, NULL, NULL, NULL, stock_sylpheed_newmail, sizeof(stock_sylpheed_newmail), NULL, 0},
-	{NULL, NULL, NULL, NULL, stock_sylpheed_newmail_16, sizeof(stock_sylpheed_newmail_16), NULL, 0},
-	{NULL, NULL, NULL, NULL, sylpheed_logo, sizeof(sylpheed_logo), NULL, 0},
-	{NULL, NULL, NULL, NULL, stock_person, sizeof(stock_person), "stock_person", 16},
-	{NULL, NULL, NULL, NULL, folder_search, sizeof(folder_search), "folder-search", 0},
-	{NULL, NULL, NULL, NULL, stock_spam_16, sizeof(stock_spam_16), "stock_spam", 16},
+	{NULL, NULL, NULL, NULL, stock_inbox, sizeof(stock_inbox), "stock_inbox", 16, "stock_inbox.png"},
+	{NULL, NULL, NULL, NULL, stock_outbox, sizeof(stock_outbox), "stock_outbox", 16, "stock_outbox.png"},
+	{NULL, NULL, NULL, NULL, stock_mail_compose_16, sizeof(stock_mail_compose_16), "stock_mail-compose", 16, "stock_mail-compose_16.png"},
+	{NULL, NULL, NULL, NULL, stock_delete_16, sizeof(stock_delete_16), GTK_STOCK_DELETE, 16, "stock_delete_16.png"},
+	{NULL, NULL, NULL, NULL, stock_mail, sizeof(stock_mail), "stock_mail", 24, "stock_mail.png"},
+	{NULL, NULL, NULL, NULL, stock_attach, sizeof(stock_attach), "stock_attach", 24, "stock_attach.png"},
+	{NULL, NULL, NULL, NULL, stock_mail_compose, sizeof(stock_mail_compose), "stock_mail-compose", 24, "stock_mail-compose.png"},
+	{NULL, NULL, NULL, NULL, stock_mail_forward, sizeof(stock_mail_forward), "stock_mail-forward", 24, "stock_mail-forward.png"},
+	{NULL, NULL, NULL, NULL, stock_mail_receive, sizeof(stock_mail_receive), "stock_mail-receive", 24, "stock_mail-receive.png"},
+	{NULL, NULL, NULL, NULL, stock_mail_receive_all, sizeof(stock_mail_receive_all), NULL, 0, "stock_mail_receive_all.png"},
+	{NULL, NULL, NULL, NULL, stock_mail_reply, sizeof(stock_mail_reply), "stock_mail-reply", 24, "stock_mail-reply.png"},
+	{NULL, NULL, NULL, NULL, stock_mail_reply_to_all, sizeof(stock_mail_reply_to_all), "stock_mail-reply-to-all", 24, "stock_mail-reply-to-all.png"},
+	{NULL, NULL, NULL, NULL, stock_mail_send, sizeof(stock_mail_send), "stock_mail-send", 24, "stock_mail-send.png"},
+	{NULL, NULL, NULL, NULL, stock_mail_send_queue, sizeof(stock_mail_send_queue), NULL, 0, "stock_mail_send_queue.png"},
+	{NULL, NULL, NULL, NULL, stock_insert_file, sizeof(stock_insert_file), "stock_insert-file", 24, "stock_insert-file.png"},
+	{NULL, NULL, NULL, NULL, stock_addressbook, sizeof(stock_addressbook), "stock_addressbook", 24, "stock_addressbook.png"},
+	{NULL, NULL, NULL, NULL, stock_delete, sizeof(stock_delete), GTK_STOCK_DELETE, 24, "stock_delete.png"},
+	{NULL, NULL, NULL, NULL, stock_spam, sizeof(stock_spam), "stock_spam", 24, "stock_spam.png"},
+	{NULL, NULL, NULL, NULL, stock_notspam, sizeof(stock_notspam), "stock_notspam", 24, "stock_notspam.png"},
+	{NULL, NULL, NULL, NULL, stock_hand_signed, sizeof(stock_hand_signed), "stock_hand-signed", 24, "stock_hand-signed.png"},
+	{NULL, NULL, NULL, NULL, stock_sylpheed, sizeof(stock_sylpheed), NULL, 0, "stock_sylpheed.png"},
+	{NULL, NULL, NULL, NULL, stock_sylpheed_16, sizeof(stock_sylpheed_16), NULL, 0, "stock_sylpheed_16.png"},
+	{NULL, NULL, NULL, NULL, stock_sylpheed_32, sizeof(stock_sylpheed_32), NULL, 0, "stock_sylpheed_32.png"},
+	{NULL, NULL, NULL, NULL, stock_sylpheed_newmail, sizeof(stock_sylpheed_newmail), NULL, 0, "stock_sylpheed_newmail.png"},
+	{NULL, NULL, NULL, NULL, stock_sylpheed_newmail_16, sizeof(stock_sylpheed_newmail_16), NULL, 0, "stock_sylpheed_newmail_16.png"},
+	{NULL, NULL, NULL, NULL, sylpheed_logo, sizeof(sylpheed_logo), NULL, 0, "sylpheed-logo.png"},
+	{NULL, NULL, NULL, NULL, stock_person, sizeof(stock_person), "stock_person", 16, "stock_person.png"},
+	{NULL, NULL, NULL, NULL, folder_search, sizeof(folder_search), "folder-search", 0, "folder-search.png"},
+	{NULL, NULL, NULL, NULL, stock_spam_16, sizeof(stock_spam_16), "stock_spam", 16, "stock_spam_16.png"},
 };
+
+static gchar *theme_dir = NULL;
 
 
 GtkWidget *stock_pixbuf_widget(GtkWidget *window, StockPixmap icon)
@@ -223,6 +230,18 @@ gint stock_pixbuf_gdk(GtkWidget *window, StockPixmap icon, GdkPixbuf **pixbuf)
 
 	pix_d = &pixmaps[icon];
 
+	if (!pix_d->pixbuf && pix_d->icon_file && theme_dir) {
+		gchar *path;
+
+		path = g_strconcat(theme_dir, G_DIR_SEPARATOR_S,
+				   pix_d->icon_file, NULL);
+		if (is_file_exist(path)) {
+			debug_print("stock_pixbuf_gdk: loading theme icon: %s\n", path);
+			pix_d->pixbuf = gdk_pixbuf_new_from_file(path, NULL);
+		}
+		g_free(path);
+	}
+
 	if (!pix_d->pixbuf && pix_d->pixbuf_data)
 		pix_d->pixbuf = gdk_pixbuf_new_from_inline
 			(pix_d->pixbuf_data_len, pix_d->pixbuf_data,
@@ -241,6 +260,14 @@ gint stock_pixbuf_gdk(GtkWidget *window, StockPixmap icon, GdkPixbuf **pixbuf)
 
 	if (pixbuf)
 		*pixbuf = pix_d->pixbuf;
+
+	return 0;
+}
+
+gint stock_pixbuf_set_theme_dir(const gchar *dir)
+{
+	g_free(theme_dir);
+	theme_dir = g_strdup(dir);
 
 	return 0;
 }
