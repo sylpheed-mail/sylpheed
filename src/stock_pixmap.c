@@ -104,7 +104,7 @@ struct _StockPixmapData
 static StockPixmapData pixmaps[] =
 {
 	{address_xpm	 , NULL, NULL, NULL, NULL, 0, NULL, 0, "address.png"},
-	{NULL, NULL, NULL, NULL, stock_book, sizeof(stock_book), "stock_book", 16, "book.png"},
+	{NULL, NULL, NULL, NULL, stock_book, sizeof(stock_book), "stock_book", 16, "stock_book.png"},
 	{category_xpm	 , NULL, NULL, NULL, NULL, 0, NULL, 0, "category.png"},
 	{clip_xpm	 , NULL, NULL, NULL, NULL, 0, NULL, 0, "clip.png"},
 	{complete_xpm	 , NULL, NULL, NULL, NULL, 0, NULL, 0, "complete.png"},
