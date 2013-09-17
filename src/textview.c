@@ -500,6 +500,8 @@ void textview_show_message(TextView *textview, MimeInfo *mimeinfo,
 		return;
 	}
 
+	debug_print("textview_show_message: displaying: %s\n", file);
+
 	charset = textview_get_src_encoding(textview, mimeinfo);
 	textview_set_font(textview, charset);
 	textview_clear(textview);
@@ -512,8 +514,6 @@ void textview_show_message(TextView *textview, MimeInfo *mimeinfo,
 
 		gtk_text_buffer_get_end_iter(buffer, &iter);
 		textview->body_pos = gtk_text_iter_get_offset(&iter);
-		debug_print("textview_show_message: body_pos: %d\n",
-			    textview->body_pos);
 	} else {
 		gtk_text_buffer_get_end_iter(buffer, &iter);
 		mark = gtk_text_buffer_get_mark(buffer, "attach-file-pos");
@@ -632,8 +632,6 @@ void textview_show_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 
 		gtk_text_buffer_get_end_iter(buffer, &iter);
 		textview->body_pos = gtk_text_iter_get_offset(&iter);
-		debug_print("textview_show_part: body_pos: %d\n",
-			    textview->body_pos);
 		if (!mimeinfo->main)
 			gtk_text_buffer_insert(buffer, &iter, "\n", 1);
 	} else {
@@ -961,6 +959,7 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 		g_snprintf(buf, sizeof(buf), "%s (%s)",
 			   mimeinfo->content_type,
 			   to_human_readable(mimeinfo->content_size));
+		debug_print("textview_add_part: adding: %s\n", buf);
 		gtk_text_buffer_insert(buffer, &iter, "\n", 1);
 		textview_add_part_widget(textview, &iter, mimeinfo, buf);
 		gtk_text_buffer_get_end_iter(buffer, &iter);
@@ -993,6 +992,8 @@ static void textview_add_part(TextView *textview, MimeInfo *mimeinfo, FILE *fp)
 		g_snprintf(buf, sizeof(buf), "%s (%s)",
 			   mimeinfo->content_type,
 			   to_human_readable(mimeinfo->content_size));
+
+	debug_print("textview_add_part: adding: %s\n", buf);
 
 	if (mimeinfo->mime_type != MIME_TEXT &&
 	    mimeinfo->mime_type != MIME_TEXT_HTML) {
@@ -2755,7 +2756,6 @@ static void textview_uri_list_update_offsets(TextView *textview, gint start, gin
 		RemoteURI *uri = (RemoteURI *)cur->data;
 
 		if (uri->start >= start) {
-			debug_print("textview_uri_list_update_offsets: update: (%d, %d) -> (%d, %d)\n", uri->start, uri->end, uri->start + add, uri->end + add);
 			uri->start += add;
 			uri->end += add;
 		}
