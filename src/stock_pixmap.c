@@ -99,6 +99,7 @@ struct _StockPixmapData
 	gint size;
 
 	gchar *icon_file;
+	GdkPixbuf *icon_file_pixbuf;
 };
 
 static StockPixmapData pixmaps[] =
@@ -159,6 +160,19 @@ static StockPixmapData pixmaps[] =
 	{NULL, NULL, NULL, NULL, stock_person, sizeof(stock_person), "stock_person", 16, "stock_person.png"},
 	{NULL, NULL, NULL, NULL, folder_search, sizeof(folder_search), "folder-search", 0, "folder-search.png"},
 	{NULL, NULL, NULL, NULL, stock_spam_16, sizeof(stock_spam_16), "stock_spam", 16, "stock_spam_16.png"},
+
+	/* for toolbar */
+	{NULL, NULL, NULL, NULL, NULL, 0, GTK_STOCK_NETWORK, 24, "remote-mailbox.png"},
+	{NULL, NULL, NULL, NULL, NULL, 0, GTK_STOCK_GO_DOWN, 24, "next.png"},
+	{NULL, NULL, NULL, NULL, NULL, 0, GTK_STOCK_GO_UP, 24, "prev.png"},
+	{NULL, NULL, NULL, NULL, NULL, 0, GTK_STOCK_FIND, 24, "search.png"},
+	{NULL, NULL, NULL, NULL, NULL, 0, GTK_STOCK_PRINT, 24, "print.png"},
+	{NULL, NULL, NULL, NULL, NULL, 0, GTK_STOCK_STOP, 24, "stop.png"},
+	{NULL, NULL, NULL, NULL, NULL, 0, GTK_STOCK_EXECUTE, 24, "execute.png"},
+	{NULL, NULL, NULL, NULL, NULL, 0, GTK_STOCK_PREFERENCES, 24, "common-prefs.png"},
+	{NULL, NULL, NULL, NULL, NULL, 0, GTK_STOCK_PREFERENCES, 24, "account-prefs.png"},
+	{NULL, NULL, NULL, NULL, NULL, 0, GTK_STOCK_SAVE, 24, "save.png"},
+	{NULL, NULL, NULL, NULL, NULL, 0, GTK_STOCK_EDIT, 24, "editor.png"},
 };
 
 static gchar *theme_dir = NULL;
@@ -188,6 +202,60 @@ GtkWidget *stock_pixbuf_widget_scale(GtkWidget *window, StockPixmap icon,
 						GDK_INTERP_HYPER);
 	image = gtk_image_new_from_pixbuf(scaled_pixbuf);
 	g_object_unref(scaled_pixbuf);
+
+	return image;
+}
+
+static gboolean stock_pixbuf_load_theme_icon_file(StockPixmap icon)
+{
+	StockPixmapData *pix_d;
+
+	g_return_val_if_fail(icon >= 0 && icon < N_STOCK_PIXMAPS, FALSE);
+
+	pix_d = &pixmaps[icon];
+
+	if (!pix_d->icon_file_pixbuf && pix_d->icon_file && theme_dir) {
+		gchar *path;
+
+		path = g_strconcat(theme_dir, G_DIR_SEPARATOR_S,
+				   pix_d->icon_file, NULL);
+		debug_print("stock_pixbuf_load_theme_icon_file: checking theme icon: %s\n", path);
+		if (is_file_exist(path)) {
+			debug_print("stock_pixbuf_load_theme_icon_file: loading theme icon: %s\n", path);
+			pix_d->icon_file_pixbuf = gdk_pixbuf_new_from_file(path, NULL);
+			if (!pix_d->icon_file_pixbuf) {
+				g_warning("stock_pixbuf_load_theme_icon_file: loading of theme icon failed: %s", path);
+				pix_d->icon_file = NULL;
+			} else if (!pix_d->pixbuf)
+				pix_d->pixbuf = pix_d->icon_file_pixbuf;
+		} else
+			pix_d->icon_file = NULL;
+		g_free(path);
+	}
+
+	return pix_d->icon_file_pixbuf != NULL;
+}
+
+GtkWidget *stock_pixbuf_widget_for_toolbar(StockPixmap icon)
+{
+	GtkWidget *image = NULL;
+	StockPixmapData *pix_d;
+
+	g_return_val_if_fail(icon >= 0 && icon < N_STOCK_PIXMAPS, NULL);
+
+	stock_pixbuf_load_theme_icon_file(icon);
+
+	pix_d = &pixmaps[icon];
+
+	if (pix_d->icon_file_pixbuf) {
+		image = gtk_image_new_from_pixbuf(pix_d->icon_file_pixbuf);
+	}
+
+	if (!image && pix_d->icon_name)
+		image = gtk_image_new_from_stock(pix_d->icon_name, GTK_ICON_SIZE_LARGE_TOOLBAR);
+
+	if (!image)
+		image = stock_pixbuf_widget(NULL, icon);
 
 	return image;
 }
@@ -228,19 +296,9 @@ gint stock_pixbuf_gdk(GtkWidget *window, StockPixmap icon, GdkPixbuf **pixbuf)
 
 	g_return_val_if_fail(icon >= 0 && icon < N_STOCK_PIXMAPS, -1);
 
+	stock_pixbuf_load_theme_icon_file(icon);
+
 	pix_d = &pixmaps[icon];
-
-	if (!pix_d->pixbuf && pix_d->icon_file && theme_dir) {
-		gchar *path;
-
-		path = g_strconcat(theme_dir, G_DIR_SEPARATOR_S,
-				   pix_d->icon_file, NULL);
-		if (is_file_exist(path)) {
-			debug_print("stock_pixbuf_gdk: loading theme icon: %s\n", path);
-			pix_d->pixbuf = gdk_pixbuf_new_from_file(path, NULL);
-		}
-		g_free(path);
-	}
 
 	if (!pix_d->pixbuf && pix_d->pixbuf_data)
 		pix_d->pixbuf = gdk_pixbuf_new_from_inline

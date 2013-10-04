@@ -2708,12 +2708,7 @@ static GtkWidget *main_window_toolbar_create_from_list(MainWindow *mainwin,
 		if (item->id == -1)
 			continue;
 
-		if (ditem->stock_id) {
-			icon_wid = gtk_image_new_from_stock
-				(ditem->stock_id, GTK_ICON_SIZE_LARGE_TOOLBAR);
-		} else
-			icon_wid = stock_pixbuf_widget(NULL, ditem->icon);
-
+		icon_wid = stock_pixbuf_widget_for_toolbar(ditem->icon);
 		toolitem = gtk_tool_button_new(icon_wid, gettext(ditem->label));
 		if (ditem->description) {
 			gtk_tool_item_set_tooltip(toolitem,

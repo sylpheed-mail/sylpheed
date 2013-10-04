@@ -82,6 +82,20 @@ typedef enum
 	STOCK_PIXMAP_FOLDER_SEARCH,
 	STOCK_PIXMAP_SPAM_SMALL,
 
+	/* for toolbar */
+
+	STOCK_PIXMAP_REMOTE_MAILBOX,
+	STOCK_PIXMAP_NEXT,
+	STOCK_PIXMAP_PREV,
+	STOCK_PIXMAP_SEARCH,
+	STOCK_PIXMAP_PRINT,
+	STOCK_PIXMAP_STOP,
+	STOCK_PIXMAP_EXECUTE,
+	STOCK_PIXMAP_COMMON_PREFS,
+	STOCK_PIXMAP_ACCOUNT_PREFS,
+	STOCK_PIXMAP_SAVE,
+	STOCK_PIXMAP_EDIT,
+
 	N_STOCK_PIXMAPS
 } StockPixmap;
 
@@ -92,6 +106,8 @@ GtkWidget *stock_pixbuf_widget_scale	(GtkWidget	*window,
 					 StockPixmap	 icon,
 					 gint		 width,
 					 gint		 height);
+
+GtkWidget *stock_pixbuf_widget_for_toolbar(StockPixmap	 icon);
 
 gint stock_pixmap_gdk		(GtkWidget	 *window,
 				 StockPixmap	  icon,
