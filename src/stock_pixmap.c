@@ -251,8 +251,12 @@ GtkWidget *stock_pixbuf_widget_for_toolbar(StockPixmap icon)
 		image = gtk_image_new_from_pixbuf(pix_d->icon_file_pixbuf);
 	}
 
-	if (!image && pix_d->icon_name)
-		image = gtk_image_new_from_stock(pix_d->icon_name, GTK_ICON_SIZE_LARGE_TOOLBAR);
+	if (!image && pix_d->icon_name) {
+		if (gtk_style_lookup_icon_set(gtk_widget_get_default_style(), pix_d->icon_name))
+			image = gtk_image_new_from_stock(pix_d->icon_name, GTK_ICON_SIZE_LARGE_TOOLBAR);
+		else
+			pix_d->icon_name = NULL;
+	}
 
 	if (!image)
 		image = stock_pixbuf_widget(NULL, icon);
