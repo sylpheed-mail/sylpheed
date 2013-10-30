@@ -1316,7 +1316,7 @@ static void rpop3_close(GtkButton *button, gpointer data)
 		rpop3_status_label_set(_("Quitting..."));
 		rpop3_idle(FALSE);
 		pop3_logout_send(rpop3_window.session);
-	} else if (rpop3_window.session->state != POP3_DONE ||
+	} else if (rpop3_window.session->state != POP3_DONE &&
 		   rpop3_window.session->state != POP3_ERROR)
 		rpop3_window.cancelled = TRUE;
 }

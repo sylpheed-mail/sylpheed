@@ -1557,7 +1557,7 @@ void folderview_move_folder(FolderView *folderview)
 	g_return_if_fail(item->folder != NULL);
 
 	if (!item->path) return;
-	if (item->stype != F_NORMAL || item->stype != F_VIRTUAL) return;
+	if (item->stype != F_NORMAL && item->stype != F_VIRTUAL) return;
 
 	if (item->folder->klass->move_folder)
 		folderview_move_folder_cb(folderview, 0, NULL);

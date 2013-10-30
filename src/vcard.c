@@ -433,7 +433,6 @@ static void vcard_unescape_qp( gchar *value ) {
 			ch = *(ptr + 2);
 			if( ch ) {
 				if( ch > '\x60' ) ch -= '\x20';
-				if( ch > '0' && ch < ' ' ) d = ch - '0';
 				d = ch - '0';
 				if( d > 9 ) d -= 7;
 				if( d > -1 && d < 16 ) {
