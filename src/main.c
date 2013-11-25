@@ -1144,6 +1144,11 @@ static void set_log_handlers(gboolean enable)
 }
 
 #ifdef G_OS_WIN32
+
+#if !GTK_CHECK_VERSION(2, 14, 0)
+static UINT taskbar_created_msg;
+#endif
+
 static BOOL WINAPI
 ctrl_handler(DWORD dwctrltype)
 {
@@ -1176,6 +1181,21 @@ wndproc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
 		}
 		break;
 	default:
+#if !GTK_CHECK_VERSION(2, 14, 0)
+		if (message == taskbar_created_msg) {
+			debug_print("TaskbarCreated received\n");
+
+			/* recreate tray icon */
+			{
+				MainWindow *mainwin = main_window_get();
+				if (mainwin && mainwin->tray_icon &&
+				    gtk_status_icon_get_visible(mainwin->tray_icon->status_icon)) {
+					trayicon_hide(mainwin->tray_icon);
+					trayicon_show(mainwin->tray_icon);
+				}
+			}
+		}
+#endif
 		break;
 	}
 
@@ -1199,6 +1219,10 @@ static void register_system_events(void)
 
 	if (hwnd)
 		return;
+
+#if !GTK_CHECK_VERSION(2, 14, 0)
+	taskbar_created_msg = RegisterWindowMessage("TaskbarCreated");
+#endif
 
 	debug_print("register_system_events(): RegisterClass\n");
 
