@@ -284,7 +284,7 @@ static void headerview_show_xface(HeaderView *headerview, MsgInfo *msginfo)
 	}
 	if (!GTK_WIDGET_VISIBLE(headerview->hbox)) return;
 
-	strncpy(xface, msginfo->xface, sizeof(xface));
+	strncpy2(xface, msginfo->xface, sizeof(xface));
 
 	if (uncompface(xface) < 0) {
 		g_warning("uncompface failed\n");
