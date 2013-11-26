@@ -934,6 +934,7 @@ static gint jpilot_read_db_files( JPilotFile *pilotFile, GList **records ) {
 
 			temp_br = malloc(sizeof(buf_rec));
 			if (!temp_br) {
+				free(buf);
 				break;
 			}
 			temp_br->rt = PALM_REC;
@@ -990,6 +991,7 @@ static gint jpilot_read_db_files( JPilotFile *pilotFile, GList **records ) {
 				}
 			}
 		}
+		free(temp_br);
 	}
 	fclose(pc_in);
 

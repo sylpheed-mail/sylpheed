@@ -565,6 +565,8 @@ gboolean rfc2015_msg_is_encrypted(const gchar *file)
 
 	ret = rfc2015_is_encrypted(mimeinfo);
 	procmime_mimeinfo_free_all(mimeinfo);
+	fclose(fp);
+
 	return ret != 0 ? TRUE : FALSE;
 }
 
