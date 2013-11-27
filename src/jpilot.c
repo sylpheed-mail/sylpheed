@@ -899,9 +899,11 @@ static gint jpilot_read_db_files( JPilotFile *pilotFile, GList **records ) {
 	temp_mem_rh = mem_rh;
 
 	if (num_records) {
+		attrib = unique_id = 0;
 		if (out_of_order) {
 			find_next_offset(mem_rh, 0, &next_offset, &attrib, &unique_id);
 		} else {
+			next_offset = 0xFFFFFF;
 			if (mem_rh) {
 				next_offset = mem_rh->offset;
 				attrib = mem_rh->attrib;
