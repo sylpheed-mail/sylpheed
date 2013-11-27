@@ -1553,7 +1553,7 @@ static gint prohibit_duplicate_launch(void)
 		}
 		fd_write_all(sock, ".\n", 2);
 		for (;;) {
-			fd_gets(sock, buf, sizeof(buf));
+			if (fd_gets(sock, buf, sizeof(buf)) <= 0) break;
 			if (!strncmp(buf, ".\n", 2)) break;
 			fputs(buf, stdout);
 		}
@@ -1613,7 +1613,7 @@ static GPtrArray *get_folder_item_list(gint sock)
 	GPtrArray *folders = NULL;
 
 	for (;;) {
-		fd_gets(sock, buf, sizeof(buf));
+		if (fd_gets(sock, buf, sizeof(buf)) <= 0) break;
 		if (!strncmp(buf, ".\n", 2)) break;
 		strretchomp(buf);
 		if (!folders) folders = g_ptr_array_new();
@@ -1640,7 +1640,13 @@ static gboolean lock_socket_input_cb(GIOChannel *source, GIOCondition condition,
 
 	fd = g_io_channel_unix_get_fd(source);
 	sock = fd_accept(fd);
-	fd_gets(sock, buf, sizeof(buf));
+	if (fd_gets(sock, buf, sizeof(buf)) <= 0) {
+		fd_close(sock);
+#if USE_THREADS
+		gdk_threads_leave();
+#endif
+		return TRUE;
+	}
 
 	if (!strncmp(buf, "popup", 5)) {
 #ifdef G_OS_WIN32
