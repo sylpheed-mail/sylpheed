@@ -770,7 +770,7 @@ static gchar *html_unescape_str(HTMLParser *parser, const gchar *str)
 					gint len;
 
 					len = g_unichar_to_utf8((gunichar)ch, buf);
-					if (len > 0 && len <= n + 1) {
+					if (len > 0 && len <= 6 && len <= n + 1) {
 						memcpy(up, buf, len);
 						up += len;
 					} else {
