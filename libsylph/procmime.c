@@ -1722,6 +1722,8 @@ static GList *procmime_parse_mailcap(const gchar *file)
 		list = g_list_append(list, mailcap);
 	}
 
+	fclose(fp);
+
 	return list;
 }
 

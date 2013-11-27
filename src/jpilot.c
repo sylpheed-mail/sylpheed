@@ -849,6 +849,7 @@ static gint jpilot_read_db_files( JPilotFile *pilotFile, GList **records ) {
 			return MGU_ERROR_READ;
 		}
 		if (feof(in)) {
+			fclose(in);
 			return MGU_EOF;
 		}
 	}
@@ -866,6 +867,8 @@ static gint jpilot_read_db_files( JPilotFile *pilotFile, GList **records ) {
 				break;
 			}
 			if (feof(in)) {
+				free_mem_rec_header(&mem_rh);
+				fclose(in);
 				return MGU_EOF;
 			}
 		}

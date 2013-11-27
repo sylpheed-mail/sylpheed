@@ -2018,8 +2018,8 @@ gint procmsg_concat_partial_messages(GSList *mlist, const gchar *file)
 
 		g_free(cur_id);
 skip:
-		fclose(fp);
 		procmime_mimeinfo_free_all(mimeinfo);
+		fclose(fp);
 	}
 
 	if (!part_id) {
@@ -2094,6 +2094,8 @@ skip:
 		out_size = get_left_file_size(fp);
 		if (out_size < 0) {
 			g_warning("cannot tell left file size of part %d\n", i + 1);
+			procmime_mimeinfo_free_all(mimeinfo);
+			fclose(fp);
 			fclose(tmp_fp);
 			g_unlink(file);
 			return -1;
@@ -2101,6 +2103,8 @@ skip:
 		empty_line_size = get_last_empty_line_size(fp, out_size);
 		if (empty_line_size < 0) {
 			g_warning("cannot get last empty line size of part %d\n", i + 1);
+			procmime_mimeinfo_free_all(mimeinfo);
+			fclose(fp);
 			fclose(tmp_fp);
 			g_unlink(file);
 			return -1;
@@ -2109,13 +2113,15 @@ skip:
 		if (append_file_part(fp, ftell(fp), out_size - empty_line_size,
 				     tmp_fp) < 0) {
 			g_warning("write failed\n");
+			procmime_mimeinfo_free_all(mimeinfo);
+			fclose(fp);
 			fclose(tmp_fp);
 			g_unlink(file);
 			return -1;
 		}
 
-		fclose(fp);
 		procmime_mimeinfo_free_all(mimeinfo);
+		fclose(fp);
 	}
 
 	fclose(tmp_fp);

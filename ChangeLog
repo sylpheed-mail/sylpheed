@@ -1,3 +1,13 @@
+2013-11-27
+
+	* src/template.c: template_load(): fixed fp leak on error.
+	* plugin/attachment_tool/attachment_tool.c: remove_attachment():
+	  fixed fp leak on error.
+	* libsylph/procmsg.c: procmsg_concat_partial_messages(): fixed fp
+	  leaks on error.
+	* libsylph/procmime.c: procmime_parse_mailcap(): fixed fp leak.
+	* src/jpilot.c: jpilot_read_db_files(): fixed fp leak and memory leaks.
+
 2013-11-26
 
 	* src/headerview.c: headerview_show_xface(): make sure xface is nul

@@ -73,6 +73,7 @@ static Template *template_load(gchar *filename, guint tmplid)
 	if (!tmpl->name) {
 		g_warning("wrong template format\n");
 		template_free(tmpl);
+		fclose(fp);
 		return NULL;
 	}
 
@@ -80,6 +81,7 @@ static Template *template_load(gchar *filename, guint tmplid)
 	if (!tmpl->value) {
 		g_warning("cannot read template body\n");
 		template_free(tmpl);
+		fclose(fp);
 		return NULL;
 	}
 	fclose(fp);

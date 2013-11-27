@@ -211,6 +211,7 @@ static gboolean remove_attachment(MsgInfo *msginfo)
 	if ((outfp = g_fopen(outfile, "wb")) == NULL) {
 		g_free(outfile);
 		g_free(infile);
+		fclose(fp);
 		procmime_mimeinfo_free_all(mimeinfo);
 		return FALSE;
 	}
