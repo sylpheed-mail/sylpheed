@@ -2301,7 +2301,8 @@ static gboolean textview_event_after(GtkWidget *widget, GdkEvent *event,
 			ac = account_find_from_item(msginfo->folder);
 		if (ac && ac->protocol == A_NNTP)
 			ac = NULL;
-		compose_new(ac, msginfo->folder, uri->uri + 7, NULL);
+		compose_new(ac, msginfo ? msginfo->folder : NULL,
+			    uri->uri + 7, NULL);
 	} else if (uri->uri[0] == '#') {
 		/* don't open in-page link */
 	} else if (textview_uri_security_check(textview, uri) == TRUE)
@@ -2540,7 +2541,8 @@ static void textview_popup_menu_activate_open_uri_cb(GtkMenuItem *menuitem,
 			ac = account_find_from_item(msginfo->folder);
 		if (ac && ac->protocol == A_NNTP)
 			ac = NULL;
-		compose_new(ac, msginfo->folder, uri->uri + 7, NULL);
+		compose_new(ac, msginfo ? msginfo->folder : NULL,
+			    uri->uri + 7, NULL);
 	} else if (uri->uri[0] == '#') {
 		/* don't open in-page link */
 	} else if (textview_uri_security_check(textview, uri) == TRUE)
