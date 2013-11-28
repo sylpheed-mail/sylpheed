@@ -218,7 +218,7 @@ static void colorlabel_recreate_label(gint color)
 {
 	const gchar *text;
 
-	if (!label_colors[color].changed & LCCF_LABEL)
+	if (!(label_colors[color].changed & LCCF_LABEL))
 		return;
 
 	text = colorlabel_get_color_text(color);
@@ -244,7 +244,7 @@ static void colorlabel_recreate_all(void)
 {
 	gint n;
 
-	for ( n = 0; n < LABEL_COLORS_ELEMS; n++) 
+	for (n = 0; n < LABEL_COLORS_ELEMS; n++) 
 		colorlabel_recreate(n);
 }
 
