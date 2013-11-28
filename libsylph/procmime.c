@@ -328,10 +328,11 @@ void procmime_scan_multipart_message(MimeInfo *mimeinfo, FILE *fp)
 
 		if (partinfo->mime_type == MIME_MULTIPART ||
 		    partinfo->mime_type == MIME_MESSAGE_RFC822) {
-			if (partinfo->level < MAX_MIME_LEVEL)
+			if (partinfo->level < MAX_MIME_LEVEL) {
 				mime_debug_print("\n");
 				mime_debug_print("enter to child part:\n");
 				procmime_scan_multipart_message(partinfo, fp);
+			}
 		}
 
 		/* look for next boundary */
