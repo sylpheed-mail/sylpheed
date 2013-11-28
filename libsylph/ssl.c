@@ -182,7 +182,8 @@ void ssl_done(void)
 					  trust_file);
 			X509_free((X509 *)cur->data);
 		}
-		fclose(fp);
+		if (fp)
+			fclose(fp);
 		g_free(trust_file);
 		g_slist_free(trust_list);
 		trust_list = NULL;
