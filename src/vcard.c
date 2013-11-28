@@ -384,8 +384,8 @@ static void vcard_build_items( VCardFile *cardFile, GSList *listName, GSList *li
 			if( *str != '\0' ) {
 				ItemEMail *email = addritem_create_item_email();
 				addritem_email_set_address( email, str );
-				str = nodeRemarks->data;
 				if( nodeRemarks ) {
+					str = nodeRemarks->data;
 					if( str ) {
 						if( g_ascii_strcasecmp( str, "internet" ) != 0 ) {
 							if( *str != '\0' ) addritem_email_set_remarks( email, str );

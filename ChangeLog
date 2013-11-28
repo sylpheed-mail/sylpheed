@@ -1,5 +1,14 @@
 2013-11-28
 
+	* src/syldap.c:
+	  syldap_test_connect():
+	  syldap_read_basedn():
+	  NULL check argument first.
+	* src/vcard.c: vcard_build_items(): dereference nodeRemarks only if
+	  it's non-null.
+
+2013-11-28
+
 	* src/rpop3.c: rpop3_retr_recv(): check error of
 	  procheader_parse_file().
 

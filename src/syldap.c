@@ -891,8 +891,8 @@ GList *syldap_read_basedn( SyldapServer *ldapServer ) {
 	gchar **vals;
 	struct timeval timeout;
 
-	ldapServer->retVal = MGU_BAD_ARGS;
 	if( ldapServer == NULL ) return baseDN;
+	ldapServer->retVal = MGU_BAD_ARGS;
 	if( ldapServer->hostName == NULL ) return baseDN;
 	if( ldapServer->port < 1 ) return baseDN;
 
@@ -1041,8 +1041,8 @@ gboolean syldap_test_connect( SyldapServer *ldapServer ) {
 	gboolean retVal = FALSE;
 	LDAP *ld;
 
-	ldapServer->retVal = MGU_BAD_ARGS;
 	if( ldapServer == NULL ) return retVal;
+	ldapServer->retVal = MGU_BAD_ARGS;
 	if( ldapServer->hostName == NULL ) return retVal;
 	if( ldapServer->port < 1 ) return retVal;
 	ldapServer->retVal = MGU_LDAP_INIT;
