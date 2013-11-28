@@ -795,6 +795,11 @@ static gint rpop3_retr_recv(Pop3Session *session, FILE *fp, guint len)
 	}
 
 	msginfo = procheader_parse_file(file, flags, FALSE);
+	if (!msginfo) {
+		session->error_val = PS_IOERR;
+		return -1;
+	}
+
 	msginfo->file_path = g_strdup(file);
 
 	msgview = messageview_create_with_new_window();
