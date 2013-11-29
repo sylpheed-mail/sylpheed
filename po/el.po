@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.4.0beta5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-28 18:17+0900\n"
+"POT-Creation-Date: 2013-11-29 12:53+0900\n"
 "PO-Revision-Date: 2007-03-17 00:57+0200\n"
 "Last-Translator: Stavros Giannouris <stavrosg@hellug.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -519,7 +519,7 @@ msgstr "Βρέθηκαν %s\n"
 msgid "Configuration is saved.\n"
 msgstr "Οι ρυθμίσεις αποθηκεύτηκαν.\n"
 
-#: libsylph/procmime.c:1335
+#: libsylph/procmime.c:1336
 msgid "procmime_get_text_content(): Code conversion failed.\n"
 msgstr "procmime_get_text_content(): Η μετατροπή του κώδικα απέτυχε.\n"
 
@@ -577,35 +577,35 @@ msgstr "Το TLSv1 δεν είναι διαθέσιμο\n"
 msgid "TLSv1 available\n"
 msgstr "Το TLSv1 είναι διαθέσιμο\n"
 
-#: libsylph/ssl.c:231 libsylph/ssl.c:238
+#: libsylph/ssl.c:232 libsylph/ssl.c:239
 msgid "SSL method not available\n"
 msgstr "Η μέθοδος SSL δεν είναι διαθέσιμη\n"
 
-#: libsylph/ssl.c:244
+#: libsylph/ssl.c:245
 msgid "Unknown SSL method *PROGRAM BUG*\n"
 msgstr "Άγνωστη μέθοδος SSL *ΣΦΑΛΜΑ ΣΤΟ ΠΡΟΓΡΑΜΜΑ*\n"
 
-#: libsylph/ssl.c:250
+#: libsylph/ssl.c:251
 #, fuzzy
 msgid "Error creating ssl context\n"
 msgstr "Σφάλμα δημιουργίας signal pipe."
 
 #. Get the cipher
-#: libsylph/ssl.c:269
+#: libsylph/ssl.c:270
 #, c-format
 msgid "SSL connection using %s\n"
 msgstr "Σύνδεση SSL με χρήση %s\n"
 
-#: libsylph/ssl.c:285
+#: libsylph/ssl.c:286
 msgid "Server certificate:\n"
 msgstr "Πιστοποιητικό διακομιστή:\n"
 
-#: libsylph/ssl.c:288
+#: libsylph/ssl.c:289
 #, c-format
 msgid "  Subject: %s\n"
 msgstr "  Θέμα: %s\n"
 
-#: libsylph/ssl.c:293
+#: libsylph/ssl.c:294
 #, c-format
 msgid "  Issuer: %s\n"
 msgstr "  Εκδότης: %s\n"
@@ -1293,7 +1293,7 @@ msgid "Warning"
 msgstr "Προειδοποίηση"
 
 #: src/alertpanel.c:168 src/inc.c:950
-#: plugin/attachment_tool/attachment_tool.c:263
+#: plugin/attachment_tool/attachment_tool.c:264
 msgid "Error"
 msgstr "Σφάλμα"
 
@@ -1337,7 +1337,7 @@ msgstr "Καφέ"
 #. create sub items. for the menu item activation callback we pass the
 #. * color flag value as data parameter. Also we attach a data pointer
 #. * so we can always get back the SummaryView pointer.
-#: src/colorlabel.c:300 src/prefs_folder_item.c:317 src/summaryview.c:5365
+#: src/colorlabel.c:300 src/prefs_folder_item.c:317 src/summaryview.c:5367
 msgid "None"
 msgstr "Κανένα"
 
@@ -1885,7 +1885,7 @@ msgstr "Ημερομηνία"
 #. S_COL_DATE
 #: src/compose.c:5386 src/mimeview.c:217 src/prefs_filter_edit.c:512
 #: src/prefs_summary_column.c:72 src/rpop3.c:437 src/select-keys.c:309
-#: src/summaryview.c:5514
+#: src/summaryview.c:5516
 msgid "Size"
 msgstr "Μέγεθος"
 
@@ -3071,7 +3071,7 @@ msgstr "Σύνδεση με το διακομιστή POP3: %s..."
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Δεν μπορώ να συνδεθώ στον POP3 server: %s:%d\n"
 
-#: src/inc.c:1171 src/rpop3.c:873 src/send_message.c:846
+#: src/inc.c:1171 src/rpop3.c:878 src/send_message.c:846
 #, c-format
 msgid "Authenticating..."
 msgstr "Πιστοποίηση..."
@@ -3111,8 +3111,8 @@ msgstr "Κλείνω τη σύνδεση"
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "Λαμβάνεται το μήνυμα (%d / %d) (%s / %s)"
 
-#: src/inc.c:1522 src/inc.c:1549 src/summaryview.c:4843 src/summaryview.c:5033
-#: src/summaryview.c:5084
+#: src/inc.c:1522 src/inc.c:1549 src/summaryview.c:4845 src/summaryview.c:5035
+#: src/summaryview.c:5086
 msgid ""
 "Execution of the junk filter command failed.\n"
 "Please check the junk mail control setting."
@@ -3358,20 +3358,20 @@ msgstr ""
 "Το GnuPG δεν έχει εγκατασταθεί σωστά, ή χρειάζεται αναβάθμιση.\n"
 "Η υποστήριξη OpenPGP απενεργοποιήθηκε."
 
-#: src/main.c:1268
+#: src/main.c:1292
 msgid "Loading plug-ins..."
 msgstr ""
 
 #. remote command mode
-#: src/main.c:1474
+#: src/main.c:1498
 msgid "another Sylpheed is already running.\n"
 msgstr "Τρέχει ήδη ένα Sylpheed.\n"
 
-#: src/main.c:1762
+#: src/main.c:1792
 msgid "Migration of configuration"
 msgstr "Μεταφορά ρυθμίσεων"
 
-#: src/main.c:1763
+#: src/main.c:1793
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
@@ -4041,7 +4041,7 @@ msgid "MainWindow: color allocation %d failed\n"
 msgstr ""
 
 #: src/mainwindow.c:1224 src/summaryview.c:2675 src/summaryview.c:2762
-#: src/summaryview.c:4407 src/summaryview.c:4536 src/summaryview.c:4925
+#: src/summaryview.c:4407 src/summaryview.c:4538 src/summaryview.c:4927
 msgid "done.\n"
 msgstr "έγινε.\n"
 
@@ -6557,19 +6557,19 @@ msgstr "Σημείωση"
 
 #. S_COL_MIME
 #: src/prefs_summary_column.c:69 src/query_search.c:402 src/rpop3.c:434
-#: src/summaryview.c:5507
+#: src/summaryview.c:5509
 msgid "Subject"
 msgstr "Θέμα"
 
 #. S_COL_SUBJECT
 #: src/prefs_summary_column.c:70 src/query_search.c:403 src/rpop3.c:435
-#: src/summaryview.c:5510
+#: src/summaryview.c:5512
 msgid "From"
 msgstr "Από"
 
 #. S_COL_FROM
 #: src/prefs_summary_column.c:71 src/query_search.c:404 src/rpop3.c:436
-#: src/summaryview.c:5512
+#: src/summaryview.c:5514
 msgid "Date"
 msgstr "Ημερομηνία"
 
@@ -6579,7 +6579,7 @@ msgid "Number"
 msgstr "Αριθμός"
 
 #. S_COL_NUMBER
-#: src/prefs_summary_column.c:74 src/summaryview.c:5518
+#: src/prefs_summary_column.c:74 src/summaryview.c:5520
 #, fuzzy
 msgid "To"
 msgstr "Προς:"
@@ -6988,7 +6988,7 @@ msgstr "/_Αρχείο"
 msgid "_Get"
 msgstr "Λήψη"
 
-#: src/rpop3.c:251 src/rpop3.c:1097
+#: src/rpop3.c:251 src/rpop3.c:1102
 #, fuzzy
 msgid "_Resume"
 msgstr "/_Διαγραφή"
@@ -7007,7 +7007,7 @@ msgstr "_Σχετικά"
 msgid "%s - POP3 Remote mailbox"
 msgstr "Αφαίρεση γραμματοκιβωτίου"
 
-#: src/rpop3.c:433 src/summaryview.c:5516
+#: src/rpop3.c:433 src/summaryview.c:5518
 msgid "No."
 msgstr "Όχι."
 
@@ -7038,58 +7038,58 @@ msgstr "Προέκυψε σφάλμα στη συνεδρία POP3\n"
 msgid "Retrieving message headers (%d / %d) ..."
 msgstr "Εμφάνιση Όλων των _Κεφαλίδων"
 
-#: src/rpop3.c:899
+#: src/rpop3.c:904
 #, fuzzy
 msgid "Getting the number of messages..."
 msgstr "Λήψη αριθμού νέων μηνυμάτων (STAT)..."
 
-#: src/rpop3.c:908 src/rpop3.c:921
+#: src/rpop3.c:913 src/rpop3.c:926
 #, fuzzy
 msgid "No message"
 msgstr "Δεν υπάρχουν νέα μηνύματα."
 
-#: src/rpop3.c:954
+#: src/rpop3.c:959
 #, fuzzy, c-format
 msgid "Deleted %d messages"
 msgstr "Διαγραφή μηνύματος(ων)"
 
-#: src/rpop3.c:1000 src/rpop3.c:1012 src/rpop3.c:1073 src/rpop3.c:1316
+#: src/rpop3.c:1005 src/rpop3.c:1017 src/rpop3.c:1078 src/rpop3.c:1321
 #: src/send_message.c:863
 #, c-format
 msgid "Quitting..."
 msgstr "Εγκατάλειψη..."
 
-#: src/rpop3.c:1058
+#: src/rpop3.c:1063
 #, fuzzy, c-format
 msgid "Retrieved %d messages"
 msgstr "Λήψη νέων μηνυμάτων"
 
-#: src/rpop3.c:1065
+#: src/rpop3.c:1070
 #, fuzzy, c-format
 msgid "Opened message %d"
 msgstr "Αποστολή μηνύματος"
 
-#: src/rpop3.c:1082
+#: src/rpop3.c:1087
 #, fuzzy, c-format
 msgid "Retrieved %d (of %d) message headers"
 msgstr "Λήψη νέων μηνυμάτων"
 
-#: src/rpop3.c:1086
+#: src/rpop3.c:1091
 #, fuzzy, c-format
 msgid "Retrieved %d message headers"
 msgstr "Λήψη νέων μηνυμάτων"
 
-#: src/rpop3.c:1208
+#: src/rpop3.c:1213
 #, fuzzy, c-format
 msgid "Retrieving message %d ..."
 msgstr "Λήψη μηνυμάτων από %s..."
 
-#: src/rpop3.c:1234
+#: src/rpop3.c:1239
 #, fuzzy
 msgid "Delete messages"
 msgstr "Διαγραφή μηνύματος(ων)"
 
-#: src/rpop3.c:1235
+#: src/rpop3.c:1240
 msgid ""
 "Really delete selected messages from server?\n"
 "This operation cannot be reverted."
@@ -7974,29 +7974,29 @@ msgstr "Συνέβη ένα σφάλμα κατά την επεξεργασία 
 msgid "Building threads..."
 msgstr "Δημιουργώ τα νήματα..."
 
-#: src/summaryview.c:4465 src/summaryview.c:4466
+#: src/summaryview.c:4468 src/summaryview.c:4469
 msgid "Unthreading..."
 msgstr ""
 
-#: src/summaryview.c:4759 src/summaryview.c:4820
+#: src/summaryview.c:4761 src/summaryview.c:4822
 #, c-format
 msgid "Filtering (%d / %d)..."
 msgstr "Εφαρμογή φίλτρων (%d / %d)..."
 
-#: src/summaryview.c:4886
+#: src/summaryview.c:4888
 msgid "filtering..."
 msgstr "Εφαρμογή φίλτρων..."
 
-#: src/summaryview.c:4887
+#: src/summaryview.c:4889
 msgid "Filtering..."
 msgstr "Φιλτράρω..."
 
-#: src/summaryview.c:4932
+#: src/summaryview.c:4934
 #, c-format
 msgid "%d message(s) have been filtered."
 msgstr "Φιλτραρίστηκαν %d μηνύματα."
 
-#: src/template.c:188
+#: src/template.c:190
 #, c-format
 msgid "file %s already exists\n"
 msgstr "Το αρχείο \"%s\" υπάρχει ήδη\n"
@@ -8024,36 +8024,36 @@ msgid ""
 "failed.\n"
 msgstr ""
 
-#: src/textview.c:2476
+#: src/textview.c:2477
 msgid "Sa_ve this image as..."
 msgstr "Α_ποθήκευση εικόνας ως..."
 
-#: src/textview.c:2496 src/trayicon.c:160
+#: src/textview.c:2497 src/trayicon.c:160
 msgid "Compose _new message"
 msgstr "Σύνθεση _νέου μηνύματος"
 
-#: src/textview.c:2498
+#: src/textview.c:2499
 #, fuzzy
 msgid "R_eply to this address"
 msgstr "Αντιγραφή _διεύθυνσης"
 
-#: src/textview.c:2501
+#: src/textview.c:2502
 msgid "Add to address _book..."
 msgstr "Προσθήκη στο _ευρετήριο διευθύνσεων..."
 
-#: src/textview.c:2503
+#: src/textview.c:2504
 msgid "Copy this add_ress"
 msgstr "Αντιγραφή _διεύθυνσης"
 
-#: src/textview.c:2506
+#: src/textview.c:2507
 msgid "_Open with Web browser"
 msgstr "_Άνοιγμα με τον περιηγητή ιστοσελίδων"
 
-#: src/textview.c:2508
+#: src/textview.c:2509
 msgid "Copy this _link"
 msgstr "Αντιγραφή _συνδέσμου"
 
-#: src/textview.c:2714
+#: src/textview.c:2716
 #, c-format
 msgid ""
 "The real URL (%s) is different from\n"
@@ -8066,7 +8066,7 @@ msgstr ""
 "\n"
 "Θέλετε σίγουρα να την ανοίξετε;"
 
-#: src/textview.c:2719
+#: src/textview.c:2721
 msgid "Fake URL warning"
 msgstr "Προειδοποίηση για μη έγκυρο URL"
 
@@ -8135,16 +8135,16 @@ msgid "Couldn't get the version information of plug-ins."
 msgstr ""
 
 #: plugin/attachment_tool/attachment_tool.c:50
-#: plugin/attachment_tool/attachment_tool.c:271
+#: plugin/attachment_tool/attachment_tool.c:272
 #, fuzzy
 msgid "Remove attachments"
 msgstr "Έχει συνημμένο"
 
-#: plugin/attachment_tool/attachment_tool.c:263
+#: plugin/attachment_tool/attachment_tool.c:264
 msgid "This tool is available on local folders only."
 msgstr ""
 
-#: plugin/attachment_tool/attachment_tool.c:272
+#: plugin/attachment_tool/attachment_tool.c:273
 msgid "Do you really remove attached files from the selected messages?"
 msgstr ""
 
