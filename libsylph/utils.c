@@ -52,6 +52,10 @@
 #  include <shlobj.h>
 #endif
 
+#ifdef __APPLE__
+#  include <AppKit/AppKit.h>
+#endif
+
 #include "utils.h"
 #include "socket.h"
 
@@ -2127,6 +2131,21 @@ void set_startup_dir(void)
 				startup_dir = g_get_current_dir();
 			}
 		} else
+			startup_dir = g_get_current_dir();
+	}
+#elif defined(__APPLE__)
+	if (!startup_dir) {
+		const gchar *path;
+		NSAutoreleasePool *pool;
+
+		pool = [[NSAutoreleasePool alloc] init];
+
+		path = [[[NSBundle mainBundle] bundlePath] UTF8String];
+		startup_dir = g_strdup(path);
+
+		[pool release];
+
+		if (!startup_dir)
 			startup_dir = g_get_current_dir();
 	}
 #else

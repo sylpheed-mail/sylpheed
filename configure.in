@@ -78,6 +78,7 @@ native_win32=no
 case "$target" in
 *-darwin*)
 	CFLAGS="$CFLAGS -no-cpp-precomp -fno-common"
+	LIBSYLPH_CFLAGS="$LIBSYLPH_CFLAGS -xobjective-c"
 	;;
 *-*-mingw*)
 	native_win32=yes
@@ -86,6 +87,8 @@ case "$target" in
 	AC_CHECK_PROG(WINDRES, windres, windres)
 	;;
 esac
+
+AC_SUBST(LIBSYLPH_CFLAGS)
 
 AM_CONDITIONAL(NATIVE_WIN32, test "$native_win32" = "yes")
 
