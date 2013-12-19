@@ -1,4 +1,4 @@
-SUBDIRS = ac libsylph src plugin po manual faq nsis
+SUBDIRS = ac libsylph src plugin po manual faq nsis macosx
 
 EXTRA_DIST = config.rpath  \
 	ChangeLog.ja \
@@ -20,6 +20,7 @@ EXTRA_DIST = config.rpath  \
 	sylpheed-128x128.png \
 	sylpheed-64x64.png \
 	autogen.sh \
+	makeosx.sh \
 	makewin32.sh \
 	mime.types \
 	sylpheed-mailto-protocol_admin.reg \

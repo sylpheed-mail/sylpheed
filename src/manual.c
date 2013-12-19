@@ -65,6 +65,13 @@ void manual_open(ManualLang lang)
 			       get_startup_dir(),
 			       G_DIR_SEPARATOR_S "doc" G_DIR_SEPARATOR_S
 			       "manual",
+#elif defined(__APPLE__)
+			       get_startup_dir(),
+			       G_DIR_SEPARATOR_S "Contents" G_DIR_SEPARATOR_S
+			       "Resources" G_DIR_SEPARATOR_S
+			       "share" G_DIR_SEPARATOR_S
+			       "sylpheed" G_DIR_SEPARATOR_S
+			       "manual",
 #else
 			       MANUALDIR,
 #endif
@@ -87,6 +94,13 @@ void faq_open(ManualLang lang)
 #ifdef G_OS_WIN32
 			       get_startup_dir(),
 			       G_DIR_SEPARATOR_S "doc" G_DIR_SEPARATOR_S "faq",
+#elif defined(__APPLE__)
+			       get_startup_dir(),
+			       G_DIR_SEPARATOR_S "Contents" G_DIR_SEPARATOR_S
+			       "Resources" G_DIR_SEPARATOR_S
+			       "share" G_DIR_SEPARATOR_S
+			       "sylpheed" G_DIR_SEPARATOR_S
+			       "faq",
 #else
 			       FAQDIR,
 #endif

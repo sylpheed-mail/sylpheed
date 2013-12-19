@@ -1428,6 +1428,16 @@ static void plugin_init(void)
 			   NULL);
 	syl_plugin_load_all(path);
 	g_free(path);
+#elif defined(__APPLE__)
+	path = g_strconcat(get_startup_dir(), G_DIR_SEPARATOR_S,
+			   "Contents" G_DIR_SEPARATOR_S
+			   "Resources" G_DIR_SEPARATOR_S
+			   "lib" G_DIR_SEPARATOR_S
+			   "sylpheed" G_DIR_SEPARATOR_S
+			   PLUGIN_DIR,
+			   NULL);
+	syl_plugin_load_all(path);
+	g_free(path);
 #else
 	syl_plugin_load_all(PLUGINDIR);
 #endif
