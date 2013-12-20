@@ -1,3 +1,10 @@
+2013-12-20
+
+	* src/addr_compl.c: address_completion_create_completion_window():
+	  use gdk_window_get_origin() instead of deprecated
+	  gdk_window_get_deskrelative_origin() (fixes wrong completion list
+	  on OS X).
+
 2013-12-19
 
 	* src/main.c

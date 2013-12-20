@@ -873,7 +873,7 @@ static gboolean address_completion_complete_address_in_entry(GtkEntry *entry,
 static void address_completion_create_completion_window(GtkEntry *entry_,
 							gboolean select_next)
 {
-	gint x, y, height, width, depth;
+	gint x, y, width;
 	GtkWidget *scroll, *clist;
 	GtkRequisition r;
 	guint count = 0;
@@ -916,9 +916,10 @@ static void address_completion_create_completion_window(GtkEntry *entry_,
 		g_free(text[0]);
 	}
 
-	gdk_window_get_geometry(entry->window, &x, &y, &width, &height, &depth);
-	gdk_window_get_deskrelative_origin (entry->window, &x, &y);
-	y += height;
+	gdk_window_get_origin(entry->window, &x, &y);
+	gtk_widget_size_request(entry, &r);
+	width = entry->allocation.width;
+	y += r.height;
 	gtk_window_move(GTK_WINDOW(completion_window), x, y);
 
 	gtk_widget_size_request(clist, &r);
