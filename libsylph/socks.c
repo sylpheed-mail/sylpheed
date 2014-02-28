@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2010 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2014 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -129,6 +129,13 @@ gint socks4_connect(SockInfo *sock, const gchar *hostname, gushort port)
 		return -1;
 	}
 
+	/* replace sock->hostname with endpoint */
+	if (sock->hostname != hostname) {
+		g_free(sock->hostname);
+		sock->hostname = g_strdup(hostname);
+		sock->port = port;
+	}
+
 	debug_print("socks4_connect: SOCKS4 connection to %s:%u successful.\n", hostname, port);
 
 	return 0;
@@ -245,6 +252,13 @@ gint socks5_connect(SockInfo *sock, const gchar *hostname, gushort port,
 			g_warning("socks5_connect: SOCKS5 connect request response read failed");
 			return -1;
 		}
+	}
+
+	/* replace sock->hostname with endpoint */
+	if (sock->hostname != hostname) {
+		g_free(sock->hostname);
+		sock->hostname = g_strdup(hostname);
+		sock->port = port;
 	}
 
 	debug_print("socks5_connect: SOCKS5 connection to %s:%u successful.\n", hostname, port);

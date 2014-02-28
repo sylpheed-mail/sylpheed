@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2008 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2014 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -30,6 +30,7 @@
 
 #include "utils.h"
 #include "ssl.h"
+#include "ssl_hostname_validation.h"
 
 static SSL_CTX *ssl_ctx_SSLv23 = NULL;
 static SSL_CTX *ssl_ctx_TLSv1 = NULL;
@@ -310,9 +311,14 @@ gboolean ssl_init_socket_with_method(SockInfo *sockinfo, SSLMethod method)
 
 		verify_result = SSL_get_verify_result(sockinfo->ssl);
 		if (verify_result == X509_V_OK) {
-			debug_print("SSL verify OK\n");
-			X509_free(server_cert);
-			return TRUE;
+			debug_print("SSL certificate verify OK\n");
+			if (ssl_validate_hostname(sockinfo->hostname, server_cert) == SSL_HOSTNAME_MATCH_FOUND) {
+				debug_print("SSL certificate hostname validation OK\n");
+				X509_free(server_cert);
+				return TRUE;
+			} else {
+				verify_result = X509_V_ERR_APPLICATION_VERIFICATION;
+			}
 		} else if (verify_result == X509_V_ERR_CERT_HAS_EXPIRED) {
 			log_message("SSL certificate of %s has expired\n", sockinfo->hostname);
 			expired = TRUE;
@@ -330,9 +336,14 @@ gboolean ssl_init_socket_with_method(SockInfo *sockinfo, SSLMethod method)
 			return FALSE;
 		}
 
-		g_warning("%s: SSL certificate verify failed (%ld: %s)\n",
-			  sockinfo->hostname, verify_result,
-			  X509_verify_cert_error_string(verify_result));
+		if (verify_result == X509_V_ERR_APPLICATION_VERIFICATION) {
+			g_warning("%s: SSL hostname validation failed\n",
+				  sockinfo->hostname);
+		} else {
+			g_warning("%s: SSL certificate verify failed (%ld: %s)\n",
+				  sockinfo->hostname, verify_result,
+				  X509_verify_cert_error_string(verify_result));
+		}
 
 		if (verify_ui_func) {
 			gint res;

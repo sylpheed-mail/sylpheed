@@ -99,7 +99,11 @@ gint ssl_manager_verify_cert(SockInfo *sockinfo, const gchar *hostname,
 
 	message = g_string_new("");
 	g_string_append_printf(message, _("The SSL certificate of %s cannot be verified by the following reason:"), hostname);
-	g_string_append_printf(message, "\n  %s\n\n", X509_verify_cert_error_string(verify_result));
+	if (verify_result == X509_V_ERR_APPLICATION_VERIFICATION) {
+		g_string_append_printf(message, "\n  certificate hostname does not match\n\n");
+	} else {
+		g_string_append_printf(message, "\n  %s\n\n", X509_verify_cert_error_string(verify_result));
+	}
 	g_string_append_printf(message, _("Subject: %s\n"), subject ? subject : "(unknown)");
 	g_string_append_printf(message, _("Issuer: %s\n"), issuer ? issuer : "(unknown)");
 	g_string_append_printf(message, _("Issued date: %s\n"), not_before);

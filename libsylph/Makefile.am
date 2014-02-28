@@ -39,6 +39,7 @@ libsylph_0_la_SOURCES = \
 	socket.c \
 	socks.c \
 	ssl.c \
+	ssl_hostname_validation.c \
 	stringtable.c \
 	sylmain.c \
 	unmime.c \
@@ -81,6 +82,7 @@ libsylph_0include_HEADERS = \
 	socket.h \
 	socks.h \
 	ssl.h \
+	ssl_hostname_validation.h \
 	stringtable.h \
 	sylmain.h \
 	unmime.h \
