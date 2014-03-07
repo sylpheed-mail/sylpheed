@@ -35,7 +35,7 @@ EXTRA_DIST = $(manualdata_DATA) \
      sylpheed.sgml
 
 update-html:
-	sgml2html --language=ja --charset=nippon sylpheed.sgml
+	sgml2html --language=ja --charset=nippon --header=header.txt sylpheed.sgml
 	for i in *.html; do \
 	  iconv -f EUC-JP -t UTF-8 $$i > $$i.tmp && mv $$i.tmp $$i; \
 	done
