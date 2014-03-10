@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2013 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2014 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -316,6 +316,12 @@ static void summary_create_filter_cb	(SummaryView		*summaryview,
 
 static void summary_column_clicked	(GtkWidget		*button,
 					 SummaryView		*summaryview);
+
+static gboolean summary_column_drop_func(GtkTreeView		*treeview,
+					 GtkTreeViewColumn	*column,
+					 GtkTreeViewColumn	*prev_column,
+					 GtkTreeViewColumn	*next_column,
+					 gpointer		 data);
 
 static void summary_drag_begin		(GtkWidget	  *widget,
 					 GdkDragContext	  *drag_context,
@@ -5522,6 +5528,18 @@ static GtkWidget *summary_tree_view_create(SummaryView *summaryview)
 
 #undef ADD_COLUMN
 
+	/* add rightmost empty column */
+	column = gtk_tree_view_column_new();
+	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
+	gtk_tree_view_column_set_fixed_width(column, 1);
+	gtk_tree_view_column_set_min_width(column, 1);
+	gtk_tree_view_column_set_clickable(column, FALSE);
+	gtk_tree_view_column_set_reorderable(column, FALSE);
+	gtk_tree_view_set_column_drag_function(GTK_TREE_VIEW(treeview),
+					       summary_column_drop_func,
+					       summaryview, NULL);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
+
 	g_object_set_data(G_OBJECT(treeview), "user_data", summaryview);
 
 	g_signal_connect(G_OBJECT(treeview), "button_press_event",
@@ -6351,6 +6369,18 @@ static void summary_column_clicked(GtkWidget *button, SummaryView *summaryview)
 			break;
 		}
 	}
+}
+
+static gboolean summary_column_drop_func(GtkTreeView *treeview,
+					 GtkTreeViewColumn *column,
+					 GtkTreeViewColumn *prev_column,
+					 GtkTreeViewColumn *next_column,
+					 gpointer data)
+{
+	if (next_column == NULL)
+		return FALSE;
+	else
+		return TRUE;
 }
 
 static void summary_drag_begin(GtkWidget *widget, GdkDragContext *drag_context,
