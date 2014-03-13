@@ -467,6 +467,15 @@ FolderView *folderview_create(void)
 	g_signal_connect(G_OBJECT(column->button), "size-allocate",
 			 G_CALLBACK(folderview_col_resized), folderview);
 
+	/* add rightmost empty column */
+	column = gtk_tree_view_column_new();
+	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
+	gtk_tree_view_column_set_min_width(column, 0);
+	gtk_tree_view_column_set_max_width(column, 0);
+	gtk_tree_view_column_set_clickable(column, FALSE);
+	gtk_tree_view_column_set_reorderable(column, FALSE);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
+
 	gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(store),
 					     COL_FOLDER_NAME,
 					     GTK_SORT_ASCENDING);

@@ -5531,8 +5531,8 @@ static GtkWidget *summary_tree_view_create(SummaryView *summaryview)
 	/* add rightmost empty column */
 	column = gtk_tree_view_column_new();
 	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
-	gtk_tree_view_column_set_fixed_width(column, 1);
-	gtk_tree_view_column_set_min_width(column, 1);
+	gtk_tree_view_column_set_min_width(column, 0);
+	gtk_tree_view_column_set_max_width(column, 0);
 	gtk_tree_view_column_set_clickable(column, FALSE);
 	gtk_tree_view_column_set_reorderable(column, FALSE);
 	gtk_tree_view_set_column_drag_function(GTK_TREE_VIEW(treeview),
