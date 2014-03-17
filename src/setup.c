@@ -121,7 +121,7 @@ void setup_mailbox(void)
 
 	dialog = gtk_dialog_new();
 	gtk_window_set_title(GTK_WINDOW(dialog), _("Mailbox setting"));
-	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, FALSE);
+	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, TRUE, FALSE);
 	gtk_widget_set_size_request(dialog, 540, -1);
 	gtk_window_set_position(GTK_WINDOW(dialog),
 				GTK_WIN_POS_CENTER_ON_PARENT);
@@ -676,7 +676,7 @@ PrefsAccount *setup_account(void)
 	setupac.next_btn = gtk_dialog_add_button(GTK_DIALOG(dialog), GTK_STOCK_GO_FORWARD, GTK_RESPONSE_ACCEPT);
 	setupac.cancel_btn = gtk_dialog_add_button(GTK_DIALOG(dialog), GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL);
 
-	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, FALSE);
+	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, TRUE, FALSE);
 	gtk_widget_set_size_request(dialog, 540, -1);
 	gtk_window_set_position(GTK_WINDOW(dialog),
 				GTK_WIN_POS_CENTER_ON_PARENT);
