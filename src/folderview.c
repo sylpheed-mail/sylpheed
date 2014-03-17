@@ -388,6 +388,7 @@ FolderView *folderview_create(void)
 	gtk_tree_view_column_set_fixed_width
 		(column, prefs_common.folder_col_folder);
 	gtk_tree_view_column_set_resizable(column, TRUE);
+	gtk_tree_view_column_set_expand(column, TRUE);
 
 	renderer = gtk_cell_renderer_pixbuf_new();
 	g_object_set(renderer, "ypad", 0, NULL);
@@ -649,6 +650,11 @@ static void folderview_set_columns(FolderView *folderview)
 	column = gtk_tree_view_get_column(treeview, COL_TOTAL);
 	gtk_tree_view_column_set_visible
 		(column, prefs_common.folder_col_visible[COL_TOTAL]);
+	column = gtk_tree_view_get_column(treeview, COL_TOTAL + 1);
+	gtk_tree_view_column_set_visible
+		(column, prefs_common.folder_col_visible[COL_NEW] ||
+			 prefs_common.folder_col_visible[COL_UNREAD] ||
+			 prefs_common.folder_col_visible[COL_TOTAL]);
 }
 
 void folderview_select(FolderView *folderview, FolderItem *item)

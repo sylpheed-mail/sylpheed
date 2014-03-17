@@ -400,6 +400,7 @@ static void query_search_create(void)
 
 	APPEND_COLUMN(_("Folder"), COL_FOLDER, 0);
 	APPEND_COLUMN(_("Subject"), COL_SUBJECT, 200);
+	gtk_tree_view_column_set_expand(column, TRUE);
 	APPEND_COLUMN(_("From"), COL_FROM, 180);
 	APPEND_COLUMN(_("Date"), COL_DATE, 0);
 

@@ -5514,6 +5514,7 @@ static GtkWidget *summary_tree_view_create(SummaryView *summaryview)
 
 	ADD_COLUMN(_("Subject"), text, S_COL_SUBJECT, TRUE,
 		   prefs_common.summary_col_size[S_COL_SUBJECT], 0.0);
+	gtk_tree_view_column_set_expand(column, TRUE);
 	gtk_tree_view_set_expander_column(GTK_TREE_VIEW(treeview), column);
 	ADD_COLUMN(_("From"), text, S_COL_FROM, TRUE,
 		   prefs_common.summary_col_size[S_COL_FROM], 0.0);

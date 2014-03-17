@@ -432,6 +432,7 @@ static void rpop3_window_create(PrefsAccount *account)
 
         APPEND_COLUMN(_("No."), COL_NUMBER, 0);
         APPEND_COLUMN(_("Subject"), COL_SUBJECT, 200);
+	gtk_tree_view_column_set_expand(column, TRUE);
         APPEND_COLUMN(_("From"), COL_FROM, 160);
         APPEND_COLUMN(_("Date"), COL_DATE, 0);
         APPEND_COLUMN(_("Size"), COL_SIZE, 0);
