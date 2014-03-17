@@ -388,7 +388,9 @@ FolderView *folderview_create(void)
 	gtk_tree_view_column_set_fixed_width
 		(column, prefs_common.folder_col_folder);
 	gtk_tree_view_column_set_resizable(column, TRUE);
+#if GTK_CHECK_VERSION(2, 14, 0)
 	gtk_tree_view_column_set_expand(column, TRUE);
+#endif
 
 	renderer = gtk_cell_renderer_pixbuf_new();
 	g_object_set(renderer, "ypad", 0, NULL);

@@ -3,6 +3,14 @@
 	* src/rpop3.c
 	  src/query_search.c
 	  src/summaryview.c
+	  src/folderview.c: disabled auto-expand for GTK+ < 2.14.0 because
+	  of GTK+ Bug #316087 (Resizing columns is chaotic).
+
+2014-03-17
+
+	* src/rpop3.c
+	  src/query_search.c
+	  src/summaryview.c
 	  src/folderview.c: auto-expand Subject / Folder name column on
 	  resize of the tree view.
 
