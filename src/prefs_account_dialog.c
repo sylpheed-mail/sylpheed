@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2012 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2014 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -142,6 +142,7 @@ static struct Privacy {
 	GtkWidget *default_sign_chkbtn;
 	GtkWidget *default_encrypt_chkbtn;
 	GtkWidget *encrypt_reply_chkbtn;
+	GtkWidget *encrypt_to_self_chkbtn;
 	GtkWidget *ascii_armored_chkbtn;
 	GtkWidget *clearsign_chkbtn;
 	GtkWidget *defaultkey_radiobtn;
@@ -342,6 +343,8 @@ static PrefsUIData ui_data[] = {
 	{"default_encrypt", &privacy.default_encrypt_chkbtn,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"encrypt_reply", &privacy.encrypt_reply_chkbtn,
+	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"encrypt_to_self", &privacy.encrypt_to_self_chkbtn,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"ascii_armored", &privacy.ascii_armored_chkbtn,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
@@ -1432,6 +1435,7 @@ static void prefs_account_privacy_create(void)
 	GtkWidget *default_sign_chkbtn;
 	GtkWidget *default_encrypt_chkbtn;
 	GtkWidget *encrypt_reply_chkbtn;
+	GtkWidget *encrypt_to_self_chkbtn;
 	GtkWidget *ascii_armored_chkbtn;
 	GtkWidget *clearsign_chkbtn;
 	GtkWidget *defaultkey_radiobtn;
@@ -1454,6 +1458,8 @@ static void prefs_account_privacy_create(void)
 			   _("PGP encrypt message by default"));
 	PACK_CHECK_BUTTON (vbox2, encrypt_reply_chkbtn,
 			   _("Encrypt when replying to encrypted message"));
+	PACK_CHECK_BUTTON (vbox2, encrypt_to_self_chkbtn,
+			   _("Add my own key to the recipients list"));
 	PACK_CHECK_BUTTON (vbox2, ascii_armored_chkbtn,
 			   _("Use ASCII-armored format for encryption"));
 	PACK_CHECK_BUTTON (vbox2, clearsign_chkbtn,
@@ -1462,7 +1468,7 @@ static void prefs_account_privacy_create(void)
 			  G_CALLBACK (prefs_account_ascii_armored_warning),
 			  NULL);
 
-	PACK_FRAME (vbox1, frame1, _("Sign key"));
+	PACK_FRAME (vbox1, frame1, _("Sign / Encryption key"));
 
 	vbox2 = gtk_vbox_new (FALSE, 0);
 	gtk_widget_show (vbox2);
@@ -1518,6 +1524,7 @@ static void prefs_account_privacy_create(void)
 	privacy.default_sign_chkbtn    = default_sign_chkbtn;
 	privacy.default_encrypt_chkbtn = default_encrypt_chkbtn;
 	privacy.encrypt_reply_chkbtn   = encrypt_reply_chkbtn;
+	privacy.encrypt_to_self_chkbtn = encrypt_to_self_chkbtn;
 	privacy.ascii_armored_chkbtn   = ascii_armored_chkbtn;
 	privacy.clearsign_chkbtn       = clearsign_chkbtn;
 	privacy.defaultkey_radiobtn    = defaultkey_radiobtn;

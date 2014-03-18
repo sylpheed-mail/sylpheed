@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2010 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2014 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -97,6 +97,7 @@ static PrefParam param[] = {
 	{"default_sign", "FALSE", &tmp_ac_prefs.default_sign, P_BOOL},
 	{"default_encrypt", "FALSE", &tmp_ac_prefs.default_encrypt, P_BOOL},
 	{"encrypt_reply", "TRUE", &tmp_ac_prefs.encrypt_reply, P_BOOL},
+	{"encrypt_to_self", "TRUE", &tmp_ac_prefs.encrypt_to_self, P_BOOL},
 	{"ascii_armored", "FALSE", &tmp_ac_prefs.ascii_armored, P_BOOL},
 	{"clearsign", "FALSE", &tmp_ac_prefs.clearsign, P_BOOL},
 	{"sign_key", NULL, &tmp_ac_prefs.sign_key, P_ENUM},

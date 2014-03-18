@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2013 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2014 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -3635,17 +3635,13 @@ static gint compose_send(Compose *compose)
 }
 
 #if USE_GPGME
-/* interfaces to rfc2015 to keep out the prefs stuff there.
- * returns 0 on success and -1 on error. */
-static gint compose_create_signers_list(Compose *compose, GSList **pkey_list)
+static const gchar *compose_get_self_key_id(Compose *compose)
 {
 	const gchar *key_id = NULL;
-	GSList *key_list;
 
 	switch (compose->account->sign_key) {
 	case SIGN_KEY_DEFAULT:
-		*pkey_list = NULL;
-		return 0;
+		break;
 	case SIGN_KEY_BY_FROM:
 		key_id = compose->account->address;
 		break;
@@ -3656,8 +3652,23 @@ static gint compose_create_signers_list(Compose *compose, GSList **pkey_list)
 		break;
 	}
 
-	key_list = rfc2015_create_signers_list(key_id);
+	return key_id;
+}
 
+/* interfaces to rfc2015 to keep out the prefs stuff there.
+ * returns 0 on success and -1 on error. */
+static gint compose_create_signers_list(Compose *compose, GSList **pkey_list)
+{
+	const gchar *key_id = NULL;
+	GSList *key_list;
+
+	key_id = compose_get_self_key_id(compose);
+	if (!key_id) {
+		*pkey_list = NULL;
+		return 0;
+	}
+
+	key_list = rfc2015_create_signers_list(key_id);
 	if (!key_list) {
 		alertpanel_error(_("Could not find any key associated with "
 				   "currently selected key id `%s'."), key_id);
@@ -3666,6 +3677,22 @@ static gint compose_create_signers_list(Compose *compose, GSList **pkey_list)
 
 	*pkey_list = key_list;
 	return 0;
+}
+
+static GSList *compose_create_encrypt_recipients_list(Compose *compose)
+{
+	GSList *recp_list = NULL;
+	const gchar *key_id = NULL;
+
+	g_return_val_if_fail(compose->to_list != NULL, NULL);
+
+	recp_list = g_slist_copy(compose->to_list);
+	if (compose->account->encrypt_to_self) {
+		key_id = compose_get_self_key_id(compose);
+		recp_list = g_slist_append(recp_list, (gpointer)key_id);
+	}
+
+	return recp_list;
 }
 
 /* clearsign message body text */
@@ -3705,6 +3732,7 @@ static gint compose_clearsign_text(Compose *compose, gchar **text)
 static gint compose_encrypt_armored(Compose *compose, gchar **text)
 {
 	gchar *tmp_file;
+	GSList *recp_list;
 
 	tmp_file = get_tmp_file();
 	if (str_write_to_file(*text, tmp_file) < 0) {
@@ -3712,13 +3740,17 @@ static gint compose_encrypt_armored(Compose *compose, gchar **text)
 		return -1;
 	}
 
-	if (rfc2015_encrypt_armored(tmp_file, compose->to_list) < 0) {
+	recp_list = compose_create_encrypt_recipients_list(compose);
+
+	if (rfc2015_encrypt_armored(tmp_file, recp_list) < 0) {
 		alertpanel_error(_("Can't encrypt the message."));
+		g_slist_free(recp_list);
 		g_unlink(tmp_file);
 		g_free(tmp_file);
 		return -1;
 	}
 
+	g_slist_free(recp_list);
 	g_free(*text);
 	*text = file_read_to_str(tmp_file);
 	g_unlink(tmp_file);
@@ -3732,6 +3764,7 @@ static gint compose_encrypt_armored(Compose *compose, gchar **text)
 static gint compose_encrypt_sign_armored(Compose *compose, gchar **text)
 {
 	GSList *key_list;
+	GSList *recp_list;
 	gchar *tmp_file;
 
 	tmp_file = get_tmp_file();
@@ -3746,14 +3779,17 @@ static gint compose_encrypt_sign_armored(Compose *compose, gchar **text)
 		return -1;
 	}
 
-	if (rfc2015_encrypt_sign_armored
-		(tmp_file, compose->to_list, key_list) < 0) {
+	recp_list = compose_create_encrypt_recipients_list(compose);
+
+	if (rfc2015_encrypt_sign_armored(tmp_file, recp_list, key_list) < 0) {
 		alertpanel_error(_("Can't encrypt or sign the message."));
+		g_slist_free(recp_list);
 		g_unlink(tmp_file);
 		g_free(tmp_file);
 		return -1;
 	}
 
+	g_slist_free(recp_list);
 	g_free(*text);
 	*text = file_read_to_str(tmp_file);
 	g_unlink(tmp_file);
@@ -4077,6 +4113,7 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 		}
 	} else if (use_pgpmime_encryption) {
 		GSList *key_list;
+		GSList *recp_list;
 
 		if (compose->use_bcc) {
 			const gchar *text;
@@ -4104,23 +4141,30 @@ static gint compose_write_to_file(Compose *compose, const gchar *file,
 				g_free(bcc);
 			}
 		}
+
+		recp_list = compose_create_encrypt_recipients_list(compose);
+
 		if (use_pgpmime_signing) {
 			if (compose_create_signers_list
 				(compose, &key_list) < 0) {
 				g_unlink(file);
 				return -1;
 			}
-			if (rfc2015_encrypt_sign(file, compose->to_list,
-						 key_list) < 0) {
+
+			if (rfc2015_encrypt_sign(file, recp_list, key_list) < 0) {
 				alertpanel_error(_("Can't encrypt or sign the message."));
+				g_slist_free(recp_list);
 				g_unlink(file);
 				return -1;
 			}
-		} else if (rfc2015_encrypt(file, compose->to_list) < 0) {
+		} else if (rfc2015_encrypt(file, recp_list) < 0) {
 			alertpanel_error(_("Can't encrypt the message."));
+			g_slist_free(recp_list);
 			g_unlink(file);
 			return -1;
 		}
+
+		g_slist_free(recp_list);
 	}
 #endif /* USE_GPGME */
 

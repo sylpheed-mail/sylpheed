@@ -1,5 +1,6 @@
 /* select-keys.c - GTK+ based key selection
  *      Copyright (C) 2001 Werner Koch (dd9jn)
+ *      Copyright (C) 1999-2014 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify        
  * it under the terms of the GNU General Public License as published by
@@ -93,10 +94,10 @@ update_progress (struct select_keys_s *sk, int running, const char *pattern)
     if (!pattern)
 	pattern = "";
     if (!running)
-        buf = g_strdup_printf (_("Please select key for `%s'"), 
+        buf = g_strdup_printf (_("Please select key for \"%s\""), 
                                pattern);
     else 
-        buf = g_strdup_printf (_("Collecting info for `%s' ... %c"), 
+        buf = g_strdup_printf (_("Collecting info for \"%s\" ... %c"), 
                                pattern,
                                windmill[running%DIM(windmill)]);
     gtk_label_set_text (sk->toplabel, buf);
@@ -124,7 +125,7 @@ gpgmegtk_recipient_selection (GSList *recp_names)
     open_dialog (&sk);
 
     do {
-        sk.pattern = recp_names? recp_names->data:NULL;
+        sk.pattern = recp_names ? recp_names->data : NULL;
         gtk_clist_clear (sk.clist);
         fill_clist (&sk, sk.pattern);
         update_progress (&sk, 0, sk.pattern);
@@ -223,7 +224,8 @@ fill_clist (struct select_keys_s *sk, const char *pattern)
     clist = sk->clist;
     g_return_if_fail (clist);
 
-    debug_print ("select_keys:fill_clist:  pattern `%s'\n", pattern);
+    debug_print ("select_keys:fill_clist:  pattern '%s'\n",
+		 pattern ? pattern : "");
 
     /*gtk_clist_freeze (select_keys.clist);*/
     err = gpgme_new (&ctx);
@@ -238,7 +240,7 @@ fill_clist (struct select_keys_s *sk, const char *pattern)
     err = gpgme_op_keylist_start (ctx, pattern, 0);
     if (err) {
         debug_print ("** gpgme_op_keylist_start(%s) failed: %s",
-                     pattern, gpgme_strerror (err));
+                     pattern ? pattern : "", gpgme_strerror (err));
         sk->select_ctx = NULL;
         gpgme_release(ctx);
         return;

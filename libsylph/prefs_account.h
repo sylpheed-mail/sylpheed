@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2010 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2014 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -180,6 +180,9 @@ struct _PrefsAccount
 	gboolean use_proxy_auth;
 	gchar *proxy_name;
 	gchar *proxy_pass;
+
+	/* Privacy */
+	gboolean encrypt_to_self;
 };
 
 PrefsAccount *prefs_account_new		(void);
