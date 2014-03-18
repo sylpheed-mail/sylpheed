@@ -1459,7 +1459,7 @@ static void prefs_account_privacy_create(void)
 	PACK_CHECK_BUTTON (vbox2, encrypt_reply_chkbtn,
 			   _("Encrypt when replying to encrypted message"));
 	PACK_CHECK_BUTTON (vbox2, encrypt_to_self_chkbtn,
-			   _("Add my own key to the recipients list"));
+			   _("Add my own key to the recipients list on encryption"));
 	PACK_CHECK_BUTTON (vbox2, ascii_armored_chkbtn,
 			   _("Use ASCII-armored format for encryption"));
 	PACK_CHECK_BUTTON (vbox2, clearsign_chkbtn,
