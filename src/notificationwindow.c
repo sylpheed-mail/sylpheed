@@ -163,10 +163,10 @@ gint notification_window_open(const gchar *message, const gchar *submessage,
 	if (y < 0) y = 0;
 	gtk_window_move(GTK_WINDOW(window), x, y);
 
-	if (timeout == 0)
-		timeout = 1;
-	notify_window.notify_tag = g_timeout_add(timeout * 1000,
-						 notify_timeout_cb, NULL);
+	if (timeout > 0) {
+		notify_window.notify_tag = g_timeout_add(timeout * 1000,
+							 notify_timeout_cb, NULL);
+	}
 
 	debug_print("notification window created\n");
 
@@ -280,8 +280,11 @@ static gboolean nwin_motion_notify(GtkWidget *widget, GdkEventMotion *event,
 	notify_window.notify_event_count = 0;
 	gtk_window_move(GTK_WINDOW(notify_window.window),
 			notify_window.x, notify_window.y);
-	notify_window.notify_tag = g_timeout_add(notify_window.timeout * 1000,
-						 notify_timeout_cb, NULL);
+	if (notify_window.timeout > 0) {
+		notify_window.notify_tag =
+			g_timeout_add(notify_window.timeout * 1000,
+				      notify_timeout_cb, NULL);
+	}
 
 	return FALSE;
 }

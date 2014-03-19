@@ -250,7 +250,7 @@ static void inc_finished(MainWindow *mainwin, IncResult *result)
 				}
 			}
 
-			notification_window_open(buf, str->str, 5);
+			notification_window_open(buf, str->str, prefs_common.notify_window_period);
 		}
 
 		g_string_free(str, TRUE);

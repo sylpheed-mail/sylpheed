@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2013 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2014 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -70,6 +70,8 @@ static struct Receive {
 	GtkWidget *checkbtn_scan_after_inc;
 
 	GtkWidget *checkbtn_newmsg_notify_window;
+	GtkWidget *spinbtn_notifywin;
+	GtkObject *spinbtn_notifywin_adj;
 #ifdef G_OS_WIN32
 	GtkWidget *checkbtn_newmsg_sound;
 	GtkWidget *entry_newmsg_sound;
@@ -329,6 +331,8 @@ static PrefsUIData ui_data[] = {
 #endif
 	{"enable_newmsg_notify_window", &receive.checkbtn_newmsg_notify_window,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
+	{"notify_window_period", &receive.spinbtn_notifywin,
+	 prefs_set_data_from_spinbtn, prefs_set_spinbtn},
 
 #ifndef G_OS_WIN32
 	{"inc_local", &receive.checkbtn_local,
@@ -854,6 +858,11 @@ static void prefs_receive_create(void)
 
 	GtkWidget *frame_notify;
 	GtkWidget *checkbtn_newmsg_notify_window;
+	GtkWidget *hbox_notifywin;
+	GtkWidget *hbox_spc;
+	GtkWidget *label_notifywin;
+	GtkObject *spinbtn_notifywin_adj;
+	GtkWidget *spinbtn_notifywin;
 	GtkWidget *checkbtn_newmsg_notify;
 	GtkWidget *label_newmsg_notify;
 	GtkWidget *entry_newmsg_notify;
@@ -930,6 +939,49 @@ static void prefs_receive_create(void)
 	PACK_CHECK_BUTTON
 		(vbox4, checkbtn_newmsg_notify_window,
 		 _("Show notification window when new messages arrive"));
+
+	hbox_notifywin = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox_notifywin);
+	gtk_box_pack_start (GTK_BOX (vbox4), hbox_notifywin, FALSE, FALSE, 0);
+
+	hbox_spc = gtk_hbox_new (FALSE, 0);
+	gtk_widget_show (hbox_spc);
+	gtk_box_pack_start (GTK_BOX (hbox_notifywin), hbox_spc, FALSE, FALSE, 0);
+	gtk_widget_set_size_request (hbox_spc, 12, -1);
+
+	label_notifywin = gtk_label_new (_("Display window for"));
+	gtk_widget_show (label_notifywin);
+	gtk_box_pack_start (GTK_BOX (hbox_notifywin), label_notifywin, FALSE, FALSE, 0);
+
+	spinbtn_notifywin_adj = gtk_adjustment_new (10, 0, 1000, 1, 10, 0);
+	spinbtn_notifywin = gtk_spin_button_new
+		(GTK_ADJUSTMENT (spinbtn_notifywin_adj), 1, 0);
+	gtk_widget_show (spinbtn_notifywin);
+	gtk_box_pack_start (GTK_BOX (hbox_notifywin), spinbtn_notifywin, FALSE, FALSE, 0);
+	gtk_widget_set_size_request (spinbtn_notifywin, 64, -1);
+	gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbtn_notifywin), TRUE);
+
+	label_notifywin = gtk_label_new (_("second(s)"));
+	gtk_widget_show (label_notifywin);
+	gtk_box_pack_start (GTK_BOX (hbox_notifywin), label_notifywin, FALSE, FALSE, 0);
+
+	SET_TOGGLE_SENSITIVITY(checkbtn_newmsg_notify_window, hbox_notifywin);
+
+	hbox_notifywin = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox_notifywin);
+	gtk_box_pack_start (GTK_BOX (vbox4), hbox_notifywin, FALSE, FALSE, 0);
+
+	hbox_spc = gtk_hbox_new (FALSE, 0);
+	gtk_widget_show (hbox_spc);
+	gtk_box_pack_start (GTK_BOX (hbox_notifywin), hbox_spc, FALSE, FALSE, 0);
+	gtk_widget_set_size_request (hbox_spc, 12, -1);
+
+	label_notifywin = gtk_label_new (_("0: don't auto-close"));
+	gtk_widget_show (label_notifywin);
+	gtk_box_pack_start (GTK_BOX (hbox_notifywin), label_notifywin, FALSE, FALSE, 0);
+	gtkut_widget_set_small_font_size (label_notifywin);
+
+	SET_TOGGLE_SENSITIVITY(checkbtn_newmsg_notify_window, hbox_notifywin);
 
 #ifdef G_OS_WIN32
 	PACK_CHECK_BUTTON
@@ -1023,6 +1075,8 @@ static void prefs_receive_create(void)
 	receive.checkbtn_scan_after_inc = checkbtn_scan_after_inc;
 
 	receive.checkbtn_newmsg_notify_window = checkbtn_newmsg_notify_window;
+	receive.spinbtn_notifywin       = spinbtn_notifywin;
+	receive.spinbtn_notifywin_adj   = spinbtn_notifywin_adj;
 #ifdef G_OS_WIN32
 	receive.checkbtn_newmsg_sound   = checkbtn_newmsg_sound;
 	receive.entry_newmsg_sound      = entry_newmsg_sound;

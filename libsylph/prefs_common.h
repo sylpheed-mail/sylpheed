@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2013 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2014 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -349,6 +349,8 @@ struct _PrefsCommon
 	gboolean alt_prefer_html;            /* Message */
 
 	gint save_file_type;
+
+	gint notify_window_period;           /* Receive */
 };
 
 extern PrefsCommon prefs_common;
