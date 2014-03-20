@@ -319,7 +319,9 @@ gboolean ssl_init_socket_with_method(SockInfo *sockinfo, SSLMethod method)
 			} else {
 				verify_result = X509_V_ERR_APPLICATION_VERIFICATION;
 			}
-		} else if (verify_result == X509_V_ERR_CERT_HAS_EXPIRED) {
+		}
+
+		if (verify_result == X509_V_ERR_CERT_HAS_EXPIRED) {
 			log_message("SSL certificate of %s has expired\n", sockinfo->hostname);
 			expired = TRUE;
 		} else if (g_slist_find_custom(trust_list, server_cert,

@@ -29,6 +29,13 @@
  *
  */
  
+#ifdef HAVE_CONFIG_H
+#  include "config.h"
+#endif
+
+#if USE_SSL
+
+#include <glib.h>
 
 #include <strings.h>
 #include <openssl/x509v3.h>
@@ -38,6 +45,114 @@
 
 
 #define HOSTNAME_MAX_SIZE 255
+
+
+/* The following host_match() function is based on cURL/libcurl code. */
+
+/***************************************************************************
+ *                                  _   _ ____  _
+ *  Project                     ___| | | |  _ \| |
+ *                             / __| | | | |_) | |
+ *                            | (__| |_| |  _ <| |___
+ *                             \___|\___/|_| \_\_____|
+ *
+ * Copyright (C) 1998 - 2013, Daniel Stenberg, <daniel@haxx.se>, et al.
+ *
+ * This software is licensed as described in the file COPYING, which
+ * you should have received as part of this distribution. The terms
+ * are also available at http://curl.haxx.se/docs/copyright.html.
+ *
+ * You may opt to use, copy, modify, merge, publish, distribute and/or sell
+ * copies of the Software, and permit persons to whom the Software is
+ * furnished to do so, under the terms of the COPYING file.
+ *
+ * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY
+ * KIND, either express or implied.
+ *
+ ***************************************************************************/
+
+/***************************************************************************
+ *
+ * COPYRIGHT AND PERMISSION NOTICE
+ *
+ * Copyright (c) 1996 - 2014, Daniel Stenberg, <daniel@haxx.se>.
+ *
+ * All rights reserved.
+ *
+ * Permission to use, copy, modify, and distribute this software for any purpose
+ * with or without fee is hereby granted, provided that the above copyright
+ * notice and this permission notice appear in all copies.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF THIRD PARTY RIGHTS. IN
+ * NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+ * OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * Except as contained in this notice, the name of a copyright holder shall not
+ * be used in advertising or otherwise to promote the sale, use or other dealings
+ * in this Software without prior written authorization of the copyright holder.
+ *
+ ***************************************************************************/
+
+/**
+* Match a hostname against a wildcard pattern.
+* E.g.
+*  "foo.host.com" matches "*.host.com".
+*
+* We use the matching rule described in RFC6125, section 6.4.3.
+* http://tools.ietf.org/html/rfc6125#section-6.4.3
+*/
+
+static int host_match(const char *hostname, const char *pattern)
+{
+	const char *pattern_label_end, *pattern_wildcard, *hostname_label_end;
+	size_t prefixlen, suffixlen;
+
+	if (!pattern || !*pattern || !hostname || !*hostname)
+		return SSL_HOSTNAME_MATCH_NOT_FOUND;
+
+	/* trivial case */
+	if (g_ascii_strcasecmp(pattern, hostname) == 0)
+		return SSL_HOSTNAME_MATCH_FOUND;
+
+	pattern_wildcard = strchr(pattern, '*');
+	if (pattern_wildcard == NULL) {
+		return g_ascii_strcasecmp(pattern, hostname) == 0 ?
+			SSL_HOSTNAME_MATCH_FOUND : SSL_HOSTNAME_MATCH_NOT_FOUND;
+	}
+
+	/* We require at least 2 dots in pattern to avoid too wide wildcard
+	   match. */
+	pattern_label_end = strchr(pattern, '.');
+	if (pattern_label_end == NULL ||
+	    strchr(pattern_label_end + 1, '.') == NULL ||
+	    pattern_wildcard > pattern_label_end ||
+	    g_ascii_strncasecmp(pattern, "xn--", 4) == 0) {
+		return g_ascii_strcasecmp(pattern, hostname) == 0 ?
+		SSL_HOSTNAME_MATCH_FOUND : SSL_HOSTNAME_MATCH_NOT_FOUND;
+	}
+
+	hostname_label_end = strchr(hostname, '.');
+	if (hostname_label_end == NULL ||
+	    g_ascii_strcasecmp(pattern_label_end, hostname_label_end) != 0)
+		return SSL_HOSTNAME_MATCH_NOT_FOUND;
+
+	/* The wildcard must match at least one character, so the left-most
+	   label of the hostname is at least as large as the left-most label
+	   of the pattern. */
+	if (hostname_label_end - hostname < pattern_label_end - pattern)
+		return SSL_HOSTNAME_MATCH_NOT_FOUND;
+
+	prefixlen = pattern_wildcard - pattern;
+	suffixlen = pattern_label_end - (pattern_wildcard + 1);
+	return g_ascii_strncasecmp(pattern, hostname, prefixlen) == 0 &&
+	       g_ascii_strncasecmp(pattern_wildcard + 1, hostname_label_end - suffixlen, suffixlen) == 0 ?
+		SSL_HOSTNAME_MATCH_FOUND : SSL_HOSTNAME_MATCH_NOT_FOUND;
+}
+
 
 /**
 * Tries to find a match for hostname in the certificate's Common Name field.
@@ -78,12 +193,7 @@ static SSLHostnameValidationResult matches_common_name(const char *hostname, con
 	}
 
 	// Compare expected hostname with the CN
-	if (strcasecmp(hostname, common_name_str) == 0) {
-		return SSL_HOSTNAME_MATCH_FOUND;
-	}
-	else {
-		return SSL_HOSTNAME_MATCH_NOT_FOUND;
-	}
+	return host_match(hostname, common_name_str);
 }
 
 
@@ -122,7 +232,7 @@ static SSLHostnameValidationResult matches_subject_alternative_name(const char *
 				break;
 			}
 			else { // Compare expected hostname with the DNS name
-				if (strcasecmp(hostname, dns_name) == 0) {
+				if (host_match(hostname, dns_name) == SSL_HOSTNAME_MATCH_FOUND) {
 					result = SSL_HOSTNAME_MATCH_FOUND;
 					break;
 				}
@@ -161,3 +271,5 @@ SSLHostnameValidationResult ssl_validate_hostname(const char *hostname, const X5
 
 	return result;
 }
+
+#endif /* USE_SSL */
