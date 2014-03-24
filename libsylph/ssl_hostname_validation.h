@@ -28,6 +28,17 @@
  * Modified naming convention to match LibSylph.
  *
  */
+
+#ifndef __SSL_HOSTNAME_VALIDATION_H__
+#define __SSL_HOSTNAME_VALIDATION_H__
+
+#ifdef HAVE_CONFIG_H
+#  include "config.h"
+#endif
+
+#if USE_SSL
+
+#include <openssl/x509.h>
  
 typedef enum {
 	SSL_HOSTNAME_MATCH_FOUND,
@@ -49,3 +60,7 @@ typedef enum {
 * Returns Error if there was an error.
 */
 SSLHostnameValidationResult ssl_validate_hostname(const char *hostname, const X509 *server_cert);
+
+#endif /* USE_SSL */
+
+#endif /* __SSL_HOSTNAME_VALIDATION_H__ */
