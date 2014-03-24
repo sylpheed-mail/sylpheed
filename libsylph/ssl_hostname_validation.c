@@ -41,6 +41,7 @@
 #include <openssl/x509v3.h>
 #include <openssl/ssl.h>
 
+#include "utils.h"
 #include "ssl_hostname_validation.h"
 
 
@@ -187,6 +188,8 @@ static SSLHostnameValidationResult matches_common_name(const char *hostname, con
 	}			
 	common_name_str = (char *) ASN1_STRING_data(common_name_asn1);
 
+	debug_print("matches_common_name: %s\n", common_name_str);
+
 	// Make sure there isn't an embedded NUL character in the CN
 	if (ASN1_STRING_length(common_name_asn1) != strlen(common_name_str)) {
 		return SSL_HOSTNAME_MALFORMED_CERTIFICATE;
@@ -226,6 +229,8 @@ static SSLHostnameValidationResult matches_subject_alternative_name(const char *
 			// Current name is a DNS name, let's check it
 			char *dns_name = (char *) ASN1_STRING_data(current_name->d.dNSName);
 
+			debug_print("matches_subject_alternative_name: %s\n", dns_name);
+
 			// Make sure there isn't an embedded NUL character in the DNS name
 			if (ASN1_STRING_length(current_name->d.dNSName) != strlen(dns_name)) {
 				result = SSL_HOSTNAME_MALFORMED_CERTIFICATE;
@@ -258,6 +263,8 @@ static SSLHostnameValidationResult matches_subject_alternative_name(const char *
 */
 SSLHostnameValidationResult ssl_validate_hostname(const char *hostname, const X509 *server_cert) {
 	SSLHostnameValidationResult result;
+
+	debug_print("ssl_validate_hostname: validating hostname: %s\n", hostname);
 
 	if((hostname == NULL) || (server_cert == NULL))
 		return SSL_HOSTNAME_ERROR;
