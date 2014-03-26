@@ -12,16 +12,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sylpheed 3.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-19 17:34+0900\n"
-"PO-Revision-Date: 2012-12-11 03:12+0300\n"
+"POT-Creation-Date: 2014-03-26 11:51+0900\n"
+"PO-Revision-Date: 2014-03-25 19:20+0300\n"
 "Last-Translator: Vladimir Smolyar <v_2e@ukr.net>\n"
 "Language-Team: Ukrainian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
-"X-Poedit-Language: Ukrainian\n"
-"X-Poedit-Country: UKRAINE\n"
+"Language: uk_UA\n"
+"X-Generator: Poedit 1.5.5\n"
 
 #: libsylph/account.c:55
 msgid "Reading all config for each account...\n"
@@ -2300,9 +2299,8 @@ msgid "Select destination folder"
 msgstr "Оберіть папку призначення"
 
 #: src/filesel.c:216
-#, fuzzy
 msgid "File type:"
-msgstr "Назва файла :"
+msgstr "Тип файлу:"
 
 #: src/filesel.c:265
 msgid "The link target not found."
@@ -3197,9 +3195,8 @@ msgid "  --debug                debug mode"
 msgstr "  --debug                режим відлагодження"
 
 #: src/main.c:658
-#, fuzzy
 msgid "  --safe-mode            safe mode"
-msgstr "  --debug                режим відлагодження"
+msgstr "  --safe-mode            безпечний режим"
 
 #: src/main.c:659
 msgid "  --help                 display this help and exit"
@@ -4077,7 +4074,6 @@ msgid "Usage: sylpheed [OPTION]..."
 msgstr "Використання: sylpheed [ОПЦІЯ]..."
 
 #: src/mainwindow.c:4096
-#, fuzzy
 msgid ""
 "--compose [address]\n"
 "--attach file1 [file2]...\n"
@@ -4103,14 +4099,15 @@ msgstr ""
 "--status [папка]...\n"
 "--status-full [папка]...\n"
 "--open idпапки/номерлиста\n"
+"--open <URL файлу>\n"
 "--configdir каталог\n"
 "--exit\n"
 "--debug\n"
+"--safe-mode\n"
 "--help\n"
 "--version"
 
 #: src/mainwindow.c:4115
-#, fuzzy
 msgid ""
 "open composition window\n"
 "open composition window with specified files attached\n"
@@ -4136,9 +4133,11 @@ msgstr ""
 "показати загальну кількість листів\n"
 "показати стан кожної папки\n"
 "відкрити лист у новому вікні\n"
+"відкрити лист стандарту rfc822 у новому вікні\n"
 "вказати папку із файлами налаштувань\n"
 "вийти з Sylpheed\n"
 "режим відлагодження\n"
+"безпечний режим\n"
 "показати цю довідку і вийти\n"
 "показати інформацію про версію і вийти"
 
@@ -4217,12 +4216,11 @@ msgstr "Зміст листа - Sylpheed"
 
 #: src/messageview.c:931 src/summaryview.c:3928
 msgid "Original (EML/RFC 822)"
-msgstr ""
+msgstr "Оригінал (EML/RFC 822)"
 
 #: src/messageview.c:935 src/summaryview.c:3932
-#, fuzzy
 msgid "Text (UTF-8)"
-msgstr "Unicode (UTF-8)"
+msgstr "Текст (UTF-8)"
 
 #: src/messageview.c:959 src/summaryview.c:3959
 #, c-format
@@ -4618,7 +4616,7 @@ msgid ""
 "If you leave these entries empty, the same user ID and password as receiving "
 "will be used."
 msgstr ""
-"Якщо Ви залишите ці поля порожніми, буде використано ті ж ID користувача та "
+"Якщо залишити ці поля порожніми, буде використано ті ж ID користувача та "
 "пароль, що й для отримання."
 
 #: src/prefs_account_dialog.c:1258
@@ -4672,9 +4670,8 @@ msgid "Encrypt when replying to encrypted message"
 msgstr "Шифрувати відповідь на шифрований лист"
 
 #: src/prefs_account_dialog.c:1462
-#, fuzzy
 msgid "Add my own key to the recipients list on encryption"
-msgstr "не вдалося отримати список отримувачів."
+msgstr "Додати власний ключ до списку одержувачів після шифрування"
 
 #: src/prefs_account_dialog.c:1464
 msgid "Use ASCII-armored format for encryption"
@@ -4686,7 +4683,7 @@ msgstr "Використовувати підпис відкритим текс�
 
 #: src/prefs_account_dialog.c:1471
 msgid "Sign / Encryption key"
-msgstr ""
+msgstr "Ключ для підпису / шифрування"
 
 #: src/prefs_account_dialog.c:1479
 msgid "Use default GnuPG key"
@@ -5018,14 +5015,12 @@ msgid "New message notification"
 msgstr "Повідомлення про надходження листів"
 
 #: src/prefs_common_dialog.c:941
-#, fuzzy
 msgid "Show notification window when new messages arrive"
-msgstr "Програвати звук після прибуття нових листів"
+msgstr "Показувати сповіщення про прибуття нових листів"
 
 #: src/prefs_common_dialog.c:952
-#, fuzzy
 msgid "Display window for"
-msgstr "Показувати діалог надсилання"
+msgstr "Показувати сповіщення"
 
 #: src/prefs_common_dialog.c:964 src/prefs_common_dialog.c:3187
 msgid "second(s)"
@@ -5033,7 +5028,7 @@ msgstr "секунд"
 
 #: src/prefs_common_dialog.c:979
 msgid "0: don't auto-close"
-msgstr ""
+msgstr "0: не закривати автоматично"
 
 #: src/prefs_common_dialog.c:989
 msgid "Play sound when new messages arrive"
@@ -5346,7 +5341,7 @@ msgstr "Зображати HTML-листи як текст"
 
 #: src/prefs_common_dialog.c:2004
 msgid "Prefer HTML in multipart/alternative for display"
-msgstr ""
+msgstr "Віддавати перевагу формату HTML"
 
 #: src/prefs_common_dialog.c:2006
 msgid "Treat HTML only messages as attachment"
@@ -5470,7 +5465,7 @@ msgstr "Видаляти спам із сервера після отриман�
 
 #: src/prefs_common_dialog.c:2449
 msgid "Do not classify message as junk if sender is in the address book"
-msgstr ""
+msgstr "Не вважати листа спамом, якщо адреса відправника є в адресній книзі"
 
 #: src/prefs_common_dialog.c:2451
 msgid "Mark filtered junk mails as read"
@@ -6322,9 +6317,8 @@ msgid "Destination folder is not specified."
 msgstr "Не вказано папку призначення."
 
 #: src/prefs_filter_edit.c:1864
-#, fuzzy
 msgid "The specified destination folder does not exist."
-msgstr "Файл-джерело не існує."
+msgstr "Вказаної папки не існує."
 
 #: src/prefs_filter_edit.c:1961
 msgid "Invalid condition exists."
@@ -6783,9 +6777,8 @@ msgid "Last 7 days"
 msgstr "За останні 7 днів"
 
 #: src/quick_search.c:117
-#, fuzzy
 msgid "Last 30 days"
-msgstr "За останні 5 днів"
+msgstr "За останні 30 днів"
 
 #: src/quick_search.c:119
 msgid "In addressbook"
@@ -6832,9 +6825,8 @@ msgid "_Get"
 msgstr "Отримати"
 
 #: src/rpop3.c:251 src/rpop3.c:1105
-#, fuzzy
 msgid "_Resume"
-msgstr "/Видалити"
+msgstr "Продовжити"
 
 #: src/rpop3.c:254
 msgid "_Help"
@@ -6938,19 +6930,18 @@ msgstr ""
 "Відновлення буде неможливим."
 
 #: src/select-keys.c:97
-#, fuzzy, c-format
+#, c-format
 msgid "Please select key for \"%s\""
-msgstr "Оберіть, будь ласка, ключ для \"%s\""
+msgstr "Оберіть ключ для \"%s\""
 
 #: src/select-keys.c:100
-#, fuzzy, c-format
+#, c-format
 msgid "Collecting info for \"%s\" ... %c"
 msgstr "Збір інформації про \"%s\" ... %c"
 
 #: src/select-keys.c:284
-#, fuzzy
 msgid "Select encryption keys"
-msgstr "Оберіть файл призначення"
+msgstr "Оберіть ключі шифрування"
 
 #: src/select-keys.c:312
 msgid "Key ID"
