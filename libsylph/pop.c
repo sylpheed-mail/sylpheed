@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2008 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2014 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -798,7 +798,7 @@ static gint pop3_session_recv_msg(Session *session, const gchar *msg)
 			val = pop3_getrange_stat_send(pop3_session);
 		break;
 	case POP3_GETRANGE_STAT:
-		if ((val = pop3_getrange_stat_recv(pop3_session, body)) < 0)
+		if ((val = pop3_getrange_stat_recv(pop3_session, body)) != PS_SUCCESS)
 			return -1;
 		if (pop3_session->count > 0)
 			val = pop3_getrange_uidl_send(pop3_session);
@@ -809,7 +809,7 @@ static gint pop3_session_recv_msg(Session *session, const gchar *msg)
 		if (val == PS_NOTSUPPORTED)
 			pop3_session->error_val = PS_SUCCESS;
 		else if ((val = pop3_getrange_last_recv
-				(pop3_session, body)) < 0)
+				(pop3_session, body)) != PS_SUCCESS)
 			return -1;
 		if (pop3_session->cur_msg > 0)
 			val = pop3_getsize_list_send(pop3_session);
@@ -901,7 +901,7 @@ static gint pop3_session_recv_data_as_file_finished(Session *session, FILE *fp,
 
 	g_return_val_if_fail(pop3_session->state == POP3_RETR_RECV, -1);
 
-	if (pop3_retr_recv(pop3_session, fp, len) < 0)
+	if (pop3_retr_recv(pop3_session, fp, len) != PS_SUCCESS)
 		return -1;
 
 	/* disconnected? */
