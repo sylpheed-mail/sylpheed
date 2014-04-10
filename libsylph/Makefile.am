@@ -109,7 +109,7 @@ libsylph_0_la_LDFLAGS = \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
 	-export-dynamic $(no_undefined) $(export_symbols)
 
-libsylph_0_la_LIBADD = $(GLIB_LIBS)
+libsylph_0_la_LIBADD = $(GLIB_LIBS) $(LIBICONV) $(LIBSYLPH_LIBS)
 
 syl-marshal.h: syl-marshal.list
 	$(GLIB_GENMARSHAL) $< --header --prefix=syl_marshal > $@

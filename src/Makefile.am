@@ -126,6 +126,7 @@ libsylpheed_plugin_0_la_LDFLAGS = \
 
 libsylpheed_plugin_0_la_LIBADD = \
 	$(GTK_LIBS) \
+	$(GLIB_LIBS) \
 	../libsylph/libsylph-0.la
 
 EXTRA_DIST = \
@@ -158,6 +159,7 @@ sylpheed_LDADD = \
 	$(GPGME_LIBS) \
 	$(LDAP_LIBS) \
 	$(LIBICONV) \
+	$(SYLPHEED_LIBS) \
 	libsylpheed-plugin-0.la \
 	../libsylph/libsylph-0.la \
 	$(SYLPHEED_RES)

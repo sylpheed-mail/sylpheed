@@ -10,7 +10,7 @@ MICRO_VERSION=1
 INTERFACE_AGE=1
 BINARY_AGE=1
 EXTRA_VERSION=
-BUILD_REVISION=1156
+BUILD_REVISION=1157
 VERSION=$MAJOR_VERSION.$MINOR_VERSION.$MICRO_VERSION$EXTRA_VERSION
 
 dnl define if this is a development release
@@ -83,12 +83,16 @@ case "$target" in
 *-*-mingw*)
 	native_win32=yes
 	CFLAGS="$CFLAGS -mms-bitfields -mwindows"
-	LIBS="$LIBS -lws2_32 -lwinmm"
+	LIBS="$LIBS"
+	LIBSYLPH_LIBS="-lws2_32 -lwinmm"
+	SYLPHEED_LIBS="-lole32 -Wl,-luuid"
 	AC_CHECK_PROG(WINDRES, windres, windres)
 	;;
 esac
 
 AC_SUBST(LIBSYLPH_CFLAGS)
+AC_SUBST(LIBSYLPH_LIBS)
+AC_SUBST(SYLPHEED_LIBS)
 
 AM_CONDITIONAL(NATIVE_WIN32, test "$native_win32" = "yes")
 
