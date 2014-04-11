@@ -1,3 +1,11 @@
+2014-04-11
+
+	* libsylph/folder.c:
+	  folder_build_tree()
+	  folder_write_list_recursive(): fixed a bug that new/unread/total
+	  numbers in folderlist.xml was corrupted if sizeof(time_t) is 8 on
+	  32-bit (such as recent version of mingw32).
+
 2014-04-10
 
 	* libsylph/libsylph-0.def
