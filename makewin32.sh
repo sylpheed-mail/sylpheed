@@ -7,7 +7,7 @@ export C_INCLUDE_PATH=$C_INCLUDE_PATH:/usr/local/include
   --with-localedir=share/locale \
   --with-themedir=share/icons \
   --enable-oniguruma --enable-threads \
-  'CC=gcc -mtune=core2' CFLAGS=-O3 \
+  'CC=gcc -mthreads -mtune=core2' CFLAGS=-O3 \
   && make \
   && make install-strip \
   && (cd plugin/attachment_tool; make install-plugin) \
