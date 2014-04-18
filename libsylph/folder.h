@@ -20,6 +20,10 @@
 #ifndef __FOLDER_H__
 #define __FOLDER_H__
 
+#ifdef HAVE_CONFIG_H
+#  include "config.h"
+#endif
+
 #include <glib.h>
 #include <time.h>
 
@@ -127,6 +131,7 @@ typedef void (*FolderDestroyNotify)	(Folder		*folder,
 #include "prefs_account.h"
 #include "session.h"
 #include "procmsg.h"
+#include "utils.h"
 
 struct _Folder
 {
@@ -272,7 +277,7 @@ struct _FolderItem
 	gchar *name; /* UTF-8 */
 	gchar *path; /* UTF-8 */
 
-	time_t mtime;
+	stime_t mtime;
 
 	gint new;
 	gint unread;

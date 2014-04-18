@@ -37,6 +37,7 @@ typedef struct _MsgEncryptInfo	MsgEncryptInfo;
 
 #include "folder.h"
 #include "procmime.h"
+#include "utils.h"
 
 typedef enum
 {
@@ -172,8 +173,8 @@ struct _MsgInfo
 {
 	guint  msgnum;
 	gsize  size;
-	time_t mtime;
-	time_t date_t;
+	stime_t mtime;
+	stime_t date_t;
 
 	MsgFlags flags;
 

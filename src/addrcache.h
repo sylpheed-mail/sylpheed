@@ -28,6 +28,7 @@
 #include <stdio.h>
 #include <glib.h>
 #include "addritem.h"
+#include "utils.h"
 
 /* Address cache */
 typedef struct _AddressCache AddressCache;
@@ -36,7 +37,7 @@ struct _AddressCache {
 	gint       nextID;
 	gboolean   dataRead;
 	gboolean   modified;
-	time_t     modifyTime;
+	stime_t    modifyTime;
 	GHashTable *itemHash;
 	GList      *tempList;
 	ItemFolder *rootFolder;

@@ -31,6 +31,7 @@
 
 #include "socket.h"
 #include "socks.h"
+#include "utils.h"
 
 #define SESSION_BUFFSIZE	8192
 
@@ -116,7 +117,7 @@ struct _Session
 
 	SessionState state;
 
-	time_t last_access_time;
+	stime_t last_access_time;
 	GTimeVal tv_prev;
 
 	gint conn_id;

@@ -95,6 +95,14 @@ gint syl_link	(const gchar	*src,
   #define HAVE_U32_TYPEDEF
 #endif
 
+#if defined(G_OS_WIN32) && !defined(_WIN64) && defined(HAVE_64BIT_TIME_T)
+  /* for backward binary compatibility. Use only in struct definition and
+     pointer arguments. */
+  typedef gint32 stime_t;
+#else
+  typedef time_t stime_t;
+#endif
+
 #ifndef BIG_ENDIAN_HOST
   #if (G_BYTE_ORDER == G_BIG_ENDIAN)
     #define BIG_ENDIAN_HOST 1
@@ -514,11 +522,11 @@ gint play_sound			(const gchar	*file,
 				 gboolean	 async);
 
 /* time functions */
-time_t remote_tzoffset_sec	(const gchar	*zone);
-time_t tzoffset_sec		(time_t		*now);
+stime_t remote_tzoffset_sec	(const gchar	*zone);
+stime_t tzoffset_sec		(stime_t	*now);
 gchar *tzoffset_buf		(gchar		*buf,
-				 time_t		*now);
-gchar *tzoffset			(time_t		*now);
+				 stime_t	*now);
+gchar *tzoffset			(stime_t	*now);
 void get_rfc822_date		(gchar		*buf,
 				 gint		 len);
 

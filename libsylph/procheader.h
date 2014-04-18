@@ -91,11 +91,11 @@ MsgInfo *procheader_parse_stream	(FILE		*fp,
 gchar *procheader_get_fromname		(const gchar	*str);
 gchar *procheader_get_toname		(const gchar	*str);
 
-time_t procheader_date_parse		(gchar		*dest,
+stime_t procheader_date_parse		(gchar		*dest,
 					 const gchar	*src,
 					 gint		 len);
 void procheader_date_get_localtime	(gchar		*dest,
 					 gint		 len,
-					 const time_t	 timer);
+					 const stime_t	 timer);
 
 #endif /* __PROCHEADER_H__ */

@@ -1634,7 +1634,7 @@ static gboolean folder_build_tree(GNode *node, gpointer data)
 #endif
 			path = attr->value;
 		} else if (!strcmp(attr->name, "mtime"))
-			mtime = strtoull(attr->value, NULL, 10);
+			mtime = strtoll(attr->value, NULL, 10);
 		else if (!strcmp(attr->name, "new"))
 			new = atoi(attr->value);
 		else if (!strcmp(attr->name, "unread"))
@@ -1945,8 +1945,8 @@ static void folder_write_list_recursive(GNode *node, gpointer data)
 		}
 
 		fprintf(fp,
-			" mtime=\"%llu\" new=\"%d\" unread=\"%d\" total=\"%d\"",
-			(guint64)item->mtime, item->new, item->unread, item->total);
+			" mtime=\"%lld\" new=\"%d\" unread=\"%d\" total=\"%d\"",
+			(gint64)item->mtime, item->new, item->unread, item->total);
 
 		if (item->account)
 			fprintf(fp, " account_id=\"%d\"",

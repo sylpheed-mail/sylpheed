@@ -43,6 +43,7 @@
 
 #include "addritem.h"
 #include "addrcache.h"
+#include "utils.h"
 
 typedef struct _JPilotFile JPilotFile;
 
@@ -58,7 +59,7 @@ struct _JPilotFile {
 	gint                  retVal;
 	gboolean              accessFlag;
 	gboolean              havePC3;
-	time_t                pc3ModifyTime;
+	stime_t               pc3ModifyTime;
 };
 
 /* Limits */

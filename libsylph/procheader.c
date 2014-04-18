@@ -873,7 +873,7 @@ static gint procheader_scan_date_string(const gchar *str,
 	return -1;
 }
 
-time_t procheader_date_parse(gchar *dest, const gchar *src, gint len)
+stime_t procheader_date_parse(gchar *dest, const gchar *src, gint len)
 {
 	static gchar monthstr[] = "JanFebMarAprMayJunJulAugSepOctNovDec";
 	gchar weekday[11];
@@ -951,14 +951,15 @@ time_t procheader_date_parse(gchar *dest, const gchar *src, gint len)
 	return timer;
 }
 
-void procheader_date_get_localtime(gchar *dest, gint len, const time_t timer)
+void procheader_date_get_localtime(gchar *dest, gint len, const stime_t timer)
 {
+	time_t timer_ = timer;
 	struct tm *lt;
 	gchar *default_format = "%y/%m/%d(%a) %H:%M";
 	gchar *buf;
 	gchar tmp[BUFFSIZE];
 
-	lt = localtime(&timer);
+	lt = localtime(&timer_);
 	if (!lt) {
 		g_warning("can't get localtime of %ld\n", timer);
 		dest[0] = '\0';

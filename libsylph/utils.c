@@ -4315,7 +4315,7 @@ gint play_sound(const gchar *file, gboolean async)
 	return 0;
 }
 
-time_t remote_tzoffset_sec(const gchar *zone)
+stime_t remote_tzoffset_sec(const gchar *zone)
 {
 	static gchar ustzstr[] = "PSTPDTMSTMDTCSTCDTESTEDT";
 	gchar zone3[4];
@@ -4383,15 +4383,16 @@ time_t remote_tzoffset_sec(const gchar *zone)
 	return remoteoffset;
 }
 
-time_t tzoffset_sec(time_t *now)
+stime_t tzoffset_sec(stime_t *now)
 {
+	time_t now_ = *now;
 	struct tm gmt, *tmp, *lt;
 	gint off;
 
-	tmp = gmtime(now);
+	tmp = gmtime(&now_);
 	g_return_val_if_fail(tmp != NULL, -1);
 	gmt = *tmp;
-	lt = localtime(now);
+	lt = localtime(&now_);
 	g_return_val_if_fail(lt != NULL, -1);
 
 	off = (lt->tm_hour - gmt.tm_hour) * 60 + lt->tm_min - gmt.tm_min;
@@ -4414,16 +4415,17 @@ time_t tzoffset_sec(time_t *now)
 }
 
 /* calculate timezone offset (buf must not be less than 6 bytes) */
-gchar *tzoffset_buf(gchar *buf, time_t *now)
+gchar *tzoffset_buf(gchar *buf, stime_t *now)
 {
+	time_t now_ = *now;
 	struct tm gmt, *tmp, *lt;
 	gint off;
 	gchar sign = '+';
 
-	tmp = gmtime(now);
+	tmp = gmtime(&now_);
 	g_return_val_if_fail(tmp != NULL, NULL);
 	gmt = *tmp;
-	lt = localtime(now);
+	lt = localtime(&now_);
 	g_return_val_if_fail(lt != NULL, NULL);
 
 	off = (lt->tm_hour - gmt.tm_hour) * 60 + lt->tm_min - gmt.tm_min;
@@ -4450,7 +4452,7 @@ gchar *tzoffset_buf(gchar *buf, time_t *now)
 	return buf;
 }
 
-gchar *tzoffset(time_t *now)
+gchar *tzoffset(stime_t *now)
 {
 	static gchar offset_string[6];
 

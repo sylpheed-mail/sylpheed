@@ -29,6 +29,7 @@
 
 #include "session.h"
 #include "prefs_account.h"
+#include "utils.h"
 
 typedef struct _Pop3MsgInfo	Pop3MsgInfo;
 typedef struct _Pop3Session	Pop3Session;
@@ -99,7 +100,7 @@ struct _Pop3MsgInfo
 {
 	gint size;
 	gchar *uidl;
-	time_t recv_time;
+	stime_t recv_time;
 	guint received : 1;
 	guint deleted  : 1;
 };
@@ -132,7 +133,7 @@ struct _Pop3Session
 	gboolean new_msg_exist;
 	gboolean uidl_is_valid;
 
-	time_t current_time;
+	stime_t current_time;
 
 	Pop3ErrorValue error_val;
 	gchar *error_msg;
