@@ -5333,6 +5333,7 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 
 	gtk_table_set_col_spacings(GTK_TABLE(table), 4);
 
+#ifndef __APPLE__
 	g_signal_connect(G_OBJECT(to_entry), "activate",
 			 G_CALLBACK(to_activated), compose);
 	g_signal_connect(G_OBJECT(newsgroups_entry), "activate",
@@ -5347,6 +5348,7 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 			 G_CALLBACK(followupto_activated), compose);
 	g_signal_connect(G_OBJECT(subject_entry), "activate",
 			 G_CALLBACK(subject_activated), compose);
+#endif
 
 	g_signal_connect(G_OBJECT(to_entry), "grab_focus",
 			 G_CALLBACK(compose_grab_focus_cb), compose);

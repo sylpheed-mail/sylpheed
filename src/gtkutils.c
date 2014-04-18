@@ -355,6 +355,11 @@ static void vadjustment_changed(GtkAdjustment *adj, gpointer data)
 
 	gtk_widget_queue_draw(widget);
 }
+#elif defined(__APPLE__)
+static void clist_select_row(GtkCList *clist, gint row, gint column, GdkEventButton *event, gpointer data)
+{
+	gtk_widget_queue_draw(GTK_WIDGET(clist));
+}
 #endif
 
 void gtkut_clist_set_redraw(GtkCList *clist)
@@ -364,6 +369,9 @@ void gtkut_clist_set_redraw(GtkCList *clist)
 		g_signal_connect(G_OBJECT(clist->vadjustment), "changed",
 				 G_CALLBACK(vadjustment_changed), clist);
 	}
+#elif defined(__APPLE__)
+	g_signal_connect(G_OBJECT(clist), "select-row",
+			 G_CALLBACK(clist_select_row), NULL);
 #endif
 }
 

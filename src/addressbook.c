@@ -509,7 +509,7 @@ void addressbook_open(Compose *target)
 			gtk_tree_path_free(path);
 		}
 		addressbook_menuitem_set_sensitive();
-		gtk_widget_show_all(addrbook.window);
+		gtk_widget_show(addrbook.window);
 	} 
 
 	gtk_window_present(GTK_WINDOW(addrbook.window));
@@ -4073,10 +4073,10 @@ static void ldapsearch_callback(SyldapServer *sls)
 			server = ds->rawDataSource;
 			if (server == sls) {
 				/* Read from cache */
-				gtk_widget_show_all(addrbook.window);
+				gtk_widget_show(addrbook.window);
 				addressbook_set_list(obj);
 				addressbook_ldap_show_message(sls);
-				gtk_widget_show_all(addrbook.window);
+				gtk_widget_show(addrbook.window);
 				gtk_entry_set_text(GTK_ENTRY(addrbook.entry), "");
 			}
 		}

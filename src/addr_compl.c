@@ -594,8 +594,13 @@ static void completion_window_advance_selection(GtkCList *clist, gboolean forwar
 			(row - 1) < 0 ? completion_count - 1 : row - 1;
 
 	gtk_clist_freeze(clist);
-	completion_window_advance_to_row(clist, row);					
+	completion_window_advance_to_row(clist, row);
 	gtk_clist_thaw(clist);
+
+#ifdef __APPLE__
+	/* workaround for a draw bug in OS X */
+	gtk_widget_queue_draw(GTK_WIDGET(clist));
+#endif
 }
 
 #if 0
