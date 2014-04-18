@@ -4463,17 +4463,18 @@ void get_rfc822_date(gchar *buf, gint len)
 {
 	struct tm *lt;
 	time_t t;
+	stime_t t_;
 	gchar day[4], mon[4];
 	gint dd, hh, mm, ss, yyyy;
 	gchar off[6];
 
-	t = time(NULL);
+	t_ = t = time(NULL);
 	lt = localtime(&t);
 
 	sscanf(asctime(lt), "%3s %3s %d %d:%d:%d %d\n",
 	       day, mon, &dd, &hh, &mm, &ss, &yyyy);
 	g_snprintf(buf, len, "%s, %d %s %d %02d:%02d:%02d %s",
-		   day, dd, mon, yyyy, hh, mm, ss, tzoffset_buf(off, &t));
+		   day, dd, mon, yyyy, hh, mm, ss, tzoffset_buf(off, &t_));
 }
 
 /* just a wrapper to suppress the warning of gcc about %c */

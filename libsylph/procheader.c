@@ -885,8 +885,9 @@ stime_t procheader_date_parse(gchar *dest, const gchar *src, gint len)
 	GDateMonth dmonth = G_DATE_BAD_MONTH;
 	struct tm t;
 	gchar *p;
-	time_t timer;
+	time_t timer_;
 	time_t tz_offset;
+	stime_t timer;
 
 	if (procheader_scan_date_string(src, weekday, &day, month, &year,
 					&hh, &mm, &ss, zone) < 0) {
@@ -926,11 +927,11 @@ stime_t procheader_date_parse(gchar *dest, const gchar *src, gint len)
 	t.tm_yday = 0;
 	t.tm_isdst = -1;
 
-	timer = mktime(&t);
-	if (timer == -1) {
+	timer_ = mktime(&t);
+	if (timer_ == -1) {
 		if (year >= 2038) {
 			g_warning("mktime: date overflow: %s", src);
-			timer = G_MAXINT - 12 * 3600;
+			timer_ = G_MAXINT - 12 * 3600;
 		} else {
 			g_warning("mktime: can't convert date: %s", src);
 			if (dest)
@@ -939,6 +940,7 @@ stime_t procheader_date_parse(gchar *dest, const gchar *src, gint len)
 		}
 	}
 
+	timer = timer_;
 	if (timer < G_MAXINT - 12 * 3600) {
 		tz_offset = remote_tzoffset_sec(zone);
 		if (tz_offset != -1)

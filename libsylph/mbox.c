@@ -499,6 +499,7 @@ gint export_msgs_to_mbox(FolderItem *src, GSList *mlist, const gchar *mbox)
 	gchar buf[BUFFSIZE];
 	PrefsAccount *cur_ac;
 	guint count = 0, length;
+	time_t date_t_;
 
 	g_return_val_if_fail(src != NULL, -1);
 	g_return_val_if_fail(src->folder != NULL, -1);
@@ -539,8 +540,8 @@ gint export_msgs_to_mbox(FolderItem *src, GSList *mlist, const gchar *mbox)
 			 sizeof(buf));
 		extract_address(buf);
 
-		fprintf(mbox_fp, "From %s %s",
-			buf, ctime(&msginfo->date_t));
+		date_t_ = msginfo->date_t;
+		fprintf(mbox_fp, "From %s %s", buf, ctime(&date_t_));
 
 		while (fgets(buf, sizeof(buf), msg_fp) != NULL) {
 			if (!strncmp(buf, "From ", 5))

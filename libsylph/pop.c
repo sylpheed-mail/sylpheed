@@ -273,7 +273,7 @@ gint pop3_getrange_uidl_recv(Pop3Session *session, const gchar *data, guint len)
 
 		session->msg[num].uidl = g_strdup(id);
 
-		recv_time = (time_t)g_hash_table_lookup(session->uidl_table, id);
+		recv_time = GPOINTER_TO_INT(g_hash_table_lookup(session->uidl_table, id));
 		session->msg[num].recv_time = recv_time;
 
 		if (!session->ac_prefs->getall && recv_time != RECV_TIME_NONE)

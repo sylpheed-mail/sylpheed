@@ -4275,14 +4275,15 @@ static gint imap_cmd_fetch(IMAPSession *session, guint32 uid,
 	return ok;
 }
 
-static void imap_get_date_time(gchar *buf, size_t len, time_t timer)
+static void imap_get_date_time(gchar *buf, size_t len, stime_t timer)
 {
 	static gchar monthstr[] = "JanFebMarAprMayJunJulAugSepOctNovDec";
 	struct tm *lt;
 	gchar date_time[64];
 	gchar tz[6];
+	time_t timer_ = timer;
 
-	lt = localtime(&timer);
+	lt = localtime(&timer_);
 	if (lt && lt->tm_mon >= 0 && lt->tm_mon < 12) {
 		strftime(date_time, sizeof(date_time), "%d-___-%Y %H:%M:%S",
 			 lt);
