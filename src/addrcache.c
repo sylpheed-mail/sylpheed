@@ -192,7 +192,7 @@ void addrcache_free( AddressCache *cache ) {
 */
 gboolean addrcache_check_file( AddressCache *cache, gchar *path ) {
 	gboolean retVal;
-	struct stat filestat;
+	GStatBuf filestat;
 	retVal = TRUE;
 	if( path ) {
 		if( 0 == g_stat( path, &filestat ) ) {
@@ -208,7 +208,7 @@ gboolean addrcache_check_file( AddressCache *cache, gchar *path ) {
 */
 gboolean addrcache_mark_file( AddressCache *cache, gchar *path ) {
 	gboolean retVal = FALSE;
-	struct stat filestat;
+	GStatBuf filestat;
 	if( path ) {
 		if( 0 == g_stat( path, &filestat ) ) {
 			cache->modifyTime = filestat.st_mtime;

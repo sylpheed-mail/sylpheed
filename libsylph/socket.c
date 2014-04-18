@@ -792,7 +792,7 @@ static void resolver_init(void)
 {
 #ifdef G_OS_UNIX
 	static time_t resolv_conf_mtime = 0;
-	struct stat s;
+	GStatBuf s;
 
 	if (g_stat("/etc/resolv.conf", &s) == 0 &&
 	    s.st_mtime != resolv_conf_mtime) {

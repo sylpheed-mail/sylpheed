@@ -103,6 +103,14 @@ gint syl_link	(const gchar	*src,
   typedef time_t stime_t;
 #endif
 
+#if !GLIB_CHECK_VERSION(2, 26, 0)
+#if (defined (_MSC_VER) || defined (__MINGW32__)) && !defined(_WIN64)
+  typedef struct _stat32 GStatBuf;
+#else
+  typedef struct stat GStatBuf;
+#endif
+#endif
+
 #ifndef BIG_ENDIAN_HOST
   #if (G_BYTE_ORDER == G_BIG_ENDIAN)
     #define BIG_ENDIAN_HOST 1

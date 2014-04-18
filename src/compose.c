@@ -7483,7 +7483,7 @@ static void compose_draft_cb(gpointer data, guint action, GtkWidget *widget)
 		C_UNLOCK();
 		compose_destroy(compose);
 	} else {
-		struct stat s;
+		GStatBuf s;
 		gchar *path;
 
 		path = folder_item_fetch_msg(draft, msgnum);

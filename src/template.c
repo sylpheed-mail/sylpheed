@@ -126,7 +126,7 @@ GSList *template_read_config(void)
 	gchar *filename;
 	GDir *dir;
 	const gchar *dir_name;
-	struct stat s;
+	GStatBuf s;
 	Template *tmpl;
 	guint tmplid;
 	GSList *tmpl_list = NULL;

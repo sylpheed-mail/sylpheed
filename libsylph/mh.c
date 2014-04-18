@@ -937,7 +937,7 @@ static gint mh_remove_all_msg(Folder *folder, FolderItem *item)
 static gboolean mh_is_msg_changed(Folder *folder, FolderItem *item,
 				  MsgInfo *msginfo)
 {
-	struct stat s;
+	GStatBuf s;
 	gchar buf[16];
 
 	if (g_stat(utos_buf(buf, msginfo->msgnum), &s) < 0 ||
@@ -1460,7 +1460,7 @@ static gint mh_remove_folder(Folder *folder, FolderItem *item)
 static time_t mh_get_mtime(FolderItem *item)
 {
 	gchar *path;
-	struct stat s;
+	GStatBuf s;
 
 	path = folder_item_get_path(item);
 	if (g_stat(path, &s) < 0) {
@@ -1676,7 +1676,7 @@ static void mh_scan_tree_recursive(FolderItem *item)
 #else
 	DIR *dp;
 	struct dirent *d;
-	struct stat s;
+	GStatBuf s;
 #endif
 	const gchar *dir_name;
 	gchar *fs_path;

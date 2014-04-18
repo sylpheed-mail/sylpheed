@@ -2397,7 +2397,7 @@ const gchar *get_domain_name(void)
 
 off_t get_file_size(const gchar *file)
 {
-	struct stat s;
+	GStatBuf s;
 
 	if (g_stat(file, &s) < 0) {
 		FILE_OP_ERROR(file, "stat");
@@ -2509,7 +2509,7 @@ gboolean file_exist(const gchar *file, gboolean allow_fifo)
 		return FALSE;
 
 	if (allow_fifo) {
-		struct stat s;
+		GStatBuf s;
 
 		if (g_stat(file, &s) < 0) {
 			if (ENOENT != errno) FILE_OP_ERROR(file, "stat");
@@ -2717,7 +2717,7 @@ gint remove_expired_files(const gchar *dir, guint hours)
 {
 	GDir *dp;
 	const gchar *dir_name;
-	struct stat s;
+	GStatBuf s;
 	gchar *prev_dir;
 	guint file_no;
 	time_t mtime, now, expire_time;
@@ -2771,7 +2771,7 @@ gint remove_expired_files(const gchar *dir, guint hours)
 
 static gint remove_dir_recursive_real(const gchar *dir)
 {
-	struct stat s;
+	GStatBuf s;
 	GDir *dp;
 	const gchar *dir_name;
 	gchar *prev_dir;

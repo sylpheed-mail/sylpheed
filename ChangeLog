@@ -1,5 +1,19 @@
 2014-04-18
 
+	* libsylph/utils.[ch]
+	  libsylph/mh.c
+	  libsylph/procheader.c
+	  libsylph/socket.c
+	  src/addrcache.c
+	  src/compose.c
+	  src/template.c
+	  src/addrbook.c
+	  src/jpilot.c: replaced 'struct stat' passed to g_*stat() with
+	  GStatBuf, which will be defined as struct _stat32 (win32) or
+	  struct stat.
+
+2014-04-18
+
 	* configure.in: added -lgtkmacintegration check.
 	* src/compose.c
 	  src/addressbook.c

@@ -1639,7 +1639,7 @@ GList *addrbook_get_bookfile_list( AddressBookFile *book ) {
 	gchar *adbookdir;
 	GDir *dir;
 	const gchar *dir_name;
-	struct stat statbuf;
+	GStatBuf statbuf;
 	gchar buf[ WORK_BUFLEN ];
 	gchar numbuf[ WORK_BUFLEN ];
 	gint len, lenpre, lensuf, lennum;
