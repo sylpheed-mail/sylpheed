@@ -182,6 +182,9 @@ if test $ac_cv_enable_gpgme = yes; then
 	AM_PATH_GPGME(1.0.0, AC_DEFINE(USE_GPGME, 1, Define if you use GPGME to support OpenPGP.),
 		      [use_gpgme=no
 		       ac_cv_enable_gpgme=no])
+	if test $ac_cv_enable_gpgme = yes; then
+		AC_CHECK_LIB(gpgme, gpgme_io_writen, AC_DEFINE(HAVE_GPGME_IO_WRITEN, 1, Define if GPGME has gpgme_io_writen function.))
+	fi
 else
 	AC_MSG_RESULT(no)
 fi

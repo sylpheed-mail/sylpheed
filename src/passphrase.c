@@ -285,13 +285,16 @@ gpgmegtk_passphrase_cb(void *opaque, const char *uid_hint,
         const char *passphrase_hint, int prev_bad, int fd)
 {
     const char *pass;
-#ifdef G_OS_WIN32
+#if defined(G_OS_WIN32) && !defined(HAVE_GPGME_IO_WRITEN)
     HANDLE hd = (HANDLE)fd;
     DWORD n;
 #endif
 
     if (prefs_common.store_passphrase && last_pass != NULL && !prev_bad) {
-#ifdef G_OS_WIN32
+#ifdef HAVE_GPGME_IO_WRITEN
+        gpgme_io_writen(fd, last_pass, strlen(last_pass));
+        gpgme_io_writen(fd, "\n", 1);
+#elif defined(G_OS_WIN32)
         WriteFile(hd, last_pass, strlen(last_pass), &n, NULL);
         WriteFile(hd, "\n", 1, &n, NULL);
 #else
@@ -306,7 +309,9 @@ gpgmegtk_passphrase_cb(void *opaque, const char *uid_hint,
     gpgmegtk_free_passphrase();
     if (!pass) {
         debug_print ("%% cancel passphrase entry\n");
-#ifdef G_OS_WIN32
+#ifdef HAVE_GPGME_IO_WRITEN
+        gpgme_io_writen(fd, "\n", 1);
+#elif defined(G_OS_WIN32)
         WriteFile(hd, "\n", 1, &n, NULL);
         CloseHandle(hd); /* somehow it will block without this */
 #else
@@ -328,7 +333,10 @@ gpgmegtk_passphrase_cb(void *opaque, const char *uid_hint,
         }
         debug_print ("%% sending passphrase\n");
     }
-#ifdef G_OS_WIN32
+#ifdef HAVE_GPGME_IO_WRITEN
+    gpgme_io_writen(fd, pass, strlen(pass));
+    gpgme_io_writen(fd, "\n", 1);
+#elif defined(G_OS_WIN32)
     WriteFile(hd, pass, strlen(pass), &n, NULL);
     WriteFile(hd, "\n", 1, &n, NULL);
 #else
