@@ -1,7 +1,10 @@
 #!/bin/sh
 
-export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/lib
-export C_INCLUDE_PATH=$C_INCLUDE_PATH:/usr/local/include
+export PATH=$PATH:/target/bin
+export LIBRARY_PATH=$LIBRARY_PATH:/target/lib:/usr/local/lib
+export C_INCLUDE_PATH=$C_INCLUDE_PATH:/target/include:/usr/local/include
+
+(
 
 ./configure --prefix=$HOME/dist \
   --with-localedir=share/locale \
@@ -12,3 +15,5 @@ export C_INCLUDE_PATH=$C_INCLUDE_PATH:/usr/local/include
   && make install-strip \
   && (cd plugin/attachment_tool; make install-plugin) \
   && strip $HOME/dist/lib/sylpheed/plugins/attachment_tool.dll
+
+) 2>&1 | tee sylpheed-build.log
