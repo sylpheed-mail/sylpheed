@@ -467,38 +467,70 @@ static void read_ini_file(void)
 #if defined(G_OS_WIN32) || defined(__APPLE__)
 static void fix_font_setting(void)
 {
-	const gchar *str = NULL;
+	gchar *str = NULL;
+	gchar **strv = NULL;
+	gchar *style = NULL;
+	gchar *size = NULL;
+	gchar *suffix = NULL;
 
 	if (!conv_is_ja_locale())
 		return;
 
 	if (prefs_common.textfont &&
 	    strcmp(prefs_common.textfont, DEFAULT_MESSAGE_FONT) != 0) {
+		guint len;
+
 		if (gtkut_font_can_load(prefs_common.textfont)) {
 			debug_print("font '%s' load ok\n", prefs_common.textfont);
 			return;
 		}
 		debug_print("font '%s' load failed\n", prefs_common.textfont);
+		debug_print("fixing prefs_common.textfont setting\n");
+
+		strv = g_strsplit(prefs_common.textfont, " ", -1);
+		len = g_strv_length(strv);
+		if (len > 0) {
+			if (g_ascii_isdigit(strv[len - 1][0]))
+				size = g_strdup(strv[len - 1]);
+			if (len > 2) {
+				if (g_ascii_strcasecmp(strv[len - 2], "Bold") == 0)
+					style = g_strdup(strv[len - 2]);
+			}
+		}
+		g_strfreev(strv);
 	}
 
-	debug_print("fixing prefs_common.textfont setting\n");
-
+	if (style && size)
+		suffix = g_strconcat(style, " ", size, NULL);
+	else if (size)
+		suffix = g_strdup(size);
+	else
 #ifdef G_OS_WIN32
-	str = "MS Gothic 12";
+		suffix = g_strdup("12");
 #else /* __APPLE__ */
-	str = "Hiragino Kaku Gothic Pro Light 13";
+		suffix = g_strdup("13");
+#endif
+	g_free(style);	
+	g_free(size);
+#ifdef G_OS_WIN32
+	str = g_strconcat("MS Gothic ", suffix, NULL);
+#else /* __APPLE__ */
+	str = g_strconcat("Hiragino Kaku Gothic Pro Light ", suffix, NULL);
 #endif
 
 	if (!gtkut_font_can_load(str)) {
 #ifdef G_OS_WIN32
 		debug_print("font '%s' load failed\n", str);
-		str = "\xef\xbc\xad\xef\xbc\xb3 \xe3\x82\xb4\xe3\x82\xb7\xe3\x83\x83\xe3\x82\xaf 12";
+		g_free(str);
+		str = g_strconcat("\xef\xbc\xad\xef\xbc\xb3 \xe3\x82\xb4\xe3\x82\xb7\xe3\x83\x83\xe3\x82\xaf ", suffix, NULL);
 		if (!gtkut_font_can_load(str)) {
 			debug_print("font '%s' load failed\n", str);
+			g_free(str);
 			str = NULL;
 		}
 #else /* __APPLE__ */
 		debug_print("font '%s' load failed\n", str);
+		g_free(str);
 		str = NULL;
 #endif
 	}
@@ -507,8 +539,11 @@ static void fix_font_setting(void)
 		debug_print("font '%s' load ok\n", str);
 		g_free(prefs_common.textfont);
 		prefs_common.textfont = g_strdup(str);
+		g_free(str);
 	} else
 		g_warning("failed to load text font!");
+
+	g_free(suffix);
 }
 #endif
 
