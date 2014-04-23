@@ -505,17 +505,13 @@ static void fix_font_setting(void)
 	else if (size)
 		suffix = g_strdup(size);
 	else
-#ifdef G_OS_WIN32
 		suffix = g_strdup("12");
-#else /* __APPLE__ */
-		suffix = g_strdup("13");
-#endif
 	g_free(style);	
 	g_free(size);
 #ifdef G_OS_WIN32
 	str = g_strconcat("MS Gothic ", suffix, NULL);
 #else /* __APPLE__ */
-	str = g_strconcat("Hiragino Kaku Gothic Pro Light ", suffix, NULL);
+	str = g_strconcat("Hiragino Kaku Gothic Pro ", suffix, NULL);
 #endif
 
 	if (!gtkut_font_can_load(str)) {
