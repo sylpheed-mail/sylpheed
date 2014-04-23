@@ -908,7 +908,7 @@ static gint rpop3_session_recv_msg(Session *session, const gchar *msg)
 		val = pop3_getrange_stat_send(pop3_session);
 		break;
 	case POP3_GETRANGE_STAT:
-		if ((val = pop3_getrange_stat_recv(pop3_session, body)) < 0)
+		if ((val = pop3_getrange_stat_recv(pop3_session, body)) != PS_SUCCESS)
 			break;
 		if (pop3_session->count > 0)
 			val = pop3_getrange_uidl_send(pop3_session);
@@ -921,7 +921,7 @@ static gint rpop3_session_recv_msg(Session *session, const gchar *msg)
 		if (val == PS_NOTSUPPORTED)
 			pop3_session->error_val = PS_SUCCESS;
 		else if ((val = pop3_getrange_last_recv
-			(pop3_session, body)) < 0)
+			(pop3_session, body)) != PS_SUCCESS)
 			break;
 		if (pop3_session->cur_msg > 0)
 			val = pop3_getsize_list_send(pop3_session);
@@ -1053,14 +1053,14 @@ static gint rpop3_session_recv_data_as_file_finished(Session *session,
 
         switch (pop3_session->state) {
 	case POP3_RETR_RECV:
-        	if (rpop3_retr_recv(pop3_session, fp, len) < 0) {
+        	if (rpop3_retr_recv(pop3_session, fp, len) != PS_SUCCESS) {
                 	ret = -1;
 			break;
 		}
 		if (rpop3_window.recv_array) {
 			if (rpop3_window.recv_cur + 1 < rpop3_window.recv_array->len) {
 				rpop3_window.recv_cur++;
-				if (rpop3_retr_send(pop3_session) < 0)
+				if (rpop3_retr_send(pop3_session) != PS_SUCCESS)
 					ret = -1;
 			} else {
 				rpop3_status_label_set(_("Retrieved %d messages"), rpop3_window.recv_cur + 1);
