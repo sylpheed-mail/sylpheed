@@ -36,8 +36,9 @@
 #define NOTIFICATIONWINDOW_NOTIFY_PERIOD	10000
 #define NOTIFICATIONWINDOW_WIDTH		300
 #define NOTIFICATIONWINDOW_HEIGHT		64
-#define FADE_REFRESH_RATE			50
-#define FADE_SPEED				5
+#define FADE_REFRESH_RATE			50	/* ms */
+#define FADE_SPEED				5	/* pixels */
+#define FADE_IN_LENGTH				10	/* counts */
 
 typedef struct _NotificationWindow
 {
@@ -62,7 +63,11 @@ static NotificationWindow notify_window;
 
 static void notification_window_destroy(void);
 
-static gboolean notify_timeout_cb(gpointer	 data);
+#if GTK_CHECK_VERSION(2, 12, 0)
+static gboolean notify_fadein_timeout_cb(gpointer	 data);
+#endif
+
+static gboolean notify_timeout_cb	(gpointer	 data);
 
 static gboolean nwin_button_pressed	(GtkWidget	*widget,
 					 GdkEventButton	*event,
@@ -119,6 +124,9 @@ gint notification_window_open(const gchar *message, const gchar *submessage,
 	gtk_window_set_skip_taskbar_hint(GTK_WINDOW(window), TRUE);
 	gtk_window_set_gravity(GTK_WINDOW(window), GDK_GRAVITY_SOUTH_EAST);
 	gtk_widget_set_size_request(window, NOTIFICATIONWINDOW_WIDTH, -1);
+#if GTK_CHECK_VERSION(2, 12, 0)
+	gtk_window_set_opacity(GTK_WINDOW(window), 0.0);
+#endif
 	gtk_widget_realize(window);
 	gdk_window_set_type_hint(window->window, GDK_WINDOW_TYPE_HINT_NOTIFICATION);
 
@@ -163,10 +171,16 @@ gint notification_window_open(const gchar *message, const gchar *submessage,
 	if (y < 0) y = 0;
 	gtk_window_move(GTK_WINDOW(window), x, y);
 
+#if GTK_CHECK_VERSION(2, 12, 0)
+	notify_window.notify_tag = g_timeout_add(FADE_REFRESH_RATE,
+						 notify_fadein_timeout_cb,
+						 NULL);
+#else
 	if (timeout > 0) {
 		notify_window.notify_tag = g_timeout_add(timeout * 1000,
 							 notify_timeout_cb, NULL);
 	}
+#endif
 
 	debug_print("notification window created\n");
 
@@ -175,7 +189,7 @@ gint notification_window_open(const gchar *message, const gchar *submessage,
 	notify_window.sublabel = sublabel;
 	notify_window.x = x;
 	notify_window.y = y;
-	notify_window.fade_length = 0;
+	notify_window.fade_length = FADE_IN_LENGTH;
 	notify_window.fade_count = 0;
 	notify_window.notify_event_count = 0;
 	notify_window.timeout = timeout;
@@ -215,6 +229,32 @@ static void notification_window_destroy(void)
 	}
 }
 
+#if GTK_CHECK_VERSION(2, 12, 0)
+static gboolean notify_fadein_timeout_cb(gpointer data)
+{
+	gdk_threads_enter();
+	notify_window.fade_length--;
+	notify_window.fade_count++;
+
+	gtk_window_set_opacity(GTK_WINDOW(notify_window.window),
+			       (gdouble)notify_window.fade_count / FADE_IN_LENGTH);
+
+	if (notify_window.fade_length <= 0) {
+		notify_window.fade_length = 0;
+		notify_window.fade_count = 0;
+		if (notify_window.timeout > 0) {
+			notify_window.notify_tag =
+				g_timeout_add(notify_window.timeout * 1000,
+					      notify_timeout_cb, NULL);
+		}
+		gdk_threads_leave();
+		return FALSE;
+	}
+	gdk_threads_leave();
+	return TRUE;
+}
+#endif
+
 static gboolean notify_fadeout_timeout_cb(gpointer data)
 {
 	gdk_threads_enter();
@@ -223,6 +263,10 @@ static gboolean notify_fadeout_timeout_cb(gpointer data)
 
 	gtk_window_move(GTK_WINDOW(notify_window.window),
 			notify_window.x, notify_window.y + notify_window.fade_count * FADE_SPEED);
+#if GTK_CHECK_VERSION(2, 12, 0)
+	gtk_window_set_opacity(GTK_WINDOW(notify_window.window),
+			       (gdouble)notify_window.fade_length / (gdk_screen_height() - notify_window.y));
+#endif
 
 	if (notify_window.fade_length <= 0) {
 		notification_window_destroy();
