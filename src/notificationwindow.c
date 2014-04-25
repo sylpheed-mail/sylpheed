@@ -322,6 +322,9 @@ static gboolean nwin_motion_notify(GtkWidget *widget, GdkEventMotion *event,
 	}
 	notify_window.fade_count = 0;
 	notify_window.notify_event_count = 0;
+#if GTK_CHECK_VERSION(2, 12, 0)
+	gtk_window_set_opacity(GTK_WINDOW(notify_window.window), 1.0);
+#endif
 	gtk_window_move(GTK_WINDOW(notify_window.window),
 			notify_window.x, notify_window.y);
 	if (notify_window.timeout > 0) {
