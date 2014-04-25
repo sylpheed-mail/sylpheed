@@ -1,5 +1,28 @@
 Changes of Sylpheed
 
+* 3.5.0beta1 (development)
+
+    * Error check fix for remote mailbox was made (#193).
+    * Configure: silent rules are enabled by default.
+    * Configure.in was renamed to configure.ac.
+    * Fade effect was added to the notification window.
+    * Sylpheed.desktop file was updated.
+    * Win32: build fix for newer MinGW was made.
+    * Win32: 32-bit time_t is always used on win32 for backward compatibility.
+    * Win32: included third-party libraries were updated:
+      - GTK+ 2.24.23
+      - GLib 2.38.2
+      - GDK-Pixbuf 2.30.7
+      - Pango 1.36.3
+      - Cairo 1.10.2
+      - libpng 1.14.13
+      - GPGME 1.4.3
+    * Win32: the following issues were fixed because of GTK+ update:
+      - System Icon issue when ran on Windows 7 (#13, #85)
+      - Scroll jumping issue on text views when using Japanese IME
+      - Menus became more native-looking
+      - File dialogs were improved
+
 * 3.4.1 (stable)
 
     * Fixed Bug #193: Lose mails when mailbox is inaccessible.
