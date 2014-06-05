@@ -457,6 +457,7 @@ static gboolean filter_match_cond(FilterCond *cond, MsgInfo *msginfo,
 	gint ret;
 	gboolean matched = FALSE;
 	gboolean not_match = FALSE;
+	gint64 timediff = 0;
 	gchar *file;
 	gchar *cmdline;
 	PrefsAccount *cond_ac;
@@ -495,8 +496,8 @@ static gboolean filter_match_cond(FilterCond *cond, MsgInfo *msginfo,
 		matched = (msginfo->size > cond->int_value * 1024);
 		break;
 	case FLT_COND_AGE_GREATER:
-		matched = (time(NULL) - msginfo->date_t >
-				cond->int_value * 24 * 60 * 60);
+		timediff = time(NULL) - msginfo->date_t;
+		matched = (timediff > cond->int_value * 24 * 60 * 60);
 		break;
 	case FLT_COND_UNREAD:
 		matched = MSG_IS_UNREAD(msginfo->flags);
@@ -541,7 +542,7 @@ static gboolean filter_match_cond(FilterCond *cond, MsgInfo *msginfo,
 			debug_print("filter-log: %s: SIZE_GREATER: %u %s %d (KB)%s\n", G_STRFUNC, msginfo->size, not_match ? "<=" : ">", cond->int_value, nm);
 			break;
 		case FLT_COND_AGE_GREATER:
-			debug_print("filter-log: %s: AGE_GREATER: %ld (sec) %s %d (day)%s\n", G_STRFUNC, time(NULL) - msginfo->date_t, not_match ? "<=" : ">", cond->int_value, nm);
+			debug_print("filter-log: %s: AGE_GREATER: %lld (sec) %s %d (day)%s\n", G_STRFUNC, timediff, not_match ? "<=" : ">", cond->int_value, nm);
 			break;
 		case FLT_COND_UNREAD:
 			debug_print("filter-log: %s: UNREAD%s\n", G_STRFUNC, nm);
