@@ -1819,6 +1819,7 @@ static gint get_spool(FolderItem *dest, const gchar *mbox)
 {
 	gint msgs, size;
 	gint lockfd;
+	LockType locktype = LOCK_FLOCK;
 	gchar tmp_mbox[MAXPATHLEN + 1];
 	GHashTable *folder_table = NULL;
 
@@ -1831,14 +1832,17 @@ static gint get_spool(FolderItem *dest, const gchar *mbox)
 	} else if (size < 0)
 		return -1;
 
-	if ((lockfd = lock_mbox(mbox, LOCK_FLOCK)) < 0)
-		return -1;
+	if ((lockfd = lock_mbox(mbox, locktype)) < 0) {
+		locktype = LOCK_FILE;
+		if ((lockfd = lock_mbox(mbox, locktype)) < 0)
+			return -1;
+	}
 
 	g_snprintf(tmp_mbox, sizeof(tmp_mbox), "%s%ctmpmbox.%p",
 		   get_tmp_dir(), G_DIR_SEPARATOR, mbox);
 
 	if (copy_mbox(mbox, tmp_mbox) < 0) {
-		unlock_mbox(mbox, lockfd, LOCK_FLOCK);
+		unlock_mbox(mbox, lockfd, locktype);
 		return -1;
 	}
 
@@ -1854,7 +1858,7 @@ static gint get_spool(FolderItem *dest, const gchar *mbox)
 
 	g_unlink(tmp_mbox);
 	if (msgs >= 0) empty_mbox(mbox);
-	unlock_mbox(mbox, lockfd, LOCK_FLOCK);
+	unlock_mbox(mbox, lockfd, locktype);
 
 	if (!prefs_common.scan_all_after_inc) {
 		inc_update_folder_foreach(folder_table);

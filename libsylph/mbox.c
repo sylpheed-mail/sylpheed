@@ -33,6 +33,10 @@
 #include <ctype.h>
 #include <time.h>
 
+#ifdef HAVE_LOCKFILE_H
+#  include <lockfile.h>
+#endif
+
 #include "mbox.h"
 #include "procmsg.h"
 #include "procheader.h"
@@ -332,6 +336,17 @@ gint lock_mbox(const gchar *base, LockType type)
 	gint retval = 0;
 
 	if (type == LOCK_FILE) {
+#if HAVE_LIBLOCKFILE
+		gchar *lockfile;
+
+		lockfile = g_strconcat(base, ".lock", NULL);
+		if (lockfile_create(lockfile, 0, L_PID) != L_SUCCESS) {
+			FILE_OP_ERROR(lockfile, "lockfile_create");
+			g_free(lockfile);
+			return -1;
+		}
+		g_free(lockfile);
+#else
 		gchar *lockfile, *locklink;
 		gint retry = 0;
 		FILE *lockfp;
@@ -365,28 +380,23 @@ gint lock_mbox(const gchar *base, LockType type)
 		}
 		g_unlink(lockfile);
 		g_free(lockfile);
+#endif /* HAVE_LIBLOCKFILE */
 	} else if (type == LOCK_FLOCK) {
 		gint lockfd;
 
-#if HAVE_FLOCK
-		if ((lockfd = open(base, O_RDONLY)) < 0) {
-#else
 		if ((lockfd = open(base, O_RDWR)) < 0) {
-#endif
 			FILE_OP_ERROR(base, "open");
 			return -1;
 		}
-#if HAVE_FLOCK
-		if (flock(lockfd, LOCK_EX|LOCK_NB) < 0) {
-			perror("flock");
-#else
 #if HAVE_LOCKF
 		if (lockf(lockfd, F_TLOCK, 0) < 0) {
 			perror("lockf");
+#elif HAVE_FLOCK
+		if (flock(lockfd, LOCK_EX|LOCK_NB) < 0) {
+			perror("flock");
 #else
 		{
-#endif
-#endif /* HAVE_FLOCK */
+#endif /* HAVE_LOCKF */
 			g_warning(_("can't lock %s\n"), base);
 			if (close(lockfd) < 0)
 				perror("close");
@@ -410,8 +420,13 @@ gint unlock_mbox(const gchar *base, gint fd, LockType type)
 		gchar *lockfile;
 
 		lockfile = g_strconcat(base, ".lock", NULL);
+#if HAVE_LIBLOCKFILE
+		if (lockfile_remove(lockfile) != L_SUCCESS) {
+			FILE_OP_ERROR(lockfile, "lockfile_remove");
+#else
 		if (g_unlink(lockfile) < 0) {
 			FILE_OP_ERROR(lockfile, "unlink");
+#endif /* HAVE_LIBLOCKFILE */
 			g_free(lockfile);
 			return -1;
 		}
@@ -419,17 +434,15 @@ gint unlock_mbox(const gchar *base, gint fd, LockType type)
 
 		return 0;
 	} else if (type == LOCK_FLOCK) {
-#if HAVE_FLOCK
-		if (flock(fd, LOCK_UN) < 0) {
-			perror("flock");
-#else
 #if HAVE_LOCKF
 		if (lockf(fd, F_ULOCK, 0) < 0) {
 			perror("lockf");
+#elif HAVE_FLOCK
+		if (flock(fd, LOCK_UN) < 0) {
+			perror("flock");
 #else
 		{
-#endif
-#endif /* HAVE_FLOCK */
+#endif /* HAVE_LOCKF */
 			g_warning(_("can't unlock %s\n"), base);
 			if (close(fd) < 0)
 				perror("close");

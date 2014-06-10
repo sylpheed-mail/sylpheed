@@ -455,6 +455,10 @@ if test $ac_cv_dirent_d_type = yes; then
 		  Define if `struct dirent' has `d_type' member.)
 fi
 
+dnl Checks for liblockfile
+AC_CHECK_HEADERS(lockfile.h)
+AC_CHECK_LIB(lockfile, lockfile_create)
+
 
 dnl Checks for header files.
 AC_HEADER_DIRENT
