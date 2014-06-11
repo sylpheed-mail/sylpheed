@@ -1056,16 +1056,6 @@ static void my_freeaddrinfo(struct addrinfo *res)
 		g_free(res);
 	}
 }
-
-/* MinGW defines gai_strerror() in ws2tcpip.h, but it is not implemented. */
-#undef gai_strerror
-const gchar *gai_strerror(gint errcode)
-{
-	static gchar str[32];
-
-	g_snprintf(str, sizeof(str), "gai errcode: (%d)", errcode);
-	return str;
-}
 #endif
 
 static SockDesc sock_info_connect_by_getaddrinfo(SockInfo *sockinfo)
