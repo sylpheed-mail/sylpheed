@@ -1090,8 +1090,14 @@ static SockDesc sock_info_connect_by_getaddrinfo(SockInfo *sockinfo)
 	g_snprintf(port_str, sizeof(port_str), "%d", sockinfo->port);
 
 	if ((gai_error = getaddrinfo(sockinfo->hostname, port_str, &hints, &res)) != 0) {
+#ifdef G_OS_WIN32
+		fprintf(stderr, "getaddrinfo for %s:%s failed: errno: %d\n",
+			sockinfo->hostname, port_str, gai_error);
+#else
 		fprintf(stderr, "getaddrinfo for %s:%s failed: %s\n",
 			sockinfo->hostname, port_str, gai_strerror(gai_error));
+#endif
+		debug_print("getaddrinfo failed\n");
 		sockinfo->state = CONN_LOOKUPFAILED;
 		return INVALID_SOCKET;
 	}
