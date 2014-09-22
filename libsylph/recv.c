@@ -225,7 +225,7 @@ gint recv_bytes_write(SockInfo *sock, glong size, FILE *fp)
 	}
 
 	if (prev - buf < size && fp &&
-	    fwrite(buf, sizeof(gchar), size - (prev - buf), fp) == EOF) {
+	    fwrite(prev, sizeof(gchar), size - (prev - buf), fp) == EOF) {
 		perror("fwrite");
 		g_warning(_("Can't write to file.\n"));
 		fp = NULL;
