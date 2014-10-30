@@ -144,6 +144,21 @@ gboolean gtkut_font_can_load(const gchar *str)
 #endif
 }
 
+gdouble gtkut_get_dpi(void)
+{
+	gdouble dpi;
+	gdouble dp, di;
+
+	//dpi = gdk_screen_get_resolution(gdk_screen_get_default());
+
+	dp = gdk_screen_get_height(gdk_screen_get_default());
+	di = gdk_screen_get_height_mm(gdk_screen_get_default()) / 25.4;
+	dpi = dp / di;
+
+	debug_print("gtkut_get_dpi: dpi: %f\n", dpi);
+	return dpi;
+}
+
 void gtkut_convert_int_to_gdk_color(gint rgbvalue, GdkColor *color)
 {
 	g_return_if_fail(color != NULL);
@@ -969,6 +984,7 @@ void gtkut_window_popup(GtkWidget *window)
 		gdk_window_move(window->window, new_x, new_y);
 
 	gtk_window_set_skip_taskbar_hint(GTK_WINDOW(window), FALSE);
+	gtk_widget_show(window);
 	gtk_window_present(GTK_WINDOW(window));
 #ifdef G_OS_WIN32
 	/* ensure that the window is displayed at the top */

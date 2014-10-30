@@ -297,6 +297,8 @@ int main(int argc, char *argv[])
 
 	gtkut_widget_init();
 
+	gtkut_get_dpi();
+
 	path = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, "icons", NULL);
 	if (is_dir_exist(path)) {
 		debug_print("icon theme dir: %s\n", path);

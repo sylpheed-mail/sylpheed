@@ -96,6 +96,8 @@ void gtkut_widget_set_small_font_size	(GtkWidget	*widget);
 
 gboolean gtkut_font_can_load		(const gchar	*str);
 
+gdouble gtkut_get_dpi			(void);
+
 void gtkut_convert_int_to_gdk_color	(gint		 rgbvalue,
 					 GdkColor	*color);
 

@@ -3236,6 +3236,7 @@ static gboolean main_window_window_state_cb(GtkWidget *widget,
 					    gpointer data)
 {
 	MainWindow *mainwin = (MainWindow *)data;
+	gboolean minimized = FALSE;
 
 	if ((event->changed_mask & GDK_WINDOW_STATE_MAXIMIZED) != 0) {
 		if ((event->new_window_state & GDK_WINDOW_STATE_MAXIMIZED) != 0)
@@ -3244,23 +3245,32 @@ static gboolean main_window_window_state_cb(GtkWidget *widget,
 			prefs_common.mainwin_maximized = FALSE;
 	}
 	if ((event->changed_mask & GDK_WINDOW_STATE_ICONIFIED) != 0) {
-		if ((event->new_window_state & GDK_WINDOW_STATE_ICONIFIED) != 0)
+		if ((event->new_window_state & GDK_WINDOW_STATE_ICONIFIED) != 0) {
+			debug_print("main_window_window_state_cb: iconified\n");
+			minimized = TRUE;
 			mainwin->window_hidden = TRUE;
-		else
+		} else {
+			debug_print("main_window_window_state_cb: deiconified\n");
 			mainwin->window_hidden = FALSE;
+		}
 	}
 	if ((event->changed_mask & GDK_WINDOW_STATE_WITHDRAWN) != 0) {
-		if ((event->new_window_state & GDK_WINDOW_STATE_WITHDRAWN) != 0)
+		if ((event->new_window_state & GDK_WINDOW_STATE_WITHDRAWN) != 0) {
+			debug_print("main_window_window_state_cb: withdrawn\n");
 			mainwin->window_hidden = TRUE;
-		else
+		} else {
+			debug_print("main_window_window_state_cb: unwithdrawn\n");
 			mainwin->window_hidden = FALSE;
+		}
 	}
 
-	if (mainwin->window_hidden &&
-	    prefs_common.show_trayicon && prefs_common.minimize_to_tray)
+	if (minimized &&
+	    prefs_common.show_trayicon && prefs_common.minimize_to_tray) {
 		gtk_window_set_skip_taskbar_hint(GTK_WINDOW(widget), TRUE);
-	else if (!mainwin->window_hidden)
+		gtk_widget_hide(widget);
+	} else if (!mainwin->window_hidden) {
 		gtk_window_set_skip_taskbar_hint(GTK_WINDOW(widget), FALSE);
+	}
 
 	return FALSE;
 }
