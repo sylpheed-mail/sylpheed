@@ -1187,6 +1187,10 @@ MainWindow *main_window_create(SeparateType type)
 #endif
 
 	/* initialize online switch */
+	if (prefs_common.startup_online_mode == 1)
+		prefs_common.online_mode = TRUE;
+	else if (prefs_common.startup_online_mode == 0)
+		prefs_common.online_mode = FALSE;
 	prefs_common.online_mode = !prefs_common.online_mode;
 	online_switch_clicked(online_switch, mainwin);
 

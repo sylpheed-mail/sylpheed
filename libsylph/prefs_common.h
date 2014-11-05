@@ -351,6 +351,8 @@ struct _PrefsCommon
 	gint save_file_type;
 
 	gint notify_window_period;           /* Receive */
+
+	gint startup_online_mode;            /* Online */
 };
 
 extern PrefsCommon prefs_common;

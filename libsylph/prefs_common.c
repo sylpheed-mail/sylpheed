@@ -476,6 +476,9 @@ static PrefParam param[] = {
 	{"logwindow_line_limit", "1000", &prefs_common.logwin_line_limit,
 	 P_INT},
 
+	{"online_mode", "TRUE", &prefs_common.online_mode, P_BOOL},
+	{"startup_online_mode", "1", &prefs_common.startup_online_mode, P_INT},
+
 	/* External commands */
 #ifdef G_OS_WIN32
 	{"uri_open_command", NULL, &prefs_common.uri_cmd,
@@ -545,7 +548,7 @@ void prefs_common_read_config(void)
 
 	g_free(path);
 
-	prefs_common.online_mode = TRUE;
+	//prefs_common.online_mode = TRUE;
 
 	path = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, COMMAND_HISTORY,
 			   NULL);

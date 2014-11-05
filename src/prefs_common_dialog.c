@@ -246,6 +246,8 @@ static struct Other {
 	GtkWidget *checkbtn_cleanonexit;
 	GtkWidget *checkbtn_askonclean;
 	GtkWidget *checkbtn_warnqueued;
+
+	GtkWidget *radiobtn_online_mode;
 } other;
 
 static struct Extcmd {
@@ -308,6 +310,9 @@ static void prefs_common_addr_compl_set_radiobtn	   (PrefParam *pparam);
 
 static void prefs_common_attach_toolbtn_pos_set_data_from_radiobtn (PrefParam *pparam);
 static void prefs_common_attach_toolbtn_pos_set_radiobtn	   (PrefParam *pparam);
+
+static void prefs_common_online_mode_set_data_from_radiobtn(PrefParam *pparam);
+static void prefs_common_online_mode_set_radiobtn	   (PrefParam *pparam);
 
 static PrefsUIData ui_data[] = {
 	/* Receive */
@@ -608,6 +613,10 @@ static PrefsUIData ui_data[] = {
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"warn_queued_on_exit", &other.checkbtn_warnqueued,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
+
+	{"startup_online_mode", &other.radiobtn_online_mode,
+	 prefs_common_online_mode_set_data_from_radiobtn,
+	 prefs_common_online_mode_set_radiobtn},
 
 	/* {"logwindow_line_limit", NULL, NULL, NULL}, */
 
@@ -2784,6 +2793,12 @@ static GtkWidget *prefs_other_create(void)
 	GtkWidget *checkbtn_askonclean;
 	GtkWidget *checkbtn_warnqueued;
 
+	GtkWidget *frame_online;
+	GtkWidget *vbox_online;
+	GtkWidget *radiobtn_online_mode;
+	GtkWidget *radiobtn_start_offline;
+	GtkWidget *radiobtn_remember_prev_online;
+
 	vbox1 = gtk_vbox_new (FALSE, VSPACING);
 	gtk_widget_show (vbox1);
 
@@ -2892,6 +2907,41 @@ static GtkWidget *prefs_other_create(void)
 	PACK_CHECK_BUTTON (vbox_exit, checkbtn_warnqueued,
 			   _("Warn if there are queued messages"));
 
+	PACK_FRAME (vbox1, frame_online, _("Online mode"));
+
+	vbox_online = gtk_vbox_new (FALSE, 0);
+	gtk_widget_show (vbox_online);
+	gtk_container_add (GTK_CONTAINER (frame_online), vbox_online);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox_online), 8);
+
+	hbox1 = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox1);
+	gtk_box_pack_start (GTK_BOX (vbox_online), hbox1, FALSE, FALSE, 0);
+
+	radiobtn_online_mode = gtk_radio_button_new_with_label
+		(NULL, _("Start as online"));
+	gtk_widget_show (radiobtn_online_mode);
+	gtk_box_pack_start (GTK_BOX (hbox1), radiobtn_online_mode,
+			    FALSE, FALSE, 0);
+	g_object_set_data (G_OBJECT (radiobtn_online_mode), MENU_VAL_ID,
+			   GINT_TO_POINTER (1));
+
+	radiobtn_start_offline = gtk_radio_button_new_with_label_from_widget
+		(GTK_RADIO_BUTTON (radiobtn_online_mode), _("Start as offline"));
+	gtk_widget_show (radiobtn_start_offline);
+	gtk_box_pack_start (GTK_BOX (hbox1), radiobtn_start_offline,
+			    FALSE, FALSE, 0);
+	g_object_set_data (G_OBJECT (radiobtn_start_offline), MENU_VAL_ID,
+			   GINT_TO_POINTER (0));
+
+	radiobtn_remember_prev_online = gtk_radio_button_new_with_label_from_widget
+		(GTK_RADIO_BUTTON (radiobtn_online_mode), _("Remember previous mode"));
+	gtk_widget_show (radiobtn_remember_prev_online);
+	gtk_box_pack_start (GTK_BOX (hbox1), radiobtn_remember_prev_online,
+			    FALSE, FALSE, 0);
+	g_object_set_data (G_OBJECT (radiobtn_remember_prev_online), MENU_VAL_ID,
+			   GINT_TO_POINTER (2));
+
 	other.optmenu_recvdialog         = optmenu_recvdialog;
 	other.checkbtn_no_recv_err_panel = checkbtn_no_recv_err_panel;
 	other.checkbtn_close_recv_dialog = checkbtn_close_recv_dialog;
@@ -2904,6 +2954,8 @@ static GtkWidget *prefs_other_create(void)
 	other.checkbtn_cleanonexit = checkbtn_cleanonexit;
 	other.checkbtn_askonclean  = checkbtn_askonclean;
 	other.checkbtn_warnqueued  = checkbtn_warnqueued;
+
+	other.radiobtn_online_mode = radiobtn_online_mode;
 
 	return vbox1;
 }
@@ -4610,6 +4662,56 @@ static void prefs_common_attach_toolbtn_pos_set_radiobtn(PrefParam *pparam)
 		data = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(btn),
 							 MENU_VAL_ID));
 		if (data == prefs_common.attach_toolbutton_pos) {
+			gtk_toggle_button_set_active(btn, TRUE);
+			break;
+		}
+		group = group->next;
+	}
+}
+
+static void prefs_common_online_mode_set_data_from_radiobtn(PrefParam *pparam)
+{
+	PrefsUIData *ui_data;
+	GtkRadioButton *radiobtn;
+	GSList *group;
+
+	ui_data = (PrefsUIData *)pparam->ui_data;
+	g_return_if_fail(ui_data != NULL);
+	g_return_if_fail(*ui_data->widget != NULL);
+
+	radiobtn = GTK_RADIO_BUTTON(*ui_data->widget);
+	group = gtk_radio_button_get_group(radiobtn);
+	while (group != NULL) {
+		GtkToggleButton *btn = GTK_TOGGLE_BUTTON(group->data);
+
+		if (gtk_toggle_button_get_active(btn)) {
+			prefs_common.startup_online_mode =
+				GPOINTER_TO_INT(g_object_get_data(G_OBJECT(btn), MENU_VAL_ID));
+			break;
+		}
+		group = group->next;
+	}
+}
+
+static void prefs_common_online_mode_set_radiobtn(PrefParam *pparam)
+{
+	PrefsUIData *ui_data;
+	GtkRadioButton *radiobtn;
+	GSList *group;
+
+	ui_data = (PrefsUIData *)pparam->ui_data;
+	g_return_if_fail(ui_data != NULL);
+	g_return_if_fail(*ui_data->widget != NULL);
+
+	radiobtn = GTK_RADIO_BUTTON(*ui_data->widget);
+	group = gtk_radio_button_get_group(radiobtn);
+	while (group != NULL) {
+		GtkToggleButton *btn = GTK_TOGGLE_BUTTON(group->data);
+		gint data;
+
+		data = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(btn),
+							 MENU_VAL_ID));
+		if (data == prefs_common.startup_online_mode) {
 			gtk_toggle_button_set_active(btn, TRUE);
 			break;
 		}
