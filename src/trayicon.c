@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2012 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2014 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -244,11 +244,19 @@ static void trayicon_activated(GtkStatusIcon *status_icon, gpointer data)
 {
 	MainWindow *mainwin = (MainWindow *)data;
 
+#ifdef G_OS_WIN32
+	if (prefs_common.toggle_window_on_trayicon_click &&
+	    !mainwin->window_hidden && !mainwin->window_obscured)
+		gtk_window_iconify(GTK_WINDOW(mainwin->window));
+	else
+		main_window_popup(mainwin);
+#else
 	if (prefs_common.toggle_window_on_trayicon_click &&
 	    gtk_window_is_active(GTK_WINDOW(mainwin->window)))
 		gtk_window_iconify(GTK_WINDOW(mainwin->window));
 	else
 		main_window_popup(mainwin);
+#endif
 }
 
 static void trayicon_popup_menu_cb(GtkStatusIcon *status_icon, guint button,
