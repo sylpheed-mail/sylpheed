@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2012 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2014 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,6 +40,9 @@
 #include "gtkutils.h"
 #include "utils.h"
 
+#define PROGRESS_DIALOG_WIDTH		460
+#define PROGRESS_TREE_VIEW_HEIGHT	120
+
 ProgressDialog *progress_dialog_create(void)
 {
 	ProgressDialog *progress;
@@ -72,7 +75,7 @@ ProgressDialog *progress_dialog_create(void)
 	gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(treeview), TRUE);
 	gtk_widget_show(treeview);
 	gtk_container_add(GTK_CONTAINER(scrolledwin), treeview);
-	gtk_widget_set_size_request(treeview, -1, 120);
+	gtk_widget_set_size_request(treeview, -1, PROGRESS_TREE_VIEW_HEIGHT * gtkut_get_dpi_multiplier());
 
 	selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
 	gtk_tree_selection_set_mode(selection, GTK_SELECTION_BROWSE);
@@ -91,7 +94,7 @@ ProgressDialog *progress_dialog_create(void)
 		(_("Account"), renderer, "text", PROG_COL_NAME, NULL);
 	gtk_tree_view_column_set_resizable(column, TRUE);
 	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
-	gtk_tree_view_column_set_fixed_width(column, 120);
+	gtk_tree_view_column_set_fixed_width(column, 120 * gtkut_get_dpi_multiplier());
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
 
 	renderer = gtk_cell_renderer_text_new();
@@ -99,7 +102,7 @@ ProgressDialog *progress_dialog_create(void)
 		(_("Status"), renderer, "text", PROG_COL_STATUS, NULL);
 	gtk_tree_view_column_set_resizable(column, TRUE);
 	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
-	gtk_tree_view_column_set_fixed_width(column, 100);
+	gtk_tree_view_column_set_fixed_width(column, 100 * gtkut_get_dpi_multiplier());
 	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview), column);
 
 	renderer = gtk_cell_renderer_text_new();
@@ -128,7 +131,7 @@ ProgressDialog *progress_dialog_simple_create(void)
 	progress = g_new0(ProgressDialog, 1);
 
 	dialog = gtk_dialog_new();
-	gtk_widget_set_size_request(dialog, 460, -1);
+	gtk_widget_set_size_request(dialog, PROGRESS_DIALOG_WIDTH * gtkut_get_dpi_multiplier(), -1);
 	gtk_container_set_border_width(GTK_CONTAINER(dialog), 8);
 	gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
 	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, TRUE, TRUE);

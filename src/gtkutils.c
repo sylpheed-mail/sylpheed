@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2011 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2014 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -157,6 +157,24 @@ gdouble gtkut_get_dpi(void)
 
 	debug_print("gtkut_get_dpi: dpi: %f\n", dpi);
 	return dpi;
+}
+
+gdouble gtkut_get_dpi_multiplier(void)
+{
+	gdouble dpi;
+	gdouble mul;
+
+	dpi = gtkut_get_dpi();
+
+	/* 96 / 120 / 144 dpi */
+	if (dpi > 142)
+		mul = 1.5;
+	else if (dpi > 118)
+		mul = 1.25;
+	else
+		mul = 1.0;
+
+	return mul;
 }
 
 void gtkut_convert_int_to_gdk_color(gint rgbvalue, GdkColor *color)

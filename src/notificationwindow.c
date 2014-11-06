@@ -32,10 +32,11 @@
 #include "notificationwindow.h"
 #include "mainwindow.h"
 #include "utils.h"
+#include "gtkutils.h"
 
 #define NOTIFICATIONWINDOW_NOTIFY_PERIOD	10000
-#define NOTIFICATIONWINDOW_WIDTH		300
-#define NOTIFICATIONWINDOW_HEIGHT		64
+#define NOTIFICATIONWINDOW_WIDTH		400
+#define NOTIFICATIONWINDOW_HEIGHT		80
 #define FADE_REFRESH_RATE			50	/* ms */
 #define FADE_SPEED				5	/* pixels */
 #define FADE_IN_LENGTH				10	/* counts */
@@ -111,6 +112,11 @@ gint notification_window_open(const gchar *message, const gchar *submessage,
 	GdkRectangle rect;
 	gint x, y;
 	GtkRequisition requisition;
+	gint window_width;
+	gint window_height;
+
+	window_width = NOTIFICATIONWINDOW_WIDTH * gtkut_get_dpi_multiplier();
+	window_height = NOTIFICATIONWINDOW_HEIGHT * gtkut_get_dpi_multiplier();
 
 	if (notify_window.window) {
 		notification_window_destroy();
@@ -123,7 +129,7 @@ gint notification_window_open(const gchar *message, const gchar *submessage,
 	gtk_widget_set_events(window, GDK_EXPOSURE_MASK|GDK_BUTTON_MOTION_MASK|GDK_POINTER_MOTION_MASK|GDK_POINTER_MOTION_HINT_MASK|GDK_BUTTON_PRESS_MASK|GDK_BUTTON_RELEASE_MASK|GDK_ENTER_NOTIFY_MASK|GDK_LEAVE_NOTIFY_MASK);
 	gtk_window_set_skip_taskbar_hint(GTK_WINDOW(window), TRUE);
 	gtk_window_set_gravity(GTK_WINDOW(window), GDK_GRAVITY_SOUTH_EAST);
-	gtk_widget_set_size_request(window, NOTIFICATIONWINDOW_WIDTH, -1);
+	gtk_widget_set_size_request(window, window_width, -1);
 #if GTK_CHECK_VERSION(2, 12, 0)
 	gtk_window_set_opacity(GTK_WINDOW(window), 0.0);
 #endif
@@ -132,9 +138,9 @@ gint notification_window_open(const gchar *message, const gchar *submessage,
 
 	/* move window bottom-right */
 	get_work_area(&rect);
-	x = rect.x + rect.width - NOTIFICATIONWINDOW_WIDTH - 2;
+	x = rect.x + rect.width - window_width - 2;
 	if (x < 0) x = 0;
-	y = rect.y + rect.height - NOTIFICATIONWINDOW_HEIGHT - 2;
+	y = rect.y + rect.height - window_height - 2;
 	if (y < 0) y = 0;
 	gtk_window_move(GTK_WINDOW(window), x, y);
 
@@ -164,9 +170,9 @@ gint notification_window_open(const gchar *message, const gchar *submessage,
 
 	/* adjust window size and position */
 	gtk_widget_get_child_requisition(window, &requisition);
-	notify_window.width = NOTIFICATIONWINDOW_WIDTH;
-	notify_window.height = MAX(requisition.height, NOTIFICATIONWINDOW_HEIGHT);
-	gtk_widget_set_size_request(window, NOTIFICATIONWINDOW_WIDTH, notify_window.height);
+	notify_window.width = window_width;
+	notify_window.height = MAX(requisition.height, window_height);
+	gtk_widget_set_size_request(window, window_width, notify_window.height);
 	y = rect.y + rect.height - notify_window.height - 2;
 	if (y < 0) y = 0;
 	gtk_window_move(GTK_WINDOW(window), x, y);

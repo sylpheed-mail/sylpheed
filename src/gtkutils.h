@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2008 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2014 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -97,6 +97,7 @@ void gtkut_widget_set_small_font_size	(GtkWidget	*widget);
 gboolean gtkut_font_can_load		(const gchar	*str);
 
 gdouble gtkut_get_dpi			(void);
+gdouble gtkut_get_dpi_multiplier	(void);
 
 void gtkut_convert_int_to_gdk_color	(gint		 rgbvalue,
 					 GdkColor	*color);
