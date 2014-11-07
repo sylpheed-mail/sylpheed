@@ -357,7 +357,7 @@ static void rpop3_window_create(PrefsAccount *account)
 	g_snprintf(buf, sizeof(buf), _("%s - POP3 Remote mailbox"),
 		   account->account_name ? account->account_name : "");
 	gtk_window_set_title(GTK_WINDOW(window), buf);
-	gtk_widget_set_size_request(window, 640, -1);
+	gtk_widget_set_size_request(window, 640 * gtkut_get_dpi_multiplier(), -1);
 	gtk_window_set_policy(GTK_WINDOW(window), FALSE, TRUE, TRUE);
 	g_signal_connect(G_OBJECT(window), "delete_event",
 			 G_CALLBACK(window_deleted), NULL);
@@ -393,7 +393,7 @@ static void rpop3_window_create(PrefsAccount *account)
 				       GTK_POLICY_AUTOMATIC);
 	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrwin),
 					    GTK_SHADOW_IN);
-	gtk_widget_set_size_request(scrwin, -1, 320);
+	gtk_widget_set_size_request(scrwin, -1, 320 * gtkut_get_dpi_multiplier());
 
 	store = gtk_list_store_new(N_COLS, G_TYPE_INT, G_TYPE_STRING,
 				   G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING,

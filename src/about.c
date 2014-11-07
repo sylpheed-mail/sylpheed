@@ -90,7 +90,7 @@ static void about_create(void)
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_title(GTK_WINDOW(window), _("About"));
 	gtk_container_set_border_width(GTK_CONTAINER(window), 8);
-	gtk_widget_set_size_request(window, 518, 358);
+	gtk_widget_set_size_request(window, 518 * gtkut_get_dpi_multiplier(), 358 * gtkut_get_dpi_multiplier());
 	gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
 	g_signal_connect(G_OBJECT(window), "delete_event",
 			 G_CALLBACK(gtk_widget_hide_on_delete), NULL);

@@ -3181,7 +3181,7 @@ static gboolean compose_check_recipients(Compose *compose)
 	gtk_window_set_position(GTK_WINDOW(window),
 				GTK_WIN_POS_CENTER_ON_PARENT);
 	gtk_window_set_modal(GTK_WINDOW(window), TRUE);
-	gtk_widget_set_size_request(window, 480, -1);
+	gtk_widget_set_size_request(window, 480 * gtkut_get_dpi_multiplier(), -1);
 	gtk_widget_realize(window);
 	g_signal_connect(G_OBJECT(window), "delete_event",
 			 G_CALLBACK(check_recp_delete_event), &state);
@@ -3280,7 +3280,7 @@ static gboolean compose_check_recipients(Compose *compose)
 				       GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS);
 	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrwin),
 					    GTK_SHADOW_IN);
-	gtk_widget_set_size_request(scrwin, -1, 180);
+	gtk_widget_set_size_request(scrwin, -1, 180 * gtkut_get_dpi_multiplier());
 	gtk_box_pack_start(GTK_BOX(vbox), scrwin, TRUE, TRUE, 0);
 
 	store = gtk_tree_store_new(1, G_TYPE_STRING);
@@ -5399,7 +5399,7 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 				       GTK_POLICY_ALWAYS);
 	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(attach_scrwin),
 					    GTK_SHADOW_IN);
-	gtk_widget_set_size_request(attach_scrwin, -1, 80);
+	gtk_widget_set_size_request(attach_scrwin, -1, 80 * gtkut_get_dpi_multiplier());
 
 	store = gtk_list_store_new(N_ATTACH_COLS, G_TYPE_STRING, G_TYPE_STRING,
 				   G_TYPE_STRING, G_TYPE_POINTER);
@@ -6633,7 +6633,7 @@ static void compose_attach_property_create(gboolean *cancelled)
 	debug_print("Creating attach property window...\n");
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	gtk_widget_set_size_request(window, 480, -1);
+	gtk_widget_set_size_request(window, 480 * gtkut_get_dpi_multiplier(), -1);
 	gtk_container_set_border_width(GTK_CONTAINER(window), 8);
 	gtk_window_set_title(GTK_WINDOW(window), _("Properties"));
 	gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);

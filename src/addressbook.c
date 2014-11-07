@@ -614,7 +614,7 @@ static void addressbook_create(void)
 	gtk_window_set_title(GTK_WINDOW(window), _("Address book"));
 	gtk_window_set_wmclass(GTK_WINDOW(window), "addressbook", "Sylpheed");
 	gtk_window_set_policy(GTK_WINDOW(window), FALSE, TRUE, TRUE);
-	gtk_widget_set_size_request(window, 620, 360);
+	gtk_widget_set_size_request(window, 620 * gtkut_get_dpi_multiplier(), 360 * gtkut_get_dpi_multiplier());
 	gtk_window_set_default_size(GTK_WINDOW(window),
 				    prefs_common.addressbook_width,
 				    prefs_common.addressbook_height);
