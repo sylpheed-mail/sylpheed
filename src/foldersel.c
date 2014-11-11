@@ -269,7 +269,7 @@ static void foldersel_create(void)
 	MANAGE_WINDOW_SIGNALS_CONNECT(window);
 
 	vbox = gtk_vbox_new(FALSE, 4);
-	gtk_widget_set_size_request(vbox, -1, 420);
+	gtk_widget_set_size_request(vbox, -1, 460 * gtkut_get_dpi_multiplier());
 	gtk_container_add(GTK_CONTAINER(window), vbox);
 
 	label = gtk_label_new("");
@@ -277,7 +277,7 @@ static void foldersel_create(void)
 	gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 2);
 
 	scrolledwin = gtk_scrolled_window_new(NULL, NULL);
-	gtk_widget_set_size_request(scrolledwin, 300, -1);
+	gtk_widget_set_size_request(scrolledwin, 320 * gtkut_get_dpi_multiplier(), -1);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolledwin),
 				       GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS);
 	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrolledwin),
