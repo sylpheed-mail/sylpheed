@@ -72,7 +72,7 @@ LogWindow *log_window_create(void)
 	gtk_window_set_title(GTK_WINDOW(window), _("Protocol log"));
 	gtk_window_set_wmclass(GTK_WINDOW(window), "log_window", "Sylpheed");
 	gtk_window_set_policy(GTK_WINDOW(window), TRUE, TRUE, FALSE);
-	gtk_widget_set_size_request(window, 520, 400);
+	gtk_widget_set_size_request(window, 520 * gtkut_get_dpi_multiplier(), 400 * gtkut_get_dpi_multiplier());
 	g_signal_connect(G_OBJECT(window), "delete_event",
 			 G_CALLBACK(gtk_widget_hide_on_delete), NULL);
 	g_signal_connect(G_OBJECT(window), "key_press_event",

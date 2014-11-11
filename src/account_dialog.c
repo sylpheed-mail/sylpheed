@@ -296,7 +296,7 @@ static void account_edit_create(void)
 	debug_print(_("Creating account edit window...\n"));
 
 	window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-	gtk_widget_set_size_request (window, 500, 320);
+	gtk_widget_set_size_request (window, 500 * gtkut_get_dpi_multiplier(), 320 * gtkut_get_dpi_multiplier());
 	gtk_container_set_border_width (GTK_CONTAINER (window), 8);
 	gtk_window_set_title (GTK_WINDOW (window), _("Edit accounts"));
 	gtk_window_set_position (GTK_WINDOW (window),
