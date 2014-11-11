@@ -251,7 +251,7 @@ static void query_search_create(void)
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_title(GTK_WINDOW (window), _("Search messages"));
-	gtk_widget_set_size_request(window, 600, -1);
+	gtk_widget_set_size_request(window, 600 * gtkut_get_dpi_multiplier(), -1);
 	gtk_window_set_policy(GTK_WINDOW(window), FALSE, TRUE, TRUE);
 	gtk_container_set_border_width(GTK_CONTAINER (window), 8);
 	g_signal_connect(G_OBJECT(window), "delete_event",
@@ -302,7 +302,7 @@ static void query_search_create(void)
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolledwin),
 				       GTK_POLICY_AUTOMATIC,
 				       GTK_POLICY_AUTOMATIC);
-	gtk_widget_set_size_request(scrolledwin, -1, 120);
+	gtk_widget_set_size_request(scrolledwin, -1, 120 * gtkut_get_dpi_multiplier());
 
 	cond_edit = prefs_filter_edit_cond_edit_create();
 	cond_edit->add_hbox = query_search_hbox_added;
@@ -355,7 +355,7 @@ static void query_search_create(void)
 				       GTK_POLICY_AUTOMATIC);
 	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrolledwin),
 					    GTK_SHADOW_IN);
-	gtk_widget_set_size_request(scrolledwin, -1, 150);
+	gtk_widget_set_size_request(scrolledwin, -1, 150 * gtkut_get_dpi_multiplier());
 
 	store = gtk_list_store_new(N_COLS,
 				   G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING,
@@ -996,7 +996,7 @@ static QuerySearchSaveDialog *query_search_save_dialog_create(void)
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_title(GTK_WINDOW(window), _("Save as search folder"));
-	gtk_widget_set_size_request(window, 400, -1);
+	gtk_widget_set_size_request(window, 400 * gtkut_get_dpi_multiplier(), -1);
 	gtk_container_set_border_width(GTK_CONTAINER(window), 8);
 	gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
 	gtk_window_set_modal(GTK_WINDOW(window), TRUE);

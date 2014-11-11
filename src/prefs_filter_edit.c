@@ -221,7 +221,7 @@ static void prefs_filter_edit_create(void)
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_container_set_border_width(GTK_CONTAINER(window), 8);
-	gtk_widget_set_size_request(window, 632, 405);
+	gtk_widget_set_size_request(window, 632 * gtkut_get_dpi_multiplier(), 405 * gtkut_get_dpi_multiplier());
 	gtk_window_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
 	gtk_window_set_modal(GTK_WINDOW(window), TRUE);
 	gtk_window_set_policy(GTK_WINDOW(window), FALSE, TRUE, FALSE);
@@ -281,7 +281,7 @@ static void prefs_filter_edit_create(void)
 
 	cond_scrolled_win = gtk_scrolled_window_new(NULL, NULL);
 	gtk_widget_show(cond_scrolled_win);
-	gtk_widget_set_size_request(cond_scrolled_win, -1, 125);
+	gtk_widget_set_size_request(cond_scrolled_win, -1, 125 * gtkut_get_dpi_multiplier());
 	gtk_box_pack_start(GTK_BOX(vbox), cond_scrolled_win, TRUE, TRUE, 0);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(cond_scrolled_win),
 				       GTK_POLICY_AUTOMATIC,
@@ -1578,7 +1578,7 @@ static void prefs_filter_edit_edit_header_list_dialog_create(void)
 	gtk_box_pack_start(GTK_BOX(hbox), vbox2, TRUE, TRUE, 0);
 
 	scrwin = gtk_scrolled_window_new(NULL, NULL);
-	gtk_widget_set_size_request(scrwin, 120, 160);
+	gtk_widget_set_size_request(scrwin, 140 * gtkut_get_dpi_multiplier(), 180 * gtkut_get_dpi_multiplier());
 	gtk_box_pack_start(GTK_BOX(vbox2), scrwin, TRUE, TRUE, 0);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrwin),
 				       GTK_POLICY_AUTOMATIC,
