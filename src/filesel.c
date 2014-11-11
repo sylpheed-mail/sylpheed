@@ -184,6 +184,11 @@ static GSList *filesel_select_file_full(const gchar *title, const gchar *file,
 
 	manage_window_set_transient(GTK_WINDOW(dialog));
 
+	cwd = g_get_current_dir();
+	gtk_file_chooser_set_current_folder(GTK_FILE_CHOOSER(dialog), cwd);
+	g_free(cwd);
+	cwd = NULL;
+
 	if (file)
 		gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(dialog),
 						  file);
