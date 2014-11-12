@@ -135,6 +135,7 @@ EXTRA_DIST = \
 	plugin-marshal.list \
 	version.h.in \
 	sylpheed.rc.in \
+	sylpheed.exe.manifest \
 	libsylpheed-plugin-0.def
 
 INCLUDES = \
@@ -146,7 +147,7 @@ INCLUDES = \
 
 if NATIVE_WIN32
 SYLPHEED_RES = sylpheed.res
-sylpheed.res: sylpheed.rc icons/sylpheed.ico
+sylpheed.res: sylpheed.rc icons/sylpheed.ico sylpheed.exe.manifest
 	$(WINDRES) $< -O coff -o $@
 else
 SYLPHEED_RES = 
