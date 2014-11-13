@@ -178,7 +178,7 @@ static void input_dialog_create(InputDialogType dialog_type)
 
 	dialog = gtk_dialog_new();
 	gtk_window_set_resizable(GTK_WINDOW(dialog), FALSE);
-	gtk_widget_set_size_request(dialog, DIALOG_WIDTH, -1);
+	gtk_widget_set_size_request(dialog, DIALOG_WIDTH * gtkut_get_dpi_multiplier(), -1);
 	gtk_container_set_border_width
 		(GTK_CONTAINER(GTK_DIALOG(dialog)->action_area), 5);
 	gtk_window_set_position(GTK_WINDOW(dialog),

@@ -618,7 +618,7 @@ static void import_create(void)
 	gtk_container_set_border_width(GTK_CONTAINER(table), 8);
 	gtk_table_set_row_spacings(GTK_TABLE(table), 8);
 	gtk_table_set_col_spacings(GTK_TABLE(table), 8);
-	gtk_widget_set_size_request(table, 420, -1);
+	gtk_widget_set_size_request(table, 420 * gtkut_get_dpi_multiplier(), -1);
 
 	format_label = gtk_label_new(_("File format:"));
 	gtk_table_attach(GTK_TABLE(table), format_label, 0, 1, 0, 1,
