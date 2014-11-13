@@ -98,6 +98,7 @@ gboolean gtkut_font_can_load		(const gchar	*str);
 
 gdouble gtkut_get_dpi			(void);
 gdouble gtkut_get_dpi_multiplier	(void);
+void gtkut_set_dpi			(gdouble	 dpi);
 
 void gtkut_convert_int_to_gdk_color	(gint		 rgbvalue,
 					 GdkColor	*color);

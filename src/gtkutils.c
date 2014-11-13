@@ -144,19 +144,23 @@ gboolean gtkut_font_can_load(const gchar *str)
 #endif
 }
 
+static gdouble system_dpi = 0.0;
+
 gdouble gtkut_get_dpi(void)
 {
-	gdouble dpi;
 	gdouble dp, di;
+
+	if (system_dpi > 0.0)
+		return system_dpi;
 
 	//dpi = gdk_screen_get_resolution(gdk_screen_get_default());
 
 	dp = gdk_screen_get_height(gdk_screen_get_default());
 	di = gdk_screen_get_height_mm(gdk_screen_get_default()) / 25.4;
-	dpi = dp / di;
+	system_dpi = dp / di;
 
-	debug_print("gtkut_get_dpi: dpi: %f\n", dpi);
-	return dpi;
+	debug_print("gtkut_get_dpi: dpi: %f\n", system_dpi);
+	return system_dpi;
 }
 
 gdouble gtkut_get_dpi_multiplier(void)
@@ -175,6 +179,11 @@ gdouble gtkut_get_dpi_multiplier(void)
 		mul = 1.0;
 
 	return mul;
+}
+
+void gtkut_set_dpi(gdouble dpi)
+{
+	system_dpi = dpi;
 }
 
 void gtkut_convert_int_to_gdk_color(gint rgbvalue, GdkColor *color)

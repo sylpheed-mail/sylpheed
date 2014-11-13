@@ -662,6 +662,15 @@ static void parse_cmd_opt(int argc, char *argv[])
 			}
 		} else if (!strncmp(argv[i], "--safe-mode", 11)) {
 			cmd.safe_mode = TRUE;
+		} else if (!strncmp(argv[i], "--dpi", 5)) {
+			if (argv[i + 1]) {
+				gdouble dpi;
+
+				dpi = strtod(argv[i + 1], NULL);
+				if (dpi > 0.0)
+					gtkut_set_dpi(dpi);
+				i++;
+			}
 		} else if (!strncmp(argv[i], "--exit", 6)) {
 			cmd.exit = TRUE;
 		} else if (!strncmp(argv[i], "--help", 6)) {
@@ -686,6 +695,7 @@ static void parse_cmd_opt(int argc, char *argv[])
 #ifdef G_OS_WIN32
 			g_print("%s\n", _("  --ipcport portnum      specify port for IPC remote commands"));
 #endif
+			g_print("%s\n", _("  --dpi dpinum           force DPI"));
 			g_print("%s\n", _("  --exit                 exit Sylpheed"));
 			g_print("%s\n", _("  --debug                debug mode"));
 			g_print("%s\n", _("  --safe-mode            safe mode"));
