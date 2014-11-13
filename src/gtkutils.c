@@ -213,7 +213,7 @@ void gtkut_stock_button_set_create(GtkWidget **bbox,
 
 	*bbox = gtk_hbutton_box_new();
 	gtk_button_box_set_layout(GTK_BUTTON_BOX(*bbox), GTK_BUTTONBOX_END);
-	gtk_box_set_spacing(GTK_BOX(*bbox), 6);
+	gtk_box_set_spacing(GTK_BOX(*bbox), 6 * gtkut_get_dpi_multiplier());
 
 	if (button3) {
 		*button3 = gtk_button_new_from_stock(label3);

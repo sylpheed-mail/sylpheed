@@ -180,7 +180,7 @@ static void input_dialog_create(InputDialogType dialog_type)
 	gtk_window_set_resizable(GTK_WINDOW(dialog), FALSE);
 	gtk_widget_set_size_request(dialog, DIALOG_WIDTH * gtkut_get_dpi_multiplier(), -1);
 	gtk_container_set_border_width
-		(GTK_CONTAINER(GTK_DIALOG(dialog)->action_area), 5);
+		(GTK_CONTAINER(GTK_DIALOG(dialog)->action_area), 5 * gtkut_get_dpi_multiplier());
 	gtk_window_set_position(GTK_WINDOW(dialog),
 				GTK_WIN_POS_CENTER_ON_PARENT);
 	gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
@@ -193,7 +193,7 @@ static void input_dialog_create(InputDialogType dialog_type)
 			 G_CALLBACK(focus_out), NULL);
 	MANAGE_WINDOW_SIGNALS_CONNECT(dialog);
 
-	vbox = gtk_vbox_new(FALSE, 8);
+	vbox = gtk_vbox_new(FALSE, 8 * gtkut_get_dpi_multiplier());
 	gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dialog)->vbox), vbox);
 	gtk_container_set_border_width(GTK_CONTAINER(vbox), 8);
 
@@ -204,7 +204,7 @@ static void input_dialog_create(InputDialogType dialog_type)
 	gtk_box_pack_start(GTK_BOX(hbox), msg_label, FALSE, FALSE, 0);
 	gtk_label_set_justify(GTK_LABEL(msg_label), GTK_JUSTIFY_LEFT);
 
-	hbox = gtk_hbox_new(FALSE, 4);
+	hbox = gtk_hbox_new(FALSE, 4 * gtkut_get_dpi_multiplier());
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
 
 	type = dialog_type;

@@ -219,6 +219,7 @@ static void alertpanel_create(const gchar *title,
 	GtkWidget *button3;
 	const gchar *label2;
 	const gchar *label3;
+	gint spacing;
 
 	debug_print(_("Creating alert panel dialog...\n"));
 
@@ -241,8 +242,9 @@ static void alertpanel_create(const gchar *title,
 			 G_CALLBACK(alertpanel_focus_out), NULL);
 
 	/* for title icon, label and message */
-	hbox = gtk_hbox_new(FALSE, 12);
-	gtk_container_set_border_width(GTK_CONTAINER(hbox), 12);
+	spacing = 12 * gtkut_get_dpi_multiplier();
+	hbox = gtk_hbox_new(FALSE, spacing);
+	gtk_container_set_border_width(GTK_CONTAINER(hbox), spacing);
 	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox),
 			   hbox, FALSE, FALSE, 0);
 
@@ -270,7 +272,7 @@ static void alertpanel_create(const gchar *title,
 	gtk_box_pack_start(GTK_BOX(hbox), image, FALSE, FALSE, 0);
 
 	/* for title and message */
-	vbox = gtk_vbox_new(FALSE, 12);
+	vbox = gtk_vbox_new(FALSE, spacing);
 	gtk_box_pack_start(GTK_BOX(hbox), vbox, TRUE, TRUE, 0);
 
 	label = gtk_label_new(title);
@@ -319,7 +321,7 @@ static void alertpanel_create(const gchar *title,
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(disable_chkbtn),
 					     TRUE);
 		gtk_box_pack_start(GTK_BOX(hbox), disable_chkbtn,
-				   FALSE, FALSE, 12);
+				   FALSE, FALSE, spacing);
 		g_signal_connect(G_OBJECT(disable_chkbtn), "toggled",
 				 G_CALLBACK(alertpanel_button_toggled),
 				 GUINT_TO_POINTER(G_ALERTDISABLE));
@@ -340,7 +342,7 @@ static void alertpanel_create(const gchar *title,
 
 	gtk_box_pack_end(GTK_BOX(GTK_DIALOG(dialog)->action_area),
 			 confirm_area, FALSE, FALSE, 0);
-	gtk_container_set_border_width(GTK_CONTAINER(confirm_area), 5);
+	gtk_container_set_border_width(GTK_CONTAINER(confirm_area), 5 * gtkut_get_dpi_multiplier());
 	gtk_widget_grab_default(button1);
 	gtk_widget_grab_focus(button1);
 	if (button2_label &&
