@@ -475,7 +475,7 @@ static GtkWidget *account_wait_window_create(const gchar *str)
 	GtkWidget *label;
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	gtk_widget_set_size_request(window, 380, 60);
+	gtk_widget_set_size_request(window, 380 * gtkut_get_dpi_multiplier(), 60 * gtkut_get_dpi_multiplier());
 	gtk_container_set_border_width(GTK_CONTAINER(window), 8);
 	gtk_window_set_position(GTK_WINDOW(window),
 				GTK_WIN_POS_CENTER_ON_PARENT);

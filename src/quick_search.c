@@ -133,7 +133,7 @@ QuickSearch *quick_search_create(SummaryView *summaryview)
 	gtk_box_pack_start(GTK_BOX(hbox), hbox2, FALSE, FALSE, 0);
 
 	entry = gtk_entry_new();
-	gtk_widget_set_size_request(entry, 200, -1);
+	gtk_widget_set_size_request(entry, 200 * gtkut_get_dpi_multiplier(), -1);
 	gtk_box_pack_start(GTK_BOX(hbox), entry, FALSE, FALSE, 0);
 	g_signal_connect(G_OBJECT(entry), "focus-in-event",
 			 G_CALLBACK(entry_focus_in), qsearch);
