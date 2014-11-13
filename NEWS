@@ -1,5 +1,21 @@
 Changes of Sylpheed
 
+* 3.5.0beta2 (development)
+
+    * Windows / widgets are now adjusted to their optimal sizes by reference
+      to system DPI value.
+    * The option to specify startup online mode was added.
+    * The bug that wrote the first part of data if the message body in the
+      IMAP4 responses didn't end with CR+LF was fixed (#84).
+    * The bug that previously selected folder on the file selection dialog
+      was not remembered with GTK+ 2.24.x was fixed.
+    * Win32: The bug that 'Minimize to tray icon' didn't work with 3.5.0beta1
+      was fixed.
+    * Win32: 'Toggle window on trayicon click' now works.
+    * Win32: sylpheed.exe executable became DPI-Aware.
+    * Win32: OpenSSL was updated to 0.9.8zc.
+    * Win32: included SSL certificates were updated.
+
 * 3.5.0beta1 (development)
 
     * Mbox locking became NFS-safe (#202).
