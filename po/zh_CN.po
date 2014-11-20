@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-07 18:55+0900\n"
+"POT-Creation-Date: 2014-11-20 13:13+0900\n"
 "PO-Revision-Date: 2013-05-05 15:15+0800\n"
 "Last-Translator: Careone <emacs-locale@qq.com>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -1243,11 +1243,11 @@ msgstr "公用地址"
 msgid "Personal address"
 msgstr "个人地址"
 
-#: src/alertpanel.c:142 src/compose.c:6889 src/main.c:930
+#: src/alertpanel.c:142 src/compose.c:6889 src/main.c:940
 msgid "Notice"
 msgstr "注意"
 
-#: src/alertpanel.c:155 src/main.c:1067
+#: src/alertpanel.c:155 src/main.c:1077
 msgid "Warning"
 msgstr "警告"
 
@@ -1256,11 +1256,11 @@ msgstr "警告"
 msgid "Error"
 msgstr "错误"
 
-#: src/alertpanel.c:223
+#: src/alertpanel.c:224
 msgid "Creating alert panel dialog...\n"
 msgstr "正在创建提醒面板对话框...\n"
 
-#: src/alertpanel.c:318
+#: src/alertpanel.c:320
 msgid "Show this message next time"
 msgstr "下次还显示本信息"
 
@@ -2288,28 +2288,28 @@ msgstr "选择目标文件"
 msgid "Select destination folder"
 msgstr "选择目标文件夹"
 
-#: src/filesel.c:216
+#: src/filesel.c:221
 #, fuzzy
 msgid "File type:"
 msgstr "文件名:"
 
-#: src/filesel.c:265
+#: src/filesel.c:270
 msgid "The link target not found."
 msgstr "找不到链接目标。"
 
-#: src/filesel.c:300 src/filesel.c:326
+#: src/filesel.c:305 src/filesel.c:331
 msgid "Save as"
 msgstr "另存为"
 
-#: src/filesel.c:307 src/filesel.c:340 src/filesel.c:506
+#: src/filesel.c:312 src/filesel.c:345 src/filesel.c:511
 msgid "Overwrite existing file"
 msgstr "覆盖已存在的文件"
 
-#: src/filesel.c:308 src/filesel.c:341 src/filesel.c:507
+#: src/filesel.c:313 src/filesel.c:346 src/filesel.c:512
 msgid "The file already exists. Do you want to replace it?"
 msgstr "文件已经存在。要替换它吗？"
 
-#: src/filesel.c:358 src/foldersel.c:256
+#: src/filesel.c:363 src/foldersel.c:256
 msgid "Select folder"
 msgstr "选择文件夹"
 
@@ -3115,16 +3115,16 @@ msgstr "输入密码"
 msgid "Protocol log"
 msgstr "协议日志"
 
-#: src/main.c:670
+#: src/main.c:679
 #, c-format
 msgid "Usage: %s [OPTIONS ...] [URL]\n"
 msgstr "用法: %s [选项 ...] [URL]\n"
 
-#: src/main.c:673
+#: src/main.c:682
 msgid "  --compose [mailto URL] open composition window"
 msgstr "  --compose [电子邮箱地址] 打开写信窗口"
 
-#: src/main.c:674
+#: src/main.c:683
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -3134,23 +3134,23 @@ msgstr ""
 "                         打开写信窗口并添加指定的附件\n"
 " "
 
-#: src/main.c:677
+#: src/main.c:686
 msgid "  --receive              receive new messages"
 msgstr "  --receive              接收新邮件"
 
-#: src/main.c:678
+#: src/main.c:687
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          接收所有帐号的新邮件"
 
-#: src/main.c:679
+#: src/main.c:688
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 发送队列中的全部邮件"
 
-#: src/main.c:680
+#: src/main.c:689
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [文件夹]...   显示邮件总数"
 
-#: src/main.c:681
+#: src/main.c:690
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
@@ -3158,53 +3158,57 @@ msgstr ""
 "  --status-full [文件夹]...\n"
 "                         显示每个文件夹的状态"
 
-#: src/main.c:683
+#: src/main.c:692
 msgid "  --open folderid/msgnum open existing message in a new window"
 msgstr "  --open 文件夹编号/邮件序号      在新窗口中打开存在的邮件"
 
-#: src/main.c:684
+#: src/main.c:693
 msgid "  --open <file URL>      open an rfc822 message file in a new window"
 msgstr "  --open <文件 URL>       在新窗口中打开 rfc822 邮件文件"
 
-#: src/main.c:685
+#: src/main.c:694
 msgid ""
 "  --configdir dirname    specify directory which stores configuration files"
 msgstr "  --configdir 目录名     指定配置文件所在的目录"
 
-#: src/main.c:687
+#: src/main.c:696
 msgid "  --ipcport portnum      specify port for IPC remote commands"
 msgstr "  --ipcport 端口号        为 IPC 远程命令指定端口"
 
-#: src/main.c:689
+#: src/main.c:698
+msgid "  --dpi dpinum           force DPI"
+msgstr ""
+
+#: src/main.c:699
 msgid "  --exit                 exit Sylpheed"
 msgstr "  --exit                 离开 Sylpheed"
 
-#: src/main.c:690
+#: src/main.c:700
 msgid "  --debug                debug mode"
 msgstr "  --debug                调试模式"
 
-#: src/main.c:691
+#: src/main.c:701
 msgid "  --safe-mode            safe mode"
 msgstr "  --safe-mode            安全模式"
 
-#: src/main.c:692
+#: src/main.c:702
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 显示帮助信息并退出"
 
-#: src/main.c:693
+#: src/main.c:703
 msgid "  --version              output version information and exit"
 msgstr "  --version              输出版本信息并退出"
 
-#: src/main.c:697
+#: src/main.c:707
 #, c-format
 msgid "Press any key..."
 msgstr "按任意键..."
 
-#: src/main.c:847
+#: src/main.c:857
 msgid "Filename encoding"
 msgstr "文件名的字符编码"
 
-#: src/main.c:848
+#: src/main.c:858
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -3225,19 +3229,19 @@ msgstr ""
 "\n"
 "要继续吗？"
 
-#: src/main.c:931
+#: src/main.c:941
 msgid "Composing message exists. Really quit?"
 msgstr "正在写信。确定要退出吗？"
 
-#: src/main.c:942
+#: src/main.c:952
 msgid "Queued messages"
 msgstr "队列中的邮件"
 
-#: src/main.c:943
+#: src/main.c:953
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "一些未发送的信件被放入队列中。现在离开吗？"
 
-#: src/main.c:1068
+#: src/main.c:1078
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -3245,20 +3249,20 @@ msgstr ""
 "没有正确安装 GnuPG，或者版本太旧。\n"
 "已禁用 OpenPGP 支持。"
 
-#: src/main.c:1325
+#: src/main.c:1335
 msgid "Loading plug-ins..."
 msgstr "加载插件..."
 
 #. remote command mode
-#: src/main.c:1541
+#: src/main.c:1551
 msgid "another Sylpheed is already running.\n"
 msgstr "另外一个 Sylpheed 正在运行。\n"
 
-#: src/main.c:1835
+#: src/main.c:1845
 msgid "Migration of configuration"
 msgstr "配置转移"
 
-#: src/main.c:1836
+#: src/main.c:1846
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"

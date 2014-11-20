@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 3.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-07 18:55+0900\n"
+"POT-Creation-Date: 2014-11-20 13:13+0900\n"
 "PO-Revision-Date: 2011-08-13 16:46+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -1244,11 +1244,11 @@ msgstr "共用通訊紀錄"
 msgid "Personal address"
 msgstr "私人通訊紀錄"
 
-#: src/alertpanel.c:142 src/compose.c:6889 src/main.c:930
+#: src/alertpanel.c:142 src/compose.c:6889 src/main.c:940
 msgid "Notice"
 msgstr "注意"
 
-#: src/alertpanel.c:155 src/main.c:1067
+#: src/alertpanel.c:155 src/main.c:1077
 msgid "Warning"
 msgstr "警告"
 
@@ -1257,11 +1257,11 @@ msgstr "警告"
 msgid "Error"
 msgstr "錯誤"
 
-#: src/alertpanel.c:223
+#: src/alertpanel.c:224
 msgid "Creating alert panel dialog...\n"
 msgstr "產生警告對話框中… \n"
 
-#: src/alertpanel.c:318
+#: src/alertpanel.c:320
 msgid "Show this message next time"
 msgstr "下次再提醒我"
 
@@ -2288,29 +2288,29 @@ msgstr "選取目的檔案"
 msgid "Select destination folder"
 msgstr "選取目的資料夾"
 
-#: src/filesel.c:216
+#: src/filesel.c:221
 #, fuzzy
 msgid "File type:"
 msgstr "檔名："
 
-#: src/filesel.c:265
+#: src/filesel.c:270
 #, fuzzy
 msgid "The link target not found."
 msgstr "找不到郵件。"
 
-#: src/filesel.c:300 src/filesel.c:326
+#: src/filesel.c:305 src/filesel.c:331
 msgid "Save as"
 msgstr "另存新檔"
 
-#: src/filesel.c:307 src/filesel.c:340 src/filesel.c:506
+#: src/filesel.c:312 src/filesel.c:345 src/filesel.c:511
 msgid "Overwrite existing file"
 msgstr "覆寫現有檔案"
 
-#: src/filesel.c:308 src/filesel.c:341 src/filesel.c:507
+#: src/filesel.c:313 src/filesel.c:346 src/filesel.c:512
 msgid "The file already exists. Do you want to replace it?"
 msgstr "檔案已經存在。您要置換它嗎？"
 
-#: src/filesel.c:358 src/foldersel.c:256
+#: src/filesel.c:363 src/foldersel.c:256
 msgid "Select folder"
 msgstr "選擇資料夾"
 
@@ -3118,17 +3118,17 @@ msgstr "輸入密碼"
 msgid "Protocol log"
 msgstr "通訊協定紀錄"
 
-#: src/main.c:670
+#: src/main.c:679
 #, fuzzy, c-format
 msgid "Usage: %s [OPTIONS ...] [URL]\n"
 msgstr "用法：%s [選項]…\n"
 
-#: src/main.c:673
+#: src/main.c:682
 #, fuzzy
 msgid "  --compose [mailto URL] open composition window"
 msgstr "  --compose [郵件地址]   直接開啟撰寫郵件視窗"
 
-#: src/main.c:674
+#: src/main.c:683
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -3137,78 +3137,82 @@ msgstr ""
 "  --attach 檔案1 [檔案2]...\n"
 "                         開啟撰寫郵件視窗，並將指定的檔案附加上去"
 
-#: src/main.c:677
+#: src/main.c:686
 msgid "  --receive              receive new messages"
 msgstr "  --receive              直接接收新郵件"
 
-#: src/main.c:678
+#: src/main.c:687
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          直接接收所有帳號的新郵件"
 
-#: src/main.c:679
+#: src/main.c:688
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 送出所有佇列匣中的郵件"
 
-#: src/main.c:680
+#: src/main.c:689
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [資料夾]…   顯示資料夾內總共有多少郵件"
 
-#: src/main.c:681
+#: src/main.c:690
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
 msgstr "  --status-full [資料夾]…     顯示每個資料夾中有多少郵件"
 
-#: src/main.c:683
+#: src/main.c:692
 #, fuzzy
 msgid "  --open folderid/msgnum open existing message in a new window"
 msgstr "  --open folderid/msgnum 在新視窗中開啟電子郵件"
 
-#: src/main.c:684
+#: src/main.c:693
 #, fuzzy
 msgid "  --open <file URL>      open an rfc822 message file in a new window"
 msgstr "  --open folderid/msgnum 在新視窗中開啟電子郵件"
 
-#: src/main.c:685
+#: src/main.c:694
 msgid ""
 "  --configdir dirname    specify directory which stores configuration files"
 msgstr "  --configdir dirname    指定儲存組態檔案的目錄"
 
-#: src/main.c:687
+#: src/main.c:696
 msgid "  --ipcport portnum      specify port for IPC remote commands"
 msgstr "  --ipcport portnum      指定用於 IPC 遠端命令的通訊埠"
 
-#: src/main.c:689
+#: src/main.c:698
+msgid "  --dpi dpinum           force DPI"
+msgstr ""
+
+#: src/main.c:699
 msgid "  --exit                 exit Sylpheed"
 msgstr "  --exit                 離開 Sylpheed"
 
-#: src/main.c:690
+#: src/main.c:700
 msgid "  --debug                debug mode"
 msgstr "  --debug                除錯模式"
 
-#: src/main.c:691
+#: src/main.c:701
 #, fuzzy
 msgid "  --safe-mode            safe mode"
 msgstr "  --debug                除錯模式"
 
-#: src/main.c:692
+#: src/main.c:702
 msgid "  --help                 display this help and exit"
 msgstr "  --help                 顯示本說明並離開"
 
-#: src/main.c:693
+#: src/main.c:703
 msgid "  --version              output version information and exit"
 msgstr "  --version              顯示版本資訊"
 
-#: src/main.c:697
+#: src/main.c:707
 #, c-format
 msgid "Press any key..."
 msgstr "按下任何鍵…"
 
-#: src/main.c:847
+#: src/main.c:857
 msgid "Filename encoding"
 msgstr "檔案名稱編碼"
 
-#: src/main.c:848
+#: src/main.c:858
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -3229,19 +3233,19 @@ msgstr ""
 "\n"
 "要繼續嗎？"
 
-#: src/main.c:931
+#: src/main.c:941
 msgid "Composing message exists. Really quit?"
 msgstr "有郵件正在編輯。確定要離開嗎？"
 
-#: src/main.c:942
+#: src/main.c:952
 msgid "Queued messages"
 msgstr "有未送出郵件"
 
-#: src/main.c:943
+#: src/main.c:953
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "有些郵件正在佇列匣中尚未送出。確定要離開嗎？"
 
-#: src/main.c:1068
+#: src/main.c:1078
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -3249,20 +3253,20 @@ msgstr ""
 "GnuPG 並未安裝好，或版本過舊。\n"
 "關閉 OpenPGP 支援項目。"
 
-#: src/main.c:1325
+#: src/main.c:1335
 msgid "Loading plug-ins..."
 msgstr "載入外掛程式…"
 
 #. remote command mode
-#: src/main.c:1541
+#: src/main.c:1551
 msgid "another Sylpheed is already running.\n"
 msgstr "已經有 Sylpheed 程式正在執行中。\n"
 
-#: src/main.c:1835
+#: src/main.c:1845
 msgid "Migration of configuration"
 msgstr "設定資料轉移"
 
-#: src/main.c:1836
+#: src/main.c:1846
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"

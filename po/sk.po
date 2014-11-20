@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-07 18:55+0900\n"
+"POT-Creation-Date: 2014-11-20 13:13+0900\n"
 "PO-Revision-Date: 2004-01-22 17:46+0100\n"
 "Last-Translator: Andrej Kacian <andrej@kacian.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -1269,11 +1269,11 @@ msgstr "Spoločná adresa"
 msgid "Personal address"
 msgstr "Súkromná adresa"
 
-#: src/alertpanel.c:142 src/compose.c:6889 src/main.c:930
+#: src/alertpanel.c:142 src/compose.c:6889 src/main.c:940
 msgid "Notice"
 msgstr "Upozornenie"
 
-#: src/alertpanel.c:155 src/main.c:1067
+#: src/alertpanel.c:155 src/main.c:1077
 msgid "Warning"
 msgstr "Varovanie"
 
@@ -1282,11 +1282,11 @@ msgstr "Varovanie"
 msgid "Error"
 msgstr "Chyba"
 
-#: src/alertpanel.c:223
+#: src/alertpanel.c:224
 msgid "Creating alert panel dialog...\n"
 msgstr "Vytváram dialóg pre varovania...\n"
 
-#: src/alertpanel.c:318
+#: src/alertpanel.c:320
 msgid "Show this message next time"
 msgstr "Zobraziť túto správu nabudúce"
 
@@ -2375,30 +2375,30 @@ msgstr "Zvoľte súbor pre export"
 msgid "Select destination folder"
 msgstr "Zvoľte súbor pre export"
 
-#: src/filesel.c:216
+#: src/filesel.c:221
 #, fuzzy
 msgid "File type:"
 msgstr "Názov súboru :"
 
-#: src/filesel.c:265
+#: src/filesel.c:270
 #, fuzzy
 msgid "The link target not found."
 msgstr "nájdených %d správ.\n"
 
-#: src/filesel.c:300 src/filesel.c:326
+#: src/filesel.c:305 src/filesel.c:331
 msgid "Save as"
 msgstr "Uložiť ako"
 
-#: src/filesel.c:307 src/filesel.c:340 src/filesel.c:506
+#: src/filesel.c:312 src/filesel.c:345 src/filesel.c:511
 #, fuzzy
 msgid "Overwrite existing file"
 msgstr "Prepísať existujúci súbor?"
 
-#: src/filesel.c:308 src/filesel.c:341 src/filesel.c:507
+#: src/filesel.c:313 src/filesel.c:346 src/filesel.c:512
 msgid "The file already exists. Do you want to replace it?"
 msgstr ""
 
-#: src/filesel.c:358 src/foldersel.c:256
+#: src/filesel.c:363 src/foldersel.c:256
 msgid "Select folder"
 msgstr "Zvoľte priečinok"
 
@@ -3240,17 +3240,17 @@ msgstr "Zadajte heslo"
 msgid "Protocol log"
 msgstr "Záznam protokolu"
 
-#: src/main.c:670
+#: src/main.c:679
 #, fuzzy, c-format
 msgid "Usage: %s [OPTIONS ...] [URL]\n"
 msgstr "Použitie: %s [VOĽBY]...\n"
 
-#: src/main.c:673
+#: src/main.c:682
 #, fuzzy
 msgid "  --compose [mailto URL] open composition window"
 msgstr "  --compose [adresa]    otvorí okno pre písanie novej správy"
 
-#: src/main.c:674
+#: src/main.c:683
 msgid ""
 "  --attach file1 [file2]...\n"
 "                         open composition window with specified files\n"
@@ -3261,23 +3261,23 @@ msgstr ""
 "uvedenými\n"
 "                         súbormi"
 
-#: src/main.c:677
+#: src/main.c:686
 msgid "  --receive              receive new messages"
 msgstr "  --receive              prijme nové správy"
 
-#: src/main.c:678
+#: src/main.c:687
 msgid "  --receive-all          receive new messages of all accounts"
 msgstr "  --receive-all          prijme nové správy pre všetky kontá"
 
-#: src/main.c:679
+#: src/main.c:688
 msgid "  --send                 send all queued messages"
 msgstr "  --send                 pošle všetky správy vo výstupnej fronte"
 
-#: src/main.c:680
+#: src/main.c:689
 msgid "  --status [folder]...   show the total number of messages"
 msgstr "  --status [priečinok]...   zobrazí celkový počet správ"
 
-#: src/main.c:681
+#: src/main.c:690
 msgid ""
 "  --status-full [folder]...\n"
 "                         show the status of each folder"
@@ -3285,59 +3285,63 @@ msgstr ""
 "  --status-full [priečinok]...\n"
 "                        zobrazí stav jednotlivých priečinkov"
 
-#: src/main.c:683
+#: src/main.c:692
 msgid "  --open folderid/msgnum open existing message in a new window"
 msgstr ""
 
-#: src/main.c:684
+#: src/main.c:693
 msgid "  --open <file URL>      open an rfc822 message file in a new window"
 msgstr ""
 
-#: src/main.c:685
+#: src/main.c:694
 msgid ""
 "  --configdir dirname    specify directory which stores configuration files"
 msgstr ""
 
-#: src/main.c:687
+#: src/main.c:696
 msgid "  --ipcport portnum      specify port for IPC remote commands"
 msgstr ""
 
-#: src/main.c:689
+#: src/main.c:698
+msgid "  --dpi dpinum           force DPI"
+msgstr ""
+
+#: src/main.c:699
 #, fuzzy
 msgid "  --exit                 exit Sylpheed"
 msgstr "  --debug                ladiaci mód"
 
-#: src/main.c:690
+#: src/main.c:700
 msgid "  --debug                debug mode"
 msgstr "  --debug                ladiaci mód"
 
-#: src/main.c:691
+#: src/main.c:701
 #, fuzzy
 msgid "  --safe-mode            safe mode"
 msgstr "  --debug                ladiaci mód"
 
-#: src/main.c:692
+#: src/main.c:702
 msgid "  --help                 display this help and exit"
 msgstr "  --help                zobrazí túto nápovedu a ukončí program"
 
-#: src/main.c:693
+#: src/main.c:703
 msgid "  --version              output version information and exit"
 msgstr ""
 "  --version                zobrazí informácie o verzii a ukončí program"
 
-#: src/main.c:697
+#: src/main.c:707
 #, fuzzy, c-format
 msgid "Press any key..."
 msgstr ""
 "alebo stlačte klávesu 'y'.\n"
 "\n"
 
-#: src/main.c:847
+#: src/main.c:857
 #, fuzzy
 msgid "Filename encoding"
 msgstr "Výstupné kódovanie znakov"
 
-#: src/main.c:848
+#: src/main.c:858
 msgid ""
 "The locale encoding is not UTF-8, but the environmental variable "
 "G_FILENAME_ENCODING is not set.\n"
@@ -3351,19 +3355,19 @@ msgid ""
 "Continue?"
 msgstr ""
 
-#: src/main.c:931
+#: src/main.c:941
 msgid "Composing message exists. Really quit?"
 msgstr "Máte rozpísanú správu. Naozaj ukončiť?"
 
-#: src/main.c:942
+#: src/main.c:952
 msgid "Queued messages"
 msgstr "Správy vo fronte"
 
-#: src/main.c:943
+#: src/main.c:953
 msgid "Some unsent messages are queued. Exit now?"
 msgstr "Vo fronte sú neodoslané správy. Ukončiť program?"
 
-#: src/main.c:1068
+#: src/main.c:1078
 msgid ""
 "GnuPG is not installed properly, or its version is too old.\n"
 "OpenPGP support disabled."
@@ -3371,21 +3375,21 @@ msgstr ""
 "GnuPG nie je nainštalované správne, alebo jeho verzia je príliš stará.\n"
 "Podpora OpenPGP je vypnutá."
 
-#: src/main.c:1325
+#: src/main.c:1335
 msgid "Loading plug-ins..."
 msgstr ""
 
 #. remote command mode
-#: src/main.c:1541
+#: src/main.c:1551
 msgid "another Sylpheed is already running.\n"
 msgstr "už beží iná kópia Sylpheedu.\n"
 
-#: src/main.c:1835
+#: src/main.c:1845
 #, fuzzy
 msgid "Migration of configuration"
 msgstr "Nastavenie akcií"
 
-#: src/main.c:1836
+#: src/main.c:1846
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
