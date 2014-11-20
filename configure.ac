@@ -10,7 +10,7 @@ MICRO_VERSION=0
 INTERFACE_AGE=0
 BINARY_AGE=0
 EXTRA_VERSION=beta2
-BUILD_REVISION=1162
+BUILD_REVISION=1163
 VERSION=$MAJOR_VERSION.$MINOR_VERSION.$MICRO_VERSION$EXTRA_VERSION
 
 dnl define if this is a development release
@@ -129,7 +129,7 @@ AM_ICONV
 AC_CHECK_FUNCS(bind_textdomain_codeset)
 
 dnl for gettext
-ALL_LINGUAS="be bg cs da de el es et eu fi fr gl hr hu it ja ko lt nl pl pt_BR ro ru sk sl sr sv tr uk vi zh_CN zh_TW"
+ALL_LINGUAS="be bg cs da de el es et eu fi fr gl he hr hu it ja ko lt nl pl pt_BR ro ru sk sl sr sv tr uk vi zh_CN zh_TW"
 GETTEXT_PACKAGE=sylpheed
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [Define text domain.])
