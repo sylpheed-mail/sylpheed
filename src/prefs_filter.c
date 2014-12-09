@@ -120,6 +120,10 @@ static void prefs_filter_row_reordered	(GtkTreeModel		*model,
 					 GtkTreeIter		*iter,
 					 gpointer		 data,
 					 gpointer		 user_data);
+static void prefs_filter_row_inserted	(GtkTreeModel		*model,
+					 GtkTreePath		*path,
+					 GtkTreeIter		*iter,
+					 gpointer		 user_data);
 
 static gint prefs_filter_deleted	(GtkWidget	*widget,
 					 GdkEventAny	*event,
@@ -278,6 +282,8 @@ static void prefs_filter_create(void)
 			 G_CALLBACK(prefs_filter_row_activated), NULL);
 	g_signal_connect_after(G_OBJECT(store), "rows-reordered",
 			       G_CALLBACK(prefs_filter_row_reordered), NULL);
+	g_signal_connect_after(G_OBJECT(store), "row-inserted",
+			       G_CALLBACK(prefs_filter_row_inserted), NULL);
 
 	/* Up / Down */
 
@@ -825,6 +831,12 @@ static void prefs_filter_row_reordered(GtkTreeModel *model,
 	gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(rule_list_window.treeview),
 				     path_, NULL, FALSE, 0.0, 0.0);
 	gtk_tree_path_free(path_);
+	rule_list_window.modified = TRUE;
+}
+
+static void prefs_filter_row_inserted(GtkTreeModel *model, GtkTreePath *path,
+				      GtkTreeIter *iter, gpointer user_data)
+{
 	rule_list_window.modified = TRUE;
 }
 
