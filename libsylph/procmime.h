@@ -196,6 +196,8 @@ gboolean procmime_find_string		(MsgInfo	*msginfo,
 
 gchar *procmime_get_part_file_name	(MimeInfo	*mimeinfo);
 gchar *procmime_get_tmp_file_name	(MimeInfo	*mimeinfo);
+gchar *procmime_get_tmp_file_name_for_user
+					(MimeInfo	*mimeinfo);
 
 ContentType procmime_scan_mime_type	(const gchar	*mime_type);
 gchar *procmime_get_mime_type		(const gchar	*filename);

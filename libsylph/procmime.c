@@ -1471,12 +1471,38 @@ gchar *procmime_get_tmp_file_name(MimeInfo *mimeinfo)
 {
 	static guint32 id = 0;
 	gchar *base;
-	gchar *filename;
+	gchar *filename = NULL;
 	gchar f_prefix[10];
 
 	g_return_val_if_fail(mimeinfo != NULL, NULL);
 
-	g_snprintf(f_prefix, sizeof(f_prefix), "%08x.", id++);
+	if (MIME_TEXT_HTML == mimeinfo->mime_type)
+		base = g_strdup("mimetmp.html");
+	else
+		base = procmime_get_part_file_name(mimeinfo);
+
+	do {
+		g_snprintf(f_prefix, sizeof(f_prefix), "%08x.", id++);
+		if (filename)
+			g_free(filename);
+		filename = g_strconcat(get_mime_tmp_dir(), G_DIR_SEPARATOR_S,
+				       f_prefix, base, NULL);
+	} while (is_file_entry_exist(filename));
+
+	g_free(base);
+
+	debug_print("procmime_get_tmp_file_name: %s\n", filename);
+
+	return filename;
+}
+
+gchar *procmime_get_tmp_file_name_for_user(MimeInfo *mimeinfo)
+{
+	gchar *base;
+	gchar *filename;
+	gint count = 1;
+
+	g_return_val_if_fail(mimeinfo != NULL, NULL);
 
 	if (MIME_TEXT_HTML == mimeinfo->mime_type)
 		base = g_strdup("mimetmp.html");
@@ -1484,9 +1510,20 @@ gchar *procmime_get_tmp_file_name(MimeInfo *mimeinfo)
 		base = procmime_get_part_file_name(mimeinfo);
 
 	filename = g_strconcat(get_mime_tmp_dir(), G_DIR_SEPARATOR_S,
-			       f_prefix, base, NULL);
+			       base, NULL);
+	while (is_file_entry_exist(filename)) {
+		gchar *base_alt;
+
+		base_alt = get_alt_filename(base, count++);
+		g_free(filename);
+		filename = g_strconcat(get_mime_tmp_dir(), G_DIR_SEPARATOR_S,
+				       base_alt, NULL);
+		g_free(base_alt);
+	}
 
 	g_free(base);
+
+	debug_print("procmime_get_tmp_file_name_for_user: %s\n", filename);
 
 	return filename;
 }

@@ -1006,7 +1006,7 @@ static void mimeview_drag_begin(GtkWidget *widget, GdkDragContext *drag_context,
 		subst_for_filename(bname);
 	}
 	if (!bname || *bname == '\0')
-		filename = procmime_get_tmp_file_name(partinfo);
+		filename = procmime_get_tmp_file_name_for_user(partinfo);
 	else
 		filename = g_strconcat(get_mime_tmp_dir(), G_DIR_SEPARATOR_S,
 				       bname, NULL);
@@ -1134,7 +1134,7 @@ void mimeview_launch_part(MimeView *mimeview, MimeInfo *partinfo)
 
 	if (!mimeview->messageview->file) return;
 
-	filename = procmime_get_tmp_file_name(partinfo);
+	filename = procmime_get_tmp_file_name_for_user(partinfo);
 
 	if (procmime_get_part(filename, mimeview->messageview->file, partinfo) < 0)
 		alertpanel_error
@@ -1154,7 +1154,7 @@ void mimeview_open_part_with(MimeView *mimeview, MimeInfo *partinfo)
 
 	if (!mimeview->messageview->file) return;
 
-	filename = procmime_get_tmp_file_name(partinfo);
+	filename = procmime_get_tmp_file_name_for_user(partinfo);
 
 	if (procmime_get_part(filename, mimeview->messageview->file, partinfo) < 0) {
 		alertpanel_error
