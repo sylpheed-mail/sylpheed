@@ -3243,10 +3243,13 @@ static gboolean main_window_window_state_cb(GtkWidget *widget,
 	gboolean minimized = FALSE;
 
 	if ((event->changed_mask & GDK_WINDOW_STATE_MAXIMIZED) != 0) {
-		if ((event->new_window_state & GDK_WINDOW_STATE_MAXIMIZED) != 0)
+		if ((event->new_window_state & GDK_WINDOW_STATE_MAXIMIZED) != 0) {
+			debug_print("main_window_window_state_cb: maximized\n");
 			prefs_common.mainwin_maximized = TRUE;
-		else
+		} else {
+			debug_print("main_window_window_state_cb: unmaximized\n");
 			prefs_common.mainwin_maximized = FALSE;
+		}
 	}
 	if ((event->changed_mask & GDK_WINDOW_STATE_ICONIFIED) != 0) {
 		if ((event->new_window_state & GDK_WINDOW_STATE_ICONIFIED) != 0) {
