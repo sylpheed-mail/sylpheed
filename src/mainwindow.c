@@ -3242,13 +3242,25 @@ static gboolean main_window_window_state_cb(GtkWidget *widget,
 	MainWindow *mainwin = (MainWindow *)data;
 	gboolean minimized = FALSE;
 
+	debug_print("main_window_window_state_cb\n");
+
 	if ((event->changed_mask & GDK_WINDOW_STATE_MAXIMIZED) != 0) {
 		if ((event->new_window_state & GDK_WINDOW_STATE_MAXIMIZED) != 0) {
 			debug_print("main_window_window_state_cb: maximized\n");
 			prefs_common.mainwin_maximized = TRUE;
 		} else {
 			debug_print("main_window_window_state_cb: unmaximized\n");
+#ifdef G_OS_WIN32
+			if ((event->changed_mask & GDK_WINDOW_STATE_ICONIFIED) != 0 &&
+			    (event->new_window_state & GDK_WINDOW_STATE_ICONIFIED) != 0) {
+				debug_print("main_window_window_state_cb: unmaximized by minimize\n");
+				/* don't change mainwin_maximized */
+			} else {
+				prefs_common.mainwin_maximized = FALSE;
+			}
+#else
 			prefs_common.mainwin_maximized = FALSE;
+#endif
 		}
 	}
 	if ((event->changed_mask & GDK_WINDOW_STATE_ICONIFIED) != 0) {
@@ -3275,6 +3287,7 @@ static gboolean main_window_window_state_cb(GtkWidget *widget,
 	if (minimized &&
 	    prefs_common.show_trayicon && prefs_common.minimize_to_tray) {
 		gtk_window_set_skip_taskbar_hint(GTK_WINDOW(widget), TRUE);
+		debug_print("main_window_window_state_cb: hide window\n");
 		gtk_widget_hide(widget);
 #else
 	if (mainwin->window_hidden &&
@@ -3283,6 +3296,10 @@ static gboolean main_window_window_state_cb(GtkWidget *widget,
 #endif
 	} else if (!mainwin->window_hidden) {
 		gtk_window_set_skip_taskbar_hint(GTK_WINDOW(widget), FALSE);
+#ifdef G_OS_WIN32
+		if (prefs_common.mainwin_maximized)
+			gtk_window_maximize(GTK_WINDOW(widget));
+#endif
 	}
 
 	return FALSE;
