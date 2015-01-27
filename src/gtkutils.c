@@ -965,7 +965,7 @@ void gtkut_text_buffer_insert_with_tag_by_name(GtkTextBuffer *buffer,
 	gtk_text_buffer_insert_with_tags_by_name
 		(buffer, iter, text, len, tag, NULL);
 
-	if (text[len - 1] != '\n') {
+	if (len > 0 && text[len - 1] != '\n') {
 		/* somehow returns invalid value first (bug?),
 		   so call it twice */
 		gtk_text_iter_get_chars_in_line(iter);
