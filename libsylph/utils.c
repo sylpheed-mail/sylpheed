@@ -3745,7 +3745,8 @@ gchar *_s_tempnam(const gchar *dir, const gchar *prefix)
 			save_errno = EINVAL;
 		}
 
-		g_free(wname);
+		free(wname);     /* must be freed by same MSVCRT used for
+				    _wtempnam() */
 		g_free(wprefix);
 		g_free(wpath);
 
@@ -3779,7 +3780,7 @@ gchar *_s_tempnam(const gchar *dir, const gchar *prefix)
 			save_errno = EINVAL;
 		}
 
-		g_free(cp_name);
+		free(cp_name);
 		g_free(cp_prefix);
 		g_free(cp_path);
 
