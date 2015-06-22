@@ -775,7 +775,7 @@ static void addressbook_create(void)
 	gtk_tree_view_column_set_resizable(column, TRUE);
 	gtk_tree_view_column_set_title(column, _("Name"));
 #if GTK_CHECK_VERSION(2, 14, 0)
-	gtk_tree_view_column_set_expand(column, TRUE);
+	/* gtk_tree_view_column_set_expand(column, TRUE); */
 #endif
 
 	renderer = gtk_cell_renderer_pixbuf_new();
@@ -814,7 +814,7 @@ static void addressbook_create(void)
 		(column, prefs_common.addressbook_col_addr);
 	gtk_tree_view_column_set_resizable(column, TRUE);
 #if GTK_CHECK_VERSION(2, 14, 0)
-	gtk_tree_view_column_set_expand(column, TRUE);
+	/* gtk_tree_view_column_set_expand(column, TRUE); */
 #endif
 	gtk_tree_view_column_set_sort_column_id(column, COL_ADDRESS);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(listview), column);
@@ -833,7 +833,7 @@ static void addressbook_create(void)
 	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
 	gtk_tree_view_column_set_resizable(column, TRUE);
 #if GTK_CHECK_VERSION(2, 14, 0)
-	gtk_tree_view_column_set_expand(column, TRUE);
+	/* gtk_tree_view_column_set_expand(column, TRUE); */
 #endif
 	gtk_tree_view_column_set_sort_column_id(column, COL_REMARKS);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(listview), column);
