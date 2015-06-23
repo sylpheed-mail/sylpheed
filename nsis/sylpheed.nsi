@@ -282,7 +282,6 @@ Section "!un.Sylpheed" sec_un_sylpheed
   Delete "$INSTDIR\libpng14-14.dll"
   Delete "$INSTDIR\libsylph-0-1.dll"
   Delete "$INSTDIR\libsylpheed-plugin-0-1.dll"
-  Delete "$INSTDIR\libtiff-3.dll"
   Delete "$INSTDIR\ssleay32.dll"
   Delete "$INSTDIR\sylpheed.exe"
   Delete "$INSTDIR\wabread.exe"
