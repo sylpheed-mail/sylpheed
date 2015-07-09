@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2012 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2015 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -295,6 +295,33 @@ static void update_dialog(const gchar *new_ver, const gchar *disp_ver,
 
 static gint child_stdout;
 
+static gchar *read_child_stdout_and_close(gint fd)
+{
+	GIOChannel *ch;
+	gchar *str = NULL;
+	gsize len = 0;
+
+	ch = g_io_channel_unix_new(fd);
+	g_io_channel_read_to_end(ch, &str, &len, NULL);
+	g_io_channel_shutdown(ch, TRUE, NULL);
+	g_io_channel_unref(ch);
+
+	return str;
+}
+
+static void close_child_stdout(gint fd)
+{
+#ifdef G_OS_WIN32
+	GIOChannel *ch;
+
+	ch = g_io_channel_win32_new_fd(fd);
+	g_io_channel_shutdown(ch, TRUE, NULL);
+	g_io_channel_unref(ch);
+#else
+	fd_close(fd);
+#endif
+}
+
 static void update_check_cb(GPid pid, gint status, gpointer data)
 {
 	gchar **lines;
@@ -311,8 +338,7 @@ static void update_check_cb(GPid pid, gint status, gpointer data)
 	gboolean rel_result = FALSE;
 	gboolean dev_result = FALSE;
 	gboolean show_dialog_always = GPOINTER_TO_INT(data);
-	gchar buf[BUFFSIZE];
-	ssize_t size;
+	gchar *str;
 	gchar *disp_rel_ver = NULL;
 	gchar *disp_dev_ver = NULL;
 
@@ -323,20 +349,15 @@ static void update_check_cb(GPid pid, gint status, gpointer data)
 		return;
 	}
 
-	size = read(child_stdout, buf, sizeof(buf) - 1);
-	if (size < 0) {
-		fd_close(child_stdout);
-		child_stdout = 0;
-		g_spawn_close_pid(pid);
-		return;
-	}
-	buf[size] = '\0';
-
-	fd_close(child_stdout);
+	str = read_child_stdout_and_close(child_stdout);
 	child_stdout = 0;
 	g_spawn_close_pid(pid);
 
-	lines = g_strsplit(buf, "\n", -1);
+	if (!str) {
+		return;
+	}
+
+	lines = g_strsplit(str, "\n", -1);
 
 	for (i = 0; lines[i] != NULL; i++) {
 		gint major = 0, minor = 0, micro = 0;
@@ -384,6 +405,7 @@ static void update_check_cb(GPid pid, gint status, gpointer data)
 	}
 
 	g_strfreev(lines);
+	g_free(str);
 
 	gdk_threads_enter();
 
@@ -452,7 +474,7 @@ static void spawn_curl(gchar *url, GChildWatchFunc func, gpointer data)
 	if (pid == 0) {
 		g_warning("Couldn't get PID of child process");
 		if (child_stdout) {
-			fd_close(child_stdout);
+			close_child_stdout(child_stdout);
 			child_stdout = 0;
 		}
 		return;
@@ -590,8 +612,7 @@ static void update_check_plugin_cb(GPid pid, gint status, gpointer data)
 	gchar *cur_ver;
 	gint i;
 	gboolean show_dialog_always = GPOINTER_TO_INT(data);
-	gchar buf[BUFFSIZE];
-	ssize_t size;
+	gchar *str;
 	GHashTable *plugin_version_table = NULL;
 	struct download_plugin_info *pinfo = NULL;
 	gboolean result = FALSE;
@@ -606,20 +627,15 @@ static void update_check_plugin_cb(GPid pid, gint status, gpointer data)
 		return;
 	}
 
-	size = read(child_stdout, buf, sizeof(buf) - 1);
-	if (size < 0) {
-		fd_close(child_stdout);
-		child_stdout = 0;
-		g_spawn_close_pid(pid);
-		return;
-	}
-	buf[size] = '\0';
-
-	fd_close(child_stdout);
+	str = read_child_stdout_and_close(child_stdout);
 	child_stdout = 0;
 	g_spawn_close_pid(pid);
 
-	lines = g_strsplit(buf, "\n", -1);
+	if (!str) {
+		return;
+	}
+
+	lines = g_strsplit(str, "\n", -1);
 	plugin_version_table = get_plugin_version_table();
 	text = g_string_new(_("Newer version of plug-ins have been found.\n"
 			      "Upgrade now?\n"));
@@ -667,8 +683,9 @@ static void update_check_plugin_cb(GPid pid, gint status, gpointer data)
 		g_free(key);
 	}
 
-	g_strfreev(lines);
 	g_hash_table_destroy(plugin_version_table);
+	g_strfreev(lines);
+	g_free(str);
 
 	debug_print("%s\n", text->str);
 
