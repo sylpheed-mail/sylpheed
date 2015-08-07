@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2011 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2015 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -30,7 +30,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #if USE_ONIGURUMA
-#  include <onigposix.h>
+#  include <oniguruma.h>
 #elif HAVE_REGEX_H
 #  include <regex.h>
 #endif
@@ -335,13 +335,31 @@ gint filter_action_exec(FilterRule *rule, MsgInfo *msginfo, const gchar *file,
 
 static gboolean strmatch_regex(const gchar *haystack, const gchar *needle)
 {
-#if defined(USE_ONIGURUMA) || defined(HAVE_REGCOMP)
+#ifdef USE_ONIGURUMA
+	gint ret = 0;
+	OnigRegex reg;
+	OnigErrorInfo err_info;
+	const UChar *ptn = (const UChar *)needle;
+	const UChar *str = (const UChar *)haystack;
+
+	ret = onig_new(&reg, ptn, ptn + strlen(needle),
+		       ONIG_OPTION_IGNORECASE|ONIG_OPTION_EXTEND,
+		       ONIG_ENCODING_UTF8, ONIG_SYNTAX_POSIX_EXTENDED,
+		       &err_info);
+	if (ret != ONIG_NORMAL)
+		return FALSE;
+
+	ret = onig_match(reg, str, str + strlen(haystack), str, NULL, 0);
+	onig_free(reg);
+
+	if (ret >= 0)
+		return TRUE;
+	else
+		return FALSE;
+#elif defined(HAVE_REGCOMP)
 	gint ret = 0;
 	regex_t preg;
 
-#if USE_ONIGURUMA
-	reg_set_encoding(REG_POSIX_ENCODING_UTF8);
-#endif
 	ret = regcomp(&preg, needle, REG_ICASE|REG_EXTENDED);
 	if (ret != 0)
 		return FALSE;
@@ -352,8 +370,10 @@ static gboolean strmatch_regex(const gchar *haystack, const gchar *needle)
 	if (ret == 0)
 		return TRUE;
 	else
-#endif
 		return FALSE;
+#else
+	return FALSE;
+#endif
 }
 
 gboolean filter_match_rule(FilterRule *rule, MsgInfo *msginfo, GSList *hlist,
