@@ -169,7 +169,6 @@ FilterRule *prefs_filter_edit_open(FilterRule *rule, const gchar *header,
 	if (header)
 		prefs_filter_edit_activate_cond_header
 			(&rule_edit_window.cond_edit, header);
-	GTK_EVENTS_FLUSH();
 	gtk_widget_show(rule_edit_window.window);
 
 	syl_plugin_signal_emit("prefs-filter-edit-open", rule, header, key,
