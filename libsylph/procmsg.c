@@ -164,7 +164,7 @@ static gint procmsg_read_cache_data_str_mem(const gchar **p, const gchar *endp, 
 	if (endp - *p < sizeof(len))
 		return -1;
 
-	len = *(const guint32 *)(*p);
+	memcpy(&len, *p, sizeof(len));
 	*p += sizeof(len);
 	if (len > G_MAXINT || len > endp - *p)
 		return -1;
@@ -197,7 +197,9 @@ static gint procmsg_read_cache_data_str_mem(const gchar **p, const gchar *endp, 
 		g_mapped_file_free(mapfile);			\
 		return NULL;					\
 	} else {						\
-		n = *(const guint32 *)p;			\
+		guint32 idata;					\
+		memcpy(&idata, p, sizeof(idata));		\
+		n = idata;					\
 		p += sizeof(guint32);				\
 	}							\
 }
