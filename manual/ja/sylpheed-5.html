@@ -23,8 +23,8 @@
 
 <P>このプログラムのコンパイル/実行には以下のものが必要です。
 <UL>
-<LI>Linux あるいは他の UNIX like OS、またはWindows 2000/XP/Vista/7 + MinGW</LI>
-<LI>GTK+ 2.4以降 (2.6以降推奨、Windowsの場合は2.10以降)</LI>
+<LI>Linux あるいは他の UNIX like OS、またはWindows Vista/7/8/10 + MinGW</LI>
+<LI>GTK+ 2.8以降 (Windowsの場合は2.24)</LI>
 <LI>GNU make</LI>
 <LI>gettext</LI>
 </UL>
@@ -93,7 +93,7 @@ Password: (パスワード入力)
 
 <H3><A NAME="gtk-inst-bin"></A> gtk+のインストール/アップグレード</H3>
 
-<P>まず、gtk+のrpmが入ってるかどうかを確認します。
+<P>まず、gtk2のrpmが入ってるかどうかを確認します。
 <BLOCKQUOTE><CODE>
 <PRE>
 $ rpm -qa | grep gtk
@@ -102,13 +102,13 @@ $ rpm -qa | grep gtk
 </PRE>
 </CODE></BLOCKQUOTE>
 
-のようにgtk+のrpmが既に入っていて、なおかつ2.4.0以上であれば大丈夫です。
+のようにgtk2のrpmが既に入っていて、なおかつ2.8.0以上であれば大丈夫です。
 古い場合は、そのDistributionを配布しているサイト等からダウンロードし、
 <BLOCKQUOTE><CODE>
 <PRE>
 $ su
 Password: (パスワードを入力)
-# rpm -Uvh gtk+-(バージョン).i386.rpm
+# rpm -Uvh gtk2-(バージョン).i386.rpm
 </PRE>
 </CODE></BLOCKQUOTE>
 
@@ -135,21 +135,21 @@ Password: (パスワードを入力)
 <P>この方法は、上記のglibcの依存関係に問題があった場合でも利用可能です。</P>
 <H3><A NAME="gtk-inst-src"></A> gtk+のインストール/アップグレード</H3>
 
-<P>まず、gtk+のrpmが入ってるかどうかを確認します。
+<P>まず、gtk2のrpmが入ってるかどうかを確認します。
 <BLOCKQUOTE><CODE>
 <PRE>
 $ rpm -qa | grep gtk
-gtk+-2.4.x-1vl5
-gtk+-devel-2.4.x-1vl5
+gtk2-2.24.23-6.el6.x86_64
+gtk2-devel-2.24.23-6.el6.x86_64
 (以下略)
 </PRE>
 </CODE></BLOCKQUOTE>
 
-のようにgtk+及びgtk+-develのpackageが既に入っていて、なおかつ2.4.0以上であれば大丈夫です。
+のようにgtk2及びgtk2-develのpackageが既に入っていて、なおかつ2.8.0以上であれば大丈夫です。
 古い場合は、そのdistributionを配布しているサイト等からダウンロードし、
 <BLOCKQUOTE><CODE>
 <PRE>
-# rpm -Uvh gtk+-(バージョン)-?.i386.rpm gtk+-devel-(バージョン)-?.i386.rpm
+# rpm -Uvh gtk2-(バージョン)-?.x86_64.rpm gtk2-devel-(バージョン)-?.x86_64.rpm
 </PRE>
 </CODE></BLOCKQUOTE>
 
@@ -175,16 +175,16 @@ Password: (パスワードを入力)
 <BLOCKQUOTE><CODE>
 <PRE>
 (以上略)
-書き込み中: /usr/src/redhat/RPMS/i386/sylpheed-2.2.0-1.i386.rpm
+書き込み中: /usr/src/redhat/RPMS/x86_64/sylpheed-3.5.0-1.x86_64.rpm
 (以下略)
 </PRE>
 </CODE></BLOCKQUOTE>
 
 のようなメッセージ(書き込み中:がWrote: などになる場合もあります)が表示されます。
-終了したら、上記に示されたファイル(sylpheed-(バージョン).i386.rpm)を
+終了したら、上記に示されたファイル(sylpheed-(バージョン).x86_64.rpm)を
 <BLOCKQUOTE><CODE>
 <PRE>
-# rpm -Uvh /usr/src/redhat/RPMS/i386/sylpheed-(バージョン).i386.rpm
+# rpm -Uvh /usr/src/redhat/RPMS/x86_64/sylpheed-(バージョン).x86_64.rpm
 </PRE>
 </CODE></BLOCKQUOTE>
 

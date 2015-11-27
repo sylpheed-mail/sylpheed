@@ -4,7 +4,7 @@
     <author>Yoichi Imai &lt;yoichi@silver-forest.com&gt;,
             Hiroyuki Yamamoto &lt;hiro-y@kcn.ne.jp&gt;
     <abstract>
-       Sylpheed User's Manual for Sylpheed 3.5 - version 0.19.0
+       Sylpheed User's Manual for Sylpheed 3.5 - version 0.19.1
     </abstract>
 
 <toc>
@@ -25,7 +25,7 @@
 <p>
  Copyright (c) 2000-2002 Yoichi Imai &lt;yoichi@silver-forest.com&gt;
 
- Copyright (c) 2004-2014 Hiroyuki Yamamoto &lt;hiro-y@kcn.ne.jp&gt;
+ Copyright (c) 2004-2015 Hiroyuki Yamamoto &lt;hiro-y@kcn.ne.jp&gt;
 <p>
 Permission is granted to copy, distribute and/or modify this document
       under the terms of the GNU Free Documentation License, Version 1.1
@@ -65,7 +65,7 @@ Sylpheed¤Ë¤Ï°Ê²¼¤Î¤è¤¦¤ÊÆÃÄ¹¤¬¤¢¤ê¤Þ¤¹¡£
 <item>¹ñºÝ²½¡¢Â¿¸À¸ìÂÐ±þ
 <item>¹âÅÙ¤ÊÆüËÜ¸ì½èÍý(Ê¸»ú¥³¡¼¥É¤Î¼«Æ°È½ÊÌ¡¢µ¡¼ï°ÍÂ¸Ê¸»úÂÐ±þÅù)
 <item>Â¿ÍÍ¤Ê¥×¥í¥È¥³¥ë¤ËÂÐ±þ
-<item>¥Þ¥ë¥Á¥¹¥ì¥Ã¥ÉÂÐ±þ
+<item>¥Þ¥ë¥Á¥¹¥ì¥Ã¥É½èÍý
 <item>¥»¥­¥å¥ê¥Æ¥£µ¡Ç½(GnuPG¡¢SSL/TLSv1)
 <item>¶¯ÎÏ¤Ê¥Õ¥£¥ë¥¿¥ê¥ó¥°¡¢¸¡º÷µ¡Ç½
 <item>ÌÂÏÇ¥á¡¼¥ëÂÐºöµ¡Ç½
@@ -76,7 +76,7 @@ Sylpheed¤Ë¤Ï°Ê²¼¤Î¤è¤¦¤ÊÆÃÄ¹¤¬¤¢¤ê¤Þ¤¹¡£
 </sect1>
 <sect1>¥¤¥ó¥¿¥Õ¥§¡¼¥¹
 <p>
-Sylpheed¤Î³°´Ñ¤ä¥¤¥ó¥¿¥Õ¥§¡¼¥¹¤ÏOutlook Express¤äBecky!¤È¤¤¤Ã¤¿¡¢Windows¤Ç¤ÏÄêÈÖ¤Î¥á¡¼¥ë¥½¥Õ¥È¤ÈÆ±ÍÍ¤Î3¥Ú¥¤¥óÊý¼°¤òºÎÍÑ¤·¤Æ¤¤¤Þ¤¹¡£
+Sylpheed¤Î³°´Ñ¤ä¥¤¥ó¥¿¥Õ¥§¡¼¥¹¤ÏOutlook¤äBecky!¤È¤¤¤Ã¤¿¡¢Windows¤Ç¤ÏÄêÈÖ¤Î¥á¡¼¥ë¥½¥Õ¥È¤ÈÆ±ÍÍ¤Î3¥Ú¥¤¥óÊý¼°¤òºÎÍÑ¤·¤Æ¤¤¤Þ¤¹¡£
 
 ÆÃ¤Ë¥­¡¼¥Ü¡¼¥É¤Ë¤è¤ëÁàºîÀ­¤ò½Å»ë¤·¤Æ¤ª¤ê¡¢¸úÎ¨¤è¤¯¥á¡¼¥ë¤òÆÉ¤ß¿Ê¤á¤ë¤³¤È¤¬¤Ç¤­¤Þ¤¹¡£¤â¤Á¤í¤ó¥Þ¥¦¥¹¤Î¤ß¤Ç¤â´ÊÃ±¤ËÁàºî¤Ç¤­¤Þ¤¹¡£
 </sect1>
@@ -136,6 +136,7 @@ Sylpheed¤ÏPOP3¡¢IMAP4rev1¡¢SMTP¤È¤¤¤Ã¤¿¼çÍ×¤Ê¥×¥í¥È¥³¥ë¤Ï¤â¤Á¤í¤ó¡¢NNTP(¥Í¥Ã¥È¥Ë
 <item>Windows ¥¢¥É¥ì¥¹Ä¢ (WAB) ¥Õ¥¡¥¤¥ë¤Î¥¤¥ó¥Ý¡¼¥È (Windows)
 <item>¥É¥é¥Ã¥°&¥É¥í¥Ã¥×
 <item>ÅºÉÕ¥Õ¥¡¥¤¥ëºï½üµ¡Ç½ (¥×¥é¥°¥¤¥ó¤È¤·¤ÆÄó¶¡)
+<item>¹âDPI´Ä¶­ÂÐ±þ
 </itemize>
 
 </sect1>
@@ -214,8 +215,8 @@ Linux¤Î¾ì¹ç¤Ï¡¢³Æ¥Ç¥£¥¹¥È¥ê¥Ó¥å¡¼¥·¥ç¥ó¤ËÉ¸½à¤ÇSylpheed¤Î¥Ñ¥Ã¥±¡¼¥¸¤¬ÍÑ°Õ¤µ¤ì¤Æ¤
 <p>
 ¤³¤Î¥×¥í¥°¥é¥à¤Î¥³¥ó¥Ñ¥¤¥ë/¼Â¹Ô¤Ë¤Ï°Ê²¼¤Î¤â¤Î¤¬É¬Í×¤Ç¤¹¡£
 <itemize>
-<item>Linux ¤¢¤ë¤¤¤ÏÂ¾¤Î UNIX like OS¡¢¤Þ¤¿¤ÏWindows 2000/XP/Vista/7 + MinGW
-<item>GTK+ 2.4°Ê¹ß (2.6°Ê¹ß¿ä¾©¡¢Windows¤Î¾ì¹ç¤Ï2.10°Ê¹ß)
+<item>Linux ¤¢¤ë¤¤¤ÏÂ¾¤Î UNIX like OS¡¢¤Þ¤¿¤ÏWindows Vista/7/8/10 + MinGW
+<item>GTK+ 2.8°Ê¹ß (Windows¤Î¾ì¹ç¤Ï2.24)
 <item>GNU make
 <item>gettext
 </itemize>
@@ -280,18 +281,18 @@ Password: (¥Ñ¥¹¥ï¡¼¥ÉÆþÎÏ)
 <p>
 <sect4>gtk+¤Î¥¤¥ó¥¹¥È¡¼¥ë/¥¢¥Ã¥×¥°¥ì¡¼¥É<label id="gtk-inst-bin">
 <p>
-¤Þ¤º¡¢gtk+¤Îrpm¤¬Æþ¤Ã¤Æ¤ë¤«¤É¤¦¤«¤ò³ÎÇ§¤·¤Þ¤¹¡£
+¤Þ¤º¡¢gtk2¤Îrpm¤¬Æþ¤Ã¤Æ¤ë¤«¤É¤¦¤«¤ò³ÎÇ§¤·¤Þ¤¹¡£
 <tscreen><verb>
 $ rpm -qa | grep gtk
 ...
 (°Ê²¼Î¬)
 </verb></tscreen>
-¤Î¤è¤¦¤Ëgtk+¤Îrpm¤¬´û¤ËÆþ¤Ã¤Æ¤¤¤Æ¡¢¤Ê¤ª¤«¤Ä2.4.0°Ê¾å¤Ç¤¢¤ì¤ÐÂç¾æÉ×¤Ç¤¹¡£
+¤Î¤è¤¦¤Ëgtk2¤Îrpm¤¬´û¤ËÆþ¤Ã¤Æ¤¤¤Æ¡¢¤Ê¤ª¤«¤Ä2.8.0°Ê¾å¤Ç¤¢¤ì¤ÐÂç¾æÉ×¤Ç¤¹¡£
 ¸Å¤¤¾ì¹ç¤Ï¡¢¤½¤ÎDistribution¤òÇÛÉÛ¤·¤Æ¤¤¤ë¥µ¥¤¥ÈÅù¤«¤é¥À¥¦¥ó¥í¡¼¥É¤·¡¢
 <tscreen><verb>
 $ su
 Password: (¥Ñ¥¹¥ï¡¼¥É¤òÆþÎÏ)
-# rpm -Uvh gtk+-(¥Ð¡¼¥¸¥ç¥ó).i386.rpm
+# rpm -Uvh gtk2-(¥Ð¡¼¥¸¥ç¥ó).i386.rpm
 </verb></tscreen>
 ¤È¤¤¤¦¤è¤¦¤Ë¥Ð¡¼¥¸¥ç¥ó¥¢¥Ã¥×¤·¤Æ¤¯¤À¤µ¤¤¡£
 
@@ -316,17 +317,17 @@ Password: (¥Ñ¥¹¥ï¡¼¥É¤òÆþÎÏ)
 ¤³¤ÎÊýË¡¤Ï¡¢¾åµ­¤Îglibc¤Î°ÍÂ¸´Ø·¸¤ËÌäÂê¤¬¤¢¤Ã¤¿¾ì¹ç¤Ç¤âÍøÍÑ²ÄÇ½¤Ç¤¹¡£
 <sect4>gtk+¤Î¥¤¥ó¥¹¥È¡¼¥ë/¥¢¥Ã¥×¥°¥ì¡¼¥É<label id="gtk-inst-src">
 <p>
-¤Þ¤º¡¢gtk+¤Îrpm¤¬Æþ¤Ã¤Æ¤ë¤«¤É¤¦¤«¤ò³ÎÇ§¤·¤Þ¤¹¡£
+¤Þ¤º¡¢gtk2¤Îrpm¤¬Æþ¤Ã¤Æ¤ë¤«¤É¤¦¤«¤ò³ÎÇ§¤·¤Þ¤¹¡£
 <tscreen><verb>
 $ rpm -qa | grep gtk
-gtk+-2.4.x-1vl5
-gtk+-devel-2.4.x-1vl5
+gtk2-2.24.23-6.el6.x86_64
+gtk2-devel-2.24.23-6.el6.x86_64
 (°Ê²¼Î¬)
 </verb></tscreen>
-¤Î¤è¤¦¤Ëgtk+µÚ¤Ógtk+-devel¤Îpackage¤¬´û¤ËÆþ¤Ã¤Æ¤¤¤Æ¡¢¤Ê¤ª¤«¤Ä2.4.0°Ê¾å¤Ç¤¢¤ì¤ÐÂç¾æÉ×¤Ç¤¹¡£
+¤Î¤è¤¦¤Ëgtk2µÚ¤Ógtk2-devel¤Îpackage¤¬´û¤ËÆþ¤Ã¤Æ¤¤¤Æ¡¢¤Ê¤ª¤«¤Ä2.8.0°Ê¾å¤Ç¤¢¤ì¤ÐÂç¾æÉ×¤Ç¤¹¡£
 ¸Å¤¤¾ì¹ç¤Ï¡¢¤½¤Îdistribution¤òÇÛÉÛ¤·¤Æ¤¤¤ë¥µ¥¤¥ÈÅù¤«¤é¥À¥¦¥ó¥í¡¼¥É¤·¡¢
 <tscreen><verb>
-# rpm -Uvh gtk+-(¥Ð¡¼¥¸¥ç¥ó)-?.i386.rpm gtk+-devel-(¥Ð¡¼¥¸¥ç¥ó)-?.i386.rpm
+# rpm -Uvh gtk2-(¥Ð¡¼¥¸¥ç¥ó)-?.x86_64.rpm gtk2-devel-(¥Ð¡¼¥¸¥ç¥ó)-?.x86_64.rpm
 </verb></tscreen>
 ¤Ç¥Ð¡¼¥¸¥ç¥ó¥¢¥Ã¥×¤·¤Æ¤¯¤À¤µ¤¤¡£
 
@@ -346,13 +347,13 @@ Password: (¥Ñ¥¹¥ï¡¼¥É¤òÆþÎÏ)
 ¤È¤¹¤ì¤Ð¥³¥ó¥Ñ¥¤¥ë¤¬³«»Ï¤µ¤ì¡¢
 <tscreen><verb>
 (°Ê¾åÎ¬)
-½ñ¤­¹þ¤ßÃæ: /usr/src/redhat/RPMS/i386/sylpheed-2.2.0-1.i386.rpm
+½ñ¤­¹þ¤ßÃæ: /usr/src/redhat/RPMS/x86_64/sylpheed-3.5.0-1.x86_64.rpm
 (°Ê²¼Î¬)
 </verb></tscreen>
 ¤Î¤è¤¦¤Ê¥á¥Ã¥»¡¼¥¸(½ñ¤­¹þ¤ßÃæ:¤¬Wrote: ¤Ê¤É¤Ë¤Ê¤ë¾ì¹ç¤â¤¢¤ê¤Þ¤¹)¤¬É½¼¨¤µ¤ì¤Þ¤¹¡£
-½ªÎ»¤·¤¿¤é¡¢¾åµ­¤Ë¼¨¤µ¤ì¤¿¥Õ¥¡¥¤¥ë(sylpheed-(¥Ð¡¼¥¸¥ç¥ó).i386.rpm)¤ò
+½ªÎ»¤·¤¿¤é¡¢¾åµ­¤Ë¼¨¤µ¤ì¤¿¥Õ¥¡¥¤¥ë(sylpheed-(¥Ð¡¼¥¸¥ç¥ó).x86_64.rpm)¤ò
 <tscreen><verb>
-# rpm -Uvh /usr/src/redhat/RPMS/i386/sylpheed-(¥Ð¡¼¥¸¥ç¥ó).i386.rpm
+# rpm -Uvh /usr/src/redhat/RPMS/x86_64/sylpheed-(¥Ð¡¼¥¸¥ç¥ó).x86_64.rpm
 </verb></tscreen>
 ¤Ç¥¤¥ó¥¹¥È¡¼¥ë´°Î»¤Ç¤¹¡£
 
@@ -1621,7 +1622,7 @@ WindowsÈÇ¤Ç´ÉÍý¼Ô¸¢¸Â¤Î¤Ê¤¤¥æ¡¼¥¶¤ÇSylpheed¤ò¼Â¹Ô¤¹¤ë¾ì¹ç¡¢bsfilter¤Ï¥¤¥ó¥¹¥È¡¼¥
  <p><itemize>
  <item> ¡Ö¥³¥ó¥È¥í¡¼¥ë ¥Ñ¥Í¥ë - ¥·¥¹¥Æ¥à - ¾ÜºÙÀßÄê - ´Ä¶­ÊÑ¿ô - (¥æ¡¼¥¶Ì¾) ¤Î¥æ¡¼¥¶¡¼´Ä¶­ÊÑ¿ô¡×¤Ç¡Ö¿·µ¬¡×¤ò²¡¤¹(Vista/7¤Î¾ì¹ç¤Ï¡Ö¥³¥ó¥È¥í¡¼¥ë¥Ñ¥Í¥ë - ¥·¥¹¥Æ¥à¤È¥á¥ó¥Æ¥Ê¥ó¥¹ - ¥·¥¹¥Æ¥à - ¥·¥¹¥Æ¥à¤Î¾ÜºÙÀßÄê - ´Ä¶­ÊÑ¿ô - (¥æ¡¼¥¶Ì¾) ¤Î¥æ¡¼¥¶¡¼´Ä¶­ÊÑ¿ô¡×)
  <item>(XP¤Î¾ì¹ç) ¡ÖÊÑ¿ôÌ¾¡×¤Ë¡ÖBSFILTERHOME¡×¡¢¡ÖÊÑ¿ôÃÍ¡×¤Ë¡ÖC:\Documents and Settings\(¥æ¡¼¥¶Ì¾)\Application Data\Sylpheed¡×¤òÆþÎÏ¤·¤Æ¡ÖOK¡×¤ò²¡¤¹
- <item>(Vista/7¤Î¾ì¹ç) ¡ÖÊÑ¿ôÌ¾¡×¤Ë¡ÖBSFILTERHOME¡×¡¢¡ÖÊÑ¿ôÃÍ¡×¤Ë¡ÖC:\Users\(¥æ¡¼¥¶Ì¾)\AppData\Roaming\Sylpheed¡×¤òÆþÎÏ¤·¤Æ¡ÖOK¡×¤ò²¡¤¹
+ <item>(Vista/7/8/10¤Î¾ì¹ç) ¡ÖÊÑ¿ôÌ¾¡×¤Ë¡ÖBSFILTERHOME¡×¡¢¡ÖÊÑ¿ôÃÍ¡×¤Ë¡ÖC:\Users\(¥æ¡¼¥¶Ì¾)\AppData\Roaming\Sylpheed¡×¤òÆþÎÏ¤·¤Æ¡ÖOK¡×¤ò²¡¤¹
  </itemize>
 <item>¡ÖÁ´ÈÌ¤ÎÀßÄê - ÌÂÏÇ¥á¡¼¥ë - ³Ø½¬¥³¥Þ¥ó¥É¡×¤Î³Æ¥³¥Þ¥ó¥É¤Ë
   --homedir "¥Ç¥£¥ì¥¯¥È¥ê" ¤òÄÉ²Ã¤¹¤ë
@@ -3285,6 +3286,12 @@ to permit their use in free software.
 2014-11-20	Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
 	* Version 0.19.0
 	* ¥ª¥ó¥é¥¤¥ó¾õÂÖ¤ÎÀßÄê¹àÌÜ¤òÄÉ²Ã
+2015-11-27	Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
+	* Version 0.19.1
+	* Ãøºî¸¢Ç¯¤ò¹¹¿·
+	* GTK+¤ÎÉ¬Í×¥Ð¡¼¥¸¥ç¥ó¤ò2.8°Ê¹ß¤Ë½¤Àµ
+	* Windows 2000/XP¤òºï½ü¤·¡¢8/10¤òÄÉ²Ã
+	* rpm¤Î¥¤¥ó¥¹¥È¡¼¥ëÊýË¡¤ò½¤Àµ
 </verb>
 </sect1> 
 </sect>
