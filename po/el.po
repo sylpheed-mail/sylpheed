@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.4.0beta5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-24 15:13+0900\n"
+"POT-Creation-Date: 2015-11-27 16:11+0900\n"
 "PO-Revision-Date: 2007-03-17 00:57+0200\n"
 "Last-Translator: Stavros Giannouris <stavrosg@hellug.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -21,11 +21,11 @@ msgstr ""
 msgid "Reading all config for each account...\n"
 msgstr "Ανάγνωση ρυθμίσεων λογαριασμών...\n"
 
-#: libsylph/filter.c:1616
+#: libsylph/filter.c:1636
 msgid "Junk mail filter (manual)"
 msgstr "Φίλτρο ανεπιθύμητης αλληλογραφίας (χειροκίνητο)"
 
-#: libsylph/filter.c:1619
+#: libsylph/filter.c:1639
 msgid "Junk mail filter"
 msgstr "Φίλτρο ανεπιθύμητης αλληλογραφίας"
 
@@ -523,17 +523,17 @@ msgstr "Οι ρυθμίσεις αποθηκεύτηκαν.\n"
 msgid "procmime_get_text_content(): Code conversion failed.\n"
 msgstr "procmime_get_text_content(): Η μετατροπή του κώδικα απέτυχε.\n"
 
-#: libsylph/procmsg.c:875
+#: libsylph/procmsg.c:877
 #, fuzzy
 msgid "can't open mark file\n"
 msgstr "Δεν είναι δυνατό το άνοιγμα του αρχείου"
 
-#: libsylph/procmsg.c:1467
+#: libsylph/procmsg.c:1469
 #, fuzzy, c-format
 msgid "can't fetch message %d\n"
 msgstr "Δέν είναι δυνατή η λήψη μέρους του πολυτμηματικού μηνύματος"
 
-#: libsylph/procmsg.c:1706
+#: libsylph/procmsg.c:1708
 #, fuzzy, c-format
 msgid "Print command line is invalid: `%s'\n"
 msgstr ""
@@ -1080,7 +1080,7 @@ msgstr "Διαγραφή"
 #: src/addressbook.c:945 src/editaddress.c:725 src/editaddress.c:859
 #: src/prefs_actions.c:254 src/prefs_customheader.c:232
 #: src/prefs_display_header.c:274 src/prefs_display_header.c:330
-#: src/prefs_filter_edit.c:1608
+#: src/prefs_filter_edit.c:1607
 msgid "Add"
 msgstr "Προσθήκη"
 
@@ -1883,7 +1883,7 @@ msgid "Data type"
 msgstr "Ημερομηνία"
 
 #. S_COL_DATE
-#: src/compose.c:5432 src/mimeview.c:217 src/prefs_filter_edit.c:512
+#: src/compose.c:5432 src/mimeview.c:217 src/prefs_filter_edit.c:511
 #: src/prefs_summary_column.c:72 src/rpop3.c:440 src/select-keys.c:311
 #: src/summaryview.c:5525
 msgid "Size"
@@ -2510,7 +2510,7 @@ msgstr "Νέα"
 
 #. S_COL_MARK
 #: src/folderview.c:444 src/prefs_common_dialog.c:1781
-#: src/prefs_filter_edit.c:516 src/prefs_summary_column.c:67
+#: src/prefs_filter_edit.c:515 src/prefs_summary_column.c:67
 #: src/quick_search.c:109
 msgid "Unread"
 msgstr "Αδιάβαστα"
@@ -4662,8 +4662,8 @@ msgstr "Λήψη όλων των μηνυμάτων (και των ήδη ληφ
 msgid "Receive size limit"
 msgstr "Όριο μεγέθους για λήψη"
 
-#: src/prefs_account_dialog.c:977 src/prefs_filter_edit.c:597
-#: src/prefs_filter_edit.c:1058
+#: src/prefs_account_dialog.c:977 src/prefs_filter_edit.c:596
+#: src/prefs_filter_edit.c:1057
 msgid "KB"
 msgstr "KB"
 
@@ -4896,7 +4896,7 @@ msgstr "Θύρα"
 msgid "Use authentication"
 msgstr "Πιστοποίηση"
 
-#: src/prefs_account_dialog.c:1841 src/prefs_filter_edit.c:257
+#: src/prefs_account_dialog.c:1841 src/prefs_filter_edit.c:256
 #: src/prefs_search_folder.c:187
 msgid "Name:"
 msgstr "Όνομα:"
@@ -6214,7 +6214,7 @@ msgstr "Παλιό Sylpheed"
 msgid "Custom header setting"
 msgstr "Ρύθμιση προσαρμοσμένων κεφαλίδων"
 
-#: src/prefs_customheader.c:238 src/prefs_filter_edit.c:1611
+#: src/prefs_customheader.c:238 src/prefs_filter_edit.c:1610
 msgid " Delete "
 msgstr " Διαγραφή "
 
@@ -6307,219 +6307,219 @@ msgstr "Θέλετε σίγουρα να διαγράψετε τον κανόν�
 msgid "Delete rule"
 msgstr "Διαγραφή κανόνα"
 
-#: src/prefs_filter_edit.c:242
+#: src/prefs_filter_edit.c:241
 msgid "Filter rule"
 msgstr "Κανόνας φίλτρου"
 
-#: src/prefs_filter_edit.c:276
+#: src/prefs_filter_edit.c:275
 msgid "If any of the following condition matches"
 msgstr "Ταίριασμα οποιουδήποτε από τα παρακάτω"
 
-#: src/prefs_filter_edit.c:278
+#: src/prefs_filter_edit.c:277
 msgid "If all of the following conditions match"
 msgstr "Ταίριασμα όλων των παρακάτω"
 
-#: src/prefs_filter_edit.c:300
+#: src/prefs_filter_edit.c:299
 msgid "Perform the following actions:"
 msgstr "Εκτέλεση ακόλουθων ενεργειών:"
 
-#: src/prefs_filter_edit.c:505
+#: src/prefs_filter_edit.c:504
 msgid "To or Cc"
 msgstr "Προς ή Κοινοποίηση"
 
-#: src/prefs_filter_edit.c:506
+#: src/prefs_filter_edit.c:505
 msgid "Any header"
 msgstr "Οποιαδήποτε κεφαλίδα"
 
-#: src/prefs_filter_edit.c:507
+#: src/prefs_filter_edit.c:506
 msgid "Edit header..."
 msgstr "Επεξεργασία κεφαλίδας..."
 
-#: src/prefs_filter_edit.c:510
+#: src/prefs_filter_edit.c:509
 msgid "Message body"
 msgstr "Σώμα μηνύματος"
 
-#: src/prefs_filter_edit.c:511
+#: src/prefs_filter_edit.c:510
 msgid "Result of command"
 msgstr "Αποτέλεσμα εντολής"
 
-#: src/prefs_filter_edit.c:513
+#: src/prefs_filter_edit.c:512
 msgid "Age"
 msgstr "Παλαιότητα"
 
-#: src/prefs_filter_edit.c:517 src/quick_search.c:110
+#: src/prefs_filter_edit.c:516 src/quick_search.c:110
 msgid "Marked"
 msgstr "Σημειωμένο"
 
-#: src/prefs_filter_edit.c:518
+#: src/prefs_filter_edit.c:517
 msgid "Has color label"
 msgstr "Έχει ετικέτα"
 
-#: src/prefs_filter_edit.c:519
+#: src/prefs_filter_edit.c:518
 msgid "Has attachment"
 msgstr "Έχει συνημμένο"
 
-#: src/prefs_filter_edit.c:539
+#: src/prefs_filter_edit.c:538
 msgid "contains"
 msgstr "περιέχει"
 
-#: src/prefs_filter_edit.c:540
+#: src/prefs_filter_edit.c:539
 msgid "doesn't contain"
 msgstr "δεν περιέχει"
 
-#: src/prefs_filter_edit.c:541
+#: src/prefs_filter_edit.c:540
 msgid "is"
 msgstr "είναι"
 
-#: src/prefs_filter_edit.c:542
+#: src/prefs_filter_edit.c:541
 msgid "is not"
 msgstr "δεν είναι"
 
-#: src/prefs_filter_edit.c:544
+#: src/prefs_filter_edit.c:543
 msgid "match to regex"
 msgstr "ταιριάζει σε κανονική έκφραση"
 
-#: src/prefs_filter_edit.c:545
+#: src/prefs_filter_edit.c:544
 msgid "doesn't match to regex"
 msgstr "δεν ταιριάζει σε κανονική έκφραση"
 
-#: src/prefs_filter_edit.c:547
+#: src/prefs_filter_edit.c:546
 #, fuzzy
 msgid "is in addressbook"
 msgstr "Κατάλογος διευθύνσεων"
 
-#: src/prefs_filter_edit.c:549
+#: src/prefs_filter_edit.c:548
 #, fuzzy
 msgid "is not in addressbook"
 msgstr "Προσθήκη στο _ευρετήριο διευθύνσεων..."
 
-#: src/prefs_filter_edit.c:561
+#: src/prefs_filter_edit.c:560
 msgid "is larger than"
 msgstr "είναι μεγαλύτερο από"
 
-#: src/prefs_filter_edit.c:562
+#: src/prefs_filter_edit.c:561
 msgid "is smaller than"
 msgstr "είναι μικρότερο από"
 
-#: src/prefs_filter_edit.c:571
+#: src/prefs_filter_edit.c:570
 msgid "is shorter than"
 msgstr "είναι πιο κοντό από"
 
-#: src/prefs_filter_edit.c:572
+#: src/prefs_filter_edit.c:571
 msgid "is longer than"
 msgstr "είναι μακρύτερο από"
 
-#: src/prefs_filter_edit.c:582
+#: src/prefs_filter_edit.c:581
 msgid "matches to status"
 msgstr "ταιριάζει σε κατάσταση"
 
-#: src/prefs_filter_edit.c:583
+#: src/prefs_filter_edit.c:582
 msgid "doesn't match to status"
 msgstr "δεν ταιριάζει σε κατάσταση"
 
-#: src/prefs_filter_edit.c:687
+#: src/prefs_filter_edit.c:686
 msgid "Move to"
 msgstr "Μετακίνηση"
 
-#: src/prefs_filter_edit.c:688
+#: src/prefs_filter_edit.c:687
 msgid "Copy to"
 msgstr "Αντιγραφή"
 
-#: src/prefs_filter_edit.c:689
+#: src/prefs_filter_edit.c:688
 msgid "Don't receive"
 msgstr "Να μη ληφθεί"
 
-#: src/prefs_filter_edit.c:690
+#: src/prefs_filter_edit.c:689
 msgid "Delete from server"
 msgstr "Διαγραφή από το διακομιστή"
 
-#: src/prefs_filter_edit.c:693
+#: src/prefs_filter_edit.c:692
 msgid "Set mark"
 msgstr "Ορισμός σημείου"
 
-#: src/prefs_filter_edit.c:694
+#: src/prefs_filter_edit.c:693
 msgid "Set color"
 msgstr "Ορισμός χρώματος"
 
-#: src/prefs_filter_edit.c:695
+#: src/prefs_filter_edit.c:694
 msgid "Mark as read"
 msgstr "Σημείωση ως αναγνωσμένο"
 
-#: src/prefs_filter_edit.c:699 src/prefs_toolbar.c:62
+#: src/prefs_filter_edit.c:698 src/prefs_toolbar.c:62
 msgid "Forward"
 msgstr "Προώθηση"
 
-#: src/prefs_filter_edit.c:700
+#: src/prefs_filter_edit.c:699
 msgid "Forward as attachment"
 msgstr "Προώθηση ως συνημμένο"
 
-#: src/prefs_filter_edit.c:701
+#: src/prefs_filter_edit.c:700
 msgid "Redirect"
 msgstr "Ανακατεύθυνση"
 
-#: src/prefs_filter_edit.c:705
+#: src/prefs_filter_edit.c:704
 msgid "Execute command"
 msgstr "Εκτέλεση εντολής"
 
-#: src/prefs_filter_edit.c:708
+#: src/prefs_filter_edit.c:707
 msgid "Stop rule evaluation"
 msgstr "Διακοπή εξέτασης κανόνα"
 
-#: src/prefs_filter_edit.c:714 src/prefs_filter_edit.c:1107
+#: src/prefs_filter_edit.c:713 src/prefs_filter_edit.c:1106
 msgid "folder:"
 msgstr "φάκελος:"
 
-#: src/prefs_filter_edit.c:1068
+#: src/prefs_filter_edit.c:1067
 msgid "day(s)"
 msgstr "ημέρες"
 
-#: src/prefs_filter_edit.c:1147
+#: src/prefs_filter_edit.c:1146
 msgid "address:"
 msgstr "διεύθυνση:"
 
-#: src/prefs_filter_edit.c:1564
+#: src/prefs_filter_edit.c:1563
 msgid "Edit header list"
 msgstr "Επεξεργασία λίστας κεφαλίδων"
 
-#: src/prefs_filter_edit.c:1587
+#: src/prefs_filter_edit.c:1586
 msgid "Headers"
 msgstr "Επικεφαλίδες"
 
-#: src/prefs_filter_edit.c:1599
+#: src/prefs_filter_edit.c:1598
 msgid "Header:"
 msgstr "Επικεφαλίδα:"
 
-#: src/prefs_filter_edit.c:1793 src/prefs_filter_edit.c:1904
-#: src/prefs_filter_edit.c:1911
+#: src/prefs_filter_edit.c:1792 src/prefs_filter_edit.c:1903
+#: src/prefs_filter_edit.c:1910
 msgid "Command is not specified."
 msgstr "Δεν έχει οριστεί η εντολή."
 
-#: src/prefs_filter_edit.c:1858
+#: src/prefs_filter_edit.c:1857
 msgid "Destination folder is not specified."
 msgstr "Δεν έχει οριστεί ο προορισμός."
 
-#: src/prefs_filter_edit.c:1864
+#: src/prefs_filter_edit.c:1863
 #, fuzzy
 msgid "The specified destination folder does not exist."
 msgstr "Το αρχείο %s δεν υπάρχει\n"
 
-#: src/prefs_filter_edit.c:1961
+#: src/prefs_filter_edit.c:1960
 msgid "Invalid condition exists."
 msgstr "Υπάρχει άκυρη συνθήκη."
 
-#: src/prefs_filter_edit.c:1984
+#: src/prefs_filter_edit.c:1983
 msgid "Rule name is not specified."
 msgstr "Ο κανόνας δεν έχει ονομαστεί."
 
-#: src/prefs_filter_edit.c:2010
+#: src/prefs_filter_edit.c:2009
 msgid "Invalid action exists."
 msgstr "Υπάρχει άκυρη δράση."
 
-#: src/prefs_filter_edit.c:2019
+#: src/prefs_filter_edit.c:2018
 msgid "Condition not exist."
 msgstr "Η συνθήκη δεν υπάρχει."
 
-#: src/prefs_filter_edit.c:2021
+#: src/prefs_filter_edit.c:2020
 msgid "Action not exist."
 msgstr "Δεν υπάρχει η ενέργεια."
 
@@ -8135,37 +8135,37 @@ msgid ""
 "Upgrade now?"
 msgstr ""
 
-#: src/update_check.c:276 src/update_check.c:571
+#: src/update_check.c:276 src/update_check.c:593
 #, fuzzy
 msgid "New version found"
 msgstr "Δεν βρέθηκε υπογραφή"
 
-#: src/update_check.c:398 src/update_check.c:683
+#: src/update_check.c:420 src/update_check.c:700
 #, fuzzy
 msgid "Information"
 msgstr "Πληροφορίες διακομιστή"
 
-#: src/update_check.c:399
+#: src/update_check.c:421
 #, fuzzy
 msgid "Sylpheed is already the latest version."
 msgstr "Τρέχει ήδη ένα Sylpheed.\n"
 
-#: src/update_check.c:402
+#: src/update_check.c:424
 msgid "Couldn't get the version information."
 msgstr ""
 
-#: src/update_check.c:624
+#: src/update_check.c:640
 msgid ""
 "Newer version of plug-ins have been found.\n"
 "Upgrade now?\n"
 msgstr ""
 
-#: src/update_check.c:684
+#: src/update_check.c:701
 #, fuzzy
 msgid "All Sylpheed plug-ins are already the latest version."
 msgstr "Τρέχει ήδη ένα Sylpheed.\n"
 
-#: src/update_check.c:687
+#: src/update_check.c:704
 msgid "Couldn't get the version information of plug-ins."
 msgstr ""
 
