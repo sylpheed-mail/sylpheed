@@ -341,6 +341,7 @@ static gboolean strmatch_regex(const gchar *haystack, const gchar *needle)
 	OnigErrorInfo err_info;
 	const UChar *ptn = (const UChar *)needle;
 	const UChar *str = (const UChar *)haystack;
+	size_t haystack_len;
 
 	ret = onig_new(&reg, ptn, ptn + strlen(needle),
 		       ONIG_OPTION_IGNORECASE|ONIG_OPTION_EXTEND,
@@ -349,7 +350,9 @@ static gboolean strmatch_regex(const gchar *haystack, const gchar *needle)
 	if (ret != ONIG_NORMAL)
 		return FALSE;
 
-	ret = onig_match(reg, str, str + strlen(haystack), str, NULL, 0);
+	haystack_len = strlen(haystack);
+	ret = onig_search(reg, str, str + haystack_len,
+			  str, str + haystack_len, NULL, 0);
 	onig_free(reg);
 
 	if (ret >= 0)
