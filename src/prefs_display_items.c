@@ -37,6 +37,9 @@
 #include "gtkutils.h"
 #include "utils.h"
 
+#define SCROLLED_WINDOW_WIDTH	180
+#define SCROLLED_WINDOW_HEIGHT	210
+
 static void prefs_display_items_set_sensitive(PrefsDisplayItemsDialog *dialog);
 
 /* callback functions */
@@ -149,7 +152,10 @@ PrefsDisplayItemsDialog *prefs_display_items_dialog_create(void)
 	gtk_box_pack_start(GTK_BOX(hbox1), clist_hbox, TRUE, TRUE, 0);
 
 	scrolledwin = gtk_scrolled_window_new(NULL, NULL);
-	gtk_widget_set_size_request(scrolledwin, 180, 210);
+	gtk_widget_set_size_request
+		(scrolledwin,
+		 SCROLLED_WINDOW_WIDTH * gtkut_get_dpi_multiplier(),
+		 SCROLLED_WINDOW_HEIGHT * gtkut_get_dpi_multiplier());
 	gtk_widget_show(scrolledwin);
 	gtk_box_pack_start(GTK_BOX(clist_hbox), scrolledwin, TRUE, TRUE, 0);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolledwin),
@@ -193,7 +199,10 @@ PrefsDisplayItemsDialog *prefs_display_items_dialog_create(void)
 	gtk_box_pack_start(GTK_BOX(hbox1), clist_hbox, TRUE, TRUE, 0);
 
 	scrolledwin = gtk_scrolled_window_new(NULL, NULL);
-	gtk_widget_set_size_request(scrolledwin, 180, 210);
+	gtk_widget_set_size_request
+		(scrolledwin,
+		 SCROLLED_WINDOW_WIDTH * gtkut_get_dpi_multiplier(),
+		 SCROLLED_WINDOW_HEIGHT * gtkut_get_dpi_multiplier());
 	gtk_widget_show(scrolledwin);
 	gtk_box_pack_start(GTK_BOX(clist_hbox), scrolledwin, TRUE, TRUE, 0);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolledwin),

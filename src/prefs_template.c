@@ -221,7 +221,10 @@ static void prefs_template_window_create(void)
 
 	text_value = gtk_text_view_new();
 	gtk_widget_show(text_value);
-	gtk_widget_set_size_request(text_value, 360, 120);
+	gtk_widget_set_size_request
+		(text_value,
+		 360 * gtkut_get_dpi_multiplier(),
+		 120 * gtkut_get_dpi_multiplier());
 	gtk_container_add(GTK_CONTAINER(scroll2), text_value);
 	gtk_text_view_set_editable(GTK_TEXT_VIEW(text_value), TRUE);
 	buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_value));
@@ -242,7 +245,8 @@ static void prefs_template_window_create(void)
 	arrow1 = gtk_arrow_new(GTK_ARROW_DOWN, GTK_SHADOW_OUT);
 	gtk_widget_show(arrow1);
 	gtk_box_pack_start(GTK_BOX(hbox2), arrow1, FALSE, FALSE, 0);
-	gtk_widget_set_size_request(arrow1, -1, 16);
+	gtk_widget_set_size_request(arrow1, -1,
+				    16 * gtkut_get_dpi_multiplier());
 
 	hbox3 = gtk_hbox_new(TRUE, 4);
 	gtk_widget_show(hbox3);
@@ -287,7 +291,8 @@ static void prefs_template_window_create(void)
 	title[0] = _("Registered templates");
 	clist_tmpls = gtk_clist_new_with_titles(1, title);
 	gtk_widget_show(clist_tmpls);
-	gtk_widget_set_size_request(scroll1, -1, 140);
+	gtk_widget_set_size_request(scroll1, -1,
+				    160 * gtkut_get_dpi_multiplier());
 	gtk_container_add(GTK_CONTAINER(scroll1), clist_tmpls);
 	gtk_clist_set_column_width(GTK_CLIST(clist_tmpls), 0, 80);
 	gtk_clist_set_selection_mode(GTK_CLIST(clist_tmpls),

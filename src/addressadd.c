@@ -151,7 +151,9 @@ static void addressadd_create( void ) {
 	gint top;
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	gtk_widget_set_size_request(window, 300, 360);
+	gtk_widget_set_size_request(window,
+				    300 * gtkut_get_dpi_multiplier(),
+				    360 * gtkut_get_dpi_multiplier());
 	gtk_container_set_border_width(GTK_CONTAINER(window), 0);
 	gtk_window_set_title(GTK_WINDOW(window), _("Add Address to Book"));
 	gtk_window_set_position(GTK_WINDOW(window),
