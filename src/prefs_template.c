@@ -1,7 +1,7 @@
 /*
  * Sylpheed templates subsystem 
  * Copyright (C) 2001 Alexander Barinov
- * Copyright (C) 2001-2012 Hiroyuki Yamamoto
+ * Copyright (C) 2001-2015 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
