@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2005 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2015 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -195,8 +195,8 @@ static void subscribe_dialog_create(void)
 	dialog = gtk_dialog_new();
 	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, TRUE, FALSE);
 	gtk_widget_set_size_request(dialog,
-				    SUBSCRIBE_DIALOG_WIDTH,
-				    SUBSCRIBE_DIALOG_HEIGHT);
+				    SUBSCRIBE_DIALOG_WIDTH * gtkut_get_dpi_multiplier(),
+				    SUBSCRIBE_DIALOG_HEIGHT * gtkut_get_dpi_multiplier());
 	gtk_container_set_border_width
 		(GTK_CONTAINER(GTK_DIALOG(dialog)->action_area), 5);
 	gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);

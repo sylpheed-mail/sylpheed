@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto & The Sylpheed Claws Team
+ * Copyright (C) 1999-2015 Hiroyuki Yamamoto & The Sylpheed Claws Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1110,7 +1110,9 @@ static void create_io_dialog(Children *children)
 	gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scrolledwin),
 					    GTK_SHADOW_IN);
 	gtk_box_pack_start(GTK_BOX(vbox), scrolledwin, TRUE, TRUE, 0);
-	gtk_widget_set_size_request(scrolledwin, 560, 200);
+	gtk_widget_set_size_request(scrolledwin,
+				    560 * gtkut_get_dpi_multiplier(),
+				    200 * gtkut_get_dpi_multiplier());
 	gtk_widget_hide(scrolledwin);
 
 	text = gtk_text_view_new();
@@ -1137,7 +1139,8 @@ static void create_io_dialog(Children *children)
 		gtk_widget_show(input_hbox);
 
 		entry = gtk_entry_new();
-		gtk_widget_set_size_request(entry, 320, -1);
+		gtk_widget_set_size_request
+			(entry, 320 * gtkut_get_dpi_multiplier(), -1);
 		g_signal_connect(G_OBJECT(entry), "activate",
 				 G_CALLBACK(send_input), children);
 		gtk_box_pack_start(GTK_BOX(input_hbox), entry, TRUE, TRUE, 0);
