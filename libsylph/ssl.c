@@ -137,11 +137,15 @@ void ssl_init(void)
 			g_warning("SSLv23 SSL_CTX_load_verify_locations failed.\n");
 	}
 
-	ssl_ctx_TLSv1 = SSL_CTX_new(TLSv1_client_method());
+	/* ssl_ctx_TLSv1 = SSL_CTX_new(TLSv1_client_method()); */
+	ssl_ctx_TLSv1 = SSL_CTX_new(SSLv23_client_method());
 	if (ssl_ctx_TLSv1 == NULL) {
 		debug_print(_("TLSv1 not available\n"));
 	} else {
 		debug_print(_("TLSv1 available\n"));
+		/* disable SSLv2/SSLv3 */
+		SSL_CTX_set_options(ssl_ctx_TLSv1,
+				    SSL_OP_NO_SSLv2|SSL_OP_NO_SSLv3);
 		if ((certs_file || certs_dir) &&
 		    !SSL_CTX_load_verify_locations(ssl_ctx_TLSv1, certs_file,
 						   certs_dir))
@@ -270,6 +274,8 @@ gboolean ssl_init_socket_with_method(SockInfo *sockinfo, SSLMethod method)
 
 	debug_print(_("SSL connection using %s\n"),
 		    SSL_get_cipher(sockinfo->ssl));
+	debug_print("SSL protocol version: %s\n",
+		    SSL_get_version(sockinfo->ssl));
 
 	/* Get server's certificate (note: beware of dynamic allocation) */
 
