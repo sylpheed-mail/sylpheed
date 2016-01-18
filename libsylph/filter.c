@@ -344,11 +344,15 @@ static gboolean strmatch_regex(const gchar *haystack, const gchar *needle)
 	size_t haystack_len;
 
 	ret = onig_new(&reg, ptn, ptn + strlen(needle),
-		       ONIG_OPTION_IGNORECASE|ONIG_OPTION_EXTEND,
+		       /* ONIG_OPTION_EXTEND requires spaces to be escaped */
+		       /* ONIG_OPTION_IGNORECASE|ONIG_OPTION_EXTEND, */
+		       ONIG_OPTION_IGNORECASE,
 		       ONIG_ENCODING_UTF8, ONIG_SYNTAX_POSIX_EXTENDED,
 		       &err_info);
-	if (ret != ONIG_NORMAL)
+	if (ret != ONIG_NORMAL) {
+		g_warning("strmatch_regex: onig_new() failed: %d", ret);
 		return FALSE;
+	}
 
 	haystack_len = strlen(haystack);
 	ret = onig_search(reg, str, str + haystack_len,
