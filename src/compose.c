@@ -7249,6 +7249,8 @@ static void toolbar_customize(GtkWidget *widget, gpointer data)
 			prefs_toolbar_get_name_list_from_item_list(item_list);
 		g_list_free(item_list);
 		prefs_common_write_config();
+
+		syl_plugin_signal_emit("compose-toolbar-changed", compose);
 	}
 }
 
