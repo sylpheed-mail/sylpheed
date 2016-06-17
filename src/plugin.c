@@ -1222,6 +1222,14 @@ void syl_plugin_compose_attach_remove_all(gpointer compose)
 	SAFE_CALL_ARG1(func, compose);
 }
 
+GSList *syl_plugin_get_attach_list(gpointer compose)
+{
+	GSList * (*func)(gpointer);
+
+	GETFUNC("compose_get_attach_list");
+	return SAFE_CALL_ARG1_RET(func, compose);
+}
+
 
 FolderItem *syl_plugin_folder_sel(Folder *cur_folder, gint sel_type,
 				  const gchar *default_folder)

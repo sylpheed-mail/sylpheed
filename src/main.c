@@ -1422,6 +1422,7 @@ static void plugin_init(void)
 	ADD_SYM(compose_get_textview);
 	ADD_SYM(compose_attach_append);
 	ADD_SYM(compose_attach_remove_all);
+	ADD_SYM(compose_get_attach_list);
 	ADD_SYM(compose_send);
 
 	ADD_SYM(foldersel_folder_sel);

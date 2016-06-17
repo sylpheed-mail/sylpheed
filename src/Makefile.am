@@ -113,7 +113,8 @@ libsylpheed_plugin_0_la_SOURCES = \
 
 libsylpheed_plugin_0includedir=$(includedir)/sylpheed
 libsylpheed_plugin_0include_HEADERS = \
-	plugin.h
+	plugin.h \
+	plugin-types.h
 
 if NATIVE_WIN32
 no_undefined = -no-undefined

@@ -28,6 +28,7 @@
 #include "procmsg.h"
 #include "folder.h"
 #include "filter.h"
+#include "plugin-types.h"
 
 /* SylPlugin object */
 
@@ -287,6 +288,8 @@ void syl_plugin_compose_attach_append		(gpointer compose,
 						 const gchar *filename,
 						 const gchar *content_type);
 void syl_plugin_compose_attach_remove_all	(gpointer compose);
+/* returns list of SylPluginAttachInfo (GSList must be freed by caller) */
+GSList *syl_plugin_get_attach_list		(gpointer compose);
 
 /* Others */
 FolderItem *syl_plugin_folder_sel		(Folder *cur_folder,
