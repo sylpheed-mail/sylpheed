@@ -257,6 +257,7 @@ void compose_attach_append	(Compose	*compose,
 				 const gchar	*filename,
 				 const gchar	*content_type);
 void compose_attach_remove_all	(Compose	*compose);
+GSList *compose_get_attach_list	(Compose	*compose);
 
 gint compose_send		(Compose	*compose,
 				 gboolean	 close_on_success);

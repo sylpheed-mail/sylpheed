@@ -6508,6 +6508,23 @@ void compose_attach_remove_all(Compose *compose)
 	gtk_list_store_clear(GTK_LIST_STORE(model));
 }
 
+GSList *compose_get_attach_list(Compose *compose)
+{
+	GtkTreeModel *model = GTK_TREE_MODEL(compose->attach_store);
+	GtkTreeIter iter;
+	gboolean valid;
+	AttachInfo *ainfo;
+	GSList *alist = NULL;
+
+	for (valid = gtk_tree_model_get_iter_first(model, &iter); valid;
+	     valid = gtk_tree_model_iter_next(model, &iter)) {
+		gtk_tree_model_get(model, &iter, COL_ATTACH_INFO, &ainfo, -1);
+		alist = g_slist_append(alist, ainfo);
+	}
+
+	return alist;
+}
+
 static struct _AttachProperty
 {
 	GtkWidget *window;
