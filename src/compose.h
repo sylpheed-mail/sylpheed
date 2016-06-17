@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2012 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2016 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -217,17 +217,17 @@ Compose *compose_new		(PrefsAccount	*account,
 				 const gchar	*mailto,
 				 GPtrArray	*attach_files);
 
-void compose_reply		(MsgInfo	*msginfo,
+Compose *compose_reply		(MsgInfo	*msginfo,
 				 FolderItem	*item,
 				 ComposeMode	 mode,
 				 const gchar	*body);
-void compose_forward		(GSList		*mlist,
+Compose *compose_forward	(GSList		*mlist,
 				 FolderItem	*item,
 				 gboolean	 as_attach,
 				 const gchar	*body);
-void compose_redirect		(MsgInfo	*msginfo,
+Compose *compose_redirect	(MsgInfo	*msginfo,
 				 FolderItem	*item);
-void compose_reedit		(MsgInfo	*msginfo);
+Compose *compose_reedit		(MsgInfo	*msginfo);
 
 GList *compose_get_compose_list	(void);
 
@@ -247,5 +247,18 @@ void compose_block_modified	(Compose	*compose);
 void compose_unblock_modified	(Compose	*compose);
 
 void compose_reflect_prefs_all	(void);
+
+GtkWidget *compose_get_toolbar	(Compose	*compose);
+GtkWidget *compose_get_misc_hbox(Compose	*compose);
+GtkWidget *compose_get_textview	(Compose	*compose);
+
+void compose_attach_append	(Compose	*compose,
+				 const gchar	*file,
+				 const gchar	*filename,
+				 const gchar	*content_type);
+void compose_attach_remove_all	(Compose	*compose);
+
+gint compose_send		(Compose	*compose,
+				 gboolean	 close_on_success);
 
 #endif /* __COMPOSE_H__ */

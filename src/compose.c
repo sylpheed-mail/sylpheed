@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2014 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2016 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -244,10 +244,6 @@ static void compose_insert_file			(Compose	*compose,
 						 const gchar	*file,
 						 gboolean	 scroll);
 
-static void compose_attach_append		(Compose	*compose,
-						 const gchar	*file,
-						 const gchar	*filename,
-						 const gchar	*content_type);
 static void compose_attach_parts		(Compose	*compose,
 						 MsgInfo	*msginfo);
 
@@ -272,7 +268,7 @@ static gboolean compose_check_activities	(Compose	*compose);
 static void compose_add_new_recipients_to_addressbook
 						(Compose	*compose);
 
-static gint compose_send			(Compose	*compose);
+static gint compose_send_real			(Compose	*compose);
 static gint compose_write_to_file		(Compose	*compose,
 						 const gchar	*file,
 						 gboolean	 is_draft);
@@ -834,8 +830,8 @@ Compose *compose_new(PrefsAccount *account, FolderItem *item,
 	return compose;
 }
 
-void compose_reply(MsgInfo *msginfo, FolderItem *item, ComposeMode mode,
-		   const gchar *body)
+Compose *compose_reply(MsgInfo *msginfo, FolderItem *item, ComposeMode mode,
+		       const gchar *body)
 {
 	Compose *compose;
 	PrefsAccount *account = NULL;
@@ -844,7 +840,7 @@ void compose_reply(MsgInfo *msginfo, FolderItem *item, ComposeMode mode,
 	GtkTextIter iter;
 	gboolean quote = FALSE;
 
-	g_return_if_fail(msginfo != NULL);
+	g_return_val_if_fail(msginfo != NULL, NULL);
 
 	if (COMPOSE_QUOTE_MODE(mode) == COMPOSE_WITH_QUOTE)
 		quote = TRUE;
@@ -862,7 +858,7 @@ void compose_reply(MsgInfo *msginfo, FolderItem *item, ComposeMode mode,
 		account = msginfo->folder->folder->account;
 	if (!account)
 		account = cur_account;
-	g_return_if_fail(account != NULL);
+	g_return_val_if_fail(account != NULL, NULL);
 
 	compose = compose_create(account, COMPOSE_REPLY);
 
@@ -879,7 +875,8 @@ void compose_reply(MsgInfo *msginfo, FolderItem *item, ComposeMode mode,
 		}
 	}
 
-	if (compose_parse_header(compose, msginfo) < 0) return;
+	if (compose_parse_header(compose, msginfo) < 0)
+		return compose;
 
 	undo_block(compose->undostruct);
 
@@ -940,10 +937,12 @@ void compose_reply(MsgInfo *msginfo, FolderItem *item, ComposeMode mode,
 					   autosave_timeout, compose, NULL);
 	if (prefs_common.auto_exteditor)
 		compose_exec_ext_editor(compose);
+
+	return compose;
 }
 
-void compose_forward(GSList *mlist, FolderItem *item, gboolean as_attach,
-		     const gchar *body)
+Compose *compose_forward(GSList *mlist, FolderItem *item, gboolean as_attach,
+			 const gchar *body)
 {
 	Compose *compose;
 	PrefsAccount *account = NULL;
@@ -954,14 +953,14 @@ void compose_forward(GSList *mlist, FolderItem *item, gboolean as_attach,
 	MsgInfo *msginfo;
 	GString *forward_targets;
 
-	g_return_if_fail(mlist != NULL);
+	g_return_val_if_fail(mlist != NULL, NULL);
 
 	msginfo = (MsgInfo *)mlist->data;
 
 	if (msginfo->folder)
 		account = account_find_from_item(msginfo->folder);
 	if (!account) account = cur_account;
-	g_return_if_fail(account != NULL);
+	g_return_val_if_fail(account != NULL, NULL);
 
 	compose = compose_create(account, COMPOSE_FORWARD);
 
@@ -1076,9 +1075,11 @@ void compose_forward(GSList *mlist, FolderItem *item, gboolean as_attach,
 					   autosave_timeout, compose, NULL);
 	if (prefs_common.auto_exteditor)
 		compose_exec_ext_editor(compose);
+
+	return compose;
 }
 
-void compose_redirect(MsgInfo *msginfo, FolderItem *item)
+Compose *compose_redirect(MsgInfo *msginfo, FolderItem *item)
 {
 	Compose *compose;
 	PrefsAccount *account;
@@ -1089,17 +1090,18 @@ void compose_redirect(MsgInfo *msginfo, FolderItem *item)
 	FILE *fp;
 	gchar buf[BUFFSIZE];
 
-	g_return_if_fail(msginfo != NULL);
-	g_return_if_fail(msginfo->folder != NULL);
+	g_return_val_if_fail(msginfo != NULL, NULL);
+	g_return_val_if_fail(msginfo->folder != NULL, NULL);
 
 	account = account_find_from_item(msginfo->folder);
 	if (!account) account = cur_account;
-	g_return_if_fail(account != NULL);
+	g_return_val_if_fail(account != NULL, NULL);
 
 	compose = compose_create(account, COMPOSE_REDIRECT);
 	compose->targetinfo = procmsg_msginfo_copy(msginfo);
 
-	if (compose_parse_header(compose, msginfo) < 0) return;
+	if (compose_parse_header(compose, msginfo) < 0)
+		return compose;
 
 	undo_block(compose->undostruct);
 
@@ -1141,9 +1143,11 @@ void compose_redirect(MsgInfo *msginfo, FolderItem *item)
 	compose_set_title(compose);
 
 	syl_plugin_signal_emit("compose-created", compose);
+
+	return compose;
 }
 
-void compose_reedit(MsgInfo *msginfo)
+Compose *compose_reedit(MsgInfo *msginfo)
 {
 	Compose *compose;
 	PrefsAccount *account;
@@ -1157,12 +1161,12 @@ void compose_reedit(MsgInfo *msginfo)
 	GtkWidget *focus_widget = NULL;
 	GtkItemFactory *ifactory;
 
-	g_return_if_fail(msginfo != NULL);
-	g_return_if_fail(msginfo->folder != NULL);
+	g_return_val_if_fail(msginfo != NULL, NULL);
+	g_return_val_if_fail(msginfo->folder != NULL, NULL);
 
 	account = account_find_from_msginfo(msginfo);
 	if (!account) account = cur_account;
-	g_return_if_fail(account != NULL);
+	g_return_val_if_fail(account != NULL, NULL);
 
 	if (msginfo->folder->stype == F_DRAFT ||
 	    msginfo->folder->stype == F_QUEUE) {
@@ -1171,14 +1175,15 @@ void compose_reedit(MsgInfo *msginfo)
 			debug_print
 				("compose_reedit(): existing window found.\n");
 			gtk_window_present(GTK_WINDOW(compose->window));
-			return;
+			return compose;
 		}
 	}
 
 	compose = compose_create(account, COMPOSE_REEDIT);
 	compose->targetinfo = procmsg_msginfo_copy(msginfo);
 
-	if (compose_parse_header(compose, msginfo) < 0) return;
+	if (compose_parse_header(compose, msginfo) < 0)
+		return compose;
 	compose_parse_source_msg(compose, msginfo);
 
 	undo_block(compose->undostruct);
@@ -1256,6 +1261,8 @@ void compose_reedit(MsgInfo *msginfo)
 					   autosave_timeout, compose, NULL);
 	if (prefs_common.auto_exteditor)
 		compose_exec_ext_editor(compose);
+
+	return compose;
 }
 
 GList *compose_get_compose_list(void)
@@ -2250,9 +2257,9 @@ static void compose_insert_file(Compose *compose, const gchar *file,
 		gtk_text_view_scroll_mark_onscreen(text, mark);
 }
 
-static void compose_attach_append(Compose *compose, const gchar *file,
-				  const gchar *filename,
-				  const gchar *content_type)
+void compose_attach_append(Compose *compose, const gchar *file,
+			   const gchar *filename,
+			   const gchar *content_type)
 {
 	GtkTreeIter iter;
 	AttachInfo *ainfo;
@@ -3465,7 +3472,7 @@ void compose_unblock_modified(Compose *compose)
 	inc_unlock();			\
 }
 
-static gint compose_send(Compose *compose)
+static gint compose_send_real(Compose *compose)
 {
 	gchar tmp[MAXPATHLEN + 1];
 	gint ok = 0;
@@ -6242,6 +6249,24 @@ void compose_reflect_prefs_all(void)
 	}
 }
 
+GtkWidget *compose_get_toolbar(Compose *compose)
+{
+	g_return_val_if_fail(compose != NULL, NULL);
+	return compose->toolbar;
+}
+
+GtkWidget *compose_get_misc_hbox(Compose *compose)
+{
+	g_return_val_if_fail(compose != NULL, NULL);
+	return compose->misc_hbox;
+}
+
+GtkWidget *compose_get_textview(Compose *compose)
+{
+	g_return_val_if_fail(compose != NULL, NULL);
+	return compose->text;
+}
+
 static void compose_template_apply(Compose *compose, Template *tmpl,
 				   gboolean replace)
 {
@@ -6462,6 +6487,25 @@ static void compose_attach_remove_selected(Compose *compose)
 	}
 
 	g_list_free(rows);
+}
+
+void compose_attach_remove_all(Compose *compose)
+{
+	GtkTreeModel *model = GTK_TREE_MODEL(compose->attach_store);
+	GtkTreeIter iter;
+	AttachInfo *ainfo;
+
+	g_return_if_fail(compose != NULL);
+
+	if (gtk_tree_model_get_iter_first(model, &iter) == FALSE)
+		return;
+
+	do {
+		gtk_tree_model_get(model, &iter, COL_ATTACH_INFO, &ainfo, -1);
+		compose_attach_info_free(ainfo);
+	} while (gtk_tree_model_iter_next(model, &iter) == TRUE);
+
+	gtk_list_store_clear(GTK_LIST_STORE(model));
 }
 
 static struct _AttachProperty
@@ -7114,7 +7158,7 @@ static gboolean compose_edit_size_alloc(GtkEditable *widget,
 
 static void toolbar_send_cb(GtkWidget *widget, gpointer data)
 {
-	compose_send_cb(data, 0, NULL);
+	compose_send((Compose *)data, TRUE);
 }
 
 static void toolbar_send_later_cb(GtkWidget *widget, gpointer data)
@@ -7316,20 +7360,28 @@ static gboolean attach_key_pressed(GtkWidget *widget, GdkEventKey *event,
 	return FALSE;
 }
 
-static void compose_send_cb(gpointer data, guint action, GtkWidget *widget)
+gint compose_send(Compose *compose, gboolean close_on_success)
 {
-	Compose *compose = (Compose *)data;
 	gint val;
 
 	if (compose->lock_count > 0)
-		return;
+		return 1;
 
 	gtk_widget_set_sensitive(compose->vbox, FALSE);
-	val = compose_send(compose);
+	val = compose_send_real(compose);
 	gtk_widget_set_sensitive(compose->vbox, TRUE);
 
-	if (val == 0)
+	if (val == 0 && close_on_success)
 		compose_destroy(compose);
+
+	return val;
+}
+
+static void compose_send_cb(gpointer data, guint action, GtkWidget *widget)
+{
+	Compose *compose = (Compose *)data;
+
+	compose_send(compose, TRUE);
 }
 
 static void compose_send_later_cb(gpointer data, guint action,
