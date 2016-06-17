@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2013 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2016 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,6 +46,8 @@ enum {
 	PREFS_FILTER_EDIT_OPEN,
 	PREFS_TEMPLATE_OPEN,
 	PLUGIN_MANAGER_OPEN,
+	MAIN_WINDOW_TOOLBAR_CHANGED,
+	COMPOSE_TOOLBAR_CHANGED,
 	LAST_SIGNAL
 };
 
@@ -73,7 +75,7 @@ enum {
 #define SAFE_CALL_ARG3_RET_VAL(func_ptr, arg1, arg2, arg3, retval) \
 				(func_ptr ? func_ptr(arg1, arg2, arg3) : retval)
 #define SAFE_CALL_ARG4(func_ptr, arg1, arg2, arg3, arg4) \
-				{ if (func_ptr) func_ptr(arg1, arg2, arg3); }
+				{ if (func_ptr) func_ptr(arg1, arg2, arg3, arg4); }
 #define SAFE_CALL_ARG4_RET(func_ptr, arg1, arg2, arg3, arg4) \
 				(func_ptr ? func_ptr(arg1, arg2, arg3, arg4) : NULL)
 #define SAFE_CALL_ARG4_RET_VAL(func_ptr, arg1, arg2, arg3, arg4, retval) \
@@ -289,6 +291,25 @@ static void syl_plugin_class_init(SylPluginClass *klass)
 			     G_TYPE_FROM_CLASS(gobject_class),
 			     G_SIGNAL_RUN_FIRST,
 			     G_STRUCT_OFFSET(SylPluginClass, plugin_manager_open),
+			     NULL, NULL,
+			     g_cclosure_marshal_VOID__POINTER,
+			     G_TYPE_NONE,
+			     1,
+			     G_TYPE_POINTER);
+	plugin_signals[MAIN_WINDOW_TOOLBAR_CHANGED] =
+		g_signal_new("main-window-toolbar-changed",
+			     G_TYPE_FROM_CLASS(gobject_class),
+			     G_SIGNAL_RUN_FIRST,
+			     G_STRUCT_OFFSET(SylPluginClass, main_window_toolbar_changed),
+			     NULL, NULL,
+			     g_cclosure_marshal_VOID__VOID,
+			     G_TYPE_NONE,
+			     0);
+	plugin_signals[COMPOSE_TOOLBAR_CHANGED] =
+		g_signal_new("compose-toolbar-changed",
+			     G_TYPE_FROM_CLASS(gobject_class),
+			     G_SIGNAL_RUN_FIRST,
+			     G_STRUCT_OFFSET(SylPluginClass, compose_toolbar_changed),
 			     NULL, NULL,
 			     g_cclosure_marshal_VOID__POINTER,
 			     G_TYPE_NONE,
@@ -564,6 +585,14 @@ void syl_plugin_main_window_popup(gpointer mainwin)
 
 	func = syl_plugin_lookup_symbol("main_window_popup");
 	SAFE_CALL_ARG1(func, mainwin);
+}
+
+GtkWidget *syl_plugin_main_window_get_toolbar(void)
+{
+	gpointer widget;
+
+	widget = syl_plugin_lookup_symbol("main_window_toolbar");
+	return GTK_WIDGET(widget);
 }
 
 GtkWidget *syl_plugin_main_window_get_statusbar(void)
@@ -1066,6 +1095,40 @@ gpointer syl_plugin_compose_new(PrefsAccount *account, FolderItem *item,
 	return SAFE_CALL_ARG4_RET(func, account, item, mailto, attach_files);
 }
 
+gpointer syl_plugin_compose_reply(MsgInfo *msginfo, FolderItem *item,
+				  gint mode, const gchar *body)
+{
+	gpointer (*func)(MsgInfo *, FolderItem *, gint, const gchar *);
+
+	GETFUNC("compose_reply");
+	return SAFE_CALL_ARG4_RET(func, msginfo, item, mode, body);
+}
+
+gpointer syl_plugin_compose_forward(GSList *mlist, FolderItem *item,
+				    gboolean as_attach, const gchar *body)
+{
+	gpointer (*func)(GSList *, FolderItem *, gboolean, const gchar *);
+
+	GETFUNC("compose_forward");
+	return SAFE_CALL_ARG4_RET(func, mlist, item, as_attach, body);
+}
+
+gpointer syl_plugin_compose_redirect(MsgInfo *msginfo, FolderItem *item)
+{
+	gpointer (*func)(MsgInfo *, FolderItem *);
+
+	GETFUNC("compose_redirect");
+	return SAFE_CALL_ARG2_RET(func, msginfo, item);
+}
+
+gpointer syl_plugin_compose_reedit(MsgInfo *msginfo)
+{
+	gpointer (*func)(MsgInfo *);
+
+	GETFUNC("compose_reedit");
+	return SAFE_CALL_ARG1_RET(func, msginfo);
+}
+
 void syl_plugin_compose_entry_set(gpointer compose, const gchar *text,
 				  gint type)
 {
@@ -1105,6 +1168,57 @@ void syl_plugin_compose_unlock(gpointer compose)
 	void (*func)(gpointer);
 
 	func = syl_plugin_lookup_symbol("compose_unlock");
+	SAFE_CALL_ARG1(func, compose);
+}
+
+GtkWidget *syl_plugin_compose_get_toolbar(gpointer compose)
+{
+	GtkWidget * (*func)(gpointer);
+
+	func = syl_plugin_lookup_symbol("compose_get_toolbar");
+	return SAFE_CALL_ARG1_RET(func, compose);
+}
+
+GtkWidget *syl_plugin_compose_get_misc_hbox(gpointer compose)
+{
+	GtkWidget * (*func)(gpointer);
+
+	func = syl_plugin_lookup_symbol("compose_get_misc_hbox");
+	return SAFE_CALL_ARG1_RET(func, compose);
+}
+
+GtkWidget *syl_plugin_compose_get_textview(gpointer compose)
+{
+	GtkWidget * (*func)(gpointer);
+
+	func = syl_plugin_lookup_symbol("compose_get_textview");
+	return SAFE_CALL_ARG1_RET(func, compose);
+}
+
+gint syl_plugin_compose_send(gpointer compose, gboolean close_on_success)
+{
+	gint (*func)(gpointer, gboolean);
+
+	GETFUNC("compose_send");
+	return SAFE_CALL_ARG2_RET_VAL(func, compose, close_on_success, -1);
+}
+
+void syl_plugin_compose_attach_append(gpointer compose,
+				      const gchar *file,
+				      const gchar *filename,
+				      const gchar *content_type)
+{
+	void (*func)(gpointer, const gchar *, const gchar *, const gchar *);
+
+	GETFUNC("compose_attach_append");
+	SAFE_CALL_ARG4(func, compose, file, filename, content_type);
+}
+
+void syl_plugin_compose_attach_remove_all(gpointer compose)
+{
+	void (*func)(gpointer);
+
+	GETFUNC("compose_attach_remove_all");
 	SAFE_CALL_ARG1(func, compose);
 }
 

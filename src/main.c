@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2014 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2016 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1355,6 +1355,7 @@ static void plugin_init(void)
 
 	syl_plugin_add_symbol("main_window_menu_factory",
 			      mainwin->menu_factory);
+	syl_plugin_add_symbol("main_window_toolbar", mainwin->toolbar);
 	syl_plugin_add_symbol("main_window_statusbar", mainwin->statusbar);
 
 	ADD_SYM(folderview_get);
@@ -1407,11 +1408,21 @@ static void plugin_init(void)
 	ADD_SYM(messageview_show);
 
 	ADD_SYM(compose_new);
+	ADD_SYM(compose_reply);
+	ADD_SYM(compose_forward);
+	ADD_SYM(compose_redirect);
+	ADD_SYM(compose_reedit);
 	ADD_SYM(compose_entry_set);
 	ADD_SYM(compose_entry_append);
 	ADD_SYM(compose_entry_get_text);
 	ADD_SYM(compose_lock);
 	ADD_SYM(compose_unlock);
+	ADD_SYM(compose_get_toolbar);
+	ADD_SYM(compose_get_misc_hbox);
+	ADD_SYM(compose_get_textview);
+	ADD_SYM(compose_attach_append);
+	ADD_SYM(compose_attach_remove_all);
+	ADD_SYM(compose_send);
 
 	ADD_SYM(foldersel_folder_sel);
 	ADD_SYM(foldersel_folder_sel_full);

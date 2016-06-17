@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2013 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2016 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ typedef void (*SylPluginLoadFunc)	(void);
 typedef void (*SylPluginUnloadFunc)	(void);
 typedef void (*SylPluginCallbackFunc)	(void);
 
-#define SYL_PLUGIN_INTERFACE_VERSION	0x0109
+#define SYL_PLUGIN_INTERFACE_VERSION	0x010a
 
 struct _SylPlugin
 {
@@ -107,6 +107,9 @@ struct _SylPluginClass
 					 GtkWidget	*window);
 	void (* plugin_manager_open)	(GObject	*obj,
 					 GtkWidget	*window);
+
+	void (* compose_toolbar_changed)     (GObject *obj, gpointer compose);
+	void (* main_window_toolbar_changed) (GObject *obj);
 };
 
 struct _SylPluginInfo
@@ -159,6 +162,7 @@ void syl_plugin_main_window_lock		(void);
 void syl_plugin_main_window_unlock		(void);
 gpointer syl_plugin_main_window_get		(void);
 void syl_plugin_main_window_popup		(gpointer mainwin);
+GtkWidget *syl_plugin_main_window_get_toolbar	(void);
 GtkWidget *syl_plugin_main_window_get_statusbar	(void);
 
 void syl_plugin_app_will_exit			(gboolean force);
@@ -246,6 +250,20 @@ gpointer syl_plugin_compose_new			(PrefsAccount *account,
 						 FolderItem *item,
 						 const gchar *mailto,
 						 GPtrArray *attach_files);
+/* compose mode:
+   1: reply 2: reply to sender 3: reply to all 4: reply to list
+   | 1 << 16: with quote */
+gpointer syl_plugin_compose_reply		(MsgInfo *msginfo,
+						 FolderItem *item,
+						 gint mode,
+						 const gchar *body);
+gpointer syl_plugin_compose_forward		(GSList *mlist,
+						 FolderItem *item,
+						 gboolean as_attach,
+						 const gchar *body);
+gpointer syl_plugin_compose_redirect		(MsgInfo *msginfo,
+						 FolderItem *item);
+gpointer syl_plugin_compose_reedit		(MsgInfo *msginfo);
 
 /* entry type:
    0: To 1: Cc 2: Bcc 3: Reply-To 4: Subject 5: Newsgroups 6: Followup-To */
@@ -259,6 +277,16 @@ gchar *syl_plugin_compose_entry_get_text	(gpointer compose,
 						 gint type);
 void syl_plugin_compose_lock			(gpointer compose);
 void syl_plugin_compose_unlock			(gpointer compose);
+
+GtkWidget *syl_plugin_compose_get_toolbar	(gpointer compose);
+
+gint syl_plugin_compose_send			(gpointer compose,
+						 gboolean close_on_success);
+void syl_plugin_compose_attach_append		(gpointer compose,
+						 const gchar *file,
+						 const gchar *filename,
+						 const gchar *content_type);
+void syl_plugin_compose_attach_remove_all	(gpointer compose);
 
 /* Others */
 FolderItem *syl_plugin_folder_sel		(Folder *cur_folder,
