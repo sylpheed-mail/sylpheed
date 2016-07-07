@@ -280,6 +280,8 @@ void syl_plugin_compose_lock			(gpointer compose);
 void syl_plugin_compose_unlock			(gpointer compose);
 
 GtkWidget *syl_plugin_compose_get_toolbar	(gpointer compose);
+GtkWidget *syl_plugin_compose_get_misc_hbox	(gpointer compose);
+GtkWidget *syl_plugin_compose_get_textview	(gpointer compose);
 
 gint syl_plugin_compose_send			(gpointer compose,
 						 gboolean close_on_success);
