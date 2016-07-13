@@ -6516,6 +6516,9 @@ GSList *compose_get_attach_list(Compose *compose)
 	AttachInfo *ainfo;
 	GSList *alist = NULL;
 
+	if (!compose->use_attach)
+		return NULL;
+
 	for (valid = gtk_tree_model_get_iter_first(model, &iter); valid;
 	     valid = gtk_tree_model_iter_next(model, &iter)) {
 		gtk_tree_model_get(model, &iter, COL_ATTACH_INFO, &ainfo, -1);
