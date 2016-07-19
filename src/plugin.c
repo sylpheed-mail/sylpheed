@@ -48,6 +48,7 @@ enum {
 	PLUGIN_MANAGER_OPEN,
 	MAIN_WINDOW_TOOLBAR_CHANGED,
 	COMPOSE_TOOLBAR_CHANGED,
+	COMPOSE_ATTACH_CHANGED,
 	LAST_SIGNAL
 };
 
@@ -310,6 +311,16 @@ static void syl_plugin_class_init(SylPluginClass *klass)
 			     G_TYPE_FROM_CLASS(gobject_class),
 			     G_SIGNAL_RUN_FIRST,
 			     G_STRUCT_OFFSET(SylPluginClass, compose_toolbar_changed),
+			     NULL, NULL,
+			     g_cclosure_marshal_VOID__POINTER,
+			     G_TYPE_NONE,
+			     1,
+			     G_TYPE_POINTER);
+	plugin_signals[COMPOSE_TOOLBAR_CHANGED] =
+		g_signal_new("compose-attach-changed",
+			     G_TYPE_FROM_CLASS(gobject_class),
+			     G_SIGNAL_RUN_FIRST,
+			     G_STRUCT_OFFSET(SylPluginClass, compose_attach_changed),
 			     NULL, NULL,
 			     g_cclosure_marshal_VOID__POINTER,
 			     G_TYPE_NONE,

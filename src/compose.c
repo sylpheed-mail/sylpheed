@@ -2350,6 +2350,8 @@ void compose_attach_append(Compose *compose, const gchar *file,
 			   COL_NAME, ainfo->name,
 			   COL_ATTACH_INFO, ainfo,
 			   -1);
+
+	syl_plugin_signal_emit("compose-attach-changed", compose);
 }
 
 static void compose_attach_parts(Compose *compose, MsgInfo *msginfo)
@@ -6487,6 +6489,8 @@ static void compose_attach_remove_selected(Compose *compose)
 	}
 
 	g_list_free(rows);
+
+	syl_plugin_signal_emit("compose-attach-changed", compose);
 }
 
 void compose_attach_remove_all(Compose *compose)
@@ -6506,6 +6510,8 @@ void compose_attach_remove_all(Compose *compose)
 	} while (gtk_tree_model_iter_next(model, &iter) == TRUE);
 
 	gtk_list_store_clear(GTK_LIST_STORE(model));
+
+	syl_plugin_signal_emit("compose-attach-changed", compose);
 }
 
 GSList *compose_get_attach_list(Compose *compose)
@@ -8108,6 +8114,8 @@ static void compose_toggle_attach_cb(gpointer data, guint action,
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(compose->attach_toggle),
 				     compose->use_attach);
 #endif
+
+	syl_plugin_signal_emit("compose-attach-changed", compose);
 }
 
 static void compose_customize_toolbar_cb(gpointer data, guint action,

@@ -109,8 +109,9 @@ struct _SylPluginClass
 	void (* plugin_manager_open)	(GObject	*obj,
 					 GtkWidget	*window);
 
-	void (* compose_toolbar_changed)     (GObject *obj, gpointer compose);
 	void (* main_window_toolbar_changed) (GObject *obj);
+	void (* compose_toolbar_changed)     (GObject *obj, gpointer compose);
+	void (* compose_attach_changed)     (GObject *obj, gpointer compose);
 };
 
 struct _SylPluginInfo
