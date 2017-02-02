@@ -4211,6 +4211,15 @@ gint execute_open_file(const gchar *file, const gchar *content_type)
 
 	argv[1] = file;
 	execute_async(argv);
+#else
+	const gchar *argv[3] = {"xdg-open", NULL, NULL};
+
+	g_return_val_if_fail(file != NULL, -1);
+
+	log_print("opening %s - %s\n", file, content_type ? content_type : "");
+
+	argv[1] = file;
+	execute_async(argv);
 #endif
 
 	return 0;

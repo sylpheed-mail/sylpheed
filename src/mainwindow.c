@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2014 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2017 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -442,6 +442,13 @@ static void execute_summary_cb	 (MainWindow	*mainwin,
 static void update_summary_cb	 (MainWindow	*mainwin,
 				  guint		 action,
 				  GtkWidget	*widget);
+static void open_config_folder_cb(MainWindow	*mainwin,
+				  guint		 action,
+				  GtkWidget	*widget);
+static void open_attachments_folder_cb
+				 (MainWindow	*mainwin,
+				  guint		 action,
+				  GtkWidget	*widget);
 
 static void prev_cb		 (MainWindow	*mainwin,
 				  guint		 action,
@@ -866,6 +873,10 @@ static GtkItemFactoryEntry mainwin_entries[] =
 						NULL, concat_partial_cb, 0, NULL},
 	{N_("/_Tools/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_Tools/E_xecute marked process"),	"X", execute_summary_cb, 0, NULL},
+	{N_("/_Tools/---"),			NULL, NULL, 0, "<Separator>"},
+	{N_("/_Tools/Op_en configuration folder"),
+						NULL, open_config_folder_cb, 0, NULL},
+	{N_("/_Tools/Open a_ttachments folder"),NULL, open_attachments_folder_cb, 0, NULL},
 	{N_("/_Tools/---"),			NULL, NULL, 0, "<Separator>"},
 	{N_("/_Tools/_Log window"),		"<shift><control>L", log_window_show_cb, 0, NULL},
 
@@ -3865,6 +3876,18 @@ static void update_summary_cb(MainWindow *mainwin, guint action,
 
 	summary_show(mainwin->summaryview, mainwin->summaryview->folder_item,
 		     TRUE);
+}
+
+static void open_config_folder_cb(MainWindow *mainwin, guint action,
+				  GtkWidget *widget)
+{
+	execute_open_file(get_rc_dir(), NULL);
+}
+
+static void open_attachments_folder_cb(MainWindow *mainwin, guint action,
+				       GtkWidget *widget)
+{
+	execute_open_file(get_mime_tmp_dir(), NULL);
 }
 
 static void prev_cb(MainWindow *mainwin, guint action, GtkWidget *widget)
