@@ -275,6 +275,25 @@ Emitted on opening plug-in manager dialog.
 
 window: dialog window (GtkWindow)
 -------------------------------------------------------------------------
+void (* main_window_toolbar_changed) (GObject *obj);
+
+Emitted on toolbar change of main window.
+Use syl_plugin_main_window_get_toolbar() to get main window toolbar object.
+-------------------------------------------------------------------------
+void (* compose_toolbar_changed)     (GObject *obj, gpointer compose);
+
+Emitted on toolbar change of compose window.
+Use syl_plugin_compose_get_toolbar() to get compose toolbar object.
+
+compose: Compose object
+-------------------------------------------------------------------------
+void (* compose_attach_changed)     (GObject *obj, gpointer compose);
+
+Emitted when attachments in compose window are changed.
+Use syl_plugin_get_attach_list() to get the list of current attachments.
+
+compose: Compose object
+-------------------------------------------------------------------------
 
 * libsylph-0
 

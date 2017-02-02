@@ -190,6 +190,114 @@ uri: URI の上でメニューを表示した場合その URI 文字列
 selected_text: テキストビューでテキストが選択されている場合、その文字列
 msginfo: テキストビューで表示されているメッセージの MsgInfo オブジェクト
 -------------------------------------------------------------------------
+gboolean (* compose_send)       (GObject        *obj,
+                                 gpointer        compose,
+                                 gint            compose_mode,
+                                 gint            send_mode,
+                                 const gchar    *msg_file,
+                                 GSList         *to_list);
+
+作成したメッセージが送信されようとするときに発行されるシグナルです。
+FALSE を返すと、メッセージは通常通り送信されます。
+TRUE を返すと、送信はキャンセルされます。
+
+compose: Compose オブジェクト
+compose_mode: ComposeMode enum
+send_mode: 0: 即座に送信 1: 送信待ちに入れて後で送信
+msg_file: 作成したメッセージファイルのパス
+to_list: 宛先のリスト
+-------------------------------------------------------------------------
+void (* messageview_show)       (GObject        *obj,
+                                 gpointer        msgview,
+                                 MsgInfo        *msginfo,
+                                 gboolean        all_headers);
+
+メッセージを表示するときに発行されるシグナルです。
+
+msgview: MessageView オブジェクト
+msginfo: 表示された MsgInfo メッセージオブジェクト
+all_headers: 全ヘッダ表示時は TRUE。一部のみ表示時は FALSE。
+-------------------------------------------------------------------------
+void (* inc_mail_start)         (GObject        *obj,
+                                 PrefsAccount   *account);
+
+受信開始時に発行されるシグナルです。
+
+account: 受信対象のアカウント (PrefsAccount)
+-------------------------------------------------------------------------
+void (* inc_mail_finished)      (GObject        *obj,
+                                 gint            new_messages);
+
+受信終了時に発行されるシグナルです。
+
+new_messages: 受信したメッセージ数
+-------------------------------------------------------------------------
+void (* prefs_common_open)      (GObject        *obj,
+                                 GtkWidget      *window);
+
+全般の設定ダイアログを開いたときに発行されるシグナルです。
+
+window: ダイアログウィンドウ (GtkWindow)
+-------------------------------------------------------------------------
+void (* prefs_account_open)     (GObject        *obj,
+                                 PrefsAccount   *account,
+                                 GtkWidget      *window);
+
+アカウント設定ダイアログを開いたときに発行されるシグナルです。
+
+window: ダイアログウィンドウ (GtkWindow)
+-------------------------------------------------------------------------
+void (* prefs_filter_open)      (GObject        *obj,
+                                 GtkWidget      *window);
+
+振り分けルール設定ダイアログを開いたときに発行されるシグナルです。
+
+window: ダイアログウィンドウ (GtkWindow)
+-------------------------------------------------------------------------
+void (* prefs_filter_edit_open) (GObject        *obj,
+                                 FilterRule     *rule,
+                                 const gchar    *header,
+                                 const gchar    *key,
+                                 GtkWidget      *window);
+
+振り分けルール編集ダイアログを開いたときに発行されるシグナルです。
+
+window: ダイアログウィンドウ (GtkWindow)
+-------------------------------------------------------------------------
+void (* prefs_template_open)    (GObject        *obj,
+                                 GtkWidget      *window);
+
+テンプレートダイアログを開いたときに発行されるシグナルです。
+
+window: ダイアログウィンドウ (GtkWindow)
+-------------------------------------------------------------------------
+void (* plugin_manager_open)    (GObject        *obj,
+                                 GtkWidget      *window);
+
+プラグインの管理ダイアログを開いたときに発行されるシグナルです。
+
+window: ダイアログウィンドウ (GtkWindow)
+-------------------------------------------------------------------------
+void (* main_window_toolbar_changed) (GObject *obj);
+
+メインウィンドウのツールバー変更時に発行されるシグナルです。
+メインウィンドウのツールバーオブジェクトを取得する場合は
+syl_plugin_main_window_get_toolbar() を使用してください。
+-------------------------------------------------------------------------
+void (* compose_toolbar_changed)     (GObject *obj, gpointer compose);
+
+メッセージ作成ウィンドウのツールバー変更時に発行されるシグナルです。
+メッセージ作成ウィンドウのツールバーオブジェクトを取得する場合は
+syl_plugin_compose_get_toolbar() を使用してください。
+-------------------------------------------------------------------------
+void (* compose_attach_changed)     (GObject *obj, gpointer compose);
+
+メッセージ作成ウィンドウ上の添付ファイルが変更された場合に発行される
+シグナルです。現在の添付ファイルのリストを取得する場合は
+syl_plugin_get_attach_list() を使用してください。
+
+compose: Compose オブジェクト
+-------------------------------------------------------------------------
 
 * libsylph-0
 
