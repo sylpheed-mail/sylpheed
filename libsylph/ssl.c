@@ -59,6 +59,7 @@ static gchar *find_certs_file(const gchar *certs_dir)
 		LOOK_FOR("ca-bundle.crt");
 		LOOK_FOR("ca-root.crt");
 		LOOK_FOR("certs.crt");
+		LOOK_FOR("cert.pem");
 	}
 
 #undef LOOK_FOR
