@@ -47,6 +47,7 @@ SetCompressor /SOLID lzma
 
 ; Uninstaller pages
 !insertmacro MUI_UNPAGE_WELCOME
+!define MUI_UNCONFIRMPAGE_TEXT_TOP "$(un_confirmpage_text_top)"
 !insertmacro MUI_UNPAGE_CONFIRM
 !insertmacro MUI_UNPAGE_COMPONENTS
 !insertmacro MUI_UNPAGE_INSTFILES
@@ -130,6 +131,13 @@ ${MementoSection} "$(attachment_tool_plugin)" sec_attachment_tool_plugin
   SetOutPath "$INSTDIR\doc\plugins"
   File "plugins\doc\plugins\README.attachment_tool.txt"
 ${MementoSectionEnd}
+
+!ifdef HAVE_AUTOENC_PLUGIN
+${MementoSection} "$(autoenc_plugin)" sec_autoenc_plugin
+  SetOutPath "$INSTDIR"
+  File /r "autoenc\"
+${MementoSectionEnd}
+!endif
 
 SectionGroupEnd
 
@@ -346,6 +354,18 @@ Section "un.$(attachment_tool_plugin)" sec_un_attachment_tool_plugin
   Delete "$INSTDIR\doc\plugins\README.attachment_tool.txt"
 SectionEnd
 
+!ifdef HAVE_AUTOENC_PLUGIN
+Section "un.$(autoenc_plugin)" sec_un_autoenc_plugin
+  Delete "$INSTDIR\plugins\autoenc.dll"
+  Delete "$INSTDIR\doc\autoenc\COPYING.txt"
+  Delete "$INSTDIR\doc\autoenc\README.autoenc.txt"
+  Delete "$INSTDIR\doc\autoenc\LICENSE.7-zip.txt"
+  RMDir "$INSTDIR\doc\autoenc"
+  Delete "$INSTDIR\7z.dll"
+  Delete "$INSTDIR\7z.exe"
+SectionEnd
+!endif
+
 SectionGroupEnd
 
 Section "un.sylfilter" sec_un_sylfilter
@@ -400,6 +420,9 @@ SectionEnd
   !insertmacro MUI_DESCRIPTION_TEXT ${sec_sylpheed_pro} "$(sylpheed_pro_description)"
 !endif
   !insertmacro MUI_DESCRIPTION_TEXT ${sec_attachment_tool_plugin} "$(attachment_tool_plugin_description)"
+!ifdef HAVE_AUTOENC_PLUGIN
+  !insertmacro MUI_DESCRIPTION_TEXT ${sec_autoenc_plugin} "$(autoenc_plugin_description)"
+!endif
   !insertmacro MUI_DESCRIPTION_TEXT ${sec_sylfilter} "$(sylfilter_description)"
   !insertmacro MUI_DESCRIPTION_TEXT ${sec_bsfilter} "$(bsfilter_description)"
   !insertmacro MUI_DESCRIPTION_TEXT ${sec_desktop_shortcut} "$(desktop_shortcut_description)"
@@ -413,6 +436,9 @@ SectionEnd
   !insertmacro MUI_DESCRIPTION_TEXT ${sec_un_sylpheed_pro} "$(un_sylpheed_pro_description)"
 !endif
   !insertmacro MUI_DESCRIPTION_TEXT ${sec_un_attachment_tool_plugin} "$(un_attachment_tool_plugin_description)"
+!ifdef HAVE_AUTOENC_PLUGIN
+  !insertmacro MUI_DESCRIPTION_TEXT ${sec_un_autoenc_plugin} "$(un_autoenc_plugin_description)"
+!endif
   !insertmacro MUI_DESCRIPTION_TEXT ${sec_un_sylfilter} "$(un_sylfilter_description)"
   !insertmacro MUI_DESCRIPTION_TEXT ${sec_un_bsfilter} "$(un_bsfilter_description)"
   !insertmacro MUI_DESCRIPTION_TEXT ${sec_un_desktop_shortcut} "$(un_desktop_shortcut_description)"
@@ -500,6 +526,13 @@ check_app_running:
   !insertmacro UnselectSection ${sec_un_attachment_tool_plugin}
   !insertmacro SetSectionFlag ${sec_un_attachment_tool_plugin} ${SF_RO}
   attachment_tool_plugin_file_exists:
+
+!ifdef HAVE_AUTOENC_PLUGIN
+  IfFileExists "$INSTDIR\plugins\autoenc.dll" autoenc_plugin_file_exists
+  !insertmacro UnselectSection ${sec_un_autoenc_plugin}
+  !insertmacro SetSectionFlag ${sec_un_autoenc_plugin} ${SF_RO}
+  autoenc_plugin_file_exists:
+!endif
 
   IfFileExists "$INSTDIR\sylfilter.exe" sylfilter_file_exists
   !insertmacro UnselectSection ${sec_un_sylfilter}
