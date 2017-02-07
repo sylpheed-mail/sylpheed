@@ -2311,12 +2311,8 @@ static void prefs_account_sig_combo_changed_cb(GtkWidget *widget, gpointer data)
 	gint cur_page;
 	gint new_page;
 
-	g_print("combo changed\n");
-
 	cur_page = compose.sig_selected;
 	new_page = gtk_combo_box_get_active(GTK_COMBO_BOX(widget));
-	g_print("  cur page: %d\n", cur_page);
-	g_print("  new page: %d\n", new_page);
 
 	/* Save current one */
 	g_free(compose.sig_names[cur_page]);
