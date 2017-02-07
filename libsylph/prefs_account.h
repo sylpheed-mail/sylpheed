@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2014 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2017 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -183,6 +183,10 @@ struct _PrefsAccount
 
 	/* Privacy */
 	gboolean encrypt_to_self;
+
+	/* Compose */
+	gchar *sig_names[10];
+	gchar *sig_texts[10];
 };
 
 PrefsAccount *prefs_account_new		(void);

@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2016 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2017 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -198,6 +198,8 @@ static void compose_set_toolbar_button_visibility
 static GtkWidget *compose_account_option_menu_create
 						(Compose	*compose,
 						 GtkWidget	*hbox);
+static GtkWidget *compose_signature_menu_create(Compose		*compose,
+						GtkWidget	*hbox);
 static void compose_set_out_encoding		(Compose	*compose);
 static void compose_set_template_menu		(Compose	*compose);
 static void compose_template_apply		(Compose	*compose,
@@ -257,6 +259,7 @@ static void compose_set_title			(Compose	*compose);
 static void compose_select_account		(Compose	*compose,
 						 PrefsAccount	*account,
 						 gboolean	 init);
+static void compose_update_signature_menu	(Compose	*compose);
 
 static gboolean compose_check_for_valid_recipient
 						(Compose	*compose);
@@ -375,6 +378,8 @@ static gboolean toolbar_button_pressed	(GtkWidget	*widget,
 					 gpointer	 data);
 
 static void account_activated		(GtkMenuItem	*menuitem,
+					 gpointer	 data);
+static void sig_combo_changed		(GtkComboBox	*combo,
 					 gpointer	 data);
 
 static void attach_selection_changed	(GtkTreeSelection	*selection,
@@ -1998,6 +2003,9 @@ static void compose_insert_sig(Compose *compose, gboolean append,
 	gchar *sig_str;
 	gboolean prev_autowrap;
 
+	debug_print("compose_insert_sig: append:%d replace:%d scroll:%d\n",
+		    append, replace, scroll);
+
 	g_return_if_fail(compose->account != NULL);
 
 	prev_autowrap = compose->autowrap;
@@ -2091,13 +2099,20 @@ static gchar *compose_get_signature_str(Compose *compose)
 	g_return_val_if_fail(compose->account != NULL, NULL);
 
 	if (compose->account->sig_type == SIG_DIRECT) {
+		gchar *sig_text;
 		gchar *p, *sp;
+		gint sig_index;
 
-		if (!compose->account->sig_text)
+		sig_index = gtk_combo_box_get_active(GTK_COMBO_BOX(compose->sig_combo));
+		if (sig_index > 0)
+			sig_text = compose->account->sig_texts[sig_index];
+		else
+			sig_text = compose->account->sig_text;
+		if (!sig_text)
 			return NULL;
 
-		sp = compose->account->sig_text;
-		p = sig_body = g_malloc(strlen(compose->account->sig_text) + 1);
+		sp = sig_text;
+		p = sig_body = g_malloc(strlen(sig_text) + 1);
 		while (*sp) {
 			if (*sp == '\\' && *(sp + 1) == 'n') {
 				*p++ = '\n';
@@ -2946,8 +2961,54 @@ static void compose_select_account(Compose *compose, PrefsAccount *account,
 	}
 #endif /* USE_GPGME */
 
+	compose_update_signature_menu(compose);
+
 	if (!init && compose->mode != COMPOSE_REDIRECT && prefs_common.auto_sig)
 		compose_insert_sig(compose, TRUE, TRUE, FALSE);
+}
+
+static void compose_update_signature_menu(Compose *compose)
+{
+	GtkTreeModel *model;
+	GtkListStore *store;
+	GtkTreeIter iter;
+	gboolean valid;
+	gint i;
+	gchar *name;
+
+	if (!compose->account)
+		return;
+
+	model = gtk_combo_box_get_model(GTK_COMBO_BOX(compose->sig_combo));
+	store = GTK_LIST_STORE(model);
+	valid = gtk_tree_model_get_iter_first(model, &iter);
+
+	for (i = 0; valid && i < sizeof(compose->account->sig_names) /
+		sizeof(compose->account->sig_names[0]); i++) {
+		if (compose->account->sig_names[i] &&
+		    compose->account->sig_names[i][0] != '\0') {
+			name = g_strdup_printf
+				("%s", compose->account->sig_names[i]);
+		} else {
+			name = g_strdup_printf(_("Signature %d"), i + 1);
+		}
+		gtk_list_store_set(store, &iter, 0, name, -1);
+		g_free(name);
+		valid = gtk_tree_model_iter_next(model, &iter);
+	}
+
+	g_signal_handlers_block_by_func(G_OBJECT(compose->sig_combo),
+					G_CALLBACK(sig_combo_changed), compose);
+	gtk_combo_box_set_active(GTK_COMBO_BOX(compose->sig_combo), 0);
+	g_signal_handlers_unblock_by_func(G_OBJECT(compose->sig_combo),
+					  G_CALLBACK(sig_combo_changed),
+					  compose);
+
+	if (compose->account->sig_type != SIG_DIRECT) {
+		gtk_widget_set_sensitive(compose->sig_combo, FALSE);
+	} else {
+		gtk_widget_set_sensitive(compose->sig_combo, TRUE);
+	}
 }
 
 static gboolean compose_check_for_valid_recipient(Compose *compose)
@@ -5193,6 +5254,7 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	GtkWidget *hbox;
 	GtkWidget *label;
 	GtkWidget *from_optmenu_hbox;
+	GtkWidget *sig_combo;
 	GtkWidget *to_entry;
 	GtkWidget *to_hbox;
 	GtkWidget *newsgroups_entry;
@@ -5320,9 +5382,13 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	from_optmenu_hbox = gtk_hbox_new(FALSE, 0);
 	gtk_table_attach_defaults(GTK_TABLE(table), from_optmenu_hbox,
 				  1, 2, count, count + 1);
+	//gtk_table_attach(GTK_TABLE(table), from_optmenu_hbox,
+			 //1, 2, count, count + 1, GTK_EXPAND|GTK_SHRINK|GTK_FILL, 0, 0, 0);
+	gtk_widget_set_size_request(from_optmenu_hbox, 300, -1);
 	gtk_table_set_row_spacing(GTK_TABLE(table), 0, 4);
 	count++;
 	compose_account_option_menu_create(compose, from_optmenu_hbox);
+	sig_combo = compose_signature_menu_create(compose, from_optmenu_hbox);
 
 	/* header labels and entries */
 	compose_add_entry_field(table, &to_hbox, &to_entry, &count,
@@ -5620,6 +5686,8 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	compose->reply_entry      = reply_entry;
 	compose->followup_hbox    = followup_hbox;
 	compose->followup_entry   = followup_entry;
+
+	compose->sig_combo        = sig_combo;
 
 	/* compose->attach_toggle = attach_toggle; */
 #if USE_GPGME
@@ -6041,6 +6109,33 @@ static GtkWidget *compose_account_option_menu_create(Compose *compose,
 	gtk_option_menu_set_history(GTK_OPTION_MENU(optmenu), def_menu);
 
 	return optmenu;
+}
+
+static GtkWidget *compose_signature_menu_create(Compose *compose,
+						GtkWidget *hbox)
+{
+	GtkWidget *label;
+	GtkWidget *combo;
+	gint i;
+
+	label = gtk_label_new(_("Signature:"));
+	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 4);
+
+	combo = gtk_combo_box_new_text();
+	gtk_box_pack_start(GTK_BOX(hbox), combo, FALSE, FALSE, 0);
+
+	for (i = 0; i < 10; i++) {
+		gchar buf[256];
+		g_snprintf(buf, sizeof(buf), _("Signature %d"), i + 1);
+		gtk_combo_box_append_text(GTK_COMBO_BOX(combo), buf);
+	}
+	gtk_combo_box_set_active(GTK_COMBO_BOX(combo), 0);
+	g_signal_connect(GTK_COMBO_BOX(combo), "changed",
+			 G_CALLBACK(sig_combo_changed), compose);
+
+	gtk_widget_set_tooltip_text(combo, _("Change signature"));
+
+	return combo;
 }
 
 static void compose_set_out_encoding(Compose *compose)
@@ -7317,6 +7412,14 @@ static void account_activated(GtkMenuItem *menuitem, gpointer data)
 
 	if (ac != compose->account)
 		compose_select_account(compose, ac, FALSE);
+}
+
+static void sig_combo_changed(GtkComboBox *combo, gpointer data)
+{
+	Compose *compose = (Compose *)data;
+
+	if (compose->mode != COMPOSE_REDIRECT && prefs_common.auto_sig)
+		compose_insert_sig(compose, TRUE, TRUE, FALSE);
 }
 
 static void attach_selection_changed(GtkTreeSelection *selection, gpointer data)

@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2014 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2017 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -83,7 +83,26 @@ static PrefParam param[] = {
 	{"signature_type", "2", &tmp_ac_prefs.sig_type, P_ENUM},
 	{"signature_path", "~" G_DIR_SEPARATOR_S DEFAULT_SIGNATURE,
 	 &tmp_ac_prefs.sig_path, P_STRING},
+	{"signature_name", NULL, &tmp_ac_prefs.sig_names[0], P_STRING},
+	{"signature_name2", NULL, &tmp_ac_prefs.sig_names[1], P_STRING},
+	{"signature_name3", NULL, &tmp_ac_prefs.sig_names[2], P_STRING},
+	{"signature_name4", NULL, &tmp_ac_prefs.sig_names[3], P_STRING},
+	{"signature_name5", NULL, &tmp_ac_prefs.sig_names[4], P_STRING},
+	{"signature_name6", NULL, &tmp_ac_prefs.sig_names[5], P_STRING},
+	{"signature_name7", NULL, &tmp_ac_prefs.sig_names[6], P_STRING},
+	{"signature_name8", NULL, &tmp_ac_prefs.sig_names[7], P_STRING},
+	{"signature_name9", NULL, &tmp_ac_prefs.sig_names[8], P_STRING},
+	{"signature_name10", NULL, &tmp_ac_prefs.sig_names[9], P_STRING},
 	{"signature_text", NULL, &tmp_ac_prefs.sig_text, P_STRING},
+	{"signature_text2", NULL, &tmp_ac_prefs.sig_texts[1], P_STRING},
+	{"signature_text3", NULL, &tmp_ac_prefs.sig_texts[2], P_STRING},
+	{"signature_text4", NULL, &tmp_ac_prefs.sig_texts[3], P_STRING},
+	{"signature_text5", NULL, &tmp_ac_prefs.sig_texts[4], P_STRING},
+	{"signature_text6", NULL, &tmp_ac_prefs.sig_texts[5], P_STRING},
+	{"signature_text7", NULL, &tmp_ac_prefs.sig_texts[6], P_STRING},
+	{"signature_text8", NULL, &tmp_ac_prefs.sig_texts[7], P_STRING},
+	{"signature_text9", NULL, &tmp_ac_prefs.sig_texts[8], P_STRING},
+	{"signature_text10", NULL, &tmp_ac_prefs.sig_texts[9], P_STRING},
 	{"signature_before_quote", "FALSE", &tmp_ac_prefs.sig_before_quote,
 	 P_BOOL},
 	{"set_autocc", "FALSE", &tmp_ac_prefs.set_autocc, P_BOOL},

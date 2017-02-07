@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2017 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -175,5 +175,9 @@ void prefs_set_data_from_fontbtn(PrefParam	*pparam);
 void prefs_set_fontbtn		(PrefParam	*pparam);
 void prefs_set_data_from_optmenu(PrefParam	*pparam);
 void prefs_set_optmenu		(PrefParam	*pparam);
+
+gchar *prefs_get_escaped_str_from_text	(GtkWidget	*widget);
+void prefs_set_escaped_str_to_text	(GtkWidget	*widget,
+					 const gchar	*str);
 
 #endif /* __PREFS_UI_H__ */

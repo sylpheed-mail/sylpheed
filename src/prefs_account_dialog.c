@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2014 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2017 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -122,6 +122,8 @@ static struct Send {
 
 static struct Compose {
 	GtkWidget *sig_radiobtn;
+	GtkWidget *sig_combo;
+	GtkWidget *signame_entry;
 	GtkWidget *sig_text;
 	GtkTextBuffer *sig_buffer;
 	GtkWidget *sigpath_entry;
@@ -135,6 +137,9 @@ static struct Compose {
 	GtkWidget *autoreplyto_entry;
 
 	gboolean sig_modified;
+	gchar *sig_names[10];
+	gchar *sig_texts[10];
+	gint sig_selected;
 } compose;
 
 #if USE_GPGME
@@ -319,8 +324,6 @@ static PrefsUIData ui_data[] = {
 	 prefs_account_enum_set_radiobtn},
 	{"signature_path", &compose.sigpath_entry,
 	 prefs_set_data_from_entry, prefs_set_entry},
-	{"signature_text", &compose.sig_text,
-	 prefs_set_data_from_text, prefs_set_text},
 	{"signature_before_quote", &compose.sig_before_quote_chkbtn,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"set_autocc", &compose.autocc_chkbtn,
@@ -463,6 +466,8 @@ static void prefs_account_name_entry_changed_cb	(GtkWidget	*widget,
 						 gpointer	 data);
 static void prefs_account_sig_changed_cb	(GtkWidget	*widget,
 						 gpointer	 data);
+static void prefs_account_sig_combo_changed_cb	(GtkWidget	*widget,
+						 gpointer	 data);
 
 static gint prefs_account_deleted		(GtkWidget	*widget,
 						 GdkEventAny	*event,
@@ -539,6 +544,9 @@ PrefsAccount *prefs_account_open(PrefsAccount *ac_prefs)
 					(GTK_OPTION_MENU
 						(basic.protocol_optmenu))),
 			 TRUE);
+
+		gtk_combo_box_set_active(GTK_COMBO_BOX(compose.sig_combo), 0);
+
 		gtk_window_set_title(GTK_WINDOW(dialog.window),
 				     _("Preferences for new account"));
 		gtk_widget_hide(dialog.apply_btn);
@@ -547,6 +555,24 @@ PrefsAccount *prefs_account_open(PrefsAccount *ac_prefs)
 			(G_OBJECT(compose.sig_buffer),
 			 G_CALLBACK(prefs_account_sig_changed_cb), NULL);
 	} else {
+		gint i;
+
+		for (i = 0; i < 10; i++) {
+			g_free(compose.sig_names[i]);
+			compose.sig_names[i] = g_strdup(ac_prefs->sig_names[i]);
+		}
+		g_free(compose.sig_texts[0]);
+		compose.sig_texts[0] = g_strdup(ac_prefs->sig_text);
+		for (i = 1; i < 10; i++) {
+			g_free(compose.sig_texts[i]);
+			compose.sig_texts[i] = g_strdup(ac_prefs->sig_texts[i]);
+		}
+
+		gtk_combo_box_set_active(GTK_COMBO_BOX(compose.sig_combo), 0);
+		gtk_entry_set_text(GTK_ENTRY(compose.signame_entry),
+				   compose.sig_names[0] ? compose.sig_names[0] : "");
+		prefs_set_escaped_str_to_text(compose.sig_text, compose.sig_texts[0]);
+
 		prefs_set_dialog(prefs_account_get_params());
 		gtk_window_set_title(GTK_WINDOW(dialog.window),
 				     _("Account preferences"));
@@ -1273,9 +1299,13 @@ static void prefs_account_compose_create(void)
 	GtkWidget *vbox1;
 	GtkWidget *sig_vbox;
 	GtkWidget *sig_radiobtn;
+	GtkWidget *sig_hbox;
+	GtkWidget *sig_combo;
+	GtkWidget *signame_label;
+	GtkWidget *signame_entry;
+	GtkWidget *sigtext_label;
 	GtkWidget *sigtext_scrwin;
 	GtkWidget *sig_text;
-	GtkWidget *sig_hbox;
 	GtkWidget *sigfile_radiobtn;
 	GtkWidget *sigcmd_radiobtn;
 	GtkWidget *sigpath_entry;
@@ -1288,6 +1318,7 @@ static void prefs_account_compose_create(void)
 	GtkWidget *autobcc_entry;
 	GtkWidget *autoreplyto_chkbtn;
 	GtkWidget *autoreplyto_entry;
+	gint i;
 
 	vbox1 = gtk_vbox_new (FALSE, VSPACING);
 	gtk_widget_show (vbox1);
@@ -1307,6 +1338,43 @@ static void prefs_account_compose_create(void)
 	gtk_box_pack_start (GTK_BOX (sig_vbox), sig_radiobtn, FALSE, FALSE, 0);
 	g_object_set_data (G_OBJECT (sig_radiobtn), MENU_VAL_ID,
 			   GINT_TO_POINTER (SIG_DIRECT));
+
+	sig_hbox = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (sig_hbox);
+	gtk_box_pack_start (GTK_BOX (sig_vbox), sig_hbox, FALSE, FALSE, 0);
+
+	sig_combo = gtk_combo_box_new_text();
+	gtk_widget_show (sig_combo);
+	gtk_box_pack_start (GTK_BOX (sig_hbox), sig_combo, FALSE, FALSE, 0);
+
+	for (i = 0; i < 10; i++) {
+		gchar buf[256];
+		g_snprintf(buf, sizeof(buf), _("Signature %d"), i + 1);
+		gtk_combo_box_append_text(GTK_COMBO_BOX(sig_combo), buf);
+	}
+	gtk_combo_box_set_active(GTK_COMBO_BOX(sig_combo), 0);
+	g_signal_connect(GTK_COMBO_BOX(sig_combo), "changed",
+			 G_CALLBACK(prefs_account_sig_combo_changed_cb), NULL);
+
+	signame_label = gtk_label_new(_("Name:"));
+	gtk_widget_show (signame_label);
+	gtk_box_pack_start (GTK_BOX (sig_hbox), signame_label, FALSE, FALSE, 0);
+
+	signame_entry = gtk_entry_new ();
+	gtk_widget_show (signame_entry);
+	gtk_box_pack_start (GTK_BOX (sig_hbox), signame_entry, TRUE, TRUE, 0);
+
+	sig_hbox = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (sig_hbox);
+	gtk_box_pack_start (GTK_BOX (sig_vbox), sig_hbox, FALSE, FALSE, 0);
+
+	sigtext_label = gtk_label_new
+		(_("'Signature 1' will be used by default."));
+	gtk_widget_show (sigtext_label);
+	gtk_box_pack_start (GTK_BOX (sig_hbox), sigtext_label, FALSE, FALSE, 0);
+	gtk_label_set_justify (GTK_LABEL (sigtext_label), GTK_JUSTIFY_LEFT);
+	gtk_label_set_line_wrap (GTK_LABEL (sigtext_label), TRUE);
+	gtkut_widget_set_small_font_size (sigtext_label);
 
 	sigtext_scrwin = gtk_scrolled_window_new (NULL, NULL);
 	gtk_widget_show (sigtext_scrwin);
@@ -1409,6 +1477,8 @@ static void prefs_account_compose_create(void)
 	SET_TOGGLE_SENSITIVITY (autoreplyto_chkbtn, autoreplyto_entry);
 
 	compose.sig_radiobtn  = sig_radiobtn;
+	compose.sig_combo     = sig_combo;
+	compose.signame_entry = signame_entry;
 	compose.sig_text      = sig_text;
 	compose.sigpath_entry = sigpath_entry;
 
@@ -2101,6 +2171,8 @@ static gint prefs_account_apply(void)
 	RecvProtocol protocol;
 	GtkWidget *menu;
 	GtkWidget *menuitem;
+	PrefsAccount *tmp_ac_prefs;
+	gint i;
 
 	menu = gtk_option_menu_get_menu(GTK_OPTION_MENU(basic.protocol_optmenu));
 	menuitem = gtk_menu_get_active(GTK_MENU(menu));
@@ -2147,6 +2219,19 @@ static gint prefs_account_apply(void)
 	}
 
 	prefs_set_data_from_dialog(prefs_account_get_params());
+
+	prefs_account_sig_combo_changed_cb(compose.sig_combo, NULL);
+
+	tmp_ac_prefs = prefs_account_get_tmp_prefs();
+	g_free(tmp_ac_prefs->sig_text);
+	tmp_ac_prefs->sig_text = g_strdup(compose.sig_texts[0]);
+	for (i = 0; i < 10; i++) {
+		g_free(tmp_ac_prefs->sig_names[i]);
+		tmp_ac_prefs->sig_names[i] = g_strdup(compose.sig_names[i]);
+		g_free(tmp_ac_prefs->sig_texts[i]);
+		tmp_ac_prefs->sig_texts[i] = g_strdup(compose.sig_texts[i]);
+	}
+
 	return 0;
 }
 
@@ -2219,6 +2304,36 @@ static void prefs_account_name_entry_changed_cb(GtkWidget *widget,
 static void prefs_account_sig_changed_cb(GtkWidget *widget, gpointer data)
 {
 	compose.sig_modified = TRUE;
+}
+
+static void prefs_account_sig_combo_changed_cb(GtkWidget *widget, gpointer data)
+{
+	gint cur_page;
+	gint new_page;
+
+	g_print("combo changed\n");
+
+	cur_page = compose.sig_selected;
+	new_page = gtk_combo_box_get_active(GTK_COMBO_BOX(widget));
+	g_print("  cur page: %d\n", cur_page);
+	g_print("  new page: %d\n", new_page);
+
+	/* Save current one */
+	g_free(compose.sig_names[cur_page]);
+	compose.sig_names[cur_page] =
+		gtk_editable_get_chars(GTK_EDITABLE(compose.signame_entry), 0, -1);
+	g_free(compose.sig_texts[cur_page]);
+	compose.sig_texts[cur_page] =
+		prefs_get_escaped_str_from_text(compose.sig_text);
+
+	/* Restore another one */
+	if (cur_page != new_page) {
+		gtk_entry_set_text(GTK_ENTRY(compose.signame_entry),
+				   compose.sig_names[new_page] ? compose.sig_names[new_page] : "");
+		prefs_set_escaped_str_to_text(compose.sig_text,
+					      compose.sig_texts[new_page]);
+		compose.sig_selected = new_page;
+	}
 }
 
 static void prefs_account_enum_set_data_from_radiobtn(PrefParam *pparam)

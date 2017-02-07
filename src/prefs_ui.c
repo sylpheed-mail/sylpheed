@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2006 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2017 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -297,12 +297,54 @@ void prefs_set_entry(PrefParam *pparam)
 	}
 }
 
+gchar *prefs_get_escaped_str_from_text(GtkWidget *widget)
+{
+	gchar *text = NULL, *tp = NULL;
+	gchar *str, *p;
+
+	g_return_val_if_fail(widget != NULL, NULL);
+
+	if (GTK_IS_EDITABLE(widget)) {
+		tp = text = gtk_editable_get_chars
+		(GTK_EDITABLE(widget), 0, -1);
+	} else if (GTK_IS_TEXT_VIEW(widget)) {
+		GtkTextView *textview = GTK_TEXT_VIEW(widget);
+		GtkTextBuffer *buffer;
+		GtkTextIter start, end;
+
+		buffer = gtk_text_view_get_buffer(textview);
+		gtk_text_buffer_get_start_iter(buffer, &start);
+		gtk_text_buffer_get_iter_at_offset(buffer, &end, -1);
+		tp = text = gtk_text_buffer_get_text
+			(buffer, &start, &end, FALSE);
+	}
+
+	g_return_val_if_fail(tp != NULL && text != NULL, NULL);
+
+	if (text[0] == '\0') {
+		g_free(text);
+		return NULL;
+	}
+
+	p = str = g_malloc(strlen(text) * 2 + 1);
+	while (*tp) {
+		if (*tp == '\n') {
+			*p++ = '\\';
+			*p++ = 'n';
+			tp++;
+		} else
+			*p++ = *tp++;
+		}
+	*p = '\0';
+	g_free(text);
+
+	return str;
+}
+
 void prefs_set_data_from_text(PrefParam *pparam)
 {
 	PrefsUIData *ui_data;
 	gchar **str;
-	gchar *text = NULL, *tp = NULL;
-	gchar *tmp, *tmpp;
 
 	ui_data = (PrefsUIData *)pparam->ui_data;
 	g_return_if_fail(ui_data != NULL);
@@ -314,41 +356,7 @@ void prefs_set_data_from_text(PrefParam *pparam)
 	case P_STRING:
 		str = (gchar **)pparam->data;
 		g_free(*str);
-		if (GTK_IS_EDITABLE(*ui_data->widget)) {
-			tp = text = gtk_editable_get_chars
-				(GTK_EDITABLE(*ui_data->widget), 0, -1);
-		} else if (GTK_IS_TEXT_VIEW(*ui_data->widget)) {
-			GtkTextView *textview = GTK_TEXT_VIEW(*ui_data->widget);
-			GtkTextBuffer *buffer;
-			GtkTextIter start, end;
-
-			buffer = gtk_text_view_get_buffer(textview);
-			gtk_text_buffer_get_start_iter(buffer, &start);
-			gtk_text_buffer_get_iter_at_offset(buffer, &end, -1);
-			tp = text = gtk_text_buffer_get_text
-				(buffer, &start, &end, FALSE);
-		}
-
-		g_return_if_fail(tp != NULL && text != NULL);
-
-		if (text[0] == '\0') {
-			*str = NULL;
-			g_free(text);
-			break;
-		}
-
-		tmpp = tmp = g_malloc(strlen(text) * 2 + 1);
-		while (*tp) {
-			if (*tp == '\n') {
-				*tmpp++ = '\\';
-				*tmpp++ = 'n';
-				tp++;
-			} else
-				*tmpp++ = *tp++;
-		}
-		*tmpp = '\0';
-		*str = tmp;
-		g_free(text);
+		*str = prefs_get_escaped_str_from_text(*ui_data->widget);
 		break;
 	default:
 		g_warning("Invalid PrefType for GtkTextView widget: %d\n",
@@ -356,14 +364,43 @@ void prefs_set_data_from_text(PrefParam *pparam)
 	}
 }
 
-void prefs_set_text(PrefParam *pparam)
+void prefs_set_escaped_str_to_text(GtkWidget *widget, const gchar *str)
 {
-	PrefsUIData *ui_data;
-	gchar *buf, *sp, *bufp;
-	gchar **str;
+	gchar *buf, *bufp;
+	const gchar *sp;
 	GtkTextView *text;
 	GtkTextBuffer *buffer;
 	GtkTextIter iter;
+
+	g_return_if_fail(widget != NULL);
+
+	if (str) {
+		bufp = buf = g_malloc(strlen(str) + 1);
+		sp = str;
+		while (*sp) {
+			if (*sp == '\\' && *(sp + 1) == 'n') {
+				*bufp++ = '\n';
+				sp += 2;
+			} else
+				*bufp++ = *sp++;
+		}
+		*bufp = '\0';
+	} else
+		buf = g_strdup("");
+
+	text = GTK_TEXT_VIEW(widget);
+	buffer = gtk_text_view_get_buffer(text);
+	gtk_text_buffer_set_text(buffer, "", 0);
+	gtk_text_buffer_get_start_iter(buffer, &iter);
+	gtk_text_buffer_insert(buffer, &iter, buf, -1);
+
+	g_free(buf);
+}
+
+void prefs_set_text(PrefParam *pparam)
+{
+	PrefsUIData *ui_data;
+	gchar **str;
 
 	ui_data = (PrefsUIData *)pparam->ui_data;
 	g_return_if_fail(ui_data != NULL);
@@ -372,26 +409,7 @@ void prefs_set_text(PrefParam *pparam)
 	switch (pparam->type) {
 	case P_STRING:
 		str = (gchar **)pparam->data;
-		if (*str) {
-			bufp = buf = g_malloc(strlen(*str) + 1);
-			sp = *str;
-			while (*sp) {
-				if (*sp == '\\' && *(sp + 1) == 'n') {
-					*bufp++ = '\n';
-					sp += 2;
-				} else
-					*bufp++ = *sp++;
-			}
-			*bufp = '\0';
-		} else
-			buf = g_strdup("");
-
-		text = GTK_TEXT_VIEW(*ui_data->widget);
-		buffer = gtk_text_view_get_buffer(text);
-		gtk_text_buffer_set_text(buffer, "", 0);
-		gtk_text_buffer_get_start_iter(buffer, &iter);
-		gtk_text_buffer_insert(buffer, &iter, buf, -1);
-		g_free(buf);
+		prefs_set_escaped_str_to_text(*ui_data->widget, *str);
 		break;
 	default:
 		g_warning("Invalid PrefType for GtkTextView widget: %d\n",
