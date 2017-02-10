@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2007 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2017 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,12 +51,14 @@
 typedef enum {
 	GROUP_COL_NAME    = 0,
 	GROUP_COL_EMAIL   = 1,
-	GROUP_COL_REMARKS = 2
-} GroupEditEMailColumnPos;
+	GROUP_COL_REMARKS = 2,
+	GROUP_COL_DATA    = 3,
+	GROUP_N_COLS
+} GroupEditEMailColumns;
 
-#define GROUP_N_COLS          3
-#define GROUP_COL_WIDTH_NAME  140
-#define GROUP_COL_WIDTH_EMAIL 120
+#define GROUP_COL_WIDTH_NAME    160
+#define GROUP_COL_WIDTH_EMAIL   140
+#define GROUP_COL_WIDTH_REMARKS 80
 
 static struct _GroupEdit_dlg {
 	GtkWidget *window;
@@ -68,13 +70,8 @@ static struct _GroupEdit_dlg {
 
 	/* Basic data tab */
 	GtkWidget *entry_name;
-	GtkCList *clist_avail;
-	GtkCList *clist_group;
-
-	GHashTable *hashEMail;
-	gint rowIndGroup;
-	gint rowIndAvail;
-
+	GtkTreeView *treeview_avail;
+	GtkTreeView *treeview_group;
 } groupeditdlg;
 
 
@@ -128,7 +125,7 @@ static gboolean edit_group_key_pressed(GtkWidget *widget, GdkEventKey *event, gb
 	return FALSE;
 }
 
-static gchar *edit_group_format_item_clist( ItemPerson *person, ItemEMail *email ) {
+static gchar *edit_group_format_item( ItemPerson *person, ItemEMail *email ) {
 	gchar *str = NULL;
 	gchar *aName = ADDRITEM_NAME(email);
 	if( aName == NULL || *aName == '\0' ) return str;
@@ -141,11 +138,17 @@ static gchar *edit_group_format_item_clist( ItemPerson *person, ItemEMail *email
 	return str;
 }
 
-static gint edit_group_clist_add_email( GtkCList *clist, ItemEMail *email ) {
+static void edit_group_list_add_email( GtkTreeView *treeview, ItemEMail *email ) {
 	ItemPerson *person = ( ItemPerson * ) ADDRITEM_PARENT(email);
-	gchar *str = edit_group_format_item_clist( person, email );
+	gchar *str = edit_group_format_item( person, email );
 	gchar *text[ GROUP_N_COLS ];
-	gint row;
+	GtkTreeModel *model;
+	GtkTreeStore *store;
+	GtkTreeIter iter;
+
+	model = gtk_tree_view_get_model(treeview);
+	store = GTK_TREE_STORE(model);
+
 	if( str ) {
 		text[ GROUP_COL_NAME ] = str;
 	}
@@ -154,53 +157,60 @@ static gint edit_group_clist_add_email( GtkCList *clist, ItemEMail *email ) {
 	}
 	text[ GROUP_COL_EMAIL   ] = email->address;
 	text[ GROUP_COL_REMARKS ] = email->remarks;
-	row = gtk_clist_append( clist, text );
-	gtk_clist_set_row_data( clist, row, email );
-	return row;
+	gtk_tree_store_append(store, &iter, NULL);
+	gtk_tree_store_set(store, &iter, GROUP_COL_NAME, text[ GROUP_COL_NAME ], GROUP_COL_EMAIL, text[ GROUP_COL_EMAIL ], GROUP_COL_REMARKS, text[ GROUP_COL_REMARKS ], GROUP_COL_DATA, email, -1);
 }
 
-static void edit_group_load_clist( GtkCList *clist, GList *listEMail ) {
+static void edit_group_load_list( GtkTreeView *treeview, GList *listEMail ) {
 	GList *node = listEMail;
-	gtk_clist_freeze( clist );
 	while( node ) {
 		ItemEMail *email = node->data;
-		edit_group_clist_add_email( clist, email );
+		edit_group_list_add_email( treeview, email );
 		node = g_list_next( node );
 	}
-	gtk_clist_thaw( clist );
 }
 
-static void edit_group_group_selected( GtkCList *clist, gint row, gint column, GdkEvent *event, gpointer data ) {
-	groupeditdlg.rowIndGroup = row;
-}
+static void edit_group_move_email( GtkTreeView *treeview_from, GtkTreeView *treeview_to ) {
+	GtkTreeModel *model;
+	GtkTreeSelection *selection;
+	GtkTreeIter iter;
+	GList *rows;
+	GList *cur;
+	GtkTreePath *path;
+	ItemEMail *email;
 
-static void edit_group_avail_selected( GtkCList *clist, gint row, gint column, GdkEvent *event, gpointer data ) {
-	groupeditdlg.rowIndAvail = row;
-}
+	model = gtk_tree_view_get_model(treeview_from);
+	selection = gtk_tree_view_get_selection(treeview_from);
+	rows = gtk_tree_selection_get_selected_rows(selection, NULL);
+	rows = g_list_reverse(rows);
 
-static gint edit_group_move_email( GtkCList *clist_from, GtkCList *clist_to, gint row ) {
-	ItemEMail *email = gtk_clist_get_row_data( clist_from, row );
-	gint rrow = -1;
-	if( email ) {
-		gtk_clist_remove( clist_from, row );
-		rrow = edit_group_clist_add_email( clist_to, email );
-		gtk_clist_select_row( clist_to, rrow, 0 );
-		gtkut_clist_set_focus_row( clist_to, rrow );
+	for (cur = rows; cur != NULL; cur = cur->next) {
+		path = (GtkTreePath *)cur->data;
+		gtk_tree_model_get_iter(model, &iter, path);
+		gtk_tree_model_get(model, &iter, GROUP_COL_DATA, &email, -1);
+		edit_group_list_add_email(treeview_to, email);
+		gtk_tree_store_remove(GTK_TREE_STORE(model), &iter);
+		if (gtk_tree_store_iter_is_valid(GTK_TREE_STORE(model), &iter)) {
+			gtk_tree_selection_select_iter(selection, &iter);
+		} else {
+			if (gtkut_tree_model_get_iter_last(model, &iter)) {
+				gtk_tree_selection_select_iter(selection, &iter);
+			}
+		}
+		gtk_tree_path_free(path);
 	}
-	return rrow;
+	g_list_free(rows);
 }
 
 static void edit_group_to_group( GtkWidget *widget, gpointer data ) {
-	groupeditdlg.rowIndGroup = edit_group_move_email( groupeditdlg.clist_avail,
-					groupeditdlg.clist_group, groupeditdlg.rowIndAvail );
+	edit_group_move_email( groupeditdlg.treeview_avail, groupeditdlg.treeview_group );
 }
 
 static void edit_group_to_avail( GtkWidget *widget, gpointer data ) {
-	groupeditdlg.rowIndAvail = edit_group_move_email( groupeditdlg.clist_group,
-					groupeditdlg.clist_avail, groupeditdlg.rowIndGroup );
+	edit_group_move_email( groupeditdlg.treeview_group, groupeditdlg.treeview_avail );
 }
 
-static gboolean edit_group_list_group_button( GtkCList *clist, GdkEventButton *event, gpointer data ) {
+static gboolean edit_group_list_group_button( GtkWidget *treeview, GdkEventButton *event, gpointer data ) {
 	if( ! event ) return FALSE;
 	if( event->button == 1 ) {
 		if( event->type == GDK_2BUTTON_PRESS ) {
@@ -210,7 +220,7 @@ static gboolean edit_group_list_group_button( GtkCList *clist, GdkEventButton *e
 	return FALSE;
 }
 
-static gboolean edit_group_list_avail_button( GtkCList *clist, GdkEventButton *event, gpointer data ) {
+static gboolean edit_group_list_avail_button( GtkWidget *treeview, GdkEventButton *event, gpointer data ) {
 	if( ! event ) return FALSE;
 	if( event->button == 1 ) {
 		if( event->type == GDK_2BUTTON_PRESS ) {
@@ -220,15 +230,62 @@ static gboolean edit_group_list_avail_button( GtkCList *clist, GdkEventButton *e
 	return FALSE;
 }
 
-static gint edit_group_list_compare_func( GtkCList *clist, gconstpointer ptr1, gconstpointer ptr2 ) {
-	GtkCell *cell1 = ((GtkCListRow *)ptr1)->cell;
-	GtkCell *cell2 = ((GtkCListRow *)ptr2)->cell;
+static gint edit_group_list_col_compare(GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b, gint col)
+{
 	gchar *name1 = NULL, *name2 = NULL;
-	if( cell1 ) name1 = cell1->u.text;
-	if( cell2 ) name2 = cell2->u.text;
-	if( ! name1 ) return ( name2 != NULL );
-	if( ! name2 ) return -1;
-	return g_ascii_strcasecmp( name1, name2 );
+	gint ret;
+
+	gtk_tree_model_get(model, a, col, &name1, -1);
+	gtk_tree_model_get(model, b, col, &name2, -1);
+
+	if (!name1) {
+		name1 = g_strdup("");
+	}
+	if (!name2) {
+		name2 = g_strdup("");
+	}
+
+	ret = g_ascii_strcasecmp(name1, name2);
+	g_free(name2);
+	g_free(name1);
+
+	return ret;
+}
+
+static gint edit_group_list_name_compare_func(GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b, gpointer data) {
+	gint ret;
+
+	ret = edit_group_list_col_compare(model, a, b, GROUP_COL_NAME);
+	if (ret == 0)
+		ret = edit_group_list_col_compare(model, a, b, GROUP_COL_EMAIL);
+	if (ret == 0)
+		ret = edit_group_list_col_compare(model, a, b, GROUP_COL_REMARKS);
+
+	return ret;
+}
+
+static gint edit_group_list_email_compare_func(GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b, gpointer data) {
+	gint ret;
+
+	ret = edit_group_list_col_compare(model, a, b, GROUP_COL_EMAIL);
+	if (ret == 0)
+		ret = edit_group_list_col_compare(model, a, b, GROUP_COL_NAME);
+	if (ret == 0)
+		ret = edit_group_list_col_compare(model, a, b, GROUP_COL_REMARKS);
+
+	return ret;
+}
+
+static gint edit_group_list_remarks_compare_func(GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b, gpointer data) {
+	gint ret;
+
+	ret = edit_group_list_col_compare(model, a, b, GROUP_COL_REMARKS);
+	if (ret == 0)
+		ret = edit_group_list_col_compare(model, a, b, GROUP_COL_NAME);
+	if (ret == 0)
+		ret = edit_group_list_col_compare(model, a, b, GROUP_COL_EMAIL);
+
+	return ret;
 }
 
 static void addressbook_edit_group_create( gboolean *cancelled ) {
@@ -252,16 +309,19 @@ static void addressbook_edit_group_create( gboolean *cancelled ) {
 	GtkWidget *vboxb1;
 	GtkWidget *hboxb;
 
-	GtkWidget *clist_swin;
-	GtkWidget *clist_avail;
-	GtkWidget *clist_group;
+	GtkWidget *treeview_swin;
+	GtkWidget *treeview_avail;
+	GtkWidget *treeview_group;
+	GtkTreeStore *store;
+	GtkTreeViewColumn *column;
+	GtkCellRenderer *renderer;
+	GtkTreeSelection *selection;
 
 	GtkWidget *button_add;
 	GtkWidget *button_remove;
 	gint top;
 
 	gchar *titles[ GROUP_N_COLS ];
-	gint i;
 
 	titles[ GROUP_COL_NAME    ] = _( "Name" );
 	titles[ GROUP_COL_EMAIL   ] = _("E-Mail Address");
@@ -319,23 +379,68 @@ static void addressbook_edit_group_create( gboolean *cancelled ) {
 	label = gtk_label_new(_("Available Addresses"));
 	gtk_box_pack_end(GTK_BOX(hboxh), label, TRUE, TRUE, 0);
 
-	clist_swin = gtk_scrolled_window_new( NULL, NULL );
-	gtk_box_pack_start(GTK_BOX(vboxl), clist_swin, TRUE, TRUE, 0);
-	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(clist_swin),
+	treeview_swin = gtk_scrolled_window_new( NULL, NULL );
+	gtk_box_pack_start(GTK_BOX(vboxl), treeview_swin, TRUE, TRUE, 0);
+	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(treeview_swin),
 				       GTK_POLICY_AUTOMATIC,
 				       GTK_POLICY_ALWAYS);
 
-	clist_avail = gtk_clist_new_with_titles( GROUP_N_COLS, titles );
-	gtk_container_add( GTK_CONTAINER(clist_swin), clist_avail );
-	gtk_clist_set_selection_mode( GTK_CLIST(clist_avail), GTK_SELECTION_BROWSE );
-	gtk_clist_set_column_width( GTK_CLIST(clist_avail), GROUP_COL_NAME, GROUP_COL_WIDTH_NAME );
-	gtk_clist_set_column_width( GTK_CLIST(clist_avail), GROUP_COL_EMAIL, GROUP_COL_WIDTH_EMAIL );
-	gtk_clist_set_compare_func( GTK_CLIST(clist_avail), edit_group_list_compare_func );
-	gtk_clist_set_auto_sort( GTK_CLIST(clist_avail), TRUE );
-	gtkut_clist_set_redraw( GTK_CLIST(clist_avail) );
+	store = gtk_tree_store_new(GROUP_N_COLS, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_POINTER);
+	gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(store),
+					GROUP_COL_NAME,
+					edit_group_list_name_compare_func,
+					NULL, NULL);
+	gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(store),
+					GROUP_COL_EMAIL,
+					edit_group_list_email_compare_func,
+					NULL, NULL);
+	gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(store),
+					GROUP_COL_REMARKS,
+					edit_group_list_remarks_compare_func,
+					NULL, NULL);
 
-	for( i = 0; i < GROUP_N_COLS; i++ )
-		GTK_WIDGET_UNSET_FLAGS(GTK_CLIST(clist_avail)->column[i].button, GTK_CAN_FOCUS);
+	treeview_avail = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));
+	g_object_unref(G_OBJECT(store));
+	gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(treeview_avail), TRUE);
+	gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(treeview_avail), FALSE);
+	gtk_container_add(GTK_CONTAINER(treeview_swin), treeview_avail);
+
+	selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview_avail));
+	gtk_tree_selection_set_mode(selection, GTK_SELECTION_MULTIPLE);
+
+	renderer = gtk_cell_renderer_text_new();
+	g_object_set(renderer, "ellipsize", PANGO_ELLIPSIZE_END, "ypad", 0, NULL);
+	column = gtk_tree_view_column_new_with_attributes(titles[GROUP_COL_NAME], renderer, "text", GROUP_COL_NAME, NULL);
+	gtk_tree_view_column_set_spacing(column, 1);
+	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
+	gtk_tree_view_column_set_fixed_width(column, GROUP_COL_WIDTH_NAME);
+	gtk_tree_view_column_set_resizable(column, TRUE);
+	gtk_tree_view_column_set_sort_column_id(column, GROUP_COL_NAME);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview_avail), column);
+	gtk_tree_view_set_expander_column(GTK_TREE_VIEW(treeview_avail), column);
+
+	renderer = gtk_cell_renderer_text_new();
+	g_object_set(renderer, "ellipsize", PANGO_ELLIPSIZE_END, "ypad", 0, NULL);
+	column = gtk_tree_view_column_new_with_attributes(titles[GROUP_COL_EMAIL], renderer, "text", GROUP_COL_EMAIL, NULL);
+	gtk_tree_view_column_set_spacing(column, 1);
+	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
+	gtk_tree_view_column_set_fixed_width(column, GROUP_COL_WIDTH_EMAIL);
+	gtk_tree_view_column_set_resizable(column, TRUE);
+	gtk_tree_view_column_set_sort_column_id(column, GROUP_COL_EMAIL);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview_avail), column);
+
+	renderer = gtk_cell_renderer_text_new();
+	g_object_set(renderer, "ellipsize", PANGO_ELLIPSIZE_END, "ypad", 0, NULL);
+	column = gtk_tree_view_column_new_with_attributes(titles[GROUP_COL_REMARKS], renderer, "text", GROUP_COL_REMARKS, NULL);
+	gtk_tree_view_column_set_spacing(column, 1);
+	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
+	gtk_tree_view_column_set_fixed_width(column, GROUP_COL_WIDTH_REMARKS);
+	gtk_tree_view_column_set_resizable(column, TRUE);
+	gtk_tree_view_column_set_sort_column_id(column, GROUP_COL_REMARKS);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview_avail), column);
+
+	gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(store),
+					     GROUP_COL_NAME, GTK_SORT_ASCENDING);
 
 	/* Add/Remove button */
 	vboxb = gtk_vbox_new( FALSE, 0 );
@@ -359,24 +464,67 @@ static void addressbook_edit_group_create( gboolean *cancelled ) {
 	label = gtk_label_new(_("Addresses in Group"));
 	gtk_box_pack_start(GTK_BOX(hboxh), label, TRUE, TRUE, 0);
 
-	clist_swin = gtk_scrolled_window_new( NULL, NULL );
-	gtk_box_pack_start(GTK_BOX(vboxl), clist_swin, TRUE, TRUE, 0);
-	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(clist_swin),
+	treeview_swin = gtk_scrolled_window_new( NULL, NULL );
+	gtk_box_pack_start(GTK_BOX(vboxl), treeview_swin, TRUE, TRUE, 0);
+	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(treeview_swin),
 				       GTK_POLICY_AUTOMATIC,
 				       GTK_POLICY_ALWAYS);
 
-	clist_group = gtk_clist_new_with_titles( GROUP_N_COLS, titles );
-	gtk_container_add( GTK_CONTAINER(clist_swin), clist_group );
-	gtk_clist_set_selection_mode( GTK_CLIST(clist_group), GTK_SELECTION_BROWSE );
-	gtk_clist_set_column_width( GTK_CLIST(clist_group), GROUP_COL_NAME, GROUP_COL_WIDTH_NAME );
-	gtk_clist_set_column_width( GTK_CLIST(clist_group), GROUP_COL_EMAIL, GROUP_COL_WIDTH_EMAIL );
-	gtk_clist_set_compare_func( GTK_CLIST(clist_group), edit_group_list_compare_func );
-	gtk_clist_set_auto_sort( GTK_CLIST(clist_group), TRUE );
-	gtkut_clist_set_redraw( GTK_CLIST(clist_group) );
+	store = gtk_tree_store_new(GROUP_N_COLS, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_POINTER);
+	gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(store),
+					GROUP_COL_NAME,
+					edit_group_list_name_compare_func,
+					NULL, NULL);
+	gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(store),
+					GROUP_COL_EMAIL,
+					edit_group_list_email_compare_func,
+					NULL, NULL);
+	gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(store),
+					GROUP_COL_REMARKS,
+					edit_group_list_remarks_compare_func,
+					NULL, NULL);
 
-	for( i = 0; i < GROUP_N_COLS; i++ )
-		GTK_WIDGET_UNSET_FLAGS(GTK_CLIST(clist_group)->column[i].button, GTK_CAN_FOCUS);
+	treeview_group = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));
+	g_object_unref(G_OBJECT(store));
+	gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(treeview_group), TRUE);
+	gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(treeview_group), FALSE);
+	gtk_container_add(GTK_CONTAINER(treeview_swin), treeview_group);
 
+	selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview_group));
+	gtk_tree_selection_set_mode(selection, GTK_SELECTION_MULTIPLE);
+
+	renderer = gtk_cell_renderer_text_new();
+	g_object_set(renderer, "ellipsize", PANGO_ELLIPSIZE_END, "ypad", 0, NULL);
+	column = gtk_tree_view_column_new_with_attributes(titles[GROUP_COL_NAME], renderer, "text", GROUP_COL_NAME, NULL);
+	gtk_tree_view_column_set_spacing(column, 1);
+	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
+	gtk_tree_view_column_set_fixed_width(column, GROUP_COL_WIDTH_NAME);
+	gtk_tree_view_column_set_resizable(column, TRUE);
+	gtk_tree_view_column_set_sort_column_id(column, GROUP_COL_NAME);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview_group), column);
+
+	renderer = gtk_cell_renderer_text_new();
+	g_object_set(renderer, "ellipsize", PANGO_ELLIPSIZE_END, "ypad", 0, NULL);
+	column = gtk_tree_view_column_new_with_attributes(titles[GROUP_COL_EMAIL], renderer, "text", GROUP_COL_EMAIL, NULL);
+	gtk_tree_view_column_set_spacing(column, 1);
+	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
+	gtk_tree_view_column_set_fixed_width(column, GROUP_COL_WIDTH_EMAIL);
+	gtk_tree_view_column_set_resizable(column, TRUE);
+	gtk_tree_view_column_set_sort_column_id(column, GROUP_COL_EMAIL);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview_group), column);
+
+	renderer = gtk_cell_renderer_text_new();
+	g_object_set(renderer, "ellipsize", PANGO_ELLIPSIZE_END, "ypad", 0, NULL);
+	column = gtk_tree_view_column_new_with_attributes(titles[GROUP_COL_REMARKS], renderer, "text", GROUP_COL_REMARKS, NULL);
+	gtk_tree_view_column_set_spacing(column, 1);
+	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
+	gtk_tree_view_column_set_fixed_width(column, GROUP_COL_WIDTH_REMARKS);
+	gtk_tree_view_column_set_resizable(column, TRUE);
+	gtk_tree_view_column_set_sort_column_id(column, GROUP_COL_REMARKS);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(treeview_group), column);
+
+	gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(store),
+					     GROUP_COL_NAME, GTK_SORT_ASCENDING);
 	/* Button panel */
 	hboxb = gtk_hbox_new(FALSE, 8);
 	gtk_box_pack_start(GTK_BOX(vbox1), hboxb, FALSE, FALSE, 0);
@@ -401,17 +549,13 @@ static void addressbook_edit_group_create( gboolean *cancelled ) {
 	gtk_widget_show_all(vbox);
 
 	/* Event handlers */
-	g_signal_connect(G_OBJECT(clist_group), "select_row",
-			 G_CALLBACK( edit_group_group_selected), NULL);
-	g_signal_connect(G_OBJECT(clist_avail), "select_row",
-			 G_CALLBACK( edit_group_avail_selected), NULL);
 	g_signal_connect(G_OBJECT(button_add), "clicked",
 			 G_CALLBACK( edit_group_to_group ), NULL);
 	g_signal_connect(G_OBJECT(button_remove), "clicked",
 			 G_CALLBACK( edit_group_to_avail ), NULL);
-	g_signal_connect(G_OBJECT(clist_avail), "button_press_event",
+	g_signal_connect(G_OBJECT(treeview_avail), "button_press_event",
 			 G_CALLBACK(edit_group_list_avail_button), NULL);
-	g_signal_connect(G_OBJECT(clist_group), "button_press_event",
+	g_signal_connect(G_OBJECT(treeview_group), "button_press_event",
 			 G_CALLBACK(edit_group_list_group_button), NULL);
 
 	groupeditdlg.window     = window;
@@ -422,8 +566,8 @@ static void addressbook_edit_group_create( gboolean *cancelled ) {
 	groupeditdlg.status_cid = gtk_statusbar_get_context_id( GTK_STATUSBAR(statusbar), "Edit Group Dialog" );
 
 	groupeditdlg.entry_name  = entry_name;
-	groupeditdlg.clist_group = GTK_CLIST( clist_group );
-	groupeditdlg.clist_avail = GTK_CLIST( clist_avail );
+	groupeditdlg.treeview_group = GTK_TREE_VIEW( treeview_group );
+	groupeditdlg.treeview_avail = GTK_TREE_VIEW( treeview_avail );
 
 	if( ! _edit_group_dfl_message_ ) {
 		_edit_group_dfl_message_ = _( "Move E-Mail Addresses to or from Group with arrow buttons" );
@@ -434,14 +578,21 @@ static void addressbook_edit_group_create( gboolean *cancelled ) {
 * Return list of email items.
 */
 static GList *edit_group_build_email_list() {
-	GtkCList *clist = GTK_CLIST(groupeditdlg.clist_group);
+	GtkTreeView *treeview = groupeditdlg.treeview_group;
+	GtkTreeModel *model;
+	GtkTreeIter iter;
+	gboolean valid;
 	GList *listEMail = NULL;
 	ItemEMail *email;
-	gint row = 0;
-	while( (email = gtk_clist_get_row_data( clist, row )) ) {
+
+	model = gtk_tree_view_get_model(treeview);
+	valid = gtk_tree_model_get_iter_first(model, &iter);
+	while (valid) {
+		gtk_tree_model_get(model, &iter, GROUP_COL_DATA, &email, -1);
 		listEMail = g_list_append( listEMail, email );
-		row++;
+		valid = gtk_tree_model_iter_next(model, &iter);
 	}
+
 	return listEMail;
 }
 
@@ -457,6 +608,9 @@ ItemGroup *addressbook_edit_group( AddressBookFile *abf, ItemFolder *parent, Ite
 	static gboolean cancelled;
 	GList *listEMail = NULL;
 	gchar *name;
+	GtkTreeModel *model;
+	GtkTreeSelection *selection;
+	GtkTreeIter iter;
 
 	if (!groupeditdlg.window)
 		addressbook_edit_group_create(&cancelled);
@@ -468,16 +622,16 @@ ItemGroup *addressbook_edit_group( AddressBookFile *abf, ItemFolder *parent, Ite
 	gtk_widget_show(groupeditdlg.window);
 
 	/* Clear all fields */
-	groupeditdlg.rowIndGroup = -1;
-	groupeditdlg.rowIndAvail = -1;
 	edit_group_status_show( "" );
-	gtk_clist_clear( GTK_CLIST(groupeditdlg.clist_group) );
-	gtk_clist_clear( GTK_CLIST(groupeditdlg.clist_avail) );
+	model = gtk_tree_view_get_model(groupeditdlg.treeview_group);
+	gtk_tree_store_clear(GTK_TREE_STORE(model));
+	model = gtk_tree_view_get_model(groupeditdlg.treeview_avail);
+	gtk_tree_store_clear(GTK_TREE_STORE(model));
 
 	if( group ) {
 		if( ADDRITEM_NAME(group) )
 			gtk_entry_set_text(GTK_ENTRY(groupeditdlg.entry_name), ADDRITEM_NAME(group) );
-		edit_group_load_clist( groupeditdlg.clist_group, group->listEMail );
+		edit_group_load_list( groupeditdlg.treeview_group, group->listEMail );
 		gtk_window_set_title( GTK_WINDOW(groupeditdlg.window), _("Edit Group Details"));
 	}
 	else {
@@ -486,14 +640,21 @@ ItemGroup *addressbook_edit_group( AddressBookFile *abf, ItemFolder *parent, Ite
 	}
 
 	listEMail = addrbook_get_available_email_list( abf, group );
-	edit_group_load_clist( groupeditdlg.clist_avail, listEMail );
+	edit_group_load_list( groupeditdlg.treeview_avail, listEMail );
 	mgu_clear_list( listEMail );
 	g_list_free( listEMail );
 	listEMail = NULL;
-	gtk_clist_select_row( groupeditdlg.clist_group, 0, 0 );
-	gtkut_clist_set_focus_row( groupeditdlg.clist_group, 0 );
-	gtk_clist_select_row( groupeditdlg.clist_avail, 0, 0 );
-	gtkut_clist_set_focus_row( groupeditdlg.clist_avail, 0 );
+
+	model = gtk_tree_view_get_model(groupeditdlg.treeview_group);
+	selection = gtk_tree_view_get_selection(groupeditdlg.treeview_group);
+	if (gtk_tree_model_get_iter_first(model, &iter)) {
+		gtk_tree_selection_select_iter(selection, &iter);
+	}
+	model = gtk_tree_view_get_model(groupeditdlg.treeview_avail);
+	selection = gtk_tree_view_get_selection(groupeditdlg.treeview_avail);
+	if (gtk_tree_model_get_iter_first(model, &iter)) {
+		gtk_tree_selection_select_iter(selection, &iter);
+	}
 
 	edit_group_status_show( _edit_group_dfl_message_ );
 
