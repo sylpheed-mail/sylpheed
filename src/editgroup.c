@@ -190,11 +190,13 @@ static void edit_group_move_email( GtkTreeView *treeview_from, GtkTreeView *tree
 		gtk_tree_model_get(model, &iter, GROUP_COL_DATA, &email, -1);
 		edit_group_list_add_email(treeview_to, email);
 		gtk_tree_store_remove(GTK_TREE_STORE(model), &iter);
-		if (gtk_tree_store_iter_is_valid(GTK_TREE_STORE(model), &iter)) {
-			gtk_tree_selection_select_iter(selection, &iter);
-		} else {
-			if (gtkut_tree_model_get_iter_last(model, &iter)) {
+		if (cur->next == NULL) {
+			if (gtk_tree_store_iter_is_valid(GTK_TREE_STORE(model), &iter)) {
 				gtk_tree_selection_select_iter(selection, &iter);
+			} else {
+				if (gtkut_tree_model_get_iter_last(model, &iter)) {
+					gtk_tree_selection_select_iter(selection, &iter);
+				}
 			}
 		}
 		gtk_tree_path_free(path);
