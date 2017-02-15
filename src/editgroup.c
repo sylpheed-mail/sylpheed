@@ -153,6 +153,9 @@ static void edit_group_list_add_email(GtkTreeStore *store, GtkTreeIter *parent, 
 			   GROUP_COL_EMAIL, email->address,
 			   GROUP_COL_REMARKS, email->remarks,
 			   GROUP_COL_DATA, email, -1);
+	if (parent && GTK_TREE_MODEL(store) == gtk_tree_view_get_model(groupeditdlg.treeview_avail)) {
+		gtkut_tree_view_expand_parent_all(groupeditdlg.treeview_avail, &iter);
+	}
 
 	g_free(name);
 }
@@ -166,8 +169,6 @@ static void edit_group_load_available_list_recurse(ItemFolder *folder, GtkTreeIt
 	GtkTreeStore *store;
 	GtkTreeIter iter;
 	GList *node;
-
-	debug_print("edit_group_load_available_list_recurse: %s (id: %s)\n", ADDRITEM_NAME(folder), ADDRITEM_ID(folder));
 
 	model = gtk_tree_view_get_model(groupeditdlg.treeview_avail);
 	store = GTK_TREE_STORE(model);
@@ -190,21 +191,16 @@ static void edit_group_load_available_list_recurse(ItemFolder *folder, GtkTreeIt
 		node = g_list_next(node);
 	}
 
-	debug_print("folder: %s (id: %s)\n", ADDRITEM_NAME(folder), ADDRITEM_ID(folder));
 	node = folder->listPerson;
 	while (node) {
 		if (ADDRITEM_TYPE(node->data) == ITEMTYPE_PERSON) {
 			GList *cur;
 			ItemPerson *person = (ItemPerson *)node->data;
-			debug_print("  person: %s (id: %s)\n", ADDRITEM_NAME(person), ADDRITEM_ID(person));
 			cur = person->listEMail;
 			while (cur) {
 				ItemEMail *email = (ItemEMail *)cur->data;
 				if (!g_hash_table_lookup(table, ADDRITEM_ID(email))) {
-					debug_print("    email: <%s>\n", email->address);
-					edit_group_list_add_email(store, ADDRITEM_PARENT(folder) ? &iter: NULL, email);
-				} else {
-					debug_print("    email: <%s> is already in group\n", email->address);
+					edit_group_list_add_email(store, ADDRITEM_PARENT(folder) ? &iter : NULL, email);
 				}
 				cur = g_list_next(cur);
 			}
