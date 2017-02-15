@@ -138,57 +138,167 @@ static gchar *edit_group_format_item( ItemPerson *person, ItemEMail *email ) {
 	return str;
 }
 
-static void edit_group_list_add_email( GtkTreeView *treeview, ItemEMail *email ) {
-	ItemPerson *person = ( ItemPerson * ) ADDRITEM_PARENT(email);
-	gchar *str = edit_group_format_item( person, email );
-	gchar *text[ GROUP_N_COLS ];
+static void edit_group_list_add_email(GtkTreeStore *store, GtkTreeIter *parent, ItemEMail *email) {
+	ItemPerson *person = (ItemPerson *)ADDRITEM_PARENT(email);
+	gchar *name;
+	GtkTreeIter iter;
+
+	name = edit_group_format_item(person, email);
+	if (!name)
+		name = g_strdup(ADDRITEM_NAME(person));
+
+	gtk_tree_store_append(store, &iter, parent);
+	gtk_tree_store_set(store, &iter,
+			   GROUP_COL_NAME, name,
+			   GROUP_COL_EMAIL, email->address,
+			   GROUP_COL_REMARKS, email->remarks,
+			   GROUP_COL_DATA, email, -1);
+
+	g_free(name);
+}
+
+/*
+* Build available email list with folder tree excluding ones in already
+* the group
+*/
+static void edit_group_load_available_list_recurse(ItemFolder *folder, GtkTreeIter *parent, GHashTable *table) {
 	GtkTreeModel *model;
 	GtkTreeStore *store;
 	GtkTreeIter iter;
+	GList *node;
 
-	model = gtk_tree_view_get_model(treeview);
+	debug_print("edit_group_load_available_list_recurse: %s (id: %s)\n", ADDRITEM_NAME(folder), ADDRITEM_ID(folder));
+
+	model = gtk_tree_view_get_model(groupeditdlg.treeview_avail);
 	store = GTK_TREE_STORE(model);
 
-	if( str ) {
-		text[ GROUP_COL_NAME ] = str;
+	if (ADDRITEM_PARENT(folder)) {
+		gtk_tree_store_append(store, &iter, parent);
+		gtk_tree_store_set(store, &iter,
+				   GROUP_COL_NAME, ADDRITEM_NAME(folder),
+				   GROUP_COL_EMAIL, "",
+				   GROUP_COL_REMARKS, "Folder",
+				   GROUP_COL_DATA, folder, -1);
 	}
-	else {
-		text[ GROUP_COL_NAME ] = ADDRITEM_NAME(person);
+
+	node = folder->listFolder;
+	while (node) {
+		if (ADDRITEM_TYPE(node->data) == ITEMTYPE_FOLDER) {
+			ItemFolder *child = (ItemFolder *)node->data;
+			edit_group_load_available_list_recurse(child, ADDRITEM_PARENT(folder) ? &iter : NULL, table);
+		}
+		node = g_list_next(node);
 	}
-	text[ GROUP_COL_EMAIL   ] = email->address;
-	text[ GROUP_COL_REMARKS ] = email->remarks;
-	gtk_tree_store_append(store, &iter, NULL);
-	gtk_tree_store_set(store, &iter, GROUP_COL_NAME, text[ GROUP_COL_NAME ], GROUP_COL_EMAIL, text[ GROUP_COL_EMAIL ], GROUP_COL_REMARKS, text[ GROUP_COL_REMARKS ], GROUP_COL_DATA, email, -1);
+
+	debug_print("folder: %s (id: %s)\n", ADDRITEM_NAME(folder), ADDRITEM_ID(folder));
+	node = folder->listPerson;
+	while (node) {
+		if (ADDRITEM_TYPE(node->data) == ITEMTYPE_PERSON) {
+			GList *cur;
+			ItemPerson *person = (ItemPerson *)node->data;
+			debug_print("  person: %s (id: %s)\n", ADDRITEM_NAME(person), ADDRITEM_ID(person));
+			cur = person->listEMail;
+			while (cur) {
+				ItemEMail *email = (ItemEMail *)cur->data;
+				if (!g_hash_table_lookup(table, ADDRITEM_ID(email))) {
+					debug_print("    email: <%s>\n", email->address);
+					edit_group_list_add_email(store, ADDRITEM_PARENT(folder) ? &iter: NULL, email);
+				} else {
+					debug_print("    email: <%s> is already in group\n", email->address);
+				}
+				cur = g_list_next(cur);
+			}
+		}
+		node = g_list_next(node);
+	}
 }
 
-static void edit_group_load_list( GtkTreeView *treeview, GList *listEMail ) {
-	GList *node = listEMail;
-	while( node ) {
-		ItemEMail *email = node->data;
-		edit_group_list_add_email( treeview, email );
-		node = g_list_next( node );
+static void edit_group_load_available_list(AddressBookFile *abf, ItemGroup *group) {
+	GHashTable *table;
+
+	g_return_if_fail(abf != NULL);
+
+	table = g_hash_table_new(g_str_hash, g_str_equal);
+	if (group) {
+		GList *list = group->listEMail;
+		while (list) {
+			ItemEMail *email = list->data;
+			g_hash_table_insert(table, ADDRITEM_ID(email), email);
+			list = g_list_next(list);
+		}
 	}
+
+	edit_group_load_available_list_recurse(abf->addressCache->rootFolder, NULL, table);
+
+	g_hash_table_destroy(table);
+	table = NULL;
+}
+
+static void edit_group_load_group_list( GtkTreeView *treeview, GList *listEMail ) {
+	GList *node = listEMail;
+	GtkTreeModel *model = gtk_tree_view_get_model(treeview);
+
+	while (node) {
+		ItemEMail *email = node->data;
+		edit_group_list_add_email(GTK_TREE_STORE(model), NULL, email);
+		node = g_list_next(node);
+	}
+}
+
+static gboolean edit_group_find_parent_folder(GtkTreeModel *model, GtkTreeIter *parent, ItemEMail *email) {
+	ItemPerson *person;
+	ItemFolder *folder;
+
+	person = (ItemPerson *)ADDRITEM_PARENT(email);
+	folder = (ItemFolder *)ADDRITEM_PARENT(person);
+	if (ADDRITEM_TYPE(folder) != ITEMTYPE_FOLDER) {
+		return FALSE;
+	}
+	if (ADDRITEM_PARENT(folder) == NULL) {
+		/* Root folder */
+		return FALSE;
+	}
+
+	if (gtkut_tree_model_find_by_column_data(model, parent, NULL, GROUP_COL_DATA, folder)) {
+		return TRUE;
+	}
+
+	return FALSE;
 }
 
 static void edit_group_move_email( GtkTreeView *treeview_from, GtkTreeView *treeview_to ) {
 	GtkTreeModel *model;
+	GtkTreeModel *model_to;
 	GtkTreeSelection *selection;
 	GtkTreeIter iter;
 	GList *rows;
 	GList *cur;
 	GtkTreePath *path;
+	AddrItemObject *obj;
 	ItemEMail *email;
+	GtkTreeIter parent;
 
 	model = gtk_tree_view_get_model(treeview_from);
 	selection = gtk_tree_view_get_selection(treeview_from);
 	rows = gtk_tree_selection_get_selected_rows(selection, NULL);
 	rows = g_list_reverse(rows);
 
+	model_to = gtk_tree_view_get_model(treeview_to);
+
 	for (cur = rows; cur != NULL; cur = cur->next) {
 		path = (GtkTreePath *)cur->data;
 		gtk_tree_model_get_iter(model, &iter, path);
-		gtk_tree_model_get(model, &iter, GROUP_COL_DATA, &email, -1);
-		edit_group_list_add_email(treeview_to, email);
+		gtk_tree_model_get(model, &iter, GROUP_COL_DATA, &obj, -1);
+		if (ADDRITEM_TYPE(obj) == ITEMTYPE_FOLDER) {
+			continue;
+		}
+		email = (ItemEMail *)obj;
+		if (treeview_to == groupeditdlg.treeview_avail &&
+		    edit_group_find_parent_folder(model_to, &parent, email)) {
+			edit_group_list_add_email(GTK_TREE_STORE(model_to), &parent, email);
+		} else {
+			edit_group_list_add_email(GTK_TREE_STORE(model_to), NULL, email);
+		}
 		gtk_tree_store_remove(GTK_TREE_STORE(model), &iter);
 		if (cur->next == NULL) {
 			if (gtk_tree_store_iter_is_valid(GTK_TREE_STORE(model), &iter)) {
@@ -633,7 +743,7 @@ ItemGroup *addressbook_edit_group( AddressBookFile *abf, ItemFolder *parent, Ite
 	if( group ) {
 		if( ADDRITEM_NAME(group) )
 			gtk_entry_set_text(GTK_ENTRY(groupeditdlg.entry_name), ADDRITEM_NAME(group) );
-		edit_group_load_list( groupeditdlg.treeview_group, group->listEMail );
+		edit_group_load_group_list( groupeditdlg.treeview_group, group->listEMail );
 		gtk_window_set_title( GTK_WINDOW(groupeditdlg.window), _("Edit Group Details"));
 	}
 	else {
@@ -641,11 +751,8 @@ ItemGroup *addressbook_edit_group( AddressBookFile *abf, ItemFolder *parent, Ite
 		gtk_entry_set_text(GTK_ENTRY(groupeditdlg.entry_name), ADDRESSBOOK_GUESS_GROUP_NAME );
 	}
 
-	listEMail = addrbook_get_available_email_list( abf, group );
-	edit_group_load_list( groupeditdlg.treeview_avail, listEMail );
-	mgu_clear_list( listEMail );
-	g_list_free( listEMail );
-	listEMail = NULL;
+	edit_group_load_available_list(abf, group);
+	gtk_tree_view_expand_all(groupeditdlg.treeview_avail);
 
 	model = gtk_tree_view_get_model(groupeditdlg.treeview_group);
 	selection = gtk_tree_view_get_selection(groupeditdlg.treeview_group);
