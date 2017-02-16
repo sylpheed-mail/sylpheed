@@ -41,6 +41,7 @@
 #include "inputdialog.h"
 #include "manage_window.h"
 #include "gtkutils.h"
+#include "stock_pixmap.h"
 
 #define ADDRESSBOOK_GUESS_FOLDER_NAME	"NewFolder"
 #define ADDRESSBOOK_GUESS_GROUP_NAME	"NewGroup"
@@ -49,10 +50,12 @@
 #define EDITGROUP_HEIGHT     340
 
 typedef enum {
-	GROUP_COL_NAME    = 0,
-	GROUP_COL_EMAIL   = 1,
-	GROUP_COL_REMARKS = 2,
-	GROUP_COL_DATA    = 3,
+	GROUP_COL_NAME,
+	GROUP_COL_EMAIL,
+	GROUP_COL_REMARKS,
+	GROUP_COL_DATA,
+	GROUP_COL_PIXBUF,
+	GROUP_COL_PIXBUF_OPEN,
 	GROUP_N_COLS
 } GroupEditEMailColumns;
 
@@ -74,6 +77,9 @@ static struct _GroupEdit_dlg {
 	GtkTreeView *treeview_group;
 } groupeditdlg;
 
+
+static GdkPixbuf *folderpix;
+static GdkPixbuf *folderopenpix;
 
 static gchar *_edit_group_dfl_message_ = NULL;
 
@@ -179,7 +185,9 @@ static void edit_group_load_available_list_recurse(ItemFolder *folder, GtkTreeIt
 				   GROUP_COL_NAME, ADDRITEM_NAME(folder),
 				   GROUP_COL_EMAIL, "",
 				   GROUP_COL_REMARKS, "",
-				   GROUP_COL_DATA, folder, -1);
+				   GROUP_COL_DATA, folder,
+				   GROUP_COL_PIXBUF, folderpix,
+				   GROUP_COL_PIXBUF_OPEN, folderopenpix, -1);
 	}
 
 	node = folder->listFolder;
@@ -541,7 +549,7 @@ static void addressbook_edit_group_create( gboolean *cancelled ) {
 				       GTK_POLICY_AUTOMATIC,
 				       GTK_POLICY_ALWAYS);
 
-	store = gtk_tree_store_new(GROUP_N_COLS, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_POINTER);
+	store = gtk_tree_store_new(GROUP_N_COLS, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_POINTER, GDK_TYPE_PIXBUF, GDK_TYPE_PIXBUF);
 	gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(store),
 					GROUP_COL_NAME,
 					edit_group_list_name_compare_func,
@@ -564,9 +572,18 @@ static void addressbook_edit_group_create( gboolean *cancelled ) {
 	selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview_avail));
 	gtk_tree_selection_set_mode(selection, GTK_SELECTION_MULTIPLE);
 
+	column = gtk_tree_view_column_new();
+	renderer = gtk_cell_renderer_pixbuf_new();
+	g_object_set(renderer, "ypad", 0, NULL);
+	gtk_tree_view_column_pack_start(column, renderer, FALSE);
+	gtk_tree_view_column_set_attributes(column, renderer, "pixbuf", GROUP_COL_PIXBUF, "pixbuf-expander-open", GROUP_COL_PIXBUF_OPEN, "pixbuf-expander-closed", GROUP_COL_PIXBUF, NULL);
+
 	renderer = gtk_cell_renderer_text_new();
 	g_object_set(renderer, "ellipsize", PANGO_ELLIPSIZE_END, "ypad", 0, NULL);
-	column = gtk_tree_view_column_new_with_attributes(titles[GROUP_COL_NAME], renderer, "text", GROUP_COL_NAME, NULL);
+	gtk_tree_view_column_pack_start(column, renderer, TRUE);
+	gtk_tree_view_column_set_attributes(column, renderer, "text", GROUP_COL_NAME, NULL);
+
+	gtk_tree_view_column_set_title(column, titles[GROUP_COL_NAME]);
 	gtk_tree_view_column_set_spacing(column, 1);
 	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
 	gtk_tree_view_column_set_fixed_width(column, GROUP_COL_WIDTH_NAME);
@@ -626,7 +643,7 @@ static void addressbook_edit_group_create( gboolean *cancelled ) {
 				       GTK_POLICY_AUTOMATIC,
 				       GTK_POLICY_ALWAYS);
 
-	store = gtk_tree_store_new(GROUP_N_COLS, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_POINTER);
+	store = gtk_tree_store_new(GROUP_N_COLS, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_POINTER, GDK_TYPE_PIXBUF, GDK_TYPE_PIXBUF);
 	gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(store),
 					GROUP_COL_NAME,
 					edit_group_list_name_compare_func,
@@ -724,6 +741,9 @@ static void addressbook_edit_group_create( gboolean *cancelled ) {
 	groupeditdlg.entry_name  = entry_name;
 	groupeditdlg.treeview_group = GTK_TREE_VIEW( treeview_group );
 	groupeditdlg.treeview_avail = GTK_TREE_VIEW( treeview_avail );
+
+	stock_pixbuf_gdk(window, STOCK_PIXMAP_FOLDER_CLOSE, &folderpix);
+	stock_pixbuf_gdk(window, STOCK_PIXMAP_FOLDER_OPEN, &folderopenpix);
 
 	if( ! _edit_group_dfl_message_ ) {
 		_edit_group_dfl_message_ = _( "Move E-Mail Addresses to or from Group with arrow buttons" );
