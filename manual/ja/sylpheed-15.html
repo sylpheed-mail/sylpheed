@@ -2,7 +2,7 @@
 <HTML>
 <HEAD>
  <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
- <META NAME="GENERATOR" CONTENT="LinuxDoc-Tools 0.9.66">
+ <META NAME="GENERATOR" CONTENT="LinuxDoc-Tools 0.9.69">
  <TITLE>Sylpheed ユーザーズマニュアル: 迷惑メール対策</TITLE>
  <LINK HREF="sylpheed-16.html" REL=next>
  <LINK HREF="sylpheed-14.html" REL=previous>
@@ -47,19 +47,18 @@ Sylpheedは現在、Sylpheed向けに新たに開発された
 <LI>環境変数 BSFILTERHOME に書き込み可能なディレクトリを指定する
 <P>
 <UL>
-<LI> 「コントロール パネル - システム - 詳細設定 - 環境変数 - (ユーザ名) のユーザー環境変数」で「新規」を押す(Vista/7の場合は「コントロールパネル - システムとメンテナンス - システム - システムの詳細設定 - 環境変数 - (ユーザ名) のユーザー環境変数」)</LI>
-<LI>(XPの場合) 「変数名」に「BSFILTERHOME」、「変数値」に「C:\Documents and Settings\(ユーザ名)\Application Data\Sylpheed」を入力して「OK」を押す</LI>
-<LI>(Vista/7/8/10の場合) 「変数名」に「BSFILTERHOME」、「変数値」に「C:\Users\(ユーザ名)\AppData\Roaming\Sylpheed」を入力して「OK」を押す</LI>
+<LI>「コントロールパネル - システムとメンテナンス - システム - システムの詳細設定 - 環境変数 - (ユーザ名) のユーザー環境変数」で「新規」を押す</LI>
+<LI>「変数名」に「BSFILTERHOME」、「変数値」に「C:\Users\(ユーザ名)\AppData\Roaming\Sylpheed」を入力して「OK」を押す</LI>
 </UL>
 </P>
 </LI>
 <LI>「全般の設定 - 迷惑メール - 学習コマンド」の各コマンドに
 --homedir "ディレクトリ" を追加する
-<P>例) bsfilterw.exe --homedir "C:\Documents and Settings\(ユーザ名)\Application Data\Sylpheed" -C -s -u</P>
+<P>例) bsfilterw.exe --homedir "C:\Users\(ユーザ名)\AppData\Roaming\Sylpheed" -C -s -u</P>
 </LI>
 </UL>
 </P>
-<P>なお、Vista/7の場合、標準のProgram Filesフォルダにインストールした場合に限り、自動的に「C:\Users\(ユーザ名)\AppData\Local\VirtualStore\Program Files\Sylpheed」以下にリダイレクトされるため、上記の対策は特に必要ありません。</P>
+<P>なお、標準のProgram Filesフォルダにインストールした場合は、自動的に「C:\Users\(ユーザ名)\AppData\Local\VirtualStore\Program Files\Sylpheed」以下にリダイレクトされるため、上記の対策は特に必要ありません。</P>
 <H2><A NAME="ss15.4">15.4</A> <A HREF="sylpheed.html#toc15.4">アクションの設定</A>
 </H2>
 
