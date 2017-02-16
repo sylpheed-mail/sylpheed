@@ -178,7 +178,7 @@ static void edit_group_load_available_list_recurse(ItemFolder *folder, GtkTreeIt
 		gtk_tree_store_set(store, &iter,
 				   GROUP_COL_NAME, ADDRITEM_NAME(folder),
 				   GROUP_COL_EMAIL, "",
-				   GROUP_COL_REMARKS, "Folder",
+				   GROUP_COL_REMARKS, "",
 				   GROUP_COL_DATA, folder, -1);
 	}
 
@@ -262,11 +262,53 @@ static gboolean edit_group_find_parent_folder(GtkTreeModel *model, GtkTreeIter *
 	return FALSE;
 }
 
+static gboolean edit_group_find_next_selection(GtkTreeModel *model, GtkTreeIter *next) {
+	gboolean valid;
+	GtkTreeIter iter = *next;
+	AddrItemObject *obj;
+
+	while ((valid = gtkut_tree_model_next(model, &iter)) != FALSE) {
+		gtk_tree_model_get(model, &iter, GROUP_COL_DATA, &obj, -1);
+		if (!obj || ADDRITEM_TYPE(obj) == ITEMTYPE_FOLDER) {
+			continue;
+		}
+		*next = iter;
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
+static gboolean edit_group_find_last_selection(GtkTreeModel *model, GtkTreeIter *next) {
+	gboolean valid;
+	GtkTreeIter iter;
+	GtkTreeIter last;
+	AddrItemObject *obj;
+	gboolean found = FALSE;
+
+	valid = gtk_tree_model_get_iter_first(model, &iter);
+	while (valid) {
+		gtk_tree_model_get(model, &iter, GROUP_COL_DATA, &obj, -1);
+		if (obj && ADDRITEM_TYPE(obj) != ITEMTYPE_FOLDER) {
+			last = iter;
+			found = TRUE;
+		}
+		valid = gtkut_tree_model_next(model, &iter);
+	}
+
+	if (found) {
+		*next = last;
+	}
+	return found;
+}
+
 static void edit_group_move_email( GtkTreeView *treeview_from, GtkTreeView *treeview_to ) {
 	GtkTreeModel *model;
 	GtkTreeModel *model_to;
 	GtkTreeSelection *selection;
 	GtkTreeIter iter;
+	GtkTreeIter next;
+	gboolean next_valid;
 	GList *rows;
 	GList *cur;
 	GtkTreePath *path;
@@ -277,7 +319,14 @@ static void edit_group_move_email( GtkTreeView *treeview_from, GtkTreeView *tree
 	model = gtk_tree_view_get_model(treeview_from);
 	selection = gtk_tree_view_get_selection(treeview_from);
 	rows = gtk_tree_selection_get_selected_rows(selection, NULL);
+	if (!rows) {
+		return;
+	}
 	rows = g_list_reverse(rows);
+
+	path = (GtkTreePath *)rows->data;
+	gtk_tree_model_get_iter(model, &next, path);
+	next_valid = edit_group_find_next_selection(model, &next);
 
 	model_to = gtk_tree_view_get_model(treeview_to);
 
@@ -285,7 +334,7 @@ static void edit_group_move_email( GtkTreeView *treeview_from, GtkTreeView *tree
 		path = (GtkTreePath *)cur->data;
 		gtk_tree_model_get_iter(model, &iter, path);
 		gtk_tree_model_get(model, &iter, GROUP_COL_DATA, &obj, -1);
-		if (ADDRITEM_TYPE(obj) == ITEMTYPE_FOLDER) {
+		if (obj && ADDRITEM_TYPE(obj) == ITEMTYPE_FOLDER) {
 			continue;
 		}
 		email = (ItemEMail *)obj;
@@ -296,18 +345,17 @@ static void edit_group_move_email( GtkTreeView *treeview_from, GtkTreeView *tree
 			edit_group_list_add_email(GTK_TREE_STORE(model_to), NULL, email);
 		}
 		gtk_tree_store_remove(GTK_TREE_STORE(model), &iter);
-		if (cur->next == NULL) {
-			if (gtk_tree_store_iter_is_valid(GTK_TREE_STORE(model), &iter)) {
-				gtk_tree_selection_select_iter(selection, &iter);
-			} else {
-				if (gtkut_tree_model_get_iter_last(model, &iter)) {
-					gtk_tree_selection_select_iter(selection, &iter);
-				}
-			}
-		}
 		gtk_tree_path_free(path);
 	}
 	g_list_free(rows);
+
+	gtk_tree_selection_unselect_all(selection);
+	if (!next_valid) {
+		next_valid = edit_group_find_last_selection(model, &next);
+	}
+	if (next_valid) {
+		gtk_tree_selection_select_iter(selection, &next);
+	}
 }
 
 static void edit_group_to_group( GtkWidget *widget, gpointer data ) {
