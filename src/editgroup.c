@@ -541,7 +541,7 @@ static void addressbook_edit_group_create( gboolean *cancelled ) {
 	hboxh = gtk_hbox_new( FALSE, 0 );
 	gtk_box_pack_start(GTK_BOX(vboxl), hboxh, FALSE, FALSE, 0);
 	label = gtk_label_new(_("Available Addresses"));
-	gtk_box_pack_end(GTK_BOX(hboxh), label, TRUE, TRUE, 0);
+	gtk_box_pack_start(GTK_BOX(hboxh), label, FALSE, FALSE, 0);
 
 	treeview_swin = gtk_scrolled_window_new( NULL, NULL );
 	gtk_box_pack_start(GTK_BOX(vboxl), treeview_swin, TRUE, TRUE, 0);
@@ -635,7 +635,7 @@ static void addressbook_edit_group_create( gboolean *cancelled ) {
 	hboxh = gtk_hbox_new( FALSE, 0 );
 	gtk_box_pack_start(GTK_BOX(vboxl), hboxh, FALSE, FALSE, 0);
 	label = gtk_label_new(_("Addresses in Group"));
-	gtk_box_pack_start(GTK_BOX(hboxh), label, TRUE, TRUE, 0);
+	gtk_box_pack_start(GTK_BOX(hboxh), label, FALSE, FALSE, 0);
 
 	treeview_swin = gtk_scrolled_window_new( NULL, NULL );
 	gtk_box_pack_start(GTK_BOX(vboxl), treeview_swin, TRUE, TRUE, 0);
