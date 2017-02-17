@@ -369,6 +369,8 @@ static gint imap_cmd_rename	(IMAPSession	*session,
 				 const gchar	*newfolder);
 static gint imap_cmd_delete	(IMAPSession	*session,
 				 const gchar	*folder);
+static gint imap_cmd_subscribe	(IMAPSession	*session,
+				 const gchar	*folder);
 static gint imap_cmd_envelope	(IMAPSession	*session,
 				 const gchar	*seq_set);
 static gint imap_cmd_search	(IMAPSession	*session,
@@ -2459,6 +2461,9 @@ static FolderItem *imap_create_folder(Folder *folder, FolderItem *parent,
 			}
 		}
 
+		g_ptr_array_free(argbuf, TRUE);
+		argbuf = NULL;
+
 		if (!exist) {
 			ok = imap_cmd_create(session, imap_path);
 			if (ok != IMAP_SUCCESS) {
@@ -2468,7 +2473,11 @@ static FolderItem *imap_create_folder(Folder *folder, FolderItem *parent,
 				return NULL;
 			}
 
-			g_ptr_array_free(argbuf, TRUE);
+			ok = imap_cmd_subscribe(session, imap_path);
+			if (ok != IMAP_SUCCESS) {
+				log_warning(_("can't subscribe mailbox\n"));
+			}
+
 			argbuf = g_ptr_array_new();
 			ok = imap_cmd_list(session, NULL, imap_path, argbuf);
 			if (ok != IMAP_SUCCESS) {
@@ -2490,9 +2499,9 @@ static FolderItem *imap_create_folder(Folder *folder, FolderItem *parent,
 					break;
 				}
 			}
+			g_ptr_array_free(argbuf, TRUE);
 		}
 
-		g_ptr_array_free(argbuf, TRUE);
 	}
 
 	new_item = folder_item_new(new_name, dirpath);
@@ -4124,6 +4133,17 @@ static gint imap_cmd_delete(IMAPSession *session, const gchar *folder)
 
 	QUOTE_IF_REQUIRED(folder_, folder);
 	if (imap_cmd_gen_send(session, "DELETE %s", folder_) != IMAP_SUCCESS)
+		return IMAP_ERROR;
+
+	return imap_cmd_ok(session, NULL);
+}
+
+static gint imap_cmd_subscribe(IMAPSession *session, const gchar *folder)
+{
+	gchar *folder_;
+
+	QUOTE_IF_REQUIRED(folder_, folder);
+	if (imap_cmd_gen_send(session, "SUBSCRIBE %s", folder_) != IMAP_SUCCESS)
 		return IMAP_ERROR;
 
 	return imap_cmd_ok(session, NULL);
