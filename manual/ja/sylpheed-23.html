@@ -3,7 +3,7 @@
 <HEAD>
  <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
  <META NAME="GENERATOR" CONTENT="LinuxDoc-Tools 0.9.69">
- <TITLE>Sylpheed ユーザーズマニュアル: 情報</TITLE>
+ <TITLE>Sylpheed ユーザーズマニュアル: FAQ</TITLE>
  <LINK HREF="sylpheed-24.html" REL=next>
  <LINK HREF="sylpheed-22.html" REL=previous>
  <LINK HREF="sylpheed.html#toc23" REL=contents>
@@ -13,76 +13,58 @@
 <A HREF="sylpheed-22.html">前のページ</A>
 <A HREF="sylpheed.html#toc23">目次へ</A>
 <HR>
-<H2><A NAME="s23">23.</A> <A HREF="sylpheed.html#toc23">情報</A></H2>
+<H2><A NAME="s23">23.</A> <A HREF="sylpheed.html#toc23">FAQ</A></H2>
 
 
-<H2><A NAME="ss23.1">23.1</A> <A HREF="sylpheed.html#toc23.1">Sylpheed 関連サイト</A>
+<H2><A NAME="ss23.1">23.1</A> <A HREF="sylpheed.html#toc23.1">ニュースのメッセージ未読情報について</A>
 </H2>
 
+<P>Q. Sylpheedでは同じMessageの未読情報を異なるフォルダ間で管理してくれないのでしょうか?</P>
 
-<H3>Sylpheed オフィシャルWebサイト</H3>
-
-<P>Sylpheed オフィシャルWebサイトの場所は、
-<A HREF="http://sylpheed.sraoss.jp/">http://sylpheed.sraoss.jp/</A>
-です。</P>
-<H3>Sylpheed 最新版入手先</H3>
-
-<P>Sylpheedの最新版は
-<A HREF="http://sylpheed.sraoss.jp/ja/download.html">http://sylpheed.sraoss.jp/ja/download.html</A> から入手できます。</P>
-
-<H2><A NAME="Sylpheed-ML"></A> <A NAME="ss23.2">23.2</A> <A HREF="sylpheed.html#toc23.2">メーリングリスト</A>
+<P>A. 現在のSylpheedは未読情報はフォルダ単位で管理しているため、
+ニュースグループごとに未読情報は独立になります。</P>
+<H2><A NAME="ss23.2">23.2</A> <A HREF="sylpheed.html#toc23.2">メニューなどのフォント変更について</A>
 </H2>
 
-<P>Sylpheed に関する全般的な話題を扱うメーリングリストです。日本語
-(
-<A HREF="sylpheed-jp@sraoss.jp">sylpheed-jp@sraoss.jp</A>) と
-英語 (
-<A HREF="sylpheed@sraoss.jp">sylpheed@sraoss.jp</A>) の2種類があります。</P>
-<P>また、リリースアナウンス専用の ML として sylpheed-announce ML (
-<A HREF="sylpheed-announce@sraoss.jp">sylpheed-announce@sraoss.jp</A>) があります。</P>
+<P>Q. メッセージ本文のフォントは
+<A HREF="sylpheed-20.html#font-config">全般の設定から変更</A>
+できましたが、サマリやメニューなどのフォントは変更できないのでしょうか?</P>
 
-<H3>参加方法</H3>
-
-<P>
-<A HREF="http://www.sraoss.jp/mailman/listinfo/">http://www.sraoss.jp/mailman/listinfo/</A> から入会したいメーリングリストを選択します。その後は指示に従ってください。</P>
-<P>投稿先は 
-<A HREF="sylpheed-jp@sraoss.jp">sylpheed-jp@sraoss.jp</A> です。</P>
-
-<H3>退会方法</H3>
-
-<P>上記のページから退会処理ができます。</P>
-<P>過去ログも上記のページから参照できます。
-以前の過去ログは
-<A HREF="http://www.tmtm.org/sylpheed/ml/">http://www.tmtm.org/sylpheed/ml/</A>から入手できます。</P>
-<H2><A NAME="ss23.3">23.3</A> <A HREF="sylpheed.html#toc23.3">Anonymous SVN</A>
-</H2>
-
-<P>Sylpheedの開発はSVNを利用して行われています。
-SVNの説明に関しては、
-<A HREF="http://subversion.bluegate.org/doc/book.html">http://subversion.bluegate.org/doc/book.html</A>などのサイトや書籍を参考にしてください。</P>
-<P>SVNから最新のSylpheedを入手するには、subversion をインストールし、svn://sylpheed.sraoss.jp/sylpheed にアクセスしてください。
+<P>A. 可能です。$HOME/.sylpheed-2.0/gtkrcファイルを作成し、内容を以下のように記述してください。
 <PRE>
-$ mkdir svn
-$ cd svn
-$ svn checkout svn://sylpheed.sraoss.jp/sylpheed/trunk sylpheed
+gtk-font-name = "Kochi Gothic 12"
 </PRE>
-
-でカレントディレクトリ以下にtrunkのソースツリーが作成されます。</P>
-<P>リポジトリの sylpheed ディレクトリ以下は次のように分かれています。
-<UL>
-<LI>trunk/ メインのツリー</LI>
-<LI>branches/ 各種実験用ブランチ</LI>
-<LI>tags/ リリースタグを付けたブランチ</LI>
-</UL>
 </P>
-<P>最新のソースツリーにアップデートするには、対象となるディレクトリで
-<PRE>
-$ svn update
-</PRE>
+<H2><A NAME="ss23.3">23.3</A> <A HREF="sylpheed.html#toc23.3">ショートカットキーのキーバインドの変更</A>
+</H2>
 
-を実行してください。</P>
-<P>Subversion ツリーには自動生成されるファイルは入っていないので、そのままでは ./configure できません。コンパイルするには、通常必要なものの他に autoconf, automake, libtool, gettext などがインストールされている必要があります。インストールされていれば、 ./autogen.sh で必要なファイルが自動生成されます。</P>
+<P>Q. ショートカットキーのキーバインドの変更はできますか?</P>
 
+<P>A. メニューに表示されている項目に関しては設定可能です。以下のいずれかの方法で設定してください。</P>
+<H3>Windowsの場合</H3>
+
+<P>Sylpheedが起動していない状態で、 C:\Users\(ユーザ名)\AppData\Roaming\Sylpheed\menurc を直接エディタで編集する。</P>
+<H3>Unix/Linuxの場合</H3>
+
+<P>Sylpheedが起動していない状態で、 ~/.sylpheed-2.0/menurc ファイルを直接エディタで編集する。</P>
+<P>また、以下の設定を行うことで、メニューで変更したい項目にカーソルを合わせてから、その部分で変更したいキーを押せば、キーを割り当てることができるようになります。また、Backspaceキーを押せば、キーバインドを消すことができます。</P>
+<H3>GNOME 2.8 以降をお使いの場合</H3>
+
+<P>アプリケーション→システムツール→設定エディタで gconf-editor を起動する。</P>
+<P>desktop → gnome → interface を選び、その中の can-change-accels をチェックする。</P>
+<H3>GNOME 2.8 以前かそれ以外の環境をお使いの場合</H3>
+
+<P>~/.gtkrc-2.0 に gtk-can-change-accels = 1 を記述する。</P>
+<H2><A NAME="ss23.4">23.4</A> <A HREF="sylpheed.html#toc23.4">サマリビューの下に表示される画像について</A>
+</H2>
+
+<P>Q. ヘッダが表示されている部分に小さな画像が表示されていますが、これは何でしょうか。
+また、どのようにしたら挿入できるのでしょうか。</P>
+<P>A. これは、X-Faceといいます。
+<A HREF="sylpheed-9.html#Account-Config">アカウントの設定</A>のユーザ定義ヘッダで、
+X-Faceヘッダフィールドに登録すれば相手側に環境があれば表示されることが可能です。</P>
+<P>
+<A HREF="http://www.dairiki.org/xface/">http://www.dairiki.org/xface/</A>のサイトで既存の画像ファイルをX-Faceフォーマットに変換することができます。</P>
 <HR>
 <A HREF="sylpheed-24.html">次のページ</A>
 <A HREF="sylpheed-22.html">前のページ</A>

@@ -3,7 +3,7 @@
 <HEAD>
  <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
  <META NAME="GENERATOR" CONTENT="LinuxDoc-Tools 0.9.69">
- <TITLE>Sylpheed ユーザーズマニュアル: 他メールソフトからSylpheedへの移行</TITLE>
+ <TITLE>Sylpheed ユーザーズマニュアル: その他の機能</TITLE>
  <LINK HREF="sylpheed-22.html" REL=next>
  <LINK HREF="sylpheed-20.html" REL=previous>
  <LINK HREF="sylpheed.html#toc21" REL=contents>
@@ -13,54 +13,32 @@
 <A HREF="sylpheed-20.html">前のページ</A>
 <A HREF="sylpheed.html#toc21">目次へ</A>
 <HR>
-<H2><A NAME="s21">21.</A> <A HREF="sylpheed.html#toc21">他メールソフトからSylpheedへの移行</A></H2>
+<H2><A NAME="s21">21.</A> <A HREF="sylpheed.html#toc21">その他の機能</A></H2>
 
-<H2><A NAME="mbox-import"></A> <A NAME="ss21.1">21.1</A> <A HREF="sylpheed.html#toc21.1">mbox形式のメッセージファイルの取り込み</A>
+<H2><A NAME="ss21.1">21.1</A> <A HREF="sylpheed.html#toc21.1">重複メッセージを削除</A>
 </H2>
 
-<P>「ファイル」メニューから「メールデータをインポート...」を選択し、
-「ファイル形式」に「UNIX mbox」、
-「インポート元」にインポートしたいmbox形式のファイルを選択します。</P>
-<P>インポート先には選択したメールボックスを展開するフォルダを指定し、OKを押せばインポートされます。</P>
-<P>Mozilla Thunderbirdや、KMailなどの、mbox形式を使用しているメールソフトからの移行が可能です。</P>
-<P>なお、取り込み可能なmboxの形式は、mboxrdと呼ばれる、本文中のFromで始まる行がすべて「>From」としてエスケープされているものに限ります。</P>
-<H2><A NAME="eml-import"></A> <A NAME="ss21.2">21.2</A> <A HREF="sylpheed.html#toc21.2">eml形式、MH形式のメッセージファイルの取り込み</A>
+<P>メニューの「ツール＞重複メッセージを削除」を選択すると、現在開いているフォルダ内の重複するメッセージを一括で削除します。</P>
+<P>メッセージが重複しているかどうかのチェックはMessage-Idにより行われます。</P>
+<H2><A NAME="ss21.2">21.2</A> <A HREF="sylpheed.html#toc21.2">分割メッセージを結合</A>
 </H2>
 
-<P>「ファイル」メニューから「メールデータをインポート...」を選択し、
-「ファイル形式」に「eml (フォルダ)」、
-「インポート元」にインポートしたいeml形式(拡張子がeml)のファイルが含まれるフォルダを選択します。</P>
-<P>インポート先には選択したメールボックスを展開するフォルダを指定し、OKを押せば、指定したフォルダ直下のすべてのemlファイルがインポートされます。</P>
-<P>なお、MH形式(連番、拡張子なし)のメールについても同様にインポートできます。</P>
-<H2><A NAME="ss21.3">21.3</A> <A HREF="sylpheed.html#toc21.3">他形式へのエクスポート</A>
+<P>サマリビューで分割して送信されたメッセージをすべて選択した状態でメニューの「ツール＞分割メッセージを結合」を選択すると、そのメッセージを結合して元の状態に復元します。</P>
+<P>対応しているメッセージ分割形式は標準の「message/partial」形式です。また、一部の分割メッセージが欠けている場合は結合できません。</P>
+<H2><A NAME="ss21.3">21.3</A> <A HREF="sylpheed.html#toc21.3">設定ファイルフォルダを開く</A>
 </H2>
 
-<P>「ファイル」メニューから「メールデータをエクスポート...」を選択し、
-「ファイル形式」に「UNIX mbox」「eml (番号 + .eml)」「MH (番号のみ)」のいずれかを選択します。</P>
-<P>「エクスポート元フォルダ」にSylpheedのエクスポート元フォルダ、「エクスポート先」に出力先のファイルまたはフォルダを指定します。</P>
-<H2><A NAME="ss21.4">21.4</A> <A HREF="sylpheed.html#toc21.4">Outlook Expressからの移行</A>
+<P>メニューの「ツール＞設定ファイルフォルダを開く」および「ツール＞添付ファイルフォルダを開く」を選択すると、それぞれSylpheedの各種設定ファイル、一時的に保存された添付ファイルを格納するフォルダを直接開くことができます。</P>
+<H2><A NAME="ss21.4">21.4</A> <A HREF="sylpheed.html#toc21.4">ログウィンドウ</A>
 </H2>
 
-<P>Sylpheed は Outlook Express のメールデータ形式(dbx)のインポートに対応しており、簡単に移行することができます。</P>
-<P>初回起動時に Outlook Express のアカウントが見つかった場合、自動的にメールデータのインポートを行います。</P>
-<P>後から手動でインポートする場合は、mbox 形式のデータの取り込みと同様、「ファイル形式」に「Outlook Express (dbx)」を選択し、 dbx ファイルを直接指定してください。</P>
-<P>また、メールデータ変換ツールを使ってインポートする方法もあります。</P>
-<P>Windows用フリーソフトウェアである
-<A HREF="http://www.tietew.net/soft/OE2/">OE2 - OutlookExpress-To</A>
-をインストールし、出力形式に「UNIX mbox」を選択してエクスポートします。</P>
-<P>次に、そのファイルを
-<A HREF="#mbox-import">インポート</A>します。</P>
-<H2><A NAME="ss21.5">21.5</A> <A HREF="sylpheed.html#toc21.5">Becky! Ver.2からの移行</A>
+<P>メニューの「ツール＞ログウィンドウ」を選択すると、メールサーバとの通信のやりとりの内容などを確認することができます。メールの送受信で問題が発生した場合などにログの内容を確認すると解決につながることがあります。</P>
+<H2><A NAME="ss21.5">21.5</A> <A HREF="sylpheed.html#toc21.5">添付ファイルを削除</A>
 </H2>
 
-<P>Becky! のメニューから「ファイル - エクスポート...」を選択し、「UNIX mbox 形式」を選択します。 「OK」ボタンを押して、保存先のファイル名を指定し、「保存」ボタンを押して保存します。</P>
-<P>次に、そのファイルを
-<A HREF="#mbox-import">インポート</A>します。</P>
-<H2><A NAME="ss21.6">21.6</A> <A HREF="sylpheed.html#toc21.6">Windows Live Mail、Windows Mailからの移行</A>
-</H2>
-
-<P>Windows Live Mail、またはVista標準添付のWindows Mailではeml形式を利用しているため、
-<A HREF="#eml-import">eml形式のインポート</A>を利用してインポートすることができます。</P>
+<P>Attachment Toolプラグインがインストールされていると、メニューの「ツール＞添付ファイルを削除」が有効になります。メールの不要な添付ファイルを削除してディスク容量を節約したい場合などに使用できます。</P>
+<P>サマリビューで添付ファイルのあるメッセージを選択した状態で「ツール＞添付ファイルを削除」を選択すると、確認ダイアログが表示されますので、「はい」を選択すると、対象のメッセージの添付ファイルが削除されます。</P>
+<P>なお、削除後の添付ファイルは0バイトのファイルとして表示されます。</P>
 <HR>
 <A HREF="sylpheed-22.html">次のページ</A>
 <A HREF="sylpheed-20.html">前のページ</A>
