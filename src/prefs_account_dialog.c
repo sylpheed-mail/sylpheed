@@ -1419,12 +1419,19 @@ static void prefs_account_compose_create(void)
 			   _("Put signature before quote (not recommended)"));
 
 	SET_TOGGLE_SENSITIVITY (sig_radiobtn, sig_text);
+	SET_TOGGLE_SENSITIVITY (sig_radiobtn, sig_combo);
+	SET_TOGGLE_SENSITIVITY (sig_radiobtn, signame_entry);
 	SET_TOGGLE_SENSITIVITY (sigfile_radiobtn, sigpath_entry);
 	SET_TOGGLE_SENSITIVITY (sigcmd_radiobtn, sigpath_entry);
 	SET_TOGGLE_SENSITIVITY_REV (sig_radiobtn, sigpath_entry);
 	SET_TOGGLE_SENSITIVITY_REV (sigfile_radiobtn, sig_text);
+	SET_TOGGLE_SENSITIVITY_REV (sigfile_radiobtn, sig_combo);
+	SET_TOGGLE_SENSITIVITY_REV (sigfile_radiobtn, signame_entry);
 	SET_TOGGLE_SENSITIVITY_REV (sigcmd_radiobtn, sig_text);
+	SET_TOGGLE_SENSITIVITY_REV (sigcmd_radiobtn, sig_combo);
+	SET_TOGGLE_SENSITIVITY_REV (sigcmd_radiobtn, signame_entry);
 	gtk_widget_set_sensitive (sig_text, TRUE);
+	gtk_widget_set_sensitive (signame_entry, TRUE);
 	gtk_widget_set_sensitive (sigpath_entry, FALSE);
 
 	PACK_FRAME (vbox1, frame,
