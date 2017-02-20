@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-07 18:40+0900\n"
+"POT-Creation-Date: 2017-02-20 13:51+0900\n"
 "PO-Revision-Date: 1999-10-12\n"
 "Last-Translator: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -27,202 +27,206 @@ msgstr "迷惑メールフィルタ (手動)"
 msgid "Junk mail filter"
 msgstr "迷惑メールフィルタ"
 
-#: libsylph/imap.c:564
+#: libsylph/imap.c:566
 #, c-format
 msgid "IMAP4 connection to %s has been disconnected. Reconnecting...\n"
 msgstr "%s へのIMAP4の接続が切れています。再接続します...\n"
 
-#: libsylph/imap.c:621 libsylph/imap.c:627
+#: libsylph/imap.c:623 libsylph/imap.c:629
 msgid "IMAP4 server disables LOGIN.\n"
 msgstr "IMAPサーバは LOGIN を無効にしています。\n"
 
-#: libsylph/imap.c:686
+#: libsylph/imap.c:688
 msgid "Could not establish IMAP connection.\n"
 msgstr "IMAP の接続を確立できませんでした。\n"
 
-#: libsylph/imap.c:705
+#: libsylph/imap.c:707
 #, c-format
 msgid "creating IMAP4 connection to %s:%d ...\n"
 msgstr "%s:%d へのIMAP4の接続を確立中...\n"
 
-#: libsylph/imap.c:758
+#: libsylph/imap.c:760
 msgid "Can't start TLS session.\n"
 msgstr "TLS セッションを開始できません。\n"
 
-#: libsylph/imap.c:905
+#: libsylph/imap.c:907
 msgid "(retrieving FLAGS...)"
 msgstr "(FLAGS を取得中...)"
 
-#: libsylph/imap.c:1296
+#: libsylph/imap.c:1298
 #, c-format
 msgid "Getting message %u"
 msgstr "メッセージ %u を取得中"
 
-#: libsylph/imap.c:1418
+#: libsylph/imap.c:1420
 #, c-format
 msgid "Appending messages to %s (%d / %d)"
 msgstr "メッセージを %s に追加しています (%d / %d)"
 
-#: libsylph/imap.c:1544
+#: libsylph/imap.c:1546
 #, c-format
 msgid "Moving messages %s to %s ..."
 msgstr "メッセージ %s を %s に移動しています..."
 
-#: libsylph/imap.c:1549
+#: libsylph/imap.c:1551
 #, c-format
 msgid "Copying messages %s to %s ..."
 msgstr "メッセージ %s を %s にコピーしています..."
 
-#: libsylph/imap.c:1691
+#: libsylph/imap.c:1693
 #, c-format
 msgid "Removing messages %s"
 msgstr "メッセージ %s を削除しています"
 
-#: libsylph/imap.c:1697
+#: libsylph/imap.c:1699
 #, c-format
 msgid "can't set deleted flags: %s\n"
 msgstr "deleted フラグをセットできません: %s\n"
 
-#: libsylph/imap.c:1705 libsylph/imap.c:1811
+#: libsylph/imap.c:1707 libsylph/imap.c:1813
 msgid "can't expunge\n"
 msgstr "expunge できません\n"
 
-#: libsylph/imap.c:1795
+#: libsylph/imap.c:1797
 #, c-format
 msgid "Removing all messages in %s"
 msgstr "%s のすべてのメッセージを削除しています"
 
-#: libsylph/imap.c:1800 libsylph/imap.c:1805
+#: libsylph/imap.c:1802 libsylph/imap.c:1807
 msgid "can't set deleted flags: 1:*\n"
 msgstr "deleted フラグをセットできません: 1:*\n"
 
-#: libsylph/imap.c:1856
+#: libsylph/imap.c:1858
 msgid "can't close folder\n"
 msgstr "フォルダをクローズできません\n"
 
-#: libsylph/imap.c:1935
+#: libsylph/imap.c:1937
 #, c-format
 msgid "root folder %s not exist\n"
 msgstr "ルートフォルダ %s が存在しません\n"
 
-#: libsylph/imap.c:2135 libsylph/imap.c:2143
+#: libsylph/imap.c:2137 libsylph/imap.c:2145
 msgid "error occurred while getting LIST.\n"
 msgstr "LIST の取得中にエラーが発生しました。\n"
 
-#: libsylph/imap.c:2375
+#: libsylph/imap.c:2377
 #, c-format
 msgid "Can't create '%s'\n"
 msgstr "'%s' を作成できません。\n"
 
-#: libsylph/imap.c:2380
+#: libsylph/imap.c:2382
 #, c-format
 msgid "Can't create '%s' under INBOX\n"
 msgstr "INBOX の下に '%s' を作成できません。\n"
 
-#: libsylph/imap.c:2442
+#: libsylph/imap.c:2444
 msgid "can't create mailbox: LIST failed\n"
 msgstr "メールボックスを作成できません: LIST に失敗\n"
 
-#: libsylph/imap.c:2465
+#: libsylph/imap.c:2470
 msgid "can't create mailbox\n"
 msgstr "メールボックスを作成できません\n"
 
-#: libsylph/imap.c:2594
+#: libsylph/imap.c:2478
+msgid "can't subscribe mailbox\n"
+msgstr "メールボックスを購読できません\n"
+
+#: libsylph/imap.c:2603
 #, c-format
 msgid "can't rename mailbox: %s to %s\n"
 msgstr "メールボックスを名称変更できません: %s -> %s\n"
 
-#: libsylph/imap.c:2683
+#: libsylph/imap.c:2692
 msgid "can't delete mailbox\n"
 msgstr "メールボックスを削除できません\n"
 
-#: libsylph/imap.c:2713
+#: libsylph/imap.c:2722
 #, c-format
 msgid "Getting message headers (%d / %d)"
 msgstr "メッセージのヘッダを取得中 (%d / %d)"
 
-#: libsylph/imap.c:2765
+#: libsylph/imap.c:2774
 msgid "error occurred while getting envelope.\n"
 msgstr "エンベロープを取得中にエラーが発生しました。\n"
 
-#: libsylph/imap.c:2786
+#: libsylph/imap.c:2795
 #, c-format
 msgid "can't parse envelope: %s\n"
 msgstr "エンベロープを解析できません: %s\n"
 
-#: libsylph/imap.c:2843
+#: libsylph/imap.c:2852
 msgid "can't get envelope\n"
 msgstr "エンベロープを取得できません\n"
 
-#: libsylph/imap.c:2963 libsylph/imap.c:2969
+#: libsylph/imap.c:2972 libsylph/imap.c:2978
 #, c-format
 msgid "Can't connect to IMAP4 server: %s:%d\n"
 msgstr "IMAP4 サーバ: %s:%d に接続できません\n"
 
-#: libsylph/imap.c:2986
+#: libsylph/imap.c:2995
 #, c-format
 msgid "Can't establish IMAP4 session with: %s:%d\n"
 msgstr "%s:%d との IMAP4 セッションを確立できません\n"
 
-#: libsylph/imap.c:3061
+#: libsylph/imap.c:3070
 msgid "can't get namespace\n"
 msgstr "namespace を取得できません\n"
 
-#: libsylph/imap.c:3685
+#: libsylph/imap.c:3694
 #, c-format
 msgid "can't select folder: %s\n"
 msgstr "フォルダ %s を選択できません\n"
 
-#: libsylph/imap.c:3723
+#: libsylph/imap.c:3732
 msgid "error on imap command: STATUS\n"
 msgstr "imap コマンド中のエラー: STATUS\n"
 
-#: libsylph/imap.c:3847 libsylph/imap.c:3882
+#: libsylph/imap.c:3856 libsylph/imap.c:3891
 msgid "IMAP4 authentication failed.\n"
 msgstr "IMAP4 の認証に失敗しました。\n"
 
-#: libsylph/imap.c:3935
+#: libsylph/imap.c:3944
 msgid "IMAP4 login failed.\n"
 msgstr "IMAP4のログインに失敗しました。\n"
 
-#: libsylph/imap.c:4344 libsylph/imap.c:4351
+#: libsylph/imap.c:4364 libsylph/imap.c:4371
 #, c-format
 msgid "can't append %s to %s\n"
 msgstr "%s を %s に追加できません\n"
 
-#: libsylph/imap.c:4358
+#: libsylph/imap.c:4378
 msgid "(sending file...)"
 msgstr "(ファイルを送信中...)"
 
-#: libsylph/imap.c:4387
+#: libsylph/imap.c:4407
 #, c-format
 msgid "can't append message to %s\n"
 msgstr "メッセージを %s に追加できません\n"
 
-#: libsylph/imap.c:4419
+#: libsylph/imap.c:4439
 #, c-format
 msgid "can't copy %s to %s\n"
 msgstr "%s を %s にコピーできません\n"
 
-#: libsylph/imap.c:4442
+#: libsylph/imap.c:4462
 #, c-format
 msgid "error while imap command: STORE %s %s\n"
 msgstr "imap コマンド中のエラー: STORE %s %s\n"
 
-#: libsylph/imap.c:4458
+#: libsylph/imap.c:4478
 msgid "error while imap command: EXPUNGE\n"
 msgstr "imap コマンド中のエラー: EXPUNGE\n"
 
-#: libsylph/imap.c:4473
+#: libsylph/imap.c:4493
 msgid "error while imap command: CLOSE\n"
 msgstr "imap コマンド中のエラー: CLOSE\n"
 
-#: libsylph/imap.c:4794
+#: libsylph/imap.c:4814
 #, c-format
 msgid "iconv cannot convert UTF-7 to %s\n"
 msgstr "iconv が UTF-7 を %s に変換できません\n"
 
-#: libsylph/imap.c:4826
+#: libsylph/imap.c:4846
 #, c-format
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "iconv が %s を UTF-7 に変換できません\n"
@@ -691,7 +695,7 @@ msgstr ""
 
 #: src/account_dialog.c:376 src/addressadd.c:181 src/addressbook.c:776
 #: src/compose.c:5517 src/editaddress.c:777 src/editaddress.c:826
-#: src/editbook.c:198 src/editgroup.c:266 src/editjpilot.c:270
+#: src/editbook.c:198 src/editgroup.c:490 src/editjpilot.c:270
 #: src/editldap.c:307 src/editvcard.c:183 src/mimeview.c:226
 #: src/prefs_filter.c:274 src/prefs_folder_item.c:171 src/select-keys.c:313
 msgid "Name"
@@ -831,7 +835,7 @@ msgid "Address"
 msgstr "アドレス"
 
 #: src/addressadd.c:201 src/addressbook.c:832 src/editaddress.c:629
-#: src/editaddress.c:695 src/editgroup.c:268 src/importcsv.c:126
+#: src/editaddress.c:695 src/editgroup.c:492 src/importcsv.c:126
 msgid "Remarks"
 msgstr "備考"
 
@@ -2001,7 +2005,7 @@ msgid "Nick Name"
 msgstr "ニックネーム"
 
 #: src/editaddress.c:627 src/editaddress.c:677 src/editaddress.c:887
-#: src/editgroup.c:267 src/importcsv.c:125
+#: src/editgroup.c:491 src/importcsv.c:125
 msgid "E-Mail Address"
 msgstr "電子メール アドレス"
 
@@ -2067,62 +2071,62 @@ msgstr "ファイル"
 msgid "Add New Address Book"
 msgstr "新規アドレス帳を追加"
 
-#: src/editgroup.c:107
+#: src/editgroup.c:110
 msgid "A Group Name must be supplied."
 msgstr "グループ名を指定する必要があります。"
 
-#: src/editgroup.c:272
+#: src/editgroup.c:496
 msgid "Edit Group Data"
 msgstr "グループデータの編集"
 
-#: src/editgroup.c:302
+#: src/editgroup.c:526
 msgid "Group Name"
 msgstr "グループ名"
 
-#: src/editgroup.c:319
+#: src/editgroup.c:543
 msgid "Available Addresses"
 msgstr "利用可能なアドレス"
 
-#: src/editgroup.c:347 src/prefs_display_items.c:184
+#: src/editgroup.c:625 src/prefs_display_items.c:184
 #: src/prefs_summary_column.c:253
 msgid "  ->  "
 msgstr "  →  "
 
-#: src/editgroup.c:350 src/prefs_display_items.c:188
+#: src/editgroup.c:628 src/prefs_display_items.c:188
 #: src/prefs_summary_column.c:257
 msgid "  <-  "
 msgstr "  ←  "
 
-#: src/editgroup.c:359
+#: src/editgroup.c:637
 msgid "Addresses in Group"
 msgstr "グループのアドレス"
 
-#: src/editgroup.c:429
+#: src/editgroup.c:749
 msgid "Move E-Mail Addresses to or from Group with arrow buttons"
 msgstr "矢印ボタンで電子メールアドレスをグループに(から)移動"
 
-#: src/editgroup.c:481
+#: src/editgroup.c:811
 msgid "Edit Group Details"
 msgstr "グループの詳細の編集"
 
-#: src/editgroup.c:484
+#: src/editgroup.c:814
 msgid "Add New Group"
 msgstr "新規グループの追加"
 
-#: src/editgroup.c:537
+#: src/editgroup.c:871
 msgid "Edit folder"
 msgstr "フォルダの編集"
 
-#: src/editgroup.c:537
+#: src/editgroup.c:871
 msgid "Input the new name of folder:"
 msgstr "フォルダの新しい名前を入力してください:"
 
-#: src/editgroup.c:540 src/foldersel.c:602 src/folderview.c:2453
+#: src/editgroup.c:874 src/foldersel.c:602 src/folderview.c:2453
 #: src/folderview.c:2459
 msgid "New folder"
 msgstr "新規フォルダ"
 
-#: src/editgroup.c:541 src/foldersel.c:603 src/folderview.c:2460
+#: src/editgroup.c:875 src/foldersel.c:603 src/folderview.c:2460
 msgid "Input the name of new folder:"
 msgstr "新規フォルダの名前を入力してください:"
 
@@ -4880,7 +4884,7 @@ msgstr "NNTPサーバが入力されていません。"
 msgid "Specified folder is not a queue folder."
 msgstr "指定したフォルダは送信待ちフォルダではありません。"
 
-#: src/prefs_account_dialog.c:2396
+#: src/prefs_account_dialog.c:2392
 msgid ""
 "It's not recommended to use the old style ASCII-armored\n"
 "mode for encrypted messages. It doesn't comply with the\n"
