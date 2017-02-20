@@ -46,8 +46,8 @@
 #define ADDRESSBOOK_GUESS_FOLDER_NAME	"NewFolder"
 #define ADDRESSBOOK_GUESS_GROUP_NAME	"NewGroup"
 
-#define EDITGROUP_WIDTH      600
-#define EDITGROUP_HEIGHT     340
+#define EDITGROUP_WIDTH      680
+#define EDITGROUP_HEIGHT     380
 
 typedef enum {
 	GROUP_COL_NAME,
