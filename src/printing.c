@@ -430,6 +430,100 @@ static void draw_page(GtkPrintOperation *operation, GtkPrintContext *context,
 	g_object_unref(layout);
 }
 
+static gboolean printing_load_settings(void)
+{
+	gchar *file;
+	GtkPrintSettings *new_settings;
+
+	debug_print("printing_load_settings: load settings\n");
+
+	file = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, "printingrc", NULL);
+	if (!is_file_exist(file)) {
+		debug_print("printing_load_settings: %s not exist\n", file);
+		g_free(file);
+		return FALSE;
+	}
+
+	if ((new_settings = gtk_print_settings_new_from_file(file, NULL)) == NULL) {
+		g_warning("printing_load_settings: gtk_print_settings_new_from_file: %s: error", file);
+		g_free(file);
+		return FALSE;
+	}
+	g_free(file);
+
+	if (settings)
+		g_object_unref(settings);
+	settings = new_settings;
+
+	return TRUE;
+}
+
+static gboolean printing_save_settings(void)
+{
+	gchar *file;
+	gboolean ret = TRUE;
+
+	g_return_val_if_fail(settings != NULL, FALSE);
+
+	debug_print("printing_save_settings: save settings\n");
+
+	file = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, "printingrc", NULL);
+	if (gtk_print_settings_to_file(settings, file, NULL) != TRUE) {
+		g_warning("printing_save_settings: gtk_print_settings_to_file: %s: error", file);
+		ret = FALSE;
+	}
+	g_free(file);
+
+	return ret;
+}
+
+static gboolean printing_load_page_setup(void)
+{
+	gchar *file;
+	GtkPageSetup *new_setup;
+
+	debug_print("printing_load_page_setup: load page setup\n");
+
+	file = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, "pagesetuprc", NULL);
+	if (!is_file_exist(file)) {
+		debug_print("printing_load_page_setup: %s not exist\n", file);
+		g_free(file);
+		return FALSE;
+	}
+
+	if ((new_setup = gtk_page_setup_new_from_file(file, NULL)) == NULL) {
+		g_warning("printing_load_page_setup: gtk_page_setup_new_from_file: %s: error", file);
+		g_free(file);
+		return FALSE;
+	}
+	g_free(file);
+
+	if (page_setup)
+		g_object_unref(page_setup);
+	page_setup = new_setup;
+
+	return TRUE;
+}
+
+static gboolean printing_save_page_setup(void)
+{
+	gchar *file;
+	gboolean ret = TRUE;
+
+	g_return_val_if_fail(page_setup != NULL, FALSE);
+
+	debug_print("printing_save_page_setup: save page setup\n");
+
+	file = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, "pagesetuprc", NULL);
+	if (gtk_page_setup_to_file(page_setup, file, NULL) != TRUE) {
+		g_warning("printing_save_page_setup: gtk_page_setup_to_file: %s: error", file);
+		ret = FALSE;
+	}
+	g_free(file);
+
+	return ret;
+}
+
 gint printing_print_messages_gtk(GSList *mlist, MimeInfo *partinfo,
 				 gboolean all_headers)
 {
@@ -468,8 +562,12 @@ gint printing_print_messages_gtk(GSList *mlist, MimeInfo *partinfo,
 			 print_data);
 	g_signal_connect(op, "draw-page", G_CALLBACK(draw_page), print_data);
 
+	if (!settings)
+		printing_load_settings();
 	if (settings)
 		gtk_print_operation_set_print_settings(op, settings);
+	if (!page_setup)
+		printing_load_page_setup();
 	if (page_setup)
 		gtk_print_operation_set_default_page_setup(op, page_setup);
 
@@ -478,11 +576,10 @@ gint printing_print_messages_gtk(GSList *mlist, MimeInfo *partinfo,
 		 GTK_WINDOW(main_window_get()->window), NULL);
 
 	if (res == GTK_PRINT_OPERATION_RESULT_APPLY) {
-		debug_print("save settings\n");
 		if (settings)
 			g_object_unref(settings);
-		settings = g_object_ref
-			(gtk_print_operation_get_print_settings(op));
+		settings = g_object_ref(gtk_print_operation_get_print_settings(op));
+		printing_save_settings();
 	}
 
 	g_object_unref(op);
@@ -515,16 +612,21 @@ void printing_page_setup_gtk(void)
 {
 	GtkPageSetup *new_page_setup;
 
-	if (settings == NULL)
+	if (!settings)
+		printing_load_settings();
+	if (!settings)
 		settings = gtk_print_settings_new();
+	if (!page_setup)
+		printing_load_page_setup();
 
 	new_page_setup = gtk_print_run_page_setup_dialog
 		(GTK_WINDOW(main_window_get()->window), page_setup, settings);
 
 	if (page_setup)
 		g_object_unref(page_setup);
-
 	page_setup = new_page_setup;
+
+	printing_save_page_setup();
 }
 
 #endif /* GTK_CHECK_VERSION(2, 10, 0) */
