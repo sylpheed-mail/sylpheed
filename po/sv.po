@@ -3,27 +3,28 @@
 # Joakim Andreasson <joakim.andreasson@gmx.net>, 2001
 # Mattias Ostergren <spikboll@gmx.net>, 2004
 # Roger Lindmark <roger.lindmark@bredband.net>, 2005
+# Andreas Rönnquist <gusnan@openmailbox.org>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-20 13:51+0900\n"
-"PO-Revision-Date: 2004-12-05 14:40+0100\n"
-"Last-Translator: Roger Lindmark <roger.lindmark@bredband.net>\n"
+"POT-Creation-Date: 2017-06-09 17:46+0900\n"
+"PO-Revision-Date: 2017-03-29 12:20+0100\n"
+"Last-Translator: Andreas Rönnquist <gusnan@openmailbox.org>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.10\n"
 
 #: libsylph/account.c:55
 msgid "Reading all config for each account...\n"
 msgstr "Läser all konfiguration för varje konto...\n"
 
 #: libsylph/filter.c:1643
-#, fuzzy
 msgid "Junk mail filter (manual)"
-msgstr "Skräppostfilter"
+msgstr "Skräppostfilter (manuellt)"
 
 #: libsylph/filter.c:1646
 msgid "Junk mail filter"
@@ -39,9 +40,8 @@ msgid "IMAP4 server disables LOGIN.\n"
 msgstr "IMAP-server stänger av LOGIN.\n"
 
 #: libsylph/imap.c:688
-#, fuzzy
 msgid "Could not establish IMAP connection.\n"
-msgstr "Kan inte skapa IMAP4-session med: %s:%d\n"
+msgstr "Kunde inte etablera IMAP-anslutning.\n"
 
 #: libsylph/imap.c:707
 #, c-format
@@ -54,12 +54,12 @@ msgstr "Kan inte starta TLS-session.\n"
 
 #: libsylph/imap.c:907
 msgid "(retrieving FLAGS...)"
-msgstr ""
+msgstr "(hämtar FLAGS...)"
 
 #: libsylph/imap.c:1298
-#, fuzzy, c-format
+#, c-format
 msgid "Getting message %u"
-msgstr "Hämtar meddelande %d"
+msgstr "Hämtar meddelande %u"
 
 #: libsylph/imap.c:1420
 #, c-format
@@ -131,9 +131,8 @@ msgid "can't create mailbox\n"
 msgstr "kan inte skapa brevlåda\n"
 
 #: libsylph/imap.c:2478
-#, fuzzy
 msgid "can't subscribe mailbox\n"
-msgstr "kan inte skapa brevlåda\n"
+msgstr "Kan inte prenumerera på brevlåda\n"
 
 #: libsylph/imap.c:2603
 #, c-format
@@ -322,9 +321,9 @@ msgid "the src folder is identical to the dest.\n"
 msgstr "ursprungsmappen är identisk med dest.\n"
 
 #: libsylph/mh.c:828
-#, fuzzy, c-format
+#, c-format
 msgid "Copying message %s/%d to %s ...\n"
-msgstr "Kopierar meddelande %s%c%d till %s...\n"
+msgstr "Kopierar meddelande %s/%d till %s...\n"
 
 #: libsylph/mh.c:1195 libsylph/mh.c:1208 src/main.c:197
 #, c-format
@@ -459,9 +458,8 @@ msgid "Timestamp syntax error in greeting\n"
 msgstr "Syntaxfel på tidsmarkering i hälsning\n"
 
 #: libsylph/pop.c:171
-#, fuzzy
 msgid "Invalid timestamp in greeting\n"
-msgstr "Nödvändig APOP-tidsmarkering inte funnen i hälsning\n"
+msgstr "Ogiltig tidsstämpel i hälsning\n"
 
 #: libsylph/pop.c:199 libsylph/pop.c:226
 msgid "POP3 protocol error\n"
@@ -675,14 +673,12 @@ msgid "Opening account edit window...\n"
 msgstr "Öppnar kontoredigeringsfönstret...\n"
 
 #: src/account_dialog.c:191
-#, fuzzy
 msgid "Creating folder tree. Please wait..."
-msgstr "Skapar mappvy...\n"
+msgstr "Skapar mappträdet. Var vänlig vänta..."
 
 #: src/account_dialog.c:193
-#, fuzzy
 msgid "Creation of the folder tree failed."
-msgstr "Uppdatering av mappträdet misslyckades."
+msgstr "Skapande av mappträdet misslyckades."
 
 #: src/account_dialog.c:296
 msgid "Creating account edit window...\n"
@@ -852,9 +848,8 @@ msgid "Select Address Book Folder"
 msgstr "Välj adressboksmapp"
 
 #: src/addressadd.c:316 src/addressbook.c:1074 src/addressbook.c:3555
-#, fuzzy
 msgid "Auto-registered address"
-msgstr "Registrerade mallar"
+msgstr "Auto-registrerad adress"
 
 #: src/addressbook.c:405 src/compose.c:583 src/mainwindow.c:558
 #: src/messageview.c:166
@@ -874,9 +869,8 @@ msgid "/_File/New _JPilot"
 msgstr "/_Arkiv/Ny _JPilot"
 
 #: src/addressbook.c:412
-#, fuzzy
 msgid "/_File/New _LDAP Server"
-msgstr "/_Arkiv/Ny _Server"
+msgstr "/_Arkiv/Ny _LDAP-server"
 
 #: src/addressbook.c:414 src/addressbook.c:417 src/compose.c:588
 #: src/compose.c:593 src/compose.c:596 src/compose.c:599 src/mainwindow.c:576
@@ -937,19 +931,16 @@ msgid "/_Address/---"
 msgstr "/A_dress/---"
 
 #: src/addressbook.c:430
-#, fuzzy
 msgid "/_Address/Add _to recipient"
-msgstr "/_A_dress/_Ta bort"
+msgstr "/_A_dress/Lägg _till i mottagarlista"
 
 #: src/addressbook.c:432
-#, fuzzy
 msgid "/_Address/Add to _Cc"
-msgstr "/A_dress/_Redigera"
+msgstr "/A_dress/Lägg till i _Cc"
 
 #: src/addressbook.c:434
-#, fuzzy
 msgid "/_Address/Add to _Bcc"
-msgstr "/A_dress/_Redigera"
+msgstr "/A_dress/Lägg till i _Bcc"
 
 #: src/addressbook.c:437
 msgid "/_Address/_Edit"
@@ -969,9 +960,8 @@ msgid "/_Tools/Import _LDIF file"
 msgstr "/V_erktyg/Importera _LDIF-fil"
 
 #: src/addressbook.c:442
-#, fuzzy
 msgid "/_Tools/Import _CSV file"
-msgstr "/V_erktyg/Importera _LDIF-fil"
+msgstr "/V_erktyg/Importera _CSV-fil"
 
 #: src/addressbook.c:444 src/compose.c:742 src/mainwindow.c:904
 #: src/messageview.c:319
@@ -1014,25 +1004,23 @@ msgstr "/_Ta bort"
 
 #: src/addressbook.c:478
 msgid "/Add _to recipient"
-msgstr ""
+msgstr "/Lägg till i mottagarlista"
 
 #: src/addressbook.c:480
 msgid "/Add t_o Cc"
-msgstr ""
+msgstr "/Lägg till i Cc"
 
 #: src/addressbook.c:482
 msgid "/Add to _Bcc"
-msgstr ""
+msgstr "/Lägg till i _Bcc"
 
 #: src/addressbook.c:488
-#, fuzzy
 msgid "/_Copy"
-msgstr "/_Kopiera..."
+msgstr "/_Kopiera"
 
 #: src/addressbook.c:489
-#, fuzzy
 msgid "/_Paste"
-msgstr "/_Redigera/Klistra _in"
+msgstr "/Klistra _in"
 
 #: src/addressbook.c:614 src/prefs_common_dialog.c:2838 src/prefs_toolbar.c:90
 msgid "Address book"
@@ -1040,7 +1028,7 @@ msgstr "Adressbok"
 
 #. special folder setting (maybe these options are redundant)
 #: src/addressbook.c:687 src/addressbook.c:4258 src/folderview.c:398
-#: src/prefs_account_dialog.c:2070 src/query_search.c:401
+#: src/prefs_account_dialog.c:2077 src/query_search.c:401
 msgid "Folder"
 msgstr "Mapp"
 
@@ -1049,9 +1037,8 @@ msgid "E-Mail address"
 msgstr "E-postadress"
 
 #: src/addressbook.c:875 src/quick_search.c:128
-#, fuzzy
 msgid "Search:"
-msgstr "Sök"
+msgstr "Sök:"
 
 #: src/addressbook.c:913 src/compose.c:3364 src/headerview.c:57
 #: src/prefs_folder_item.c:340 src/prefs_template.c:200
@@ -1084,12 +1071,10 @@ msgid "Add"
 msgstr "Lägg till"
 
 #: src/addressbook.c:948 src/prefs_toolbar.c:80
-#, fuzzy
 msgid "Search"
 msgstr "Sök"
 
 #: src/addressbook.c:951
-#, fuzzy
 msgid "_Close"
 msgstr "Stäng"
 
@@ -1174,25 +1159,25 @@ msgstr ""
 "och kunde inte skapa nya adressboksfiler."
 
 #: src/addressbook.c:3351
-#, fuzzy
 msgid "Address book conversion error"
-msgstr "Fel vid konvertering av adressbok"
+msgstr "Adressbokskonverteringsfel"
 
 #: src/addressbook.c:3355
-#, fuzzy
 msgid "Address book conversion"
 msgstr "Adressbokskonvertering"
 
 #: src/addressbook.c:3394
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Could not read address index:\n"
 "\n"
 "%s%c%s"
-msgstr "Kunde inte läsa adressindex"
+msgstr ""
+"Kunde inte läsa adressindex:\n"
+"\n"
+"%s%c%s"
 
 #: src/addressbook.c:3397
-#, fuzzy
 msgid "Address Book Error"
 msgstr "Adressboksfel"
 
@@ -1222,12 +1207,10 @@ msgid "Could not read address index"
 msgstr "Kunde inte läsa adressindex"
 
 #: src/addressbook.c:3502
-#, fuzzy
 msgid "Address Book Conversion Error"
-msgstr "Fel vid konvertering av adressbok"
+msgstr "Adressbokskonverteringsfel"
 
 #: src/addressbook.c:3508
-#, fuzzy
 msgid "Address Book Conversion"
 msgstr "Adressbokskonvertering"
 
@@ -1373,9 +1356,8 @@ msgid "/_File/Insert si_gnature"
 msgstr "/_Arkiv/Infoga si_gnatur"
 
 #: src/compose.c:598
-#, fuzzy
 msgid "/_File/A_ppend signature"
-msgstr "/_Arkiv/Infoga si_gnatur"
+msgstr "/_Arkiv/Bifoga si_gnatur"
 
 #: src/compose.c:603
 msgid "/_Edit/_Undo"
@@ -1432,7 +1414,6 @@ msgid "/_View/_Bcc"
 msgstr "/_Visa/_Dold kopia"
 
 #: src/compose.c:622
-#, fuzzy
 msgid "/_View/_Reply-To"
 msgstr "/_Visa/_Svara till"
 
@@ -1444,7 +1425,6 @@ msgid "/_View/---"
 msgstr "/_Visa/---"
 
 #: src/compose.c:624
-#, fuzzy
 msgid "/_View/_Followup-To"
 msgstr "/_Visa/_Följ upp till"
 
@@ -1457,9 +1437,8 @@ msgid "/_View/_Attachment"
 msgstr "/_Visa/_Bilagor"
 
 #: src/compose.c:630
-#, fuzzy
 msgid "/_View/Cu_stomize toolbar..."
-msgstr "/_Visa/_Gå till/_En annan mapp..."
+msgstr "/_Visa/Anpa_ssa verktygsrad..."
 
 #: src/compose.c:638 src/mainwindow.c:691 src/messageview.c:190
 msgid "/_View/Character _encoding"
@@ -1506,23 +1485,20 @@ msgid "/_View/Character _encoding/Baltic (ISO-8859-_4)"
 msgstr "/_Visa/_Teckenkodning/Baltisk (ISO-8859-_4)"
 
 #: src/compose.c:663 src/mainwindow.c:717 src/messageview.c:214
-#, fuzzy
 msgid "/_View/Character _encoding/Baltic (Windows-1257)"
-msgstr "/_Visa/_Teckenkodning/Kyrillisk (Windows-1251)"
+msgstr "/_Visa/_Teckenkodning/Baltisk (Windows-1257)"
 
 #: src/compose.c:667 src/mainwindow.c:721 src/messageview.c:217
 msgid "/_View/Character _encoding/Greek (ISO-8859-_7)"
 msgstr "/_Visa/_Teckenkodning/Grekisk (ISO-8859-_7)"
 
 #: src/compose.c:671 src/mainwindow.c:725 src/messageview.c:220
-#, fuzzy
 msgid "/_View/Character _encoding/Arabic (ISO-8859-_6)"
-msgstr "/_Visa/_Teckenkodning/Baltisk (ISO-8859-_4)"
+msgstr "/_Visa/_Teckenkodning/Arabisk (ISO-8859-_6)"
 
 #: src/compose.c:673 src/mainwindow.c:727 src/messageview.c:222
-#, fuzzy
 msgid "/_View/Character _encoding/Arabic (Windows-1256)"
-msgstr "/_Visa/_Teckenkodning/Kyrillisk (Windows-1251)"
+msgstr "/_Visa/_Teckenkodning/Arabisk (Windows-1256)"
 
 #: src/compose.c:677 src/mainwindow.c:731 src/messageview.c:225
 msgid "/_View/Character _encoding/Hebrew (ISO-8859-_8)"
@@ -1605,7 +1581,7 @@ msgstr "/V_erktyg/Redigera med e_xtern redigerare"
 
 #: src/compose.c:728
 msgid "/_Tools/Request _disposition notification"
-msgstr ""
+msgstr "/V_erktyg/Begär hanteringsbekräftelse"
 
 #: src/compose.c:732
 msgid "/_Tools/PGP Si_gn"
@@ -1616,14 +1592,12 @@ msgid "/_Tools/PGP _Encrypt"
 msgstr "/V_erktyg/_Kryptera"
 
 #: src/compose.c:738
-#, fuzzy
 msgid "/_Tools/_Check spell"
-msgstr "/V_erktyg/Utför _köade åtgärder"
+msgstr "/V_erktyg/Kontrollera stavning"
 
 #: src/compose.c:739
-#, fuzzy
 msgid "/_Tools/_Set spell language"
-msgstr "/V_erktyg/_Mall"
+msgstr "/V_erktyg/_Sätt språk för stavningskontroll"
 
 #: src/compose.c:1022
 #, c-format
@@ -1682,9 +1656,9 @@ msgid "%s - Compose%s"
 msgstr "%s - Skriv%s"
 
 #: src/compose.c:2993 src/compose.c:6129 src/prefs_account_dialog.c:1352
-#, fuzzy, c-format
+#, c-format
 msgid "Signature %d"
-msgstr "Signatur"
+msgstr "Signatur %d"
 
 #: src/compose.c:3059
 msgid "Recipient is not specified."
@@ -1699,22 +1673,20 @@ msgid "Subject is empty. Send it anyway?"
 msgstr "Ämnesraden är tom. Skicka ändå?"
 
 #: src/compose.c:3132
-#, fuzzy
 msgid "Attachment is missing"
-msgstr "Bilagor"
+msgstr "Bilaga saknas"
 
 #: src/compose.c:3133
 msgid "There is no attachment. Send it without attachments?"
-msgstr ""
+msgstr "Det finns ingen bilaga. Skicka utan bilagor?"
 
 #: src/compose.c:3250 src/compose.c:3276
 msgid "Check recipients"
-msgstr ""
+msgstr "Kontrollera mottagare"
 
 #: src/compose.c:3296
-#, fuzzy
 msgid "Really send this mail to the following addresses?"
-msgstr "Sätt automatiskt följande adresser"
+msgstr "Verkligen skicka detta e-brev till följande adresser?"
 
 #: src/compose.c:3309 src/compose.c:5377 src/headerview.c:56
 msgid "From:"
@@ -1725,16 +1697,16 @@ msgid "Subject:"
 msgstr "Ämne:"
 
 #: src/compose.c:3424
-#, fuzzy
 msgid "_Send"
-msgstr "Skicka"
+msgstr "_Skicka"
 
 #: src/compose.c:3454
-#, fuzzy
 msgid ""
 "Checking for new messages is currently running.\n"
 "Please try again later."
-msgstr "Letar efter nya meddelanden i alla mappar..."
+msgstr ""
+"Kontroll efter nya meddelanden körs för närvarande.\n"
+"Vänligen försök igen senare."
 
 #: src/compose.c:3590
 msgid "can't get recipient list."
@@ -1758,6 +1730,7 @@ msgid ""
 "Sending of message was completed, but the message could not be saved to "
 "outbox."
 msgstr ""
+"Meddelandet skickades, men det kunde inte sparas till ut skickat-mappen."
 
 #: src/compose.c:3743
 #, c-format
@@ -1766,19 +1739,16 @@ msgstr ""
 "Kunde inte hitta någon nyckel associerad med nu aktiva nyckel-ID \"%s\"."
 
 #: src/compose.c:3786 src/compose.c:4180
-#, fuzzy
 msgid "Can't sign the message."
-msgstr "Kan inte lägga meddelandet i kö."
+msgstr "Kan inte signera meddelandet."
 
 #: src/compose.c:3816 src/compose.c:4231
-#, fuzzy
 msgid "Can't encrypt the message."
-msgstr "Kan inte lägga meddelandet i kö."
+msgstr "Kan inte kryptera meddelandet."
 
 #: src/compose.c:3855 src/compose.c:4225
-#, fuzzy
 msgid "Can't encrypt or sign the message."
-msgstr "Kan inte lägga meddelandet i kö."
+msgstr "Kan inte kryptera eller signera meddelandet."
 
 #: src/compose.c:3903 src/compose.c:4262 src/compose.c:4325 src/compose.c:4445
 msgid "can't change file mode\n"
@@ -1818,7 +1788,7 @@ msgstr "Radlängdsbegränsning"
 
 #: src/compose.c:4199
 msgid "Encrypting with Bcc"
-msgstr ""
+msgstr "Kryptering med Bcc"
 
 #: src/compose.c:4200
 msgid ""
@@ -1828,6 +1798,11 @@ msgid ""
 "\n"
 "Send it anyway?"
 msgstr ""
+"Detta meddelande har Bcc-mottagare. Om detta meddelande krypteras kommar "
+"alla Bcc-mottagare att var synliga genom att undersöka "
+"krypteringsnyckellistan, vilket leder till förlust av sekretess.\n"
+"\n"
+"Skicka ändå?"
 
 #: src/compose.c:4405
 msgid "can't remove the old message\n"
@@ -1846,14 +1821,14 @@ msgid "can't queue the message\n"
 msgstr "kan inte lägga meddelandet i kö\n"
 
 #: src/compose.c:4563
-#, fuzzy, c-format
+#, c-format
 msgid "File %s doesn't exist."
-msgstr "Filen %s finns inte\n"
+msgstr "Filen %s finns inte."
 
 #: src/compose.c:4572
-#, fuzzy, c-format
+#, c-format
 msgid "Can't open file %s."
-msgstr "Kan inte öppna markeringsfil.\n"
+msgstr "Kan inte öppna filen %s."
 
 #: src/compose.c:5324
 msgid "Creating compose window...\n"
@@ -1861,16 +1836,15 @@ msgstr "Skapar skrivfönster...\n"
 
 #: src/compose.c:5457
 msgid "PGP Sign"
-msgstr "PGP Tecken"
+msgstr "PGP Signera"
 
 #: src/compose.c:5460
 msgid "PGP Encrypt"
 msgstr "PGP Kryptera"
 
 #: src/compose.c:5498 src/mimeview.c:209
-#, fuzzy
 msgid "Data type"
-msgstr "Datum"
+msgstr "Datatyp"
 
 #. S_COL_DATE
 #: src/compose.c:5507 src/mimeview.c:217 src/prefs_filter_edit.c:511
@@ -1880,14 +1854,12 @@ msgid "Size"
 msgstr "Storlek"
 
 #: src/compose.c:6121
-#, fuzzy
 msgid "Signature:"
-msgstr "Signatur"
+msgstr "Signatur:"
 
 #: src/compose.c:6136
-#, fuzzy
 msgid "Change signature"
-msgstr "Undersöker signatur"
+msgstr "Ändra signatur."
 
 #: src/compose.c:6716
 msgid "Invalid MIME type."
@@ -1920,9 +1892,8 @@ msgid "File name"
 msgstr "Filnamn"
 
 #: src/compose.c:6936
-#, fuzzy
 msgid "File not exist."
-msgstr "%s: filen finns inte\n"
+msgstr "Filen finns inte."
 
 #: src/compose.c:6946 src/mimeview.c:1259 src/mimeview.c:1274
 msgid "Opening executable file"
@@ -1946,18 +1917,17 @@ msgid "External editor command line is invalid: `%s'\n"
 msgstr "Ogiltig kommandorad för extern redigerare: \"%s\"\n"
 
 #: src/compose.c:7051
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The external editor is still working.\n"
 "Force terminating the process (pid: %d)?\n"
 msgstr ""
 "Den externa redigeraren arbetar fortfarande.\n"
-"Framtvinga avslutning av processen?\n"
-"processgrupps-id: %d"
+"Framtvinga avslutning av processen (pid: %d)?\n"
 
 #: src/compose.c:7391 src/mainwindow.c:3080
 msgid "_Customize toolbar..."
-msgstr ""
+msgstr "Anpassa verktygsfält..."
 
 #: src/compose.c:7567 src/compose.c:7573 src/compose.c:7595
 msgid "Can't queue the message."
@@ -2087,9 +2057,8 @@ msgid "Could not read file."
 msgstr "Kunde inte läsa fil."
 
 #: src/editbook.c:176 src/editbook.c:290
-#, fuzzy
 msgid "Edit Address Book"
-msgstr "Redigera adressbok"
+msgstr "Redigera Adressbok"
 
 #: src/editbook.c:205 src/editjpilot.c:277 src/editvcard.c:190
 msgid " Check File "
@@ -2101,9 +2070,8 @@ msgid "File"
 msgstr "Fil"
 
 #: src/editbook.c:309
-#, fuzzy
 msgid "Add New Address Book"
-msgstr "Lägg till ny adressbok"
+msgstr "Lägg till Ny Adressbok"
 
 #: src/editgroup.c:110
 msgid "A Group Name must be supplied."
@@ -2177,7 +2145,7 @@ msgid "Edit JPilot Entry"
 msgstr "Redigera JPilot-post"
 
 #: src/editjpilot.c:289 src/editldap.c:349 src/editvcard.c:202
-#: src/importcsv.c:696 src/importldif.c:498 src/prefs_account_dialog.c:2098
+#: src/importcsv.c:696 src/importldif.c:498 src/prefs_account_dialog.c:2105
 #: src/prefs_common_dialog.c:2424
 msgid " ... "
 msgstr " ... "
@@ -2283,55 +2251,49 @@ msgid "Add New vCard Entry"
 msgstr "Lägg till ny vCard-post"
 
 #: src/export.c:226
-#, fuzzy, c-format
+#, c-format
 msgid "Exporting %s ..."
-msgstr "Söker igenom mapp %s ..."
+msgstr "Exporterar %s ..."
 
 #: src/export.c:228
-#, fuzzy
 msgid "Exporting"
-msgstr "Exportera"
+msgstr "Exporterar"
 
 #: src/export.c:261
-#, fuzzy
 msgid "Error occurred on export."
-msgstr "Fel uppstod vid postning\n"
+msgstr "Fel uppstod vid export."
 
 #: src/export.c:355
 msgid "Export"
 msgstr "Exportera"
 
 #: src/export.c:374 src/export.c:471
-#, fuzzy
 msgid "Specify source folder and destination file."
-msgstr "Välj mbox-målfil och destinationskatalog."
+msgstr "Specificera källmapp och destinationsfil."
 
 #: src/export.c:384 src/import.c:623
-#, fuzzy
 msgid "File format:"
-msgstr "Datumformat"
+msgstr "Filformat:"
 
 #: src/export.c:389
-#, fuzzy
 msgid "Source folder:"
-msgstr "Ursprungskatalog:"
+msgstr "Ursprungsmapp:"
 
 #: src/export.c:394
-#, fuzzy
 msgid "Destination:"
-msgstr "Destinationskatalog:"
+msgstr "Destination:"
 
 #: src/export.c:404 src/import.c:643
 msgid "UNIX mbox"
-msgstr ""
+msgstr "UNIX mbox"
 
 #: src/export.c:407
 msgid "eml (number + .eml)"
-msgstr ""
+msgstr "eml (nummer + .eml)"
 
 #: src/export.c:410
 msgid "MH (number only)"
-msgstr ""
+msgstr "MH (endast nummer)"
 
 #: src/export.c:424 src/export.c:430 src/import.c:663 src/import.c:669
 #: src/prefs_account_dialog.c:1027
@@ -2339,47 +2301,40 @@ msgid " Select... "
 msgstr " Välj... "
 
 #: src/export.c:441
-#, fuzzy
 msgid "Export only selected messages"
-msgstr "Inga fler färgade meddelanden"
+msgstr "Exportera endast valda meddelanden"
 
 #: src/export.c:474
-#, fuzzy
 msgid "Specify source folder and destination folder."
-msgstr "Välj mbox-målfil och destinationskatalog."
+msgstr "Specificera källmapp och destinationsmapp."
 
 #: src/export.c:500
-#, fuzzy
 msgid "Select destination file"
-msgstr "Välj exportfil"
+msgstr "Välj destinationsfil"
 
 #: src/export.c:504
-#, fuzzy
 msgid "Select destination folder"
-msgstr "Välj exportfil"
+msgstr "Välj destinationsmapp"
 
 #: src/filesel.c:221
-#, fuzzy
 msgid "File type:"
-msgstr "Filnamn:"
+msgstr "Filtyp:"
 
 #: src/filesel.c:270
-#, fuzzy
 msgid "The link target not found."
-msgstr "%d meddelanden funna.\n"
+msgstr "Länkmålet hittades inte."
 
 #: src/filesel.c:305 src/filesel.c:331
 msgid "Save as"
 msgstr "Spara som"
 
 #: src/filesel.c:312 src/filesel.c:345 src/filesel.c:511
-#, fuzzy
 msgid "Overwrite existing file"
-msgstr "Skriv över befintlig fil?"
+msgstr "Skriv över befintlig fil"
 
 #: src/filesel.c:313 src/filesel.c:346 src/filesel.c:512
 msgid "The file already exists. Do you want to replace it?"
-msgstr ""
+msgstr "Filen finns redan. Vill du ersätta den?"
 
 #: src/filesel.c:363 src/foldersel.c:256
 msgid "Select folder"
@@ -2448,9 +2403,8 @@ msgid "/_Delete folder"
 msgstr "/_Ta bort"
 
 #: src/folderview.c:259 src/folderview.c:283
-#, fuzzy
 msgid "/Empty _junk"
-msgstr "/Töm _papperskorgen"
+msgstr "/Töm skräppost"
 
 #: src/folderview.c:260 src/folderview.c:284
 msgid "/Empty _trash"
@@ -2465,19 +2419,16 @@ msgid "/R_ebuild folder tree"
 msgstr "/_Uppdatera mappträd"
 
 #: src/folderview.c:265 src/folderview.c:291 src/folderview.c:314
-#, fuzzy
 msgid "/_Update summary"
-msgstr "/_Visa/_Uppdatera summering"
+msgstr "/_Uppdatera sammanfattning"
 
 #: src/folderview.c:267 src/folderview.c:293 src/folderview.c:316
-#, fuzzy
 msgid "/Mar_k all read"
-msgstr "Markera som läst"
+msgstr "/Markera alla som lästa"
 
 #: src/folderview.c:268 src/folderview.c:294
-#, fuzzy
 msgid "/Send _queued messages"
-msgstr "Skicka köade meddelanden"
+msgstr "/Skicka köade meddelanden"
 
 #: src/folderview.c:270 src/folderview.c:296 src/folderview.c:318
 msgid "/_Search messages..."
@@ -2485,7 +2436,7 @@ msgstr "/_Sök meddelanden..."
 
 #: src/folderview.c:271 src/folderview.c:297 src/folderview.c:319
 msgid "/Ed_it search condition..."
-msgstr ""
+msgstr "/Red_igera sökvillkor"
 
 #: src/folderview.c:286 src/folderview.c:310
 msgid "/Down_load"
@@ -2516,7 +2467,7 @@ msgstr "Olästa"
 
 #: src/folderview.c:460 src/prefs_common_dialog.c:1782
 msgid "Total"
-msgstr ""
+msgstr "Totalt"
 
 #: src/folderview.c:614
 msgid "Setting folder info...\n"
@@ -2567,14 +2518,13 @@ msgid "Downloading messages in %s ..."
 msgstr "Laddar ner meddelanden i %s ..."
 
 #: src/folderview.c:2297
-#, fuzzy, c-format
+#, c-format
 msgid "Download all messages under '%s' ?"
-msgstr "Laddar ner meddelanden i %s ..."
+msgstr "Hämta alla meddelanden under '%s' ?"
 
 #: src/folderview.c:2300
-#, fuzzy
 msgid "Download all messages"
-msgstr "Laddar ner meddelanden i %s ..."
+msgstr "Hämta alla meddelanden"
 
 #: src/folderview.c:2349
 #, c-format
@@ -2601,9 +2551,9 @@ msgid "Rename folder"
 msgstr "Byt namn på mapp"
 
 #: src/folderview.c:2561 src/folderview.c:2570
-#, fuzzy, c-format
+#, c-format
 msgid "Can't rename the folder '%s'."
-msgstr "Kan inte ta bort mappen \"%s\"."
+msgstr "Kan inte döpa om mappen '%s'."
 
 #: src/folderview.c:2645
 #, c-format
@@ -2611,36 +2561,35 @@ msgid "Can't move the folder `%s'."
 msgstr "Kan inte flytta mappen \"%s\"."
 
 #: src/folderview.c:2714
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Delete the search folder '%s' ?\n"
 "The real messages are not deleted."
 msgstr ""
-"Vill du verkligen ta bort brevlådan \"%s\" ?\n"
-"(Meddelandena tas INTE bort från disken)"
+"Vill du verkligen ta bort sökmappen '%s' ?\n"
+"De riktiga meddelandena tas inte bort."
 
 #: src/folderview.c:2716
-#, fuzzy
 msgid "Delete search folder"
-msgstr "Ta bort mapp"
+msgstr "Ta bort sökmapp"
 
 #: src/folderview.c:2721
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "All folders and messages under '%s' will be permanently deleted.\n"
 "Recovery will not be possible.\n"
 "\n"
 "Do you really want to delete?"
 msgstr ""
-"Alla mappar och meddelanden under \"%s\" kommer att tas bort permanent.\n"
-"Att återfå dem går ej.\n"
+"Alla mappar och meddelanden under '%s' kommer att tas bort permanent.\n"
+"Återställning kommer inte att vara möjlig..\n"
 "\n"
 "Vill du verkligen ta bort dem?"
 
 #: src/folderview.c:2753 src/folderview.c:2760
-#, fuzzy, c-format
+#, c-format
 msgid "Can't remove the folder '%s'."
-msgstr "Kan inte ta bort mappen \"%s\"."
+msgstr "Kan inte ta bort mappen '%s'."
 
 #: src/folderview.c:2802
 msgid "Empty trash"
@@ -2651,14 +2600,12 @@ msgid "Delete all messages in the trash folder?"
 msgstr "Ta bort alla meddelanden i papperskorgen?"
 
 #: src/folderview.c:2810
-#, fuzzy
 msgid "Empty junk"
-msgstr "Inte Skräp"
+msgstr "Töm skräp"
 
 #: src/folderview.c:2811
-#, fuzzy
 msgid "Delete all messages in the junk folder?"
-msgstr "Ta bort alla meddelanden i papperskorgen?"
+msgstr "Ta bort alla meddelanden i skräppostmappen?"
 
 #: src/folderview.c:2858
 #, c-format
@@ -2722,81 +2669,70 @@ msgid "Can't load the image."
 msgstr "Kan inte öppna bilden."
 
 #: src/import.c:211
-#, fuzzy
 msgid "The source file does not exist."
-msgstr "Filen %s finns inte\n"
+msgstr "Källfilen existerar inte."
 
 #: src/import.c:222
-#, fuzzy
 msgid "Can't find the destination folder."
-msgstr "Välj mbox-målfil och destinationskatalog."
+msgstr "Kan inte hitta destinationsmappen."
 
 #: src/import.c:227 src/import.c:552
-#, fuzzy, c-format
+#, c-format
 msgid "Importing %s ..."
-msgstr "Söker igenom mapp %s ..."
+msgstr "Importerar %s ..."
 
 #: src/import.c:229 src/import.c:510
-#, fuzzy
 msgid "Importing"
-msgstr "Importera"
+msgstr "Importerar"
 
 #: src/import.c:251 src/import.c:557
-#, fuzzy
 msgid "Scanning folder..."
-msgstr "Söker igenom mapp %s ..."
+msgstr "Söker igenom mapp..."
 
 #: src/import.c:262
-#, fuzzy
 msgid "Error occurred on import."
-msgstr "Fel uppstod vid postning\n"
+msgstr "Fel uppstod vid import."
 
 #: src/import.c:511
 msgid "Importing Outlook Express folders"
-msgstr ""
+msgstr "Importerar Outlook Express-mappar"
 
 #: src/import.c:546
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot create the folder '%s'."
-msgstr "Kan inte skapa mappen \"%s\"."
+msgstr "Kan inte skapa mappen '%s'."
 
 #: src/import.c:594
 msgid "Import"
 msgstr "Importera"
 
 #: src/import.c:613 src/import.c:701
-#, fuzzy
 msgid "Specify source file and destination folder."
-msgstr "Välj mbox-målfil och destinationskatalog."
+msgstr "Specificera källfil och destinationsmapp."
 
 #: src/import.c:628
-#, fuzzy
 msgid "Source:"
-msgstr "Ursprungskatalog:"
+msgstr "Källa:"
 
 #: src/import.c:633
-#, fuzzy
 msgid "Destination folder:"
-msgstr "Destinationskatalog:"
+msgstr "Destinationsmapp:"
 
 #: src/import.c:646
-#, fuzzy
 msgid "eml (folder)"
-msgstr "Ny mapp"
+msgstr "eml (mapp)"
 
 #: src/import.c:649
 msgid "Outlook Express (dbx)"
-msgstr ""
+msgstr "Outlook Express (dbx)"
 
 #: src/import.c:698
-#, fuzzy
 msgid "Specify source folder including eml files and destination folder."
-msgstr "Välj mbox-målfil och destinationskatalog."
+msgstr "Specificera källmap som inkluderar eml-filer samt destinationsmapp."
 
 #: src/import.c:728
-#, fuzzy
 msgid "Select importing folder"
-msgstr "Välj fil att importera"
+msgstr "Välj importmapp"
 
 #: src/import.c:731
 msgid "Select importing file"
@@ -2807,9 +2743,8 @@ msgid "Please specify address book name and file to import."
 msgstr "Ange adressboksnamn och fil att importera."
 
 #: src/importcsv.c:156
-#, fuzzy
 msgid "Select and reorder CSV field names to import."
-msgstr "Välj och byt namn på LDIF-fältnamn att importera."
+msgstr "Välj och byt ordning på CSV-fältnamn för import."
 
 #: src/importcsv.c:159 src/importldif.c:128
 msgid "File imported."
@@ -2824,19 +2759,16 @@ msgid "Address book name must be supplied."
 msgstr "Adressboksnamn måste anges."
 
 #: src/importcsv.c:533
-#, fuzzy
 msgid "Error reading CSV fields."
-msgstr "Fel vid inläsning av LDIF-fält."
+msgstr "Fel vid inläsning av CSV-fält."
 
 #: src/importcsv.c:559
-#, fuzzy
 msgid "CSV file imported successfully."
-msgstr "LDIF-fil importerad."
+msgstr "CSV-fil importerades framgångsrikt."
 
 #: src/importcsv.c:621
-#, fuzzy
 msgid "Select CSV File"
-msgstr "Välj vCard-fil"
+msgstr "Välj CSV-fil"
 
 #: src/importcsv.c:687 src/importldif.c:489
 msgid "File Name"
@@ -2844,29 +2776,27 @@ msgstr "Filnamn"
 
 #: src/importcsv.c:705
 msgid "Comma-separated"
-msgstr ""
+msgstr "Komma-separerad"
 
 #: src/importcsv.c:709
 msgid "Tab-separated"
-msgstr ""
+msgstr "Tab-separerad"
 
 #: src/importcsv.c:740 src/importldif.c:530
 msgid "S"
 msgstr "S"
 
 #: src/importcsv.c:741
-#, fuzzy
 msgid "CSV Field"
-msgstr "LDIF-fält"
+msgstr "CSV-fält"
 
 #: src/importcsv.c:742
-#, fuzzy
 msgid "Address Book Field"
-msgstr "Adressbok:"
+msgstr "Adressboksfält"
 
 #: src/importcsv.c:759
 msgid "Reorder address book fields with the Up and Down button."
-msgstr ""
+msgstr "Omorganisera fält i adressboken med hjälp av Upp- och Nerknapparna."
 
 #: src/importcsv.c:794 src/prefs_actions.c:311 src/prefs_customheader.c:279
 #: src/prefs_display_header.c:287 src/prefs_display_items.c:242
@@ -2893,9 +2823,8 @@ msgid "Records :"
 msgstr "Register:"
 
 #: src/importcsv.c:887
-#, fuzzy
 msgid "Import CSV file into Address Book"
-msgstr "Importera LDIF-fil till adressboken"
+msgstr "Importera CSV-fil till adressboken"
 
 #. Button panel
 #: src/importcsv.c:919 src/importldif.c:733 src/prefs_toolbar.c:74
@@ -2911,9 +2840,8 @@ msgid "File Info"
 msgstr "Filinfo"
 
 #: src/importcsv.c:953
-#, fuzzy
 msgid "Fields"
-msgstr "LDIF-fält"
+msgstr "Fält"
 
 #: src/importcsv.c:954 src/importldif.c:768
 msgid "Finish"
@@ -2967,21 +2895,19 @@ msgstr "Sylpheed: %d nya meddelanden"
 #: src/inc.c:225
 #, c-format
 msgid "[Local]: %d"
-msgstr ""
+msgstr "[Lokal]: %d"
 
 #: src/inc.c:667
-#, fuzzy
 msgid "Authenticating with POP3"
-msgstr "Autentiserar"
+msgstr "Autentiserar med POP3"
 
 #: src/inc.c:697
 msgid "Retrieving new messages"
 msgstr "Hämtar nya meddelanden"
 
 #: src/inc.c:699
-#, fuzzy
 msgid "Cancel _all"
-msgstr "Avbryt"
+msgstr "Avbryt _allt"
 
 #: src/inc.c:745
 msgid "Standby"
@@ -2996,24 +2922,22 @@ msgid "Retrieving"
 msgstr "Hämtar"
 
 #: src/inc.c:922 src/inc.c:1268
-#, fuzzy, c-format
+#, c-format
 msgid "%d message(s) (%s) received"
-msgstr "Färdig (%d meddelande(n) (%s) mottagna)"
+msgstr "%d meddelande(n) (%s) mottagna"
 
 #: src/inc.c:926
-#, fuzzy, c-format
+#, c-format
 msgid "no new messages"
-msgstr "Inga nya meddelanden."
+msgstr "Inga nya meddelanden"
 
 #: src/inc.c:927
-#, fuzzy
 msgid "Done"
-msgstr "Färdig."
+msgstr "Färdig"
 
 #: src/inc.c:932
-#, fuzzy
 msgid "Server not found"
-msgstr "Serverinformation"
+msgstr "Servern hittas inte"
 
 #: src/inc.c:936
 msgid "Connection failed"
@@ -3051,9 +2975,9 @@ msgid "getting new messages of account %s...\n"
 msgstr "hämtar nya meddelanden från kontot %s...\n"
 
 #: src/inc.c:1055
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Authenticating with POP3"
-msgstr "Autentiserar"
+msgstr "%s: Autentiserar med POP3"
 
 #: src/inc.c:1058
 #, c-format
@@ -3116,25 +3040,26 @@ msgid ""
 "Execution of the junk filter command failed.\n"
 "Please check the junk mail control setting."
 msgstr ""
+"MIsslyckades att köra kommandot för skräppostfiltrering.\n"
+"Vänligen kontrollera skräppostinställningarna."
 
 #: src/inc.c:1624 src/send_message.c:1001
-#, fuzzy
 msgid "Server not found."
-msgstr "%d meddelanden funna.\n"
+msgstr "Servern hittas inte"
 
 #: src/inc.c:1628
-#, fuzzy, c-format
+#, c-format
 msgid "Server %s not found."
-msgstr "%d meddelanden funna.\n"
+msgstr "Server %s inte funnen."
 
 #: src/inc.c:1631
 msgid "Connection failed."
 msgstr "Förbindelse misslyckades."
 
 #: src/inc.c:1635
-#, fuzzy, c-format
+#, c-format
 msgid "Connection to %s:%d failed."
-msgstr "Förbindelse misslyckades."
+msgstr "Anslutning till %s:%d misslyckades."
 
 #: src/inc.c:1639
 msgid "Error occurred while processing mail."
@@ -3220,14 +3145,13 @@ msgid "Protocol log"
 msgstr "Protokollogg"
 
 #: src/main.c:679
-#, fuzzy, c-format
+#, c-format
 msgid "Usage: %s [OPTIONS ...] [URL]\n"
-msgstr "Användning: %s [FLAGGOR]...\n"
+msgstr "Användning: %s [FLAGGOR ...] [URL]\n"
 
 #: src/main.c:682
-#, fuzzy
 msgid "  --compose [mailto URL] open composition window"
-msgstr "  --compose [adress]    öppna skrivfönster"
+msgstr "  --compose [adress]      öppna skrivfönster"
 
 #: src/main.c:683
 msgid ""
@@ -3235,25 +3159,25 @@ msgid ""
 "                         open composition window with specified files\n"
 "                         attached"
 msgstr ""
-" --attach fil1 [fil2]...\n"
-"                         öppna skrivfönster med angivna filer\n"
-"                         bifogade"
+"  --attach fil1 [fil2]...\n"
+"                          öppna skrivfönster med angivna filer\n"
+"                          bifogade"
 
 #: src/main.c:686
 msgid "  --receive              receive new messages"
-msgstr "  --receive             ta emot nya meddelanden"
+msgstr "  --receive               ta emot nya meddelanden"
 
 #: src/main.c:687
 msgid "  --receive-all          receive new messages of all accounts"
-msgstr "  --receive-all         ta emot nya meddelanden från alla konton"
+msgstr "  --receive-all           ta emot nya meddelanden från alla konton"
 
 #: src/main.c:688
 msgid "  --send                 send all queued messages"
-msgstr "  --send                skicka alla köade meddelanden"
+msgstr "  --send                  skicka alla köade meddelanden"
 
 #: src/main.c:689
 msgid "  --status [folder]...   show the total number of messages"
-msgstr "  --status [mapp]...    visar det totala antalet meddelanden"
+msgstr "  --status [mapp]...      visar det totala antalet meddelanden"
 
 #: src/main.c:690
 msgid ""
@@ -3265,53 +3189,51 @@ msgstr ""
 
 #: src/main.c:692
 msgid "  --open folderid/msgnum open existing message in a new window"
-msgstr ""
+msgstr "  --open mappid/msgnum    öppna existerande meddelande i nytt fönster"
 
 #: src/main.c:693
 msgid "  --open <file URL>      open an rfc822 message file in a new window"
 msgstr ""
+"  --open <fil-URL>        öppna en rfc822-meddelandefil i ett nytt fönster"
 
 #: src/main.c:694
 msgid ""
 "  --configdir dirname    specify directory which stores configuration files"
 msgstr ""
+"  --configdir mappnamn    specificera mapp som lagrar konfigurationsfiler"
 
 #: src/main.c:696
 msgid "  --ipcport portnum      specify port for IPC remote commands"
-msgstr ""
+msgstr "  --ipcport portnum        specificera port för IPC-fjärrkommandon"
 
 #: src/main.c:698
 msgid "  --dpi dpinum           force DPI"
-msgstr ""
+msgstr "  --dpi dpinum            tvinga DPI"
 
 #: src/main.c:699
-#, fuzzy
 msgid "  --exit                 exit Sylpheed"
-msgstr "  --debug               felsökningsläge"
+msgstr "  --exit                  avsluta Sylpheed"
 
 #: src/main.c:700
 msgid "  --debug                debug mode"
-msgstr "  --debug               felsökningsläge"
+msgstr "  --debug                 felsökningsläge"
 
 #: src/main.c:701
-#, fuzzy
 msgid "  --safe-mode            safe mode"
-msgstr "  --debug               felsökningsläge"
+msgstr "  --safe-mode             säkert läge"
 
 #: src/main.c:702
 msgid "  --help                 display this help and exit"
-msgstr "  --help                visa denna hjälp och avsluta"
+msgstr "  --help                  visa denna hjälp och avsluta"
 
 #: src/main.c:703
 msgid "  --version              output version information and exit"
-msgstr "  --version             skriv ut versionsinformation och avsluta"
+msgstr "  --version               skriv ut versionsinformation och avsluta"
 
 #: src/main.c:707
-#, fuzzy, c-format
+#, c-format
 msgid "Press any key..."
-msgstr ""
-"eller tryck på \"y\"-tangenten.\n"
-"\n"
+msgstr "Tryck på en tangent..."
 
 #: src/main.c:857
 msgid "Filename encoding"
@@ -3363,7 +3285,7 @@ msgstr ""
 
 #: src/main.c:1335
 msgid "Loading plug-ins..."
-msgstr ""
+msgstr "Laddar insticksmoduler..."
 
 #. remote command mode
 #: src/main.c:1563
@@ -3431,14 +3353,12 @@ msgid "/_File/_Mailbox/R_ebuild folder tree"
 msgstr "/_Arkiv/_Brevlåda/_Uppdatera mappträd"
 
 #: src/mainwindow.c:577
-#, fuzzy
 msgid "/_File/_Import mail data..."
-msgstr "/_Arkiv/_Importera mbox-fil..."
+msgstr "/_Arkiv/_Importera e-postdata..."
 
 #: src/mainwindow.c:578
-#, fuzzy
 msgid "/_File/_Export mail data..."
-msgstr "/_Arkiv/_Exportera till mbox-fil..."
+msgstr "/_Arkiv/_Exportera e-postdata..."
 
 #: src/mainwindow.c:580
 msgid "/_File/Empty all _trash"
@@ -3449,9 +3369,8 @@ msgid "/_File/_Save as..."
 msgstr "/_Arkiv/_Spara som..."
 
 #: src/mainwindow.c:585 src/messageview.c:170
-#, fuzzy
 msgid "/_File/Page set_up..."
-msgstr "/_Arkiv/_Spara som..."
+msgstr "/_Arkiv/Sidinställningar..."
 
 #: src/mainwindow.c:587 src/messageview.c:172
 msgid "/_File/_Print..."
@@ -3479,9 +3398,8 @@ msgid "/_Edit/_Search messages..."
 msgstr "/_Redigera/_Sök meddelanden..."
 
 #: src/mainwindow.c:602
-#, fuzzy
 msgid "/_Edit/_Quick search"
-msgstr "/_Redigera/Klistra _in"
+msgstr "/_Redigera/Snabbsökning"
 
 #: src/mainwindow.c:605
 msgid "/_View/Show or hi_de"
@@ -3504,9 +3422,8 @@ msgid "/_View/Show or hi_de/_Toolbar/Icon _and text"
 msgstr "/_Visa/_Visa eller dölj/_Verktygsrad/Ikoner _och text"
 
 #: src/mainwindow.c:614
-#, fuzzy
 msgid "/_View/Show or hi_de/_Toolbar/Text at the _right of icon"
-msgstr "/_Visa/_Visa eller dölj/_Verktygsrad/_Ikoner"
+msgstr "/_Visa/_Visa eller dölj/_Verktygsrad/Text till höge_r om ikon"
 
 #: src/mainwindow.c:616
 msgid "/_View/Show or hi_de/_Toolbar/_Icon"
@@ -3521,32 +3438,28 @@ msgid "/_View/Show or hi_de/_Toolbar/_None"
 msgstr "/_Visa/_Visa eller dölj/_Verktygsrad/I_ngetdera"
 
 #: src/mainwindow.c:622
-#, fuzzy
 msgid "/_View/Show or hi_de/_Search bar"
-msgstr "/_Visa/_Visa eller dölj/_Statusrad"
+msgstr "/_Visa/_Visa eller dölj/_Sökfält"
 
 #: src/mainwindow.c:624
 msgid "/_View/Show or hi_de/Status _bar"
 msgstr "/_Visa/_Visa eller dölj/_Statusrad"
 
 #: src/mainwindow.c:626
-#, fuzzy
 msgid "/_View/_Customize toolbar..."
-msgstr "/_Visa/_Gå till/_En annan mapp..."
+msgstr "/_Visa/Anpassa verktygsrad..."
 
 #: src/mainwindow.c:628
-#, fuzzy
 msgid "/_View/Layou_t"
-msgstr "/_Visa/_Sortera"
+msgstr "/_Visa/Layou_t"
 
 #: src/mainwindow.c:629
-#, fuzzy
 msgid "/_View/Layou_t/_Normal"
-msgstr "/_Visa/_Sortera/efter _från"
+msgstr "/_Visa/Layou_t/_Normal"
 
 #: src/mainwindow.c:630
 msgid "/_View/Layou_t/_Vertical"
-msgstr ""
+msgstr "/_Visa/Layou_t/_Vertikal"
 
 #: src/mainwindow.c:631
 msgid "/_View/Separate f_older tree"
@@ -3698,9 +3611,8 @@ msgid "/_View/Character _encoding/_Auto detect"
 msgstr "/_Visa/_Teckenkodning/_Automatisk igenkänning"
 
 #: src/mainwindow.c:705 src/messageview.c:204
-#, fuzzy
 msgid "/_View/Character _encoding/Western European (Windows-1252)"
-msgstr "/_Visa/_Teckenkodning/_Västeuropeisk (ISO-8859-15)"
+msgstr "/_Visa/_Teckenkodning/_Västeuropeisk (Windows-1252)"
 
 #: src/mainwindow.c:753 src/messageview.c:244
 msgid "/_View/Character _encoding/Japanese (ISO-2022-JP-2)"
@@ -3735,9 +3647,8 @@ msgid "/_View/Mess_age source"
 msgstr "/_Visa/_Meddelandekällkod"
 
 #: src/mainwindow.c:790 src/messageview.c:277 src/summaryview.c:487
-#, fuzzy
 msgid "/_View/All _headers"
-msgstr "/_Visa/_Hela brevhuvudet"
+msgstr "/_Visa/Alla brev_huvuden"
 
 #: src/mainwindow.c:792
 msgid "/_View/_Update summary"
@@ -3749,29 +3660,27 @@ msgstr "/_Meddelande"
 
 #: src/mainwindow.c:795
 msgid "/_Message/Recei_ve"
-msgstr "/_Meddelande/Mott_ag"
+msgstr "/_Meddelande/_Ta emot"
 
 #: src/mainwindow.c:796
 msgid "/_Message/Recei_ve/Get from _current account"
-msgstr "/_Meddelande/Mottag/Hämta från _detta konto"
+msgstr "/_Meddelande/Ta emot/Hämta från _detta konto"
 
 #: src/mainwindow.c:798
 msgid "/_Message/Recei_ve/Get from _all accounts"
-msgstr "/_Meddelande/Mottag/Hämta från alla _konton"
+msgstr "/_Meddelande/Ta emot/Hämta från alla _konton"
 
 #: src/mainwindow.c:800
-#, fuzzy
 msgid "/_Message/Recei_ve/Stop receivin_g"
-msgstr "/_Meddelande/Mottag/Avbryt hämtnin_g"
+msgstr "/_Meddelande/_Ta emot/Avbryt hämtnin_g"
 
 #: src/mainwindow.c:802
-#, fuzzy
 msgid "/_Message/Recei_ve/_Remote mailbox..."
-msgstr "/_Meddelande/Mottag/Hämta från alla _konton"
+msgstr "/_Meddelande/_Ta emot/Fjär_rbrevlåda"
 
 #: src/mainwindow.c:804
 msgid "/_Message/Recei_ve/---"
-msgstr "/_Meddelande/Mottag/---"
+msgstr "/_Meddelande/Ta emot/---"
 
 #: src/mainwindow.c:805
 msgid "/_Message/_Send queued messages"
@@ -3833,14 +3742,12 @@ msgid "/_Message/_Mark"
 msgstr "/_Meddelande/_Markera"
 
 #: src/mainwindow.c:825
-#, fuzzy
 msgid "/_Message/_Mark/Set _flag"
-msgstr "/_Meddelande/_Markera/_Markera"
+msgstr "/_Meddelande/_Markera/Sätt _flagga"
 
 #: src/mainwindow.c:826
-#, fuzzy
 msgid "/_Message/_Mark/_Unset flag"
-msgstr "/_Meddelande/_Markera/_Avmarkera"
+msgstr "/_Meddelande/_Markera/Ta bort flagga"
 
 #: src/mainwindow.c:827
 msgid "/_Message/_Mark/---"
@@ -3855,9 +3762,8 @@ msgid "/_Message/_Mark/Mark as rea_d"
 msgstr "/_Meddelande/_Markera/Markera som _läst"
 
 #: src/mainwindow.c:831
-#, fuzzy
 msgid "/_Message/_Mark/Mark _thread as read"
-msgstr "/_Meddelande/_Markera/Markera som _läst"
+msgstr "/_Meddelande/_Markera/Markera _tråd som läst"
 
 #: src/mainwindow.c:833
 msgid "/_Message/_Mark/Mark all _read"
@@ -3869,11 +3775,11 @@ msgstr "/_Meddelande/_Ta bort"
 
 #: src/mainwindow.c:837
 msgid "/_Message/Set as _junk mail"
-msgstr "/_Meddelande/Sätt som _skräppost"
+msgstr "/_Meddelande/Markera som _skräppost"
 
 #: src/mainwindow.c:838
 msgid "/_Message/Set as not j_unk mail"
-msgstr "/_Meddelande/Sätt som inte skr_äppost"
+msgstr "/_Meddelande/Markera som inte skr_äppost"
 
 #: src/mainwindow.c:840 src/messageview.c:297
 msgid "/_Message/Re-_edit"
@@ -3924,24 +3830,20 @@ msgid "/_Tools/Delete du_plicated messages"
 msgstr "/V_erktyg/Ta bort meddelande_dubbletter"
 
 #: src/mainwindow.c:872
-#, fuzzy
 msgid "/_Tools/C_oncatenate separated messages"
-msgstr "/V_erktyg/Ta bort meddelande_dubbletter"
+msgstr "/V_erktyg/Sammanf_oga separerade meddelanden"
 
 #: src/mainwindow.c:875
-#, fuzzy
 msgid "/_Tools/E_xecute marked process"
-msgstr "Kör markerad process"
+msgstr "/V_erktyg/E_xekvera markerad process"
 
 #: src/mainwindow.c:877
-#, fuzzy
 msgid "/_Tools/Op_en configuration folder"
-msgstr "/V_erktyg/Filtrera _skräppost i mappen"
+msgstr "/V_erktyg/Öppna konfigurationsmapp"
 
 #: src/mainwindow.c:879
-#, fuzzy
 msgid "/_Tools/Open a_ttachments folder"
-msgstr "/V_erktyg/_Filtrera alla meddelanden i mappen"
+msgstr "/V_erktyg/Öppna mapp för bilagor"
 
 #: src/mainwindow.c:881
 msgid "/_Tools/_Log window"
@@ -3956,7 +3858,6 @@ msgid "/_Configuration/_Common preferences..."
 msgstr "/_Konfiguration/_Allmänna inställningar..."
 
 #: src/mainwindow.c:886
-#, fuzzy
 msgid "/_Configuration/_Filter settings..."
 msgstr "/_Konfiguration/_Filterinställningar..."
 
@@ -3969,9 +3870,8 @@ msgid "/_Configuration/_Actions..."
 msgstr "/_Konfiguration/_Åtgärder..."
 
 #: src/mainwindow.c:892
-#, fuzzy
 msgid "/_Configuration/Plug-in _manager..."
-msgstr "/_Konfiguration/_Mall..."
+msgstr "/_Konfiguration/Hanterare för Insticks_moduler..."
 
 #: src/mainwindow.c:894
 msgid "/_Configuration/---"
@@ -4030,9 +3930,8 @@ msgid "/_Help/_FAQ/_Italian"
 msgstr "/_Hjälp/_FAQ/_Italiensk"
 
 #: src/mainwindow.c:914
-#, fuzzy
 msgid "/_Help/_Command line options"
-msgstr "Kommandorad saknas."
+msgstr "/_Hjälp/Kommandoradsalternativ"
 
 #: src/mainwindow.c:916 src/mainwindow.c:923
 msgid "/_Help/---"
@@ -4040,11 +3939,11 @@ msgstr "/_Hjälp/---"
 
 #: src/mainwindow.c:917
 msgid "/_Help/_Update check..."
-msgstr ""
+msgstr "/_Hjälp/_Uppdateringskontroll..."
 
 #: src/mainwindow.c:919
 msgid "/_Help/Update check of _plug-ins..."
-msgstr ""
+msgstr "/_Hjälp/Uppdateringskontroll för insticksmoduler..."
 
 #: src/mainwindow.c:966
 msgid "Creating main window...\n"
@@ -4154,26 +4053,23 @@ msgstr "/_Omdirigera"
 
 #: src/mainwindow.c:3073
 msgid "Icon _and text"
-msgstr ""
+msgstr "Ikon och text"
 
 #: src/mainwindow.c:3074
-#, fuzzy
 msgid "Text at the _right of icon"
-msgstr "/_Visa/_Visa eller dölj/_Verktygsrad/_Ikoner"
+msgstr "Text på höge_r sida av ikoner"
 
 #: src/mainwindow.c:3076
 msgid "_Icon"
-msgstr ""
+msgstr "_Ikon"
 
 #: src/mainwindow.c:3077
-#, fuzzy
 msgid "_Text"
-msgstr "Text"
+msgstr "_Text"
 
 #: src/mainwindow.c:3078
-#, fuzzy
 msgid "_None"
-msgstr "Ingen"
+msgstr "I_ngen"
 
 #: src/mainwindow.c:3116
 msgid "You are offline. Click the icon to go online."
@@ -4193,22 +4089,19 @@ msgstr "Avsluta detta program?"
 
 #: src/mainwindow.c:3849
 msgid "The selected messages could not be combined."
-msgstr ""
+msgstr "De valda meddelandena kunde inte kombineras."
 
 #: src/mainwindow.c:3971
-#, fuzzy
 msgid "Select folder to open"
-msgstr "Välj mapp"
+msgstr "Välj mapp att öppna"
 
 #: src/mainwindow.c:4141
-#, fuzzy
 msgid "Command line options"
-msgstr "Kommandorad saknas."
+msgstr "Kommandoradsalternativ"
 
 #: src/mainwindow.c:4154
-#, fuzzy
 msgid "Usage: sylpheed [OPTION]..."
-msgstr "Användning: %s [FLAGGOR]...\n"
+msgstr "Användning: sylpheed [FLAGGOR]..."
 
 #: src/mainwindow.c:4162
 msgid ""
@@ -4228,6 +4121,21 @@ msgid ""
 "--help\n"
 "--version"
 msgstr ""
+"--compose [adress]\n"
+"--attach fil1 [fil2]...\n"
+"--receive\n"
+"--receive-all\n"
+"--send\n"
+"--status [mapp]...\n"
+"--status-full [mapp]...\n"
+"--open mappid/msgnum\n"
+"--open <fil-URL>\n"
+"--configdir mappnamn\n"
+"--exit\n"
+"--debug\n"
+"--safe-mode\n"
+"--help\n"
+"--version"
 
 #: src/mainwindow.c:4181
 msgid ""
@@ -4247,18 +4155,33 @@ msgid ""
 "display this help and exit\n"
 "output version information and exit"
 msgstr ""
+"öppna komponerngsfönster\n"
+"öppna skriv-meddelandefönster med specificerade filer bifogade\n"
+"hämta nya meddelanden\n"
+"hämta nya meddelanden från alla konton\n"
+"skicka alla köade meddelanden\n"
+"visa det totala antalet meddelanden\n"
+"visa status för varje mapp\n"
+"öppna meddelande i ett nytt fönster\n"
+"öppna ett rfc822-meddelande i ett nytt fönster\n"
+"specificera mapp som lagrar konfigurationsfiler\n"
+"avsluta Sylpheed\n"
+"felsökningsläge\n"
+"säkert läge\n"
+"visa denna hjälp och avsluta\n"
+"skriv ut versionsinformation och avsluta"
 
 #: src/mainwindow.c:4201
 msgid "Windows-only option:"
-msgstr ""
+msgstr "Windows-specifikt alternativ:"
 
 #: src/mainwindow.c:4209
 msgid "--ipcport portnum"
-msgstr ""
+msgstr "--ipcport portnum"
 
 #: src/mainwindow.c:4214
 msgid "specify port for IPC remote commands"
-msgstr ""
+msgstr "specificera port för IPC-fjärrkommandon"
 
 #: src/message_search.c:120
 msgid "Find in current message"
@@ -4311,12 +4234,11 @@ msgstr "Bilagor"
 
 #: src/messageview.c:399
 msgid "Switch to attachment list view"
-msgstr ""
+msgstr "Växla till bilagelistvy"
 
 #: src/messageview.c:417
-#, fuzzy
 msgid "Save _all attachments..."
-msgstr "Bilaga"
+msgstr "Spara _alla bilagor..."
 
 #: src/messageview.c:481
 msgid "Message View - Sylpheed"
@@ -4324,12 +4246,11 @@ msgstr "Meddelandevy - Sylpheed"
 
 #: src/messageview.c:931 src/summaryview.c:3928
 msgid "Original (EML/RFC 822)"
-msgstr ""
+msgstr "Original (EML/RFC 822)"
 
 #: src/messageview.c:935 src/summaryview.c:3932
-#, fuzzy
 msgid "Text (UTF-8)"
-msgstr "Unicode (UTF-8)"
+msgstr "Text (UTF-8)"
 
 #: src/messageview.c:959 src/summaryview.c:3959
 #, c-format
@@ -4357,24 +4278,20 @@ msgid "/_Print..."
 msgstr "/Skriv _ut"
 
 #: src/mimeview.c:143
-#, fuzzy
 msgid "/_Reply/_Reply"
-msgstr "/_Visa/_Svara till"
+msgstr "/_Svara/_Svara"
 
 #: src/mimeview.c:144
-#, fuzzy
 msgid "/_Reply/Reply to _all"
-msgstr "/Svara till _alla"
+msgstr "/_Svara/Svara till _alla"
 
 #: src/mimeview.c:146
-#, fuzzy
 msgid "/_Reply/Reply to _sender"
-msgstr "/Svara till av_sändaren"
+msgstr "/_Svara/Svara till av_sändaren"
 
 #: src/mimeview.c:148
-#, fuzzy
 msgid "/_Reply/Reply to mailing _list"
-msgstr "/Svara till e-post_lista"
+msgstr "/_Svara/Svara till sänd_lista"
 
 #: src/mimeview.c:152
 msgid "/_Check signature"
@@ -4469,35 +4386,31 @@ msgstr ""
 
 #: src/plugin_manager.c:131
 msgid "Plug-in manager"
-msgstr ""
+msgstr "Insticksmodulshanterare"
 
 #: src/plugin_manager.c:142
 msgid "Check for _update"
-msgstr ""
+msgstr "Sök efter _uppdatering"
 
 #: src/plugin_manager.c:193
-#, fuzzy
 msgid "Plug-in information"
-msgstr "Personlig information"
+msgstr "Insticksmodulsinformation"
 
 #: src/plugin_manager.c:220 src/plugin_manager.c:222 src/plugin_manager.c:223
-#, fuzzy
 msgid "(Unknown)"
-msgstr "okänd"
+msgstr "(Okänd)"
 
 #: src/plugin_manager.c:222
 msgid "Author: "
-msgstr ""
+msgstr "Författare:"
 
 #: src/plugin_manager.c:223
-#, fuzzy
 msgid "File: "
-msgstr "Fil"
+msgstr "Fil:"
 
 #: src/plugin_manager.c:225
-#, fuzzy
 msgid "Description: "
-msgstr "Beskrivning"
+msgstr "Beskrivning:"
 
 #: src/prefs_account_dialog.c:487
 msgid "Opening account preferences window...\n"
@@ -4544,7 +4457,7 @@ msgstr "SSL"
 
 #: src/prefs_account_dialog.c:638
 msgid "Proxy"
-msgstr ""
+msgstr "Proxy"
 
 #: src/prefs_account_dialog.c:640 src/prefs_common_dialog.c:2740
 msgid "Advanced"
@@ -4579,12 +4492,12 @@ msgid "Server information"
 msgstr "Serverinformation"
 
 #: src/prefs_account_dialog.c:775 src/prefs_account_dialog.c:932
-#: src/prefs_account_dialog.c:1721
+#: src/prefs_account_dialog.c:1728
 msgid "POP3"
 msgstr "POP3"
 
 #: src/prefs_account_dialog.c:777 src/prefs_account_dialog.c:1040
-#: src/prefs_account_dialog.c:1741 src/prefs_account_dialog.c:2042
+#: src/prefs_account_dialog.c:1748 src/prefs_account_dialog.c:2049
 msgid "IMAP4"
 msgstr "IMAP4"
 
@@ -4637,14 +4550,12 @@ msgid "days"
 msgstr "dagar"
 
 #: src/prefs_account_dialog.c:980
-#, fuzzy
 msgid "0 days: remove immediately"
-msgstr "(0 dagar: ta bort direkt)"
+msgstr "0 dagar: ta bort direkt"
 
 #: src/prefs_account_dialog.c:990
-#, fuzzy
 msgid "Download all messages (including already received) on server"
-msgstr "Hämta alla meddelanden från server"
+msgstr "Hämta alla meddelanden (inklusive redan mottagna) från server"
 
 #: src/prefs_account_dialog.c:996
 msgid "Receive size limit"
@@ -4678,14 +4589,12 @@ msgid "Automatic"
 msgstr "Automatisk"
 
 #: src/prefs_account_dialog.c:1069
-#, fuzzy
 msgid "Only check INBOX on receiving"
-msgstr "Bara vid manuell mottagning"
+msgstr "Kontrollera endast iNBOX vid mottagning"
 
 #: src/prefs_account_dialog.c:1071
-#, fuzzy
 msgid "Filter new messages in INBOX on receiving"
-msgstr "Filtrera meddelanden vid mottagning"
+msgstr "Filtrera nya meddelanden i inkorgen vid mottagning"
 
 #: src/prefs_account_dialog.c:1073
 msgid "News"
@@ -4752,16 +4661,16 @@ msgstr "Signatur"
 
 #: src/prefs_account_dialog.c:1336
 msgid "Direct input"
-msgstr ""
+msgstr "Direkt inmatning"
 
-#: src/prefs_account_dialog.c:1359 src/prefs_account_dialog.c:1911
+#: src/prefs_account_dialog.c:1359 src/prefs_account_dialog.c:1918
 #: src/prefs_filter_edit.c:256 src/prefs_search_folder.c:187
 msgid "Name:"
 msgstr "Namn:"
 
 #: src/prefs_account_dialog.c:1372
 msgid "'Signature 1' will be used by default."
-msgstr ""
+msgstr "'Signatur 1' kommer att användas som standard."
 
 #: src/prefs_account_dialog.c:1407
 msgid "Command output"
@@ -4769,225 +4678,215 @@ msgstr "Kommandoutdata"
 
 #: src/prefs_account_dialog.c:1419
 msgid "Put signature before quote (not recommended)"
-msgstr ""
+msgstr "Sätt signatur före citat (rekommenderas inte)"
 
-#: src/prefs_account_dialog.c:1431 src/prefs_folder_item.c:332
+#: src/prefs_account_dialog.c:1438 src/prefs_folder_item.c:332
 msgid "Automatically set the following addresses"
 msgstr "Sätt automatiskt följande adresser"
 
-#: src/prefs_account_dialog.c:1440
+#: src/prefs_account_dialog.c:1447
 msgid "Cc"
 msgstr "Kopia"
 
-#: src/prefs_account_dialog.c:1453
+#: src/prefs_account_dialog.c:1460
 msgid "Bcc"
 msgstr "Dold kopia"
 
-#: src/prefs_account_dialog.c:1466
+#: src/prefs_account_dialog.c:1473
 msgid "Reply-To"
 msgstr "Svara till"
 
-#: src/prefs_account_dialog.c:1526
-#, fuzzy
+#: src/prefs_account_dialog.c:1533
 msgid "PGP sign message by default"
-msgstr "Signera alla meddelanden"
+msgstr "PGP-signera meddelande som standard"
 
-#: src/prefs_account_dialog.c:1528
-#, fuzzy
+#: src/prefs_account_dialog.c:1535
 msgid "PGP encrypt message by default"
-msgstr "Kryptera alla meddelanden"
+msgstr "PGP-kryptera meddelande som standard"
 
-#: src/prefs_account_dialog.c:1530
+#: src/prefs_account_dialog.c:1537
 msgid "Encrypt when replying to encrypted message"
 msgstr "Kryptera vid svar på krypterat meddelande"
 
-#: src/prefs_account_dialog.c:1532
-#, fuzzy
+#: src/prefs_account_dialog.c:1539
 msgid "Add my own key to the recipients list on encryption"
-msgstr "kan inte läsa mottagarlista"
+msgstr "Lägg till min egen nyckel till mottagarlistan vid kryptering"
 
-#: src/prefs_account_dialog.c:1534
+#: src/prefs_account_dialog.c:1541
 msgid "Use ASCII-armored format for encryption"
 msgstr "Använd ASCII-pansar för kryptering"
 
-#: src/prefs_account_dialog.c:1536
+#: src/prefs_account_dialog.c:1543
 msgid "Use clear text signature"
 msgstr "Använd klartextsignatur"
 
-#: src/prefs_account_dialog.c:1541
+#: src/prefs_account_dialog.c:1548
 msgid "Sign / Encryption key"
-msgstr ""
+msgstr "Signerings- / Krypteringsnyckel"
 
-#: src/prefs_account_dialog.c:1549
+#: src/prefs_account_dialog.c:1556
 msgid "Use default GnuPG key"
 msgstr "Använd förvald GnuPG-nyckel"
 
-#: src/prefs_account_dialog.c:1558
+#: src/prefs_account_dialog.c:1565
 msgid "Select key by your email address"
 msgstr "Välj nyckel genom din e-postadress"
 
-#: src/prefs_account_dialog.c:1567
+#: src/prefs_account_dialog.c:1574
 msgid "Specify key manually"
 msgstr "Ange nyckel manuellt"
 
-#: src/prefs_account_dialog.c:1583
+#: src/prefs_account_dialog.c:1590
 msgid "User or key ID:"
 msgstr "Användar- eller nyckel-ID:"
 
-#: src/prefs_account_dialog.c:1729 src/prefs_account_dialog.c:1749
-#: src/prefs_account_dialog.c:1768 src/prefs_account_dialog.c:1789
+#: src/prefs_account_dialog.c:1736 src/prefs_account_dialog.c:1756
+#: src/prefs_account_dialog.c:1775 src/prefs_account_dialog.c:1796
 msgid "Don't use SSL"
 msgstr "Använd inte SSL"
 
-#: src/prefs_account_dialog.c:1732
+#: src/prefs_account_dialog.c:1739
 msgid "Use SSL for POP3 connection"
 msgstr "Använd SSL för POP3-förbindelse"
 
-#: src/prefs_account_dialog.c:1735 src/prefs_account_dialog.c:1755
-#: src/prefs_account_dialog.c:1795
+#: src/prefs_account_dialog.c:1742 src/prefs_account_dialog.c:1762
+#: src/prefs_account_dialog.c:1802
 msgid "Use STARTTLS command to start SSL session"
 msgstr "Använd STARTTLS-kommando för att starta SSL-session"
 
-#: src/prefs_account_dialog.c:1752
+#: src/prefs_account_dialog.c:1759
 msgid "Use SSL for IMAP4 connection"
 msgstr "Använd SSL för IMAP4-förbindelse"
 
-#: src/prefs_account_dialog.c:1761
+#: src/prefs_account_dialog.c:1768
 msgid "NNTP"
 msgstr "NNTP"
 
-#: src/prefs_account_dialog.c:1776
+#: src/prefs_account_dialog.c:1783
 msgid "Use SSL for NNTP connection"
 msgstr "Använd SSL för NNTP-förbindelse"
 
-#: src/prefs_account_dialog.c:1781
+#: src/prefs_account_dialog.c:1788
 msgid "Send (SMTP)"
 msgstr "Skicka (SMTP)"
 
-#: src/prefs_account_dialog.c:1792
+#: src/prefs_account_dialog.c:1799
 msgid "Use SSL for SMTP connection"
 msgstr "Använd SSL för SMTP-förbindelse"
 
-#: src/prefs_account_dialog.c:1806
+#: src/prefs_account_dialog.c:1813
 msgid "Use non-blocking SSL"
 msgstr "Använd icke-blockerande SSL"
 
-#: src/prefs_account_dialog.c:1809
+#: src/prefs_account_dialog.c:1816
 msgid "Turn this off if you have problems in SSL connection."
 msgstr "Slå av detta om du har problem med SSL-förbindelsen"
 
-#: src/prefs_account_dialog.c:1859
+#: src/prefs_account_dialog.c:1866
 msgid "Use SOCKS proxy"
-msgstr ""
+msgstr "Använd SOCKS-proxy"
 
-#: src/prefs_account_dialog.c:1883
-#, fuzzy
+#: src/prefs_account_dialog.c:1890
 msgid "Hostname:"
-msgstr "Värdnamn"
+msgstr "Värdnamn:"
 
-#: src/prefs_account_dialog.c:1892
-#, fuzzy
+#: src/prefs_account_dialog.c:1899
 msgid "Port:"
-msgstr "Port"
+msgstr "Port:"
 
-#: src/prefs_account_dialog.c:1905
-#, fuzzy
+#: src/prefs_account_dialog.c:1912
 msgid "Use authentication"
-msgstr "Autentisering"
+msgstr "Använd autentisering"
 
-#: src/prefs_account_dialog.c:1920
-#, fuzzy
+#: src/prefs_account_dialog.c:1927
 msgid "Password:"
-msgstr "Lösenord"
+msgstr "Lösenord:"
 
-#: src/prefs_account_dialog.c:1931
-#, fuzzy
+#: src/prefs_account_dialog.c:1938
 msgid "Use SOCKS proxy on sending"
-msgstr "Skicka med externt program"
+msgstr "Använd SOCKS-proxy vid sändning"
 
-#: src/prefs_account_dialog.c:2009
+#: src/prefs_account_dialog.c:2016
 msgid "Specify SMTP port"
 msgstr "Ange SMTP-port"
 
-#: src/prefs_account_dialog.c:2015
+#: src/prefs_account_dialog.c:2022
 msgid "Specify POP3 port"
 msgstr "Ange POP3-port"
 
-#: src/prefs_account_dialog.c:2021
+#: src/prefs_account_dialog.c:2028
 msgid "Specify IMAP4 port"
 msgstr "Ange IMAP4-port"
 
-#: src/prefs_account_dialog.c:2027
+#: src/prefs_account_dialog.c:2034
 msgid "Specify NNTP port"
 msgstr "Ange NNTP-port"
 
-#: src/prefs_account_dialog.c:2032
+#: src/prefs_account_dialog.c:2039
 msgid "Specify domain name"
 msgstr "Ange domännamn"
 
-#: src/prefs_account_dialog.c:2053
+#: src/prefs_account_dialog.c:2060
 msgid "IMAP server directory"
 msgstr "IMAP-servermapp"
 
-#: src/prefs_account_dialog.c:2063
+#: src/prefs_account_dialog.c:2070
 msgid "Only the subfolders of this directory will be displayed."
-msgstr ""
+msgstr "Endast undermappar till denna mapp kommer att visas."
 
-#: src/prefs_account_dialog.c:2066
-#, fuzzy
+#: src/prefs_account_dialog.c:2073
 msgid "Clear all message caches on exit"
-msgstr "Hämta alla meddelanden från server"
+msgstr "Rensa all meddelandecache vid avslut"
 
-#: src/prefs_account_dialog.c:2111
+#: src/prefs_account_dialog.c:2118
 msgid "Put sent messages in"
-msgstr "Lägg skickade meddelanden i"
+msgstr "Spara skickade meddelanden i"
 
-#: src/prefs_account_dialog.c:2113
+#: src/prefs_account_dialog.c:2120
 msgid "Put draft messages in"
-msgstr "Lägg utkast i"
+msgstr "Spara utkast i"
 
-#: src/prefs_account_dialog.c:2115
-#, fuzzy
+#: src/prefs_account_dialog.c:2122
 msgid "Put queued messages in"
-msgstr "Lägg borttagna meddelanden i"
+msgstr "Spara köade meddelanden i"
 
-#: src/prefs_account_dialog.c:2117
+#: src/prefs_account_dialog.c:2124
 msgid "Put deleted messages in"
-msgstr "Lägg borttagna meddelanden i"
+msgstr "Spara borttagna meddelanden i"
 
-#: src/prefs_account_dialog.c:2188
+#: src/prefs_account_dialog.c:2195
 msgid "Account name is not entered."
 msgstr "Kontonamn har inte angivits."
 
-#: src/prefs_account_dialog.c:2192
+#: src/prefs_account_dialog.c:2199
 msgid "Mail address is not entered."
 msgstr "E-postadress har inte angivits."
 
-#: src/prefs_account_dialog.c:2197
+#: src/prefs_account_dialog.c:2204
 msgid "SMTP server is not entered."
 msgstr "SMTP-server har inte angivits."
 
-#: src/prefs_account_dialog.c:2202
+#: src/prefs_account_dialog.c:2209
 msgid "User ID is not entered."
 msgstr "Användar-ID har inte angivits."
 
-#: src/prefs_account_dialog.c:2207
+#: src/prefs_account_dialog.c:2214
 msgid "POP3 server is not entered."
 msgstr "POP3-server har inte angivits."
 
-#: src/prefs_account_dialog.c:2212
+#: src/prefs_account_dialog.c:2219
 msgid "IMAP4 server is not entered."
 msgstr "IMAP4-server har inte angivits."
 
-#: src/prefs_account_dialog.c:2217
+#: src/prefs_account_dialog.c:2224
 msgid "NNTP server is not entered."
 msgstr "NNTP-server har inte angivits."
 
-#: src/prefs_account_dialog.c:2256
+#: src/prefs_account_dialog.c:2263
 msgid "Specified folder is not a queue folder."
-msgstr ""
+msgstr "Specificerad mapp är inte en kömapp."
 
-#: src/prefs_account_dialog.c:2392
+#: src/prefs_account_dialog.c:2399
 msgid ""
 "It's not recommended to use the old style ASCII-armored\n"
 "mode for encrypted messages. It doesn't comply with the\n"
@@ -5122,7 +5021,7 @@ msgstr "Skräppost"
 
 #: src/prefs_common_dialog.c:846
 msgid "Details"
-msgstr ""
+msgstr "Detaljer"
 
 #: src/prefs_common_dialog.c:909
 msgid "Auto-check new mail"
@@ -5146,19 +5045,16 @@ msgstr "Uppdatera alla lokala mappar efter att ny post hämtats"
 
 #. New message notify
 #: src/prefs_common_dialog.c:937
-#, fuzzy
 msgid "New message notification"
-msgstr "Autentisering"
+msgstr "Nymeddelandenotifiering"
 
 #: src/prefs_common_dialog.c:950
-#, fuzzy
 msgid "Show notification window when new messages arrive"
-msgstr "Kör kommando när nytt meddelande anländer"
+msgstr "Visa notifieringsfönster när nya meddelanden anländer"
 
 #: src/prefs_common_dialog.c:961
-#, fuzzy
 msgid "Display window for"
-msgstr "Visade poster"
+msgstr "Visa fönster i"
 
 #: src/prefs_common_dialog.c:973 src/prefs_common_dialog.c:3239
 msgid "second(s)"
@@ -5166,22 +5062,19 @@ msgstr "sekunder"
 
 #: src/prefs_common_dialog.c:988
 msgid "0: don't auto-close"
-msgstr ""
+msgstr "0: stäng inte automatiskt"
 
 #: src/prefs_common_dialog.c:998
-#, fuzzy
 msgid "Play sound when new messages arrive"
-msgstr "Kör kommando när nytt meddelande anländer"
+msgstr "Spela ljud när nya meddelanden anländer"
 
 #: src/prefs_common_dialog.c:1004
-#, fuzzy
 msgid "Sound file"
-msgstr "Kunde inte läsa fil."
+msgstr "Ljudfil"
 
 #: src/prefs_common_dialog.c:1023 src/prefs_common_dialog.c:1027
-#, fuzzy
 msgid "Execute command when new messages arrive"
-msgstr "Kör kommando när nytt meddelande anländer"
+msgstr "Kör kommando när nya meddelanden anländer"
 
 #: src/prefs_common_dialog.c:1034 src/prefs_common_dialog.c:3076
 #: src/prefs_common_dialog.c:3098 src/prefs_common_dialog.c:3120
@@ -5219,33 +5112,32 @@ msgid "Apply filter rules to sent messages"
 msgstr "Använd filterregler på sända meddelanden"
 
 #: src/prefs_common_dialog.c:1152
-#, fuzzy
 msgid "Automatically add recipients to address book"
-msgstr "Sätt automatiskt följande adresser"
+msgstr "Lägg till mottagare till adressboken automatiskt"
 
 #: src/prefs_common_dialog.c:1155
-#, fuzzy
 msgid "Display send dialog"
-msgstr "Visade poster"
+msgstr "Visa skicka-dialog"
 
 #: src/prefs_common_dialog.c:1162
 msgid ""
 "Notify for missing attachments when the following strings (comma-separated) "
 "are found in the message body"
 msgstr ""
+"Notifiera för saknade bilagor när följande strängar (kommaseparerade) hittas "
+"i meddelandekroppen"
 
 #: src/prefs_common_dialog.c:1173
 msgid "(Ex: attach)"
-msgstr ""
+msgstr "(Ex: bifogad)"
 
 #: src/prefs_common_dialog.c:1184
-#, fuzzy
 msgid "Confirm recipients before sending"
-msgstr "Radbryt innan brevet skickas"
+msgstr "Bekräfta mottagare innan avsändning"
 
 #: src/prefs_common_dialog.c:1190
 msgid "Excluded addresses/domains (comma-separated):"
-msgstr ""
+msgstr "Exkluderade adresser/domäner (komma-separerade):"
 
 #: src/prefs_common_dialog.c:1209
 msgid "Transfer encoding"
@@ -5260,14 +5152,12 @@ msgstr ""
 "ska ha när det innehåller icke-ASCII-tecken."
 
 #: src/prefs_common_dialog.c:1239
-#, fuzzy
 msgid "MIME filename encoding"
-msgstr "Filnamn kodning"
+msgstr "MIME-filnamnskodning"
 
 #: src/prefs_common_dialog.c:1250
-#, fuzzy
 msgid "MIME header"
-msgstr "Filnamn kodning"
+msgstr "MIME-huvud"
 
 #: src/prefs_common_dialog.c:1260
 msgid ""
@@ -5275,6 +5165,9 @@ msgid ""
 "MIME header: most popular, but violates RFC 2047\n"
 "RFC 2231: conforms to standard, but not popular"
 msgstr ""
+"Specificera kodningsmetod för MIME-filnamn med icke-ASCII-tecken.\n"
+"MIME-brevhuvud: mest populär, men strider mot RFC 2047\n"
+"RFC 2231: enligt standard, men inte populär"
 
 #: src/prefs_common_dialog.c:1352
 msgid "Signature separator"
@@ -5297,17 +5190,16 @@ msgid "Quote message when replying"
 msgstr "Citera meddelande vid svar"
 
 #: src/prefs_common_dialog.c:1375
-#, fuzzy
 msgid "Reply to mailing list by Reply button"
-msgstr "/Svara till e-post_lista"
+msgstr "Svara till sändlista med hjälp av Svara-knappen"
 
 #: src/prefs_common_dialog.c:1377
 msgid "Inherit recipients on reply to self messages"
-msgstr ""
+msgstr "Ärv mottagare vid svar till själv-meddelanden"
 
 #: src/prefs_common_dialog.c:1379
 msgid "Set only mail address of recipients when replying"
-msgstr ""
+msgstr "Sätt endast e-postadresser för mottagare vid svar"
 
 #. editor
 #: src/prefs_common_dialog.c:1383 src/prefs_common_dialog.c:3037
@@ -5340,18 +5232,16 @@ msgid "Wrap on input"
 msgstr "Radbryt vid indata"
 
 #: src/prefs_common_dialog.c:1457
-#, fuzzy
 msgid "Auto-save to draft"
-msgstr "Spara i utkastsmapp"
+msgstr "Spara automatiskt i utkastsmapp"
 
 #: src/prefs_common_dialog.c:1482
-#, fuzzy
 msgid "Format"
-msgstr "Normal"
+msgstr "Format"
 
 #: src/prefs_common_dialog.c:1487
 msgid "Spell checking"
-msgstr ""
+msgstr "Stavningskontroll"
 
 #. reply
 #: src/prefs_common_dialog.c:1540
@@ -5373,17 +5263,15 @@ msgstr " Beskrivning av symboler "
 
 #: src/prefs_common_dialog.c:1658
 msgid "Enable Spell checking"
-msgstr ""
+msgstr "Aktivera stavningskontroll"
 
 #: src/prefs_common_dialog.c:1670
-#, fuzzy
 msgid "Default language:"
-msgstr "Förvald inkorg"
+msgstr "Standardspråk:"
 
 #: src/prefs_common_dialog.c:1743
-#, fuzzy
 msgid "Text font"
-msgstr "Text"
+msgstr "Typsnitt"
 
 #. ---- Folder View ----
 #: src/prefs_common_dialog.c:1755
@@ -5395,9 +5283,8 @@ msgid "Display unread number next to folder name"
 msgstr "Visa antal olästa bredvid mappnamn"
 
 #: src/prefs_common_dialog.c:1767
-#, fuzzy
 msgid "Displaying message number columns in the folder view:"
-msgstr "Visa meddelandeantalkolumner i mappvyn"
+msgstr "Visa meddelandeantalkolumner i mappvyn:"
 
 #: src/prefs_common_dialog.c:1791
 msgid "Abbreviate newsgroups longer than"
@@ -5439,23 +5326,20 @@ msgid "Attachment"
 msgstr "Bilaga"
 
 #: src/prefs_common_dialog.c:1866
-#, fuzzy
 msgid "Color label"
-msgstr "/F_ärgmarkera"
+msgstr "Färgetikett"
 
 #: src/prefs_common_dialog.c:1876
-#, fuzzy
 msgid "Default character encoding"
-msgstr "/_Visa/_Teckenkodning"
+msgstr "Standardteckenkodning"
 
 #: src/prefs_common_dialog.c:1890
 msgid "This is used when displaying messages with missing character encoding."
-msgstr ""
+msgstr "Detta används vid visning av meddelanden som saknar teckenkodning"
 
 #: src/prefs_common_dialog.c:1896
-#, fuzzy
 msgid "Outgoing character encoding"
-msgstr "/_Visa/_Teckenkodning"
+msgstr "Utgående teckenkodning"
 
 #: src/prefs_common_dialog.c:1910
 msgid ""
@@ -5491,12 +5375,11 @@ msgstr "Rendera HTML meddelanden som text"
 
 #: src/prefs_common_dialog.c:2013
 msgid "Prefer HTML in multipart/alternative for display"
-msgstr ""
+msgstr "Föredra HTML i flerdelad/alternativ för visning"
 
 #: src/prefs_common_dialog.c:2015
-#, fuzzy
 msgid "Treat HTML only messages as attachment"
-msgstr "Rendera HTML meddelanden som text"
+msgstr "Behandla meddelanden med endast HTML som bilaga"
 
 #: src/prefs_common_dialog.c:2019
 msgid "Display cursor in message view"
@@ -5528,24 +5411,23 @@ msgstr "Steg"
 
 #: src/prefs_common_dialog.c:2133
 msgid "Position of attachment tool button:"
-msgstr ""
+msgstr "Position för knappen för bilageverktyget:"
 
 #: src/prefs_common_dialog.c:2138
 msgid "Left"
-msgstr ""
+msgstr "Vänster"
 
 #: src/prefs_common_dialog.c:2146
 msgid "Right"
-msgstr ""
+msgstr "Höger"
 
 #: src/prefs_common_dialog.c:2154
 msgid "Toggle attachment list view with tab"
-msgstr ""
+msgstr "Växla bilagelistvyn med flikar"
 
 #: src/prefs_common_dialog.c:2158
-#, fuzzy
 msgid "Show attached files first on message view"
-msgstr "Visa korta brevhuvuden i meddelandevy"
+msgstr "Visa bifogade filer först i meddelandevyn"
 
 #: src/prefs_common_dialog.c:2160
 msgid "Images"
@@ -5561,7 +5443,7 @@ msgstr "Visa bilder som inline"
 
 #: src/prefs_common_dialog.c:2200
 msgid "You can specify label names for each color (Work, TODO etc.)."
-msgstr ""
+msgstr "Du kan specificera etikettnamn för varje färg (Jobb, TODO, osv.)."
 
 #: src/prefs_common_dialog.c:2331
 msgid "Enable Junk mail control"
@@ -5572,9 +5454,8 @@ msgid "Learning command:"
 msgstr "Lärande kommando:"
 
 #: src/prefs_common_dialog.c:2352
-#, fuzzy
 msgid "(Select preset)"
-msgstr "Välj nycklar"
+msgstr "Välj (förinställning)"
 
 #: src/prefs_common_dialog.c:2380
 msgid "Not Junk"
@@ -5589,39 +5470,42 @@ msgid ""
 "To classify junk mails automatically, both junk and not junk mails must be "
 "learned manually to a certain extent."
 msgstr ""
+"För att klassificera skräppost automatiskt, måste både skräppost och icke "
+"skräppost läras manuellt till en viss nivå."
 
 #: src/prefs_common_dialog.c:2416
 msgid "Junk folder"
 msgstr "Skräpmapp"
 
 #: src/prefs_common_dialog.c:2434
-#, fuzzy
 msgid ""
 "The messages which are set as junk mail will be moved to this folder. If "
 "empty, the default junk folder will be used."
-msgstr "Meddelanden som är markerade som skräppost flyttas till denna mapp"
+msgstr ""
+"Meddelanden som markeras som skräppost flyttas till denna mapp Om tom, "
+"kommer standardskräppostmappen att användas."
 
 #: src/prefs_common_dialog.c:2446
 msgid "Filter messages classified as junk on receiving"
 msgstr "Filtrera meddelanden klassificerade som skräp vid mottagning"
 
 #: src/prefs_common_dialog.c:2449
-#, fuzzy
 msgid "Filter junk mails before normal filtering"
-msgstr "Ta bort från server"
+msgstr "Filtrera skräppost före normal filtrering"
 
 #: src/prefs_common_dialog.c:2452
-#, fuzzy
 msgid "Delete junk mails from server on receiving"
-msgstr "Ta bort från server"
+msgstr "Ta bort skräppost från server vid mottagning"
 
 #: src/prefs_common_dialog.c:2458
 msgid "Do not classify message as junk if sender is in the address book"
 msgstr ""
+"Klassificera inte meddelanden som skräppost om avsändaren finns i "
+"adressboken."
 
 #: src/prefs_common_dialog.c:2460
 msgid "Mark filtered junk mails as read"
-msgstr ""
+msgstr "Markera filtrerade skräppostmeddelanden som lästa"
 
 #: src/prefs_common_dialog.c:2503
 msgid "Automatically check signatures"
@@ -5660,37 +5544,32 @@ msgid "Always open messages in summary when selected"
 msgstr "Öppna alltid meddelanden i summering, när de valts"
 
 #: src/prefs_common_dialog.c:2643
-#, fuzzy
 msgid "Always mark as read when a message is opened"
-msgstr "Markera endast meddelande som läst, när det öppnats i nytt fönster"
+msgstr "Markera alltid som läst när ett meddelande öppnas"
 
 #: src/prefs_common_dialog.c:2649
-#, fuzzy
 msgid "Open first unread message when a folder is opened"
-msgstr "Öppna första olästa meddelande vid öppning av mapp"
+msgstr "Öppna första olästa meddelande när en mapp öppnas"
 
 #: src/prefs_common_dialog.c:2655
-#, fuzzy
 msgid "Remember last selected message"
-msgstr "Inga fler färgade meddelanden"
+msgstr "Kom ihåg senast valt meddelande"
 
 #: src/prefs_common_dialog.c:2660
 msgid "Only mark message as read when opened in new window"
 msgstr "Markera endast meddelande som läst, när det öppnats i nytt fönster"
 
 #: src/prefs_common_dialog.c:2668
-#, fuzzy
 msgid "Open inbox after receiving new mail"
-msgstr "Gå till inkorgen efter att ny post kommit"
+msgstr "Gå till inkorgen efter mottagande av ny e-post"
 
 #: src/prefs_common_dialog.c:2670
-#, fuzzy
 msgid "Open inbox on startup"
-msgstr "Hämta ny post vid uppstart"
+msgstr "Öppna inkorg vid uppstart"
 
 #: src/prefs_common_dialog.c:2674
 msgid "Change current account on folder open"
-msgstr ""
+msgstr "Ändra aktuellt konto vid öppnande av mapp"
 
 #: src/prefs_common_dialog.c:2682
 msgid "Execute immediately when moving or deleting messages"
@@ -5707,17 +5586,16 @@ msgid "Make the order of buttons comply with GNOME HIG"
 msgstr "Gör ordningen på knapparna enligt GNOME HIG"
 
 #: src/prefs_common_dialog.c:2706
-#, fuzzy
 msgid "Display tray icon"
-msgstr "Visat namn"
+msgstr "Visa ikon i notifieringsfält"
 
 #: src/prefs_common_dialog.c:2708
 msgid "Minimize to tray icon"
-msgstr ""
+msgstr "Minimera till notifieringsfältet"
 
 #: src/prefs_common_dialog.c:2710
 msgid "Toggle window on trayicon click"
-msgstr ""
+msgstr "Växla fönstret vid klick på ikonen i notifieringsytan"
 
 #: src/prefs_common_dialog.c:2720
 msgid " Set key bindings... "
@@ -5728,14 +5606,12 @@ msgid "Other"
 msgstr "Övrigt"
 
 #: src/prefs_common_dialog.c:2730
-#, fuzzy
 msgid "External commands"
-msgstr "Kör kommando"
+msgstr "Externa kommandon"
 
 #: src/prefs_common_dialog.c:2735
-#, fuzzy
 msgid "Update"
-msgstr "Datum"
+msgstr "Uppdatera"
 
 #: src/prefs_common_dialog.c:2805
 msgid "Receive dialog"
@@ -5770,22 +5646,20 @@ msgid "Add address to destination when double-clicked"
 msgstr "Lägg till adress till destination vid dubbelklick"
 
 #: src/prefs_common_dialog.c:2851
-#, fuzzy
 msgid "Set only mail address when entering recipient from address book"
-msgstr "Sätt automatiskt följande adresser"
+msgstr "Sätt endast e-postadresser när mottagare läggs till från adressbok"
 
 #: src/prefs_common_dialog.c:2859
-#, fuzzy
 msgid "Auto-completion:"
-msgstr "Adressbokskonvertering"
+msgstr "Automatisk komplettering:"
 
 #: src/prefs_common_dialog.c:2872
 msgid "Start with Tab"
-msgstr ""
+msgstr "Starta med Tab"
 
 #: src/prefs_common_dialog.c:2880
 msgid "Disable"
-msgstr ""
+msgstr "Inaktivera"
 
 #: src/prefs_common_dialog.c:2887
 msgid "On exit"
@@ -5809,19 +5683,19 @@ msgstr "Varna om det finns köade meddelanden"
 
 #: src/prefs_common_dialog.c:2910
 msgid "Online mode"
-msgstr ""
+msgstr "Online-läge"
 
 #: src/prefs_common_dialog.c:2922
 msgid "Start as online"
-msgstr ""
+msgstr "Starta online"
 
 #: src/prefs_common_dialog.c:2930
 msgid "Start as offline"
-msgstr ""
+msgstr "Starta offline"
 
 #: src/prefs_common_dialog.c:2938
 msgid "Remember previous mode"
-msgstr ""
+msgstr "Kom ihåg föregående läge"
 
 #: src/prefs_common_dialog.c:3002
 #, c-format
@@ -5838,9 +5712,8 @@ msgid "(Default browser)"
 msgstr "(Förvald webbläsare)"
 
 #: src/prefs_common_dialog.c:3064
-#, fuzzy
 msgid "Use external program for printing"
-msgstr "Skicka med externt program"
+msgstr "Använd externt program för utskrift"
 
 #: src/prefs_common_dialog.c:3086
 msgid "Use external program for incorporation"
@@ -5852,19 +5725,19 @@ msgstr "Skicka med externt program"
 
 #: src/prefs_common_dialog.c:3160
 msgid "Update check requires 'curl' command."
-msgstr ""
+msgstr "Uppdateringskontroll kräver kommandot 'curl'."
 
 #: src/prefs_common_dialog.c:3171
 msgid "Enable auto update check"
-msgstr ""
+msgstr "Aktivera automatisk uppdateringskontroll"
 
 #: src/prefs_common_dialog.c:3173
 msgid "Use HTTP proxy"
-msgstr ""
+msgstr "Använd HTTP-proxy"
 
 #: src/prefs_common_dialog.c:3175
 msgid "HTTP proxy host (hostname:port):"
-msgstr ""
+msgstr "HTTP proxyvärd (värdnamn:port):"
 
 #: src/prefs_common_dialog.c:3216
 msgid "Enable strict checking of the integrity of summary caches"
@@ -5905,9 +5778,8 @@ msgid "Western European (ISO-8859-15)"
 msgstr "Västeuropeisk (ISO-8859-15)"
 
 #: src/prefs_common_dialog.c:3279
-#, fuzzy
 msgid "Western European (Windows-1252)"
-msgstr "Västeuropeisk (ISO-8859-15)"
+msgstr "Västeuropeisk (Windows-1252)"
 
 #: src/prefs_common_dialog.c:3283
 msgid "Central European (ISO-8859-2)"
@@ -5922,23 +5794,20 @@ msgid "Baltic (ISO-8859-4)"
 msgstr "Baltisk (ISO-8859-4)"
 
 #: src/prefs_common_dialog.c:3287
-#, fuzzy
 msgid "Baltic (Windows-1257)"
-msgstr "Kyrillisk (Windows-1251)"
+msgstr "Baltisk (Windows-1257)"
 
 #: src/prefs_common_dialog.c:3289
 msgid "Greek (ISO-8859-7)"
 msgstr "Grekisk (ISO-8859-7)"
 
 #: src/prefs_common_dialog.c:3291
-#, fuzzy
 msgid "Arabic (ISO-8859-6)"
-msgstr "Baltisk (ISO-8859-4)"
+msgstr "Arabisk (ISO-8859-6)"
 
 #: src/prefs_common_dialog.c:3292
-#, fuzzy
 msgid "Arabic (Windows-1256)"
-msgstr "Kyrillisk (Windows-1251)"
+msgstr "Arabisk (Windows-1256)"
 
 #: src/prefs_common_dialog.c:3294
 msgid "Hebrew (ISO-8859-8)"
@@ -6126,7 +5995,7 @@ msgstr "URI-länk"
 
 #: src/prefs_common_dialog.c:3716
 msgid "Recycle quote colors"
-msgstr "Återanvänd citeringsfärger"
+msgstr "Återanvänd citatfärger"
 
 #: src/prefs_common_dialog.c:3783
 msgid "Pick color for quotation level 1"
@@ -6220,7 +6089,7 @@ msgstr "Gamla Sylpheed"
 
 #: src/prefs_customheader.c:161
 msgid "Custom header setting"
-msgstr "Egendefinierat brevhuvud"
+msgstr "Inställningar för egendefinierat brevhuvud"
 
 #: src/prefs_customheader.c:238 src/prefs_filter_edit.c:1610
 msgid " Delete "
@@ -6279,9 +6148,8 @@ msgid "This header is already in the list."
 msgstr "Detta brevhuvud finns redan i listan."
 
 #: src/prefs_display_items.c:122
-#, fuzzy
 msgid "Display items setting"
-msgstr "Brevhuvudsinställning"
+msgstr "Visa enhetsinställning"
 
 #: src/prefs_display_items.c:165 src/prefs_summary_column.c:234
 msgid "Available items"
@@ -6296,7 +6164,6 @@ msgid " Revert to default "
 msgstr " Återgå till standardinställning "
 
 #: src/prefs_filter.c:225
-#, fuzzy
 msgid "Filter settings"
 msgstr "Filterinställningar"
 
@@ -6354,19 +6221,16 @@ msgid "Age"
 msgstr "Ålder"
 
 #: src/prefs_filter_edit.c:516 src/quick_search.c:110
-#, fuzzy
 msgid "Marked"
-msgstr "Markering"
+msgstr "Markerat"
 
 #: src/prefs_filter_edit.c:517
-#, fuzzy
 msgid "Has color label"
-msgstr "/F_ärgmarkera"
+msgstr "Har färgmarkering"
 
 #: src/prefs_filter_edit.c:518
-#, fuzzy
 msgid "Has attachment"
-msgstr "Bilaga"
+msgstr "Har bilaga"
 
 #: src/prefs_filter_edit.c:538
 msgid "contains"
@@ -6393,14 +6257,12 @@ msgid "doesn't match to regex"
 msgstr "matchar inte regex"
 
 #: src/prefs_filter_edit.c:546
-#, fuzzy
 msgid "is in addressbook"
-msgstr "Adressbok"
+msgstr "finns i adressbok"
 
 #: src/prefs_filter_edit.c:548
-#, fuzzy
 msgid "is not in addressbook"
-msgstr "Lägg till adress_boken"
+msgstr "finns inte i adressbok"
 
 #: src/prefs_filter_edit.c:560
 msgid "is larger than"
@@ -6420,12 +6282,11 @@ msgstr "är längre än"
 
 #: src/prefs_filter_edit.c:581
 msgid "matches to status"
-msgstr ""
+msgstr "matchar status"
 
 #: src/prefs_filter_edit.c:582
-#, fuzzy
 msgid "doesn't match to status"
-msgstr "matchar inte regex"
+msgstr "matchar inte status"
 
 #: src/prefs_filter_edit.c:686
 msgid "Move to"
@@ -6509,9 +6370,8 @@ msgid "Destination folder is not specified."
 msgstr "Destinationsmapp är inte angiven."
 
 #: src/prefs_filter_edit.c:1863
-#, fuzzy
 msgid "The specified destination folder does not exist."
-msgstr "Filen %s finns inte\n"
+msgstr "Den specificerade destinationsmappen existerar inte."
 
 #: src/prefs_filter_edit.c:1960
 msgid "Invalid condition exists."
@@ -6577,7 +6437,7 @@ msgstr "Svara till:"
 #: src/prefs_search_folder.c:164
 #, c-format
 msgid "%s - Edit search condition"
-msgstr ""
+msgstr "%s - Redigera sökvillkor"
 
 #: src/prefs_search_folder.c:209 src/query_search.c:276
 msgid "Match any of the following"
@@ -6588,14 +6448,12 @@ msgid "Match all of the following"
 msgstr "Matcha alla av följande"
 
 #: src/prefs_search_folder.c:231 src/query_search.c:323
-#, fuzzy
 msgid "Folder:"
-msgstr "Mapp"
+msgstr "Mapp:"
 
 #: src/prefs_search_folder.c:248 src/query_search.c:341
-#, fuzzy
 msgid "Search subfolders"
-msgstr "Sökning misslyckades"
+msgstr "Sök undermappar"
 
 #: src/prefs_summary_column.c:66
 msgid "Mark"
@@ -6626,9 +6484,8 @@ msgstr "Nummer"
 
 #. S_COL_NUMBER
 #: src/prefs_summary_column.c:74 src/summaryview.c:5529
-#, fuzzy
 msgid "To"
-msgstr "Till:"
+msgstr "Till"
 
 #: src/prefs_summary_column.c:183
 msgid "Creating summary column setting window...\n"
@@ -6639,14 +6496,12 @@ msgid "Summary display item setting"
 msgstr "Inställningar för poster i summeringsvyn"
 
 #: src/prefs_summary_column.c:207
-#, fuzzy
 msgid ""
 "Select items to be displayed on the summary view. You can modify\n"
 "the order by using the Up / Down button."
 msgstr ""
-"Välj vad som ska visas i summeringsvyn. Du kan ändra ordningen\n"
-"genom att använda \"Upp\"- och \"Ner\"-knapparna eller genom att dra "
-"posterna. "
+"Välj vad som ska visas i sammanfattningsvyn. Du kan ändra ordningen\n"
+"genom att använda Upp / Ner-knapparna."
 
 #: src/prefs_template.c:183
 msgid "Template name"
@@ -6673,22 +6528,20 @@ msgid "Templates"
 msgstr "Mallar"
 
 #: src/prefs_template.c:441
-#, fuzzy
 msgid "Template is modified"
-msgstr "Mallnamn"
+msgstr "Mallen är redigerad"
 
 #: src/prefs_template.c:442
 msgid "Current modification is not applied. Finish without saving it?"
-msgstr ""
+msgstr "Aktuell modifikation är inte applicerad. Avsluta utan att spara den?"
 
 #: src/prefs_template.c:460
-#, fuzzy
 msgid "Templates are modified"
-msgstr "Mallnamn"
+msgstr "Mallarna är redigerade"
 
 #: src/prefs_template.c:461
 msgid "Really discard modification to templates?"
-msgstr ""
+msgstr "Verkligen förkasta förändringar på mallar?"
 
 #: src/prefs_template.c:481
 msgid "Template"
@@ -6707,9 +6560,8 @@ msgid "Do you really want to delete this template?"
 msgstr "Vill du verkligen ta bort denna mall?"
 
 #: src/prefs_toolbar.c:39
-#, fuzzy
 msgid "---- Separator ----"
-msgstr "Signaturseparator"
+msgstr "---- Avgränsare ----"
 
 #: src/prefs_toolbar.c:41
 msgid "Get"
@@ -6728,14 +6580,12 @@ msgid "Incorporate new mail of all accounts"
 msgstr "Hämta ny post från alla konton"
 
 #: src/prefs_toolbar.c:47
-#, fuzzy
 msgid "Remote mailbox"
-msgstr "Ta bort brevlåda"
+msgstr "Fjärrbrevlåda"
 
 #: src/prefs_toolbar.c:48
-#, fuzzy
 msgid "POP3 Remote mailbox"
-msgstr "Ta bort brevlåda"
+msgstr "POP3 Fjärrbrevlåda"
 
 #: src/prefs_toolbar.c:51
 msgid "Send queued message(s)"
@@ -6770,46 +6620,40 @@ msgid "Set as junk mail"
 msgstr "Sätt som skräppost"
 
 #: src/prefs_toolbar.c:71
-#, fuzzy
 msgid "Not junk"
-msgstr "Inte Skräp"
+msgstr "Inte skräppost"
 
 #: src/prefs_toolbar.c:72
-#, fuzzy
 msgid "Set as not junk mail"
-msgstr "Sätt som skräppost"
+msgstr "Sätt som inte skräppost"
 
 #: src/prefs_toolbar.c:75
 msgid "Next unread message"
 msgstr "Nästa olästa meddelande"
 
 #: src/prefs_toolbar.c:78
-#, fuzzy
 msgid "Previous unread message"
-msgstr "Nästa olästa meddelande"
+msgstr "Föregående olästa meddelande"
 
 #: src/prefs_toolbar.c:81 src/query_search.c:253
 msgid "Search messages"
 msgstr "Sök meddelanden"
 
-#: src/prefs_toolbar.c:83 src/printing.c:540
+#: src/prefs_toolbar.c:83 src/printing.c:642
 msgid "Print"
 msgstr "Skriv ut"
 
 #: src/prefs_toolbar.c:84
-#, fuzzy
 msgid "Print message"
-msgstr "Skicka meddelande"
+msgstr "Skriv ut meddelande"
 
 #: src/prefs_toolbar.c:86
-#, fuzzy
 msgid "Stop"
-msgstr "Steg"
+msgstr "Avbryt"
 
 #: src/prefs_toolbar.c:87
-#, fuzzy
 msgid "Stop receiving"
-msgstr "Server för mottagning"
+msgstr "Avbryt mottagning"
 
 #: src/prefs_toolbar.c:92
 msgid "Execute"
@@ -6864,9 +6708,8 @@ msgid "Attach file"
 msgstr "Bifoga fil"
 
 #: src/prefs_toolbar.c:118
-#, fuzzy
 msgid "Append signature"
-msgstr "FELAKTIG signatur"
+msgstr "Bifoga signatur"
 
 #: src/prefs_toolbar.c:121
 msgid "Edit with external editor"
@@ -6881,29 +6724,26 @@ msgid "Wrap all long lines"
 msgstr "Radbryt långa rader"
 
 #: src/prefs_toolbar.c:223
-#, fuzzy
 msgid "Customize toolbar"
-msgstr "/_Visa/_Gå till/_En annan mapp..."
+msgstr "Anpassa verktygsfält"
 
 #: src/prefs_toolbar.c:225
-#, fuzzy
 msgid ""
 "Select items to be displayed on the toolbar. You can modify\n"
 "the order by using the Up / Down button."
 msgstr ""
-"Välj vad som ska visas i summeringsvyn. Du kan ändra ordningen\n"
-"genom att använda \"Upp\"- och \"Ner\"-knapparna eller genom att dra "
-"posterna. "
+"Välj vad som ska visas på verktygsraden.Du kan ändra ordningen\n"
+"genom att använda Upp / Ner-knapparna."
 
-#: src/printing.c:537
+#: src/printing.c:639
 msgid "The message will be printed with the following command:"
 msgstr "Meddelandet kommer att skrivas ut med följande kommando:"
 
-#: src/printing.c:538
+#: src/printing.c:640
 msgid "(Default print command)"
 msgstr "(Förvalt utskriftkommando)"
 
-#: src/printing.c:548
+#: src/printing.c:650
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -6917,109 +6757,99 @@ msgid "Status"
 msgstr "Status"
 
 #: src/progressdialog.c:110
-#, fuzzy
 msgid "Progress"
-msgstr "Egenskaper"
+msgstr "Förlopp"
 
 #: src/query_search.c:429
-#, fuzzy
 msgid "_Save as search folder"
-msgstr "Spara i utkastsmapp"
+msgstr "_Spara som sökmapp"
 
 #: src/query_search.c:551
-#, fuzzy, c-format
+#, c-format
 msgid "Message not found."
-msgstr "%d meddelanden funna.\n"
+msgstr "Meddelande inte funnet."
 
 #: src/query_search.c:553
-#, fuzzy, c-format
+#, c-format
 msgid "1 message found."
-msgstr "%d meddelanden funna.\n"
+msgstr "1 meddelande hittat."
 
 #: src/query_search.c:555
-#, fuzzy, c-format
+#, c-format
 msgid "%d messages found."
-msgstr "%d meddelanden funna.\n"
+msgstr "%d meddelanden hittade."
 
 #: src/query_search.c:590
-#, fuzzy, c-format
+#, c-format
 msgid "Searching %s (%d / %d)..."
-msgstr "Filtrerar..."
+msgstr "Söker %s (%d / %d)..."
 
 #: src/query_search.c:712
-#, fuzzy, c-format
+#, c-format
 msgid "Searching %s ..."
-msgstr "Söker igenom mapp %s ..."
+msgstr "Söker %s ..."
 
 #: src/query_search.c:803 src/rpop3.c:713 src/summaryview.c:2441
 msgid "(No Date)"
 msgstr "(Inget datum)"
 
 #: src/query_search.c:998
-#, fuzzy
 msgid "Save as search folder"
-msgstr "Spara i utkastsmapp"
+msgstr "Spara som sökmapp"
 
 #: src/query_search.c:1019
 msgid "Location:"
-msgstr ""
+msgstr "Plats:"
 
 #: src/query_search.c:1034
-#, fuzzy
 msgid "Folder name:"
-msgstr "Filnamn"
+msgstr "Mappnamn:"
 
 #: src/quick_search.c:108
 msgid "All"
-msgstr ""
+msgstr "Alla"
 
 #: src/quick_search.c:111
-#, fuzzy
 msgid "Have color label"
-msgstr "/F_ärgmarkera"
+msgstr "Har färgmarkering"
 
 #: src/quick_search.c:112
-#, fuzzy
 msgid "Have attachment"
-msgstr "Bilaga"
+msgstr "Har bilaga"
 
 #: src/quick_search.c:114
 msgid "Within 1 day"
-msgstr ""
+msgstr "Inom 1 dag"
 
 #: src/quick_search.c:115
-#, fuzzy
 msgid "Last 5 days"
-msgstr "Efternamn"
+msgstr "Senaste 5 dagarna"
 
 #: src/quick_search.c:116
-#, fuzzy
 msgid "Last 7 days"
-msgstr "Efternamn"
+msgstr "Senaste 7 dagarna"
 
 #: src/quick_search.c:117
-#, fuzzy
 msgid "Last 30 days"
-msgstr "Efternamn"
+msgstr "Senaste 30 dagarna"
 
 #: src/quick_search.c:119
-#, fuzzy
 msgid "In addressbook"
-msgstr "Adressbok"
+msgstr "I adressbok"
 
 #: src/quick_search.c:150 src/quick_search.c:407
 msgid "Search for Subject or From"
-msgstr ""
+msgstr "Sök efter Ämne eller Från"
 
 #: src/quick_search.c:368
 #, c-format
 msgid "%1$d in %2$d matched"
-msgstr ""
+msgstr "%1$d i %2$d matchar"
 
 #: src/quick_search.c:371
-#, fuzzy, c-format
+#, c-format
 msgid "No messages matched"
-msgstr "Inga nya meddelanden."
+msgstr "Inget meddelande matchade"
 
 #: src/rfc2015.c:145
 msgid "Cannot find user ID for this key."
@@ -7028,7 +6858,7 @@ msgstr "Kan inte finna användar-ID för denna nyckel."
 #: src/rfc2015.c:157
 #, c-format
 msgid "\t\taka \"%s\"\n"
-msgstr ""
+msgstr "\t\taka \"%s\"\n"
 
 #: src/rfc2015.c:187
 #, c-format
@@ -7040,80 +6870,74 @@ msgid "Error verifying the signature"
 msgstr "Fel vid verifikation av signatur"
 
 #: src/rpop3.c:247
-#, fuzzy
 msgid "_File"
-msgstr "/_Arkiv"
+msgstr "_Arkiv"
 
 #: src/rpop3.c:248 src/rpop3.c:458
-#, fuzzy
 msgid "_Get"
 msgstr "Hämta"
 
 #: src/rpop3.c:251 src/rpop3.c:1105
-#, fuzzy
 msgid "_Resume"
-msgstr "/_Ta bort"
+msgstr "Åte_ruppta"
 
 #: src/rpop3.c:254
-#, fuzzy
 msgid "_Help"
-msgstr "/_Hjälp"
+msgstr "_Hjälp"
 
 #: src/rpop3.c:255
-#, fuzzy
 msgid "_About"
 msgstr "Om"
 
 #: src/rpop3.c:357
-#, fuzzy, c-format
+#, c-format
 msgid "%s - POP3 Remote mailbox"
-msgstr "Ta bort brevlåda"
+msgstr "%s - POP3 Fjärrbrevlåda"
 
 #: src/rpop3.c:433 src/summaryview.c:5527
 msgid "No."
 msgstr "Nr."
 
 #: src/rpop3.c:525
-#, fuzzy, c-format
+#, c-format
 msgid "Connecting to %s:%d ..."
-msgstr "Upprättar förbindelse med SMTP-server: %s ..."
+msgstr "Ansluter till %s:%d ..."
 
 #: src/rpop3.c:536 src/rpop3.c:590 src/rpop3.c:593
-#, fuzzy, c-format
+#, c-format
 msgid "Can't connect to POP3 server: %s:%d"
-msgstr "Kan inte ansluta till POP3-server: %s:%d\n"
+msgstr "Kan inte ansluta till POP3-server: %s:%d"
 
 #: src/rpop3.c:564 src/rpop3.c:570 src/rpop3.c:597 src/rpop3.c:599
-#, fuzzy
 msgid "Error occurred during POP3 session."
-msgstr "fel uppstod vid POP3-session\n"
+msgstr "Fel uppstod vid POP3-session."
 
 #: src/rpop3.c:567
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error occurred during POP3 session:\n"
 "%s"
-msgstr "fel uppstod vid POP3-session\n"
+msgstr ""
+"Fel uppstod vid POP3-session:\n"
+"%s"
 
 #: src/rpop3.c:727
-#, fuzzy, c-format
+#, c-format
 msgid "Retrieving message headers (%d / %d) ..."
-msgstr "Hämtar meddelandehuvuden (%d / %d)"
+msgstr "Hämtar meddelandehuvuden (%d / %d) ..."
 
 #: src/rpop3.c:907
-#, fuzzy
 msgid "Getting the number of messages..."
-msgstr "Tar emot meddelandenas antal (STAT)..."
+msgstr "Hämtar antal meddelanden..."
 
 #: src/rpop3.c:916 src/rpop3.c:929
-#, fuzzy
 msgid "No message"
-msgstr "Inga nya meddelanden."
+msgstr "Inget meddelande"
 
 #: src/rpop3.c:962
-#, fuzzy, c-format
+#, c-format
 msgid "Deleted %d messages"
-msgstr "Ta bort meddelande(n)"
+msgstr "Tog bort %d meddelanden"
 
 #: src/rpop3.c:1008 src/rpop3.c:1020 src/rpop3.c:1081 src/rpop3.c:1324
 #: src/send_message.c:863
@@ -7122,55 +6946,55 @@ msgid "Quitting..."
 msgstr "Avslutar..."
 
 #: src/rpop3.c:1066
-#, fuzzy, c-format
+#, c-format
 msgid "Retrieved %d messages"
-msgstr "Hämtar nya meddelanden"
+msgstr "Hämtade %d meddelanden"
 
 #: src/rpop3.c:1073
-#, fuzzy, c-format
+#, c-format
 msgid "Opened message %d"
-msgstr "Skicka meddelande"
+msgstr "Öppnade meddelande %d"
 
 #: src/rpop3.c:1090
-#, fuzzy, c-format
+#, c-format
 msgid "Retrieved %d (of %d) message headers"
-msgstr "Hämtar nya meddelanden"
+msgstr "Hämtade %d (av %d) meddelandehuvuden"
 
 #: src/rpop3.c:1094
-#, fuzzy, c-format
+#, c-format
 msgid "Retrieved %d message headers"
-msgstr "Hämtar nya meddelanden"
+msgstr "Hämtade %d meddelandehuvuden"
 
 #: src/rpop3.c:1216
-#, fuzzy, c-format
+#, c-format
 msgid "Retrieving message %d ..."
-msgstr "Hämtar meddelanden från %s..."
+msgstr "Hämtar meddelande %d ..."
 
 #: src/rpop3.c:1242
-#, fuzzy
 msgid "Delete messages"
-msgstr "Ta bort meddelande(n)"
+msgstr "Ta bort meddelanden"
 
 #: src/rpop3.c:1243
 msgid ""
 "Really delete selected messages from server?\n"
 "This operation cannot be reverted."
 msgstr ""
+"Verkligen ta bort valda meddelanden från servern?\n"
+"Denna operation kan inte ångras."
 
 #: src/select-keys.c:97
-#, fuzzy, c-format
+#, c-format
 msgid "Please select key for \"%s\""
-msgstr "Välj nyckel för \"%s\""
+msgstr "Vänligen välj nyckel för \"%s\""
 
 #: src/select-keys.c:100
-#, fuzzy, c-format
+#, c-format
 msgid "Collecting info for \"%s\" ... %c"
 msgstr "Samlar info för \"%s\" ... %c"
 
 #: src/select-keys.c:284
-#, fuzzy
 msgid "Select encryption keys"
-msgstr "Välj exportfil"
+msgstr "Välj krypteringsnycklar"
 
 #: src/select-keys.c:312
 msgid "Key ID"
@@ -7234,9 +7058,8 @@ msgstr "Upprättar förbindelse med SMTP-server: %s ..."
 
 #. ignore errors right after QUIT
 #: src/send_message.c:791
-#, fuzzy
 msgid "Error occurred after QUIT command (ignored)"
-msgstr "Fel uppstod när kommandot skickades\n"
+msgstr "Fel uppstod när efter QUIT-kommando (ignorerat)"
 
 #: src/send_message.c:834
 #, c-format
@@ -7248,9 +7071,9 @@ msgid "Authenticating"
 msgstr "Autentiserar"
 
 #: src/send_message.c:836 src/send_message.c:842
-#, fuzzy, c-format
+#, c-format
 msgid "Sending message via %s:%d..."
-msgstr "Skickar meddelande..."
+msgstr "Skickar meddelande via %s:%d..."
 
 #: src/send_message.c:840
 #, c-format
@@ -7284,7 +7107,7 @@ msgstr "Skickar meddelande (%d / %d byte)"
 #: src/send_message.c:902
 #, c-format
 msgid "%d / %d bytes"
-msgstr ""
+msgstr "%d / %d bytes"
 
 #: src/send_message.c:933
 msgid "Sending message"
@@ -7304,19 +7127,18 @@ msgstr ""
 "%s"
 
 #: src/send_message.c:1003
-#, fuzzy, c-format
+#, c-format
 msgid "SMTP server not found: %s:%d"
-msgstr "SMTP-server har inte angivits."
+msgstr "SMTP-server hittades inte: %s:%d"
 
 #: src/send_message.c:1005
-#, fuzzy
 msgid "Can't connect to SMTP server."
-msgstr "Kan inte ansluta till NNTP-server: %s:%d\n"
+msgstr "Kan inte ansluta till SMTP-server."
 
 #: src/send_message.c:1007
-#, fuzzy, c-format
+#, c-format
 msgid "Can't connect to SMTP server: %s:%d"
-msgstr "Kan inte ansluta till NNTP-server: %s:%d\n"
+msgstr "Kan inte ansluta till SMTP-server: %s:%d"
 
 #: src/setup.c:123 src/setup.c:147
 msgid "Mailbox setting"
@@ -7324,24 +7146,27 @@ msgstr "Brevlådeinställning"
 
 #: src/setup.c:166
 msgid "This dialog will make initial setup of mailbox."
-msgstr ""
+msgstr "Denna dialog kommer skapa initiala inställningar för brevlåda."
 
 #: src/setup.c:180
-#, fuzzy
 msgid "Create mailbox at the following default location:"
-msgstr "Utför följande åtgärder:"
+msgstr "Skapa brevlåda vid följande standardplats:"
 
 #: src/setup.c:200
 msgid ""
 "Create mailbox at the following location:\n"
 "(enter folder name or full folder path)"
 msgstr ""
+"Skapa postlåda på följande plats:\n"
+"(mata in mappnamn eller fullständig sökväg)"
 
 #: src/setup.c:218
 msgid ""
 "If you want to add a mailbox at another location afterward, please select "
 "'File - Mailbox - Add mailbox...' in the menu."
 msgstr ""
+"Om du vill lägga till en postlåda på någon annan plats efter, vänligen välj "
+"'Arkiv - Brevlåda - Lägg till...' i menyn."
 
 #: src/setup.c:241 src/setup.c:474
 msgid "Cancel"
@@ -7349,104 +7174,92 @@ msgstr "Avbryt"
 
 #: src/setup.c:241
 msgid "Continue without creating mailbox?"
-msgstr ""
+msgstr "Fortsätt utan att skapa brevlåda?"
 
 #: src/setup.c:251
 msgid "Please input folder name or full folder path."
-msgstr ""
+msgstr "Vänligen mata in mappnamn eller fullständig sökväg."
 
 #: src/setup.c:260
-#, fuzzy, c-format
+#, c-format
 msgid "The mailbox '%s' already exists."
-msgstr "Brevlådan \"%s\" finns redan."
+msgstr "Brevlådan '%s' finns redan."
 
 #: src/setup.c:266
 #, c-format
 msgid ""
 "The location '%s' includes settings folder. Please specify another location."
 msgstr ""
+"Platsen '%s' inkluderar inställningsmappen. Vänligen välj en annan plats."
 
 #: src/setup.c:474
-#, fuzzy
 msgid "Cancel mail account setup?"
-msgstr "Kontoinställningar"
+msgstr "Avbryt inställning av e-postkonto?"
 
 #: src/setup.c:494 src/setup.c:502
-#, fuzzy
 msgid "Input value is not valid."
-msgstr "Menynamn är inte angivet."
+msgstr "Värde på indata är inte giltigt."
 
 #: src/setup.c:532 src/setup.c:547 src/setup.c:583 src/setup.c:605
 #: src/setup.c:826 src/setup.c:908
-#, fuzzy
 msgid "POP3 server:"
-msgstr "LDAP-server"
+msgstr "POP3-server:"
 
 #: src/setup.c:538 src/setup.c:557 src/setup.c:596 src/setup.c:613
-#, fuzzy
 msgid "IMAP4 server:"
-msgstr "LDAP-server"
+msgstr "IMAP4-server:"
 
 #: src/setup.c:672 src/setup.c:708
-#, fuzzy
 msgid "New account setup"
 msgstr "Kontoinställningar"
 
 #: src/setup.c:727
 msgid "This dialog will make initial setup of new mail account."
-msgstr ""
+msgstr "Denna dialog gör initiala inställningar av ett nytt e-postkonto."
 
 #: src/setup.c:750
-#, fuzzy
 msgid "Select account type:"
-msgstr "Ta bort konto"
+msgstr "Välj kontotyp:"
 
 #: src/setup.c:773
-#, fuzzy
 msgid "Input your name and mail address:"
-msgstr "Välj nyckel genom din e-postadress"
+msgstr "Mata in ditt namn och din e-postadress:"
 
 #: src/setup.c:782 src/setup.c:896
-#, fuzzy
 msgid "Display name:"
-msgstr "Visat namn"
+msgstr "Visat namn:"
 
 #: src/setup.c:786 src/setup.c:900
-#, fuzzy
 msgid "E-mail address:"
-msgstr "E-postadress"
+msgstr "E-postadress:"
 
 #: src/setup.c:802
 msgid "This name will be seen at the side of recipients (e.g. John Doe)"
-msgstr ""
+msgstr "Detta namn kommer att synas vid sidan av mottagare (t.ex. N.N.)"
 
 #: src/setup.c:813
 msgid "Input user ID and mail server:"
-msgstr ""
+msgstr "Mata in användar-ID och e-postserver:"
 
 #: src/setup.c:822 src/setup.c:904
-#, fuzzy
 msgid "User ID:"
-msgstr "Användar-ID"
+msgstr "Användar-ID:"
 
 #: src/setup.c:831 src/setup.c:912
-#, fuzzy
 msgid "SMTP server:"
-msgstr "Server att skicka med (SMTP)"
+msgstr "SMTP-server:"
 
 #: src/setup.c:856 src/setup.c:868
-#, fuzzy
 msgid "Use SSL"
-msgstr "SSL"
+msgstr "Använd SSL"
 
 #: src/setup.c:864
-#, fuzzy
 msgid "Use SMTP authentication"
-msgstr "Autentisering"
+msgstr "Använd SMTP-autentisering"
 
 #: src/setup.c:881
 msgid "Your new mail account has been set up with the following settings."
-msgstr ""
+msgstr "Ditt nya e-postkonto har ställts in med följande inställningar."
 
 #: src/setup.c:884
 msgid ""
@@ -7454,11 +7267,13 @@ msgid ""
 "'Configuration - Preferences for current account' or\n"
 "'Configuration - Edit accounts' in the main menu."
 msgstr ""
+"Om du vill redigera inställningarna, välj\n"
+"'Konfiguration - Inställningar för aktuellt konto' eller\n"
+"'Konfiguration - Redigera konton' i huvudmenyn."
 
 #: src/setup.c:1135
-#, fuzzy
 msgid "Importing mail data"
-msgstr "Fil att importera:"
+msgstr "Importerar e-postdata"
 
 #: src/setup.c:1135
 msgid ""
@@ -7467,31 +7282,31 @@ msgid ""
 "\n"
 "(The folder structure will not be reproduced)"
 msgstr ""
+"E-postlagringen från Outlook Express har hittats. Vill importera e-postdata "
+"från Outlook Express?\n"
+"\n"
+"(Mappstrukturen kommer inte att bevaras)"
 
 #: src/setup.c:1152 src/setup.c:1154 src/setup.c:1265
-#, fuzzy
 msgid "Imported"
-msgstr "Importera"
+msgstr "Importerat"
 
 #: src/setup.c:1189
-#, fuzzy
 msgid "Failed to import the mail data."
-msgstr "/_Arkiv/_Importera mbox-fil..."
+msgstr "Misslyckades att importera e-postdata."
 
 #: src/setup.c:1238
-#, fuzzy
 msgid "Importing address book"
-msgstr "Adressbok"
+msgstr "Importerar adressbok"
 
 #: src/setup.c:1238
 msgid ""
 "The Windows address book was found. Do you want to import the address book?"
-msgstr ""
+msgstr "Windows adressbok hittades. Vill du importera adressboken?"
 
 #: src/setup.c:1275
-#, fuzzy
 msgid "Failed to import the address book."
-msgstr "/_Arkiv/_Importera mbox-fil..."
+msgstr "Misslyckades att importera adressboken."
 
 #: src/sigstatus.c:116
 msgid "Signature check result"
@@ -7588,60 +7403,58 @@ msgstr "%s - Källkod"
 
 #: src/sslmanager.c:69
 msgid "SSL certificate verify failed"
-msgstr ""
+msgstr "Misslyckades att verifiera SSL-certifikat"
 
 #: src/sslmanager.c:101
 #, c-format
 msgid "The SSL certificate of %s cannot be verified by the following reason:"
-msgstr ""
+msgstr "SSL-certifikatet för %s kan inte verifieras av följande orsak:"
 
 #: src/sslmanager.c:107
-#, fuzzy, c-format
+#, c-format
 msgid "Subject: %s\n"
-msgstr "  Ärende:  %s\n"
+msgstr "Ärende:  %s\n"
 
 #: src/sslmanager.c:108
-#, fuzzy, c-format
+#, c-format
 msgid "Issuer: %s\n"
-msgstr "  Utfärdare: %s\n"
+msgstr "Utfärdare: %s\n"
 
 #: src/sslmanager.c:109
-#, fuzzy, c-format
+#, c-format
 msgid "Issued date: %s\n"
-msgstr "  Utfärdare: %s\n"
+msgstr "Utfärdningsdatum: %s\n"
 
 #: src/sslmanager.c:110
-#, fuzzy, c-format
+#, c-format
 msgid "Expire date: %s\n"
-msgstr "Utgår efter"
+msgstr "Utgångsdatum: %s\n"
 
 #: src/sslmanager.c:112
-#, fuzzy, c-format
+#, c-format
 msgid "SHA1 fingerprint: %s\n"
-msgstr "Nyckelfingeravtryck: %s\n"
+msgstr "SHA1 fingeravtryck: %s\n"
 
 #: src/sslmanager.c:113
-#, fuzzy, c-format
+#, c-format
 msgid "MD5 fingerprint: %s\n"
-msgstr "Nyckelfingeravtryck: %s\n"
+msgstr "MD5 fingeravtryck: %s\n"
 
 #: src/sslmanager.c:115
 msgid "Do you accept this certificate?"
-msgstr ""
+msgstr "Accepterar du detta certifikat?"
 
 #: src/sslmanager.c:190 src/sslmanager.c:198
-#, fuzzy
 msgid "_Reject"
-msgstr "Omdirigera"
+msgstr "Avslå"
 
 #: src/sslmanager.c:191 src/sslmanager.c:197
 msgid "_Temporarily accept"
-msgstr ""
+msgstr "Acceptera _tillfälligt"
 
 #: src/sslmanager.c:192 src/sslmanager.c:196
-#, fuzzy
 msgid "Always _accept"
-msgstr "Alltid"
+msgstr "Acceptera alltid"
 
 #: src/subscribedialog.c:203
 msgid "Subscribe to newsgroup"
@@ -7680,9 +7493,8 @@ msgid "unknown"
 msgstr "okänd"
 
 #: src/subscribedialog.c:481
-#, fuzzy
 msgid "Getting newsgroup list..."
-msgstr "Kan inte hämta grupplista."
+msgstr "Hämtar nyhetsgruppslista"
 
 #: src/subscribedialog.c:489
 msgid "Can't retrieve newsgroup list."
@@ -7726,14 +7538,12 @@ msgid "/_Mark"
 msgstr "/_Markera"
 
 #: src/summaryview.c:453
-#, fuzzy
 msgid "/_Mark/Set _flag"
-msgstr "/_Markera/_Markera"
+msgstr "/_Markera/Sätt _flagga"
 
 #: src/summaryview.c:454
-#, fuzzy
 msgid "/_Mark/_Unset flag"
-msgstr "_Markera/_Avmarkera"
+msgstr "_Markera/Ta bort flagga"
 
 #: src/summaryview.c:455
 msgid "/_Mark/---"
@@ -7748,9 +7558,8 @@ msgid "/_Mark/Mark as rea_d"
 msgstr "/_Markera/Markera som _läst"
 
 #: src/summaryview.c:459
-#, fuzzy
 msgid "/_Mark/Mark _thread as read"
-msgstr "/_Markera/Markera som _läst"
+msgstr "/_Markera/Markera tråd som _läst"
 
 #: src/summaryview.c:461
 msgid "/_Mark/Mark all _read"
@@ -7761,14 +7570,12 @@ msgid "/Color la_bel"
 msgstr "/F_ärgmarkera"
 
 #: src/summaryview.c:466
-#, fuzzy
 msgid "/Set as _junk mail"
-msgstr "Sätt som skräppost"
+msgstr "Markera som skräppost"
 
 #: src/summaryview.c:467
-#, fuzzy
 msgid "/Set as not j_unk mail"
-msgstr "Sätt som skräppost"
+msgstr "/Markera som icke skräppost"
 
 #: src/summaryview.c:469
 msgid "/Re-_edit"
@@ -7803,14 +7610,13 @@ msgid "Creating summary view...\n"
 msgstr "Skapar summeringsvy...\n"
 
 #: src/summaryview.c:556
-#, fuzzy
 msgid "Toggle message view"
-msgstr "Skapar meddelandevy...\n"
+msgstr "Växla meddelandevy"
 
 #: src/summaryview.c:683
-#, fuzzy, c-format
+#, c-format
 msgid "Scanning folder (%s) (%d)..."
-msgstr "Söker igenom mapp (%s)..."
+msgstr "Söker igenom mapp (%s) (%d)..."
 
 #: src/summaryview.c:737
 msgid "Process mark"
@@ -7826,9 +7632,8 @@ msgid "Scanning folder (%s)..."
 msgstr "Söker igenom mapp (%s)..."
 
 #: src/summaryview.c:971
-#, fuzzy
 msgid "Could not establish a connection to the server."
-msgstr "Kan inte skapa IMAP4-session med: %s:%d\n"
+msgstr "Kunde inte etablera en anslutning till servern."
 
 #: src/summaryview.c:1626
 msgid "_Search again"
@@ -7836,7 +7641,7 @@ msgstr "_Sök igen"
 
 #: src/summaryview.c:1648 src/summaryview.c:1657
 msgid "No more unread messages"
-msgstr "Inga fler olästa meddelande"
+msgstr "Inga fler olästa meddelanden"
 
 #: src/summaryview.c:1649
 msgid "No unread message found. Search from the end?"
@@ -7847,9 +7652,8 @@ msgid "No unread messages."
 msgstr "Inga olästa meddelanden."
 
 #: src/summaryview.c:1658
-#, fuzzy
 msgid "No unread message found. Go to next unread folder?"
-msgstr "Inget oläst meddelande funnet. Gå till nästa mapp?"
+msgstr "Inget oläst meddelande funnet. Gå till nästa olästa mapp?"
 
 #: src/summaryview.c:1666 src/summaryview.c:1675
 msgid "No more new messages"
@@ -7864,9 +7668,10 @@ msgid "No new messages."
 msgstr "Inga nya meddelanden."
 
 #: src/summaryview.c:1676
-#, fuzzy
 msgid "No new message found. Go to next folder which has new messages?"
-msgstr "Inget nytt meddelande funnet. Gå till nästa mapp?"
+msgstr ""
+"Inget nytt meddelande funnet. Gå till nästa mapp som innehåller nya "
+"meddelanden?"
 
 #: src/summaryview.c:1684 src/summaryview.c:1693
 msgid "No more marked messages"
@@ -7928,9 +7733,9 @@ msgid "%s%d copied"
 msgstr "%s%d kopierad"
 
 #: src/summaryview.c:2297
-#, fuzzy, c-format
+#, c-format
 msgid "%d/%d new, %d/%d unread, %d/%d total"
-msgstr "%d nya, %d olästa, %d totalt"
+msgstr "%d/%d nya, %d/%d olästa, %d/%d totalt"
 
 #: src/summaryview.c:2306
 #, c-format
@@ -8006,9 +7811,8 @@ msgid "Destination is same as current folder."
 msgstr "Destinationen är samma som aktuell mapp."
 
 #: src/summaryview.c:3727
-#, fuzzy
 msgid "Select folder to move"
-msgstr "Välj mapp"
+msgstr "Välj mapp att flytta"
 
 #: src/summaryview.c:3761
 #, c-format
@@ -8020,9 +7824,8 @@ msgid "Destination for copy is same as current folder."
 msgstr "Destinationen att kopiera till är samma som aktuell mapp."
 
 #: src/summaryview.c:3828
-#, fuzzy
 msgid "Select folder to copy"
-msgstr "Välj mapp"
+msgstr "Välj mapp att kopiera"
 
 #: src/summaryview.c:4003
 msgid "Error occurred while processing messages."
@@ -8037,9 +7840,9 @@ msgid "Unthreading..."
 msgstr "Avtrådar..."
 
 #: src/summaryview.c:4767 src/summaryview.c:4828
-#, fuzzy, c-format
+#, c-format
 msgid "Filtering (%d / %d)..."
-msgstr "Filtrerar..."
+msgstr "Filtrerar (%d / %d)..."
 
 #: src/summaryview.c:4894
 msgid "filtering..."
@@ -8065,12 +7868,11 @@ msgstr "Skapar textvy...\n"
 
 #: src/textview.c:530
 msgid "This message is encrypted, but its decryption failed.\n"
-msgstr ""
+msgstr "Detta meddelande är krypterat, men dess dekryptering misslyckades.\n"
 
 #: src/textview.c:859
-#, fuzzy
 msgid "_Copy file name"
-msgstr "Filnamn"
+msgstr "_Kopiera filnamn"
 
 #: src/textview.c:1201
 msgid "This message can't be displayed.\n"
@@ -8081,6 +7883,8 @@ msgid ""
 "The body text couldn't be displayed because writing to temporary file "
 "failed.\n"
 msgstr ""
+"Meddelandetexten kunde inte visas på grund av misslyckande att skriva till "
+"tillfällig fil.\n"
 
 #: src/textview.c:2477
 msgid "Sa_ve this image as..."
@@ -8091,9 +7895,8 @@ msgid "Compose _new message"
 msgstr "Skriv _nytt meddelande"
 
 #: src/textview.c:2499
-#, fuzzy
 msgid "R_eply to this address"
-msgstr "Kopiera denna ad_ress"
+msgstr "Svara till d_enna adress"
 
 #: src/textview.c:2502
 msgid "Add to address _book..."
@@ -8129,27 +7932,22 @@ msgid "Fake URL warning"
 msgstr "Fejkad URL varning"
 
 #: src/trayicon.c:141
-#, fuzzy
 msgid "_Display Sylpheed"
-msgstr "Gamla Sylpheed"
+msgstr "Visa Sylpheed"
 
 #: src/trayicon.c:146
-#, fuzzy
 msgid "Get from _current account"
-msgstr "/_Meddelande/Mottag/Hämta från _detta konto"
+msgstr "Hämta från aktuellt _konto"
 
 #: src/trayicon.c:150
-#, fuzzy
 msgid "Get from _all accounts"
-msgstr "/_Meddelande/Mottag/Hämta från alla _konton"
+msgstr "Hämta från _alla konton"
 
 #: src/trayicon.c:154
-#, fuzzy
 msgid "_Send queued messages"
-msgstr "Skicka köade meddelanden"
+msgstr "_Skicka köade meddelanden"
 
 #: src/trayicon.c:166
-#, fuzzy
 msgid "E_xit"
 msgstr "Avsluta"
 
@@ -8162,54 +7960,53 @@ msgid ""
 "A newer version of Sylpheed has been found.\n"
 "Upgrade now?"
 msgstr ""
+"En nyare version av Sylpheed har upptäckts.\n"
+"Uppgradera nu?"
 
 #: src/update_check.c:276 src/update_check.c:593
-#, fuzzy
 msgid "New version found"
-msgstr "Ingen signatur funnen"
+msgstr "Ny version funnen"
 
 #: src/update_check.c:420 src/update_check.c:700
-#, fuzzy
 msgid "Information"
-msgstr "Serverinformation"
+msgstr "Information"
 
 #: src/update_check.c:421
-#, fuzzy
 msgid "Sylpheed is already the latest version."
-msgstr "en annan instans av Sylpheed är redan igång.\n"
+msgstr "Sylpheed är redan den senaste versionen."
 
 #: src/update_check.c:424
 msgid "Couldn't get the version information."
-msgstr ""
+msgstr "Kunde inte hämta versionsinformationen."
 
 #: src/update_check.c:640
 msgid ""
 "Newer version of plug-ins have been found.\n"
 "Upgrade now?\n"
 msgstr ""
+"Nyare versioner av insticksmoduler har hittats.\n"
+"Uppgradera nu?\n"
 
 #: src/update_check.c:701
-#, fuzzy
 msgid "All Sylpheed plug-ins are already the latest version."
-msgstr "en annan instans av Sylpheed är redan igång.\n"
+msgstr "Alla Sylpheeds insticksmoduler är redan den senaste versionen."
 
 #: src/update_check.c:704
 msgid "Couldn't get the version information of plug-ins."
-msgstr ""
+msgstr "Kunde inte hämta versionsinformation från insticksmodulerna."
 
 #: plugin/attachment_tool/attachment_tool.c:50
 #: plugin/attachment_tool/attachment_tool.c:272
-#, fuzzy
 msgid "Remove attachments"
-msgstr "Bilaga"
+msgstr "Ta bort bilagor"
 
 #: plugin/attachment_tool/attachment_tool.c:264
 msgid "This tool is available on local folders only."
-msgstr ""
+msgstr "Detta verktyg är endast tillgängligt på lokala mappar."
 
 #: plugin/attachment_tool/attachment_tool.c:273
 msgid "Do you really remove attached files from the selected messages?"
-msgstr ""
+msgstr "Vill du verkligen ta bort bifogade filer från valda meddelanden?"
 
 #~ msgid "Select Keys"
 #~ msgstr "Välj nycklar"
