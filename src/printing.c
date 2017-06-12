@@ -432,6 +432,7 @@ static void draw_page(GtkPrintOperation *operation, GtkPrintContext *context,
 
 static gboolean printing_load_settings(void)
 {
+#if GTK_CHECK_VERSION(2, 12, 0)
 	gchar *file;
 	GtkPrintSettings *new_settings;
 
@@ -456,10 +457,14 @@ static gboolean printing_load_settings(void)
 	settings = new_settings;
 
 	return TRUE;
+#else
+	return FALSE;
+#endif /* GTK_CHECK_VERSION(2, 12, 0) */
 }
 
 static gboolean printing_save_settings(void)
 {
+#if GTK_CHECK_VERSION(2, 12, 0)
 	gchar *file;
 	gboolean ret = TRUE;
 
@@ -475,10 +480,14 @@ static gboolean printing_save_settings(void)
 	g_free(file);
 
 	return ret;
+#else
+	return FALSE;
+#endif /* GTK_CHECK_VERSION(2, 12, 0) */
 }
 
 static gboolean printing_load_page_setup(void)
 {
+#if GTK_CHECK_VERSION(2, 12, 0)
 	gchar *file;
 	GtkPageSetup *new_setup;
 
@@ -503,10 +512,14 @@ static gboolean printing_load_page_setup(void)
 	page_setup = new_setup;
 
 	return TRUE;
+#else
+	return FALSE;
+#endif /* GTK_CHECK_VERSION(2, 12, 0) */
 }
 
 static gboolean printing_save_page_setup(void)
 {
+#if GTK_CHECK_VERSION(2, 12, 0)
 	gchar *file;
 	gboolean ret = TRUE;
 
@@ -522,6 +535,9 @@ static gboolean printing_save_page_setup(void)
 	g_free(file);
 
 	return ret;
+#else
+	return FALSE;
+#endif /* GTK_CHECK_VERSION(2, 12, 0) */
 }
 
 gint printing_print_messages_gtk(GSList *mlist, MimeInfo *partinfo,
