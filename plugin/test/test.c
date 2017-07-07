@@ -62,7 +62,7 @@ static void inc_finished_cb(GObject *obj, gint new_messages);
 static void create_window(void);
 static void create_folderview_sub_widget(void);
 
-gulong app_exit_handler_id = 0;
+static gulong test_app_exit_handler_id = 0;
 
 void plugin_load(void)
 {
@@ -94,7 +94,7 @@ void plugin_load(void)
 
 	g_signal_connect_after(syl_app_get(), "init-done", G_CALLBACK(init_done_cb),
 			 NULL);
-	app_exit_handler_id =
+	test_app_exit_handler_id =
 	g_signal_connect(syl_app_get(), "app-exit", G_CALLBACK(app_exit_cb),
 			 NULL);
 	syl_plugin_signal_connect("folderview-menu-popup",
@@ -126,7 +126,7 @@ void plugin_load(void)
 void plugin_unload(void)
 {
 	g_print("test plug-in unloaded!\n");
-	g_signal_handler_disconnect(syl_app_get(), app_exit_handler_id);
+	g_signal_handler_disconnect(syl_app_get(), test_app_exit_handler_id);
 }
 
 SylPluginInfo *plugin_info(void)
