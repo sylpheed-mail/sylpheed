@@ -135,6 +135,9 @@ static gint get_header_data(MsgPrintInfo *mpinfo, PrintData *print_data)
 		g_free(text);
 	}
 
+	/* dummy character for correct separation */
+	g_string_append_c(str, ' ');
+
 	mpinfo->hdr_data = g_string_free(str, FALSE);
 	procheader_header_array_destroy(headers);
 
@@ -153,6 +156,7 @@ static gint layout_set_headers(PangoLayout *layout, MsgPrintInfo *mpinfo,
 	size = pango_font_description_get_size(desc);
 	pango_font_description_free(desc);
 	desc = gtkut_get_default_font_desc();
+	debug_print("layout_set_headers: using font %s (style %d, %g pt)\n", pango_font_description_get_family(desc), pango_font_description_get_style(desc), (gdouble)size / PANGO_SCALE);
 	pango_font_description_set_size(desc, size);
 	pango_layout_set_font_description(layout, desc);
 	pango_font_description_free(desc);
@@ -167,6 +171,7 @@ static gint message_count_page(MsgPrintInfo *mpinfo, GtkPrintContext *context,
 {
 	cairo_t *cr;
 	gdouble width, height, line_h, hdr_h = 0.0, body_h;
+	gdouble dpi_x, dpi_y;
 	PangoLayout *layout;
 	PangoFontDescription *desc;
 	gint layout_h;
@@ -181,11 +186,13 @@ static gint message_count_page(MsgPrintInfo *mpinfo, GtkPrintContext *context,
 	cr = gtk_print_context_get_cairo_context(context);
 	width = gtk_print_context_get_width(context);
 	height = gtk_print_context_get_height(context);
+	dpi_x = gtk_print_context_get_dpi_x(context);
+	dpi_y = gtk_print_context_get_dpi_y(context);
 
 	layout = gtk_print_context_create_pango_layout(context);
 	pango_layout_set_width(layout, width * PANGO_SCALE);
 	pango_layout_set_wrap(layout, PANGO_WRAP_WORD_CHAR);
-	pango_layout_set_spacing(layout, SPACING * PANGO_SCALE);
+	pango_layout_set_spacing(layout, (SPACING / 72 * dpi_y) * PANGO_SCALE);
 
 	if (!print_data->partinfo) {
 		if (get_header_data(mpinfo, print_data) < 0) {
@@ -209,7 +216,7 @@ static gint message_count_page(MsgPrintInfo *mpinfo, GtkPrintContext *context,
 		g_warning("invalid layout_h (%d) ! falling back to default height (%d)\n", layout_h, 12 * PANGO_SCALE);
 		layout_h = 12 * PANGO_SCALE;
 	}
-	line_h = (gdouble)layout_h / PANGO_SCALE + SPACING;
+	line_h = (gdouble)layout_h / PANGO_SCALE + (SPACING / 72 * dpi_y);
 	print_data->line_h = line_h;
 	lines_per_page = (height - line_h) / line_h;
 	print_data->lines_per_page = lines_per_page;
@@ -219,7 +226,7 @@ static gint message_count_page(MsgPrintInfo *mpinfo, GtkPrintContext *context,
 	lines_left = body_h / line_h;
 
 	debug_print("width = %g, height = %g\n", width, height);
-	debug_print("dpi_x = %g, dpi_y = %g\n", gtk_print_context_get_dpi_x(context), gtk_print_context_get_dpi_y(context));
+	debug_print("dpi_x = %g, dpi_y = %g\n", dpi_x, dpi_y);
 	debug_print("layout_h = %d, line_h = %g, lines_per_page = %d\n", layout_h, line_h, lines_per_page);
 	debug_print("hdr_h = %g, body_h = %g, lines_left = %d\n", hdr_h, body_h, lines_left);
 
@@ -323,6 +330,7 @@ static void draw_page(GtkPrintOperation *operation, GtkPrintContext *context,
 	cairo_t *cr;
 	PangoLayout *layout;
 	gdouble width, height;
+	gdouble dpi;
 	gint layout_h;
 	PangoFontDescription *desc;
 	gint font_size;
@@ -342,6 +350,7 @@ static void draw_page(GtkPrintOperation *operation, GtkPrintContext *context,
 	cr = gtk_print_context_get_cairo_context(context);
 	width = gtk_print_context_get_width(context);
 	height = gtk_print_context_get_height(context);
+	dpi = gtk_print_context_get_dpi_y(context);
 
 #if 0
 	cairo_set_source_rgb(cr, 0.8, 0.8, 0.8);
@@ -355,7 +364,7 @@ static void draw_page(GtkPrintOperation *operation, GtkPrintContext *context,
 	layout = gtk_print_context_create_pango_layout(context);
 	pango_layout_set_width(layout, width * PANGO_SCALE);
 	pango_layout_set_wrap(layout, PANGO_WRAP_WORD_CHAR);
-	pango_layout_set_spacing(layout, SPACING * PANGO_SCALE);
+	pango_layout_set_spacing(layout, (SPACING / 72 * dpi) * PANGO_SCALE);
 
 	if (pinfo->page_nr_per_msg == 0 && mpinfo->hdr_data) {
 		if (layout_set_headers(layout, mpinfo, print_data) < 0) {
@@ -371,6 +380,8 @@ static void draw_page(GtkPrintOperation *operation, GtkPrintContext *context,
 	pango_layout_set_attributes(layout, NULL);
 	desc = pango_font_description_from_string(prefs_common_get()->textfont);
 	font_size = pango_font_description_get_size(desc);
+	debug_print("draw_page: using font %s (style %d, %g pt)\n", pango_font_description_get_family(desc), pango_font_description_get_style(desc), (gdouble)font_size / PANGO_SCALE);
+	pango_font_description_set_size(desc, font_size);
 	pango_layout_set_font_description(layout, desc);
 	pango_font_description_free(desc);
 
@@ -391,6 +402,11 @@ static void draw_page(GtkPrintOperation *operation, GtkPrintContext *context,
 		if (fgets(buf, sizeof(buf), mpinfo->fp) == NULL)
 			break;
 		strretchomp(buf);
+		if (buf[0] == '\0') {
+			/* dummy character for correct empty line height */
+			buf[0] = ' ';
+			buf[1] = '\0';
+		}
 
 		pango_layout_set_text(layout, buf, -1);
 		lines = pango_layout_get_line_count(layout);
@@ -413,7 +429,7 @@ static void draw_page(GtkPrintOperation *operation, GtkPrintContext *context,
 
 		pango_layout_get_size(layout, NULL, &layout_h);
 		cairo_move_to(cr, 0,
-			      y + (gdouble)layout_h / PANGO_SCALE + SPACING);
+			      y + (gdouble)layout_h / PANGO_SCALE + (SPACING / 72 * dpi));
 	}
 	debug_print("count = %d\n", count);
 
@@ -424,7 +440,7 @@ static void draw_page(GtkPrintOperation *operation, GtkPrintContext *context,
 	g_snprintf(buf, sizeof(buf), "- %d -", pinfo->page_nr_per_msg + 1);
 	pango_layout_set_text(layout, buf, -1);
 	pango_layout_set_alignment(layout, PANGO_ALIGN_CENTER);
-	cairo_move_to(cr, 0, height - (gdouble)font_size / PANGO_SCALE);
+	cairo_move_to(cr, 0, height - (gdouble)font_size / PANGO_SCALE / 72 * dpi);
 	pango_cairo_show_layout(cr, layout);
 
 	g_object_unref(layout);
@@ -572,7 +588,8 @@ gint printing_print_messages_gtk(GSList *mlist, MimeInfo *partinfo,
 
 	op = gtk_print_operation_new();
 
-	gtk_print_operation_set_unit(op, GTK_UNIT_POINTS);
+	/* GTK_UNIT_POINTS introduces text corruption bug, so use pixel unit */
+	gtk_print_operation_set_unit(op, GTK_UNIT_PIXEL);
 
 	g_signal_connect(op, "begin-print", G_CALLBACK(begin_print),
 			 print_data);
