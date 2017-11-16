@@ -92,7 +92,10 @@ typedef enum
 	C_WINDOWS_874,
 	C_GEORGIAN_PS,
 	C_TCVN5712_1,
-	C_ISO_8859_16
+	C_ISO_8859_16,
+	C_UTF_16,
+	C_UTF_16BE,
+	C_UTF_16LE
 } CharSet;
 
 typedef enum
@@ -180,6 +183,9 @@ struct _CodeConverter
 #define CS_GEORGIAN_PS		"GEORGIAN-PS"
 #define CS_TCVN5712_1		"TCVN5712-1"
 #define CS_ISO_8859_16		"ISO-8859-16"
+#define CS_UTF_16		"UTF-16"
+#define CS_UTF_16BE		"UTF-16BE"
+#define CS_UTF_16LE		"UTF-16LE"
 
 #define C_INTERNAL		C_UTF_8
 #define CS_INTERNAL		CS_UTF_8

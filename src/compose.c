@@ -4554,6 +4554,11 @@ static gint compose_write_attach(Compose *compose, FILE *fp,
 	FILE *attach_fp;
 	gint len;
 	EncodingType encoding;
+	ContentType content_type;
+	gchar *tmp_file = NULL;
+	const gchar *src_file;
+	FILE *src_fp;
+	FILE *tmp_fp = NULL;
 
 	for (valid = gtk_tree_model_get_iter_first(model, &iter); valid;
 	     valid = gtk_tree_model_iter_next(model, &iter)) {
@@ -4631,23 +4636,95 @@ static gint compose_write_attach(Compose *compose, FILE *fp,
 		fprintf(fp, "Content-Transfer-Encoding: %s\n\n",
 			procmime_get_encoding_str(encoding));
 
+		content_type = procmime_scan_mime_type(ainfo->content_type);
+
+		if (content_type == MIME_TEXT || content_type == MIME_TEXT_HTML) {
+			CharSet enc;
+			gchar *src = NULL;
+			gsize len = 0, dlen = 0;
+			gchar *dest;
+
+			enc = conv_check_file_encoding(ainfo->file);
+			if (enc == C_UTF_16 || enc == C_UTF_16BE || enc == C_UTF_16LE) {
+				g_file_get_contents(ainfo->file, &src, &len, NULL);
+				dest = g_convert(src, len, CS_UTF_8, conv_get_charset_str(enc), NULL, &dlen, NULL);
+				tmp_file = get_tmp_file();
+				if (g_file_set_contents(tmp_file, dest, dlen, NULL) == FALSE) {
+					g_warning("Cannot convert UTF-16 file %s to UTF-8\n", ainfo->file);
+					g_free(tmp_file);
+					tmp_file = NULL;
+				}
+				g_free(dest);
+				g_free(src);
+			}
+		}
+
+		if (tmp_file) {
+			src_file = tmp_file;
+		} else {
+			src_file = ainfo->file;
+		}
+
 		if (encoding == ENC_BASE64) {
 			gchar inbuf[B64_LINE_SIZE], outbuf[B64_BUFFSIZE];
-			FILE *tmp_fp = attach_fp;
-			gchar *tmp_file = NULL;
-			ContentType content_type;
+			gchar *canon_file = NULL;
 
-			content_type =
-				procmime_scan_mime_type(ainfo->content_type);
 			if (content_type == MIME_TEXT ||
 			    content_type == MIME_TEXT_HTML ||
 			    content_type == MIME_MESSAGE_RFC822) {
-				tmp_file = get_tmp_file();
-				if (canonicalize_file(ainfo->file, tmp_file) < 0) {
-					g_free(tmp_file);
+				canon_file = get_tmp_file();
+				if (canonicalize_file(src_file, canon_file) < 0) {
+					g_free(canon_file);
+					if (tmp_file) {
+						g_unlink(tmp_file);
+						g_free(tmp_file);
+					}
 					fclose(attach_fp);
 					return -1;
 				}
+				if ((tmp_fp = g_fopen(canon_file, "rb")) == NULL) {
+					FILE_OP_ERROR(canon_file, "fopen");
+					g_unlink(canon_file);
+					g_free(canon_file);
+					if (tmp_file) {
+						g_unlink(tmp_file);
+						g_free(tmp_file);
+					}
+					fclose(attach_fp);
+					return -1;
+				}
+			}
+
+			if (tmp_fp) {
+				src_fp = tmp_fp;
+			} else {
+				src_fp = attach_fp;
+			}
+
+			while ((len = fread(inbuf, sizeof(gchar),
+					    B64_LINE_SIZE, src_fp))
+			       == B64_LINE_SIZE) {
+				base64_encode(outbuf, (guchar *)inbuf,
+					      B64_LINE_SIZE);
+				fputs(outbuf, fp);
+				fputc('\n', fp);
+			}
+			if (len > 0 && feof(src_fp)) {
+				base64_encode(outbuf, (guchar *)inbuf, len);
+				fputs(outbuf, fp);
+				fputc('\n', fp);
+			}
+
+			if (tmp_fp) {
+				fclose(tmp_fp);
+				tmp_fp = NULL;
+			}
+			if (canon_file) {
+				g_unlink(canon_file);
+				g_free(canon_file);
+			}
+		} else {
+			if (tmp_file) {
 				if ((tmp_fp = g_fopen(tmp_file, "rb")) == NULL) {
 					FILE_OP_ERROR(tmp_file, "fopen");
 					g_unlink(tmp_file);
@@ -4655,43 +4732,38 @@ static gint compose_write_attach(Compose *compose, FILE *fp,
 					fclose(attach_fp);
 					return -1;
 				}
+				src_fp = tmp_fp;
+			} else {
+				src_fp = attach_fp;
 			}
 
-			while ((len = fread(inbuf, sizeof(gchar),
-					    B64_LINE_SIZE, tmp_fp))
-			       == B64_LINE_SIZE) {
-				base64_encode(outbuf, (guchar *)inbuf,
-					      B64_LINE_SIZE);
-				fputs(outbuf, fp);
-				fputc('\n', fp);
-			}
-			if (len > 0 && feof(tmp_fp)) {
-				base64_encode(outbuf, (guchar *)inbuf, len);
-				fputs(outbuf, fp);
-				fputc('\n', fp);
+			if (encoding == ENC_QUOTED_PRINTABLE) {
+				gchar inbuf[BUFFSIZE], outbuf[BUFFSIZE * 4];
+
+				while (fgets(inbuf, sizeof(inbuf), src_fp) != NULL) {
+					qp_encode_line(outbuf, (guchar *)inbuf);
+					fputs(outbuf, fp);
+				}
+			} else {
+				gchar buf[BUFFSIZE];
+
+				while (fgets(buf, sizeof(buf), src_fp) != NULL) {
+					strcrchomp(buf);
+					fputs(buf, fp);
+				}
 			}
 
-			if (tmp_file) {
+			if (tmp_fp) {
 				fclose(tmp_fp);
-				g_unlink(tmp_file);
-				g_free(tmp_file);
-			}
-		} else if (encoding == ENC_QUOTED_PRINTABLE) {
-			gchar inbuf[BUFFSIZE], outbuf[BUFFSIZE * 4];
-
-			while (fgets(inbuf, sizeof(inbuf), attach_fp) != NULL) {
-				qp_encode_line(outbuf, (guchar *)inbuf);
-				fputs(outbuf, fp);
-			}
-		} else {
-			gchar buf[BUFFSIZE];
-
-			while (fgets(buf, sizeof(buf), attach_fp) != NULL) {
-				strcrchomp(buf);
-				fputs(buf, fp);
+				tmp_fp = NULL;
 			}
 		}
 
+		if (tmp_file) {
+			g_unlink(tmp_file);
+			g_free(tmp_file);
+			tmp_file = NULL;
+		}
 		fclose(attach_fp);
 	}
 

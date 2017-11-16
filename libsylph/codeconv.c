@@ -1681,6 +1681,9 @@ static const struct {
 	{C_GEORGIAN_PS,		CS_GEORGIAN_PS},
 	{C_TCVN5712_1,		CS_TCVN5712_1},
 	{C_ISO_8859_16,		CS_ISO_8859_16},
+	{C_UTF_16,		CS_UTF_16},
+	{C_UTF_16BE,		CS_UTF_16BE},
+	{C_UTF_16LE,		CS_UTF_16LE},
 };
 
 static const struct {
@@ -2656,6 +2659,7 @@ CharSet conv_check_file_encoding(const gchar *file)
 	CharSet enc;
 	const gchar *enc_str;
 	gboolean is_locale = TRUE, is_utf8 = TRUE;
+	size_t size;
 
 	g_return_val_if_fail(file != NULL, C_AUTO);
 
@@ -2668,6 +2672,75 @@ CharSet conv_check_file_encoding(const gchar *file)
 		FILE_OP_ERROR(file, "fopen");
 		return C_AUTO;
 	}
+
+	/* UTF-16 check */
+	if ((size = fread(buf, 2, BUFFSIZE / 2, fp)) > 0) {
+		CharSet guess_enc = C_AUTO;
+
+		debug_print("conv_check_file_encoding: check first %d bytes of file %s\n", size * 2, file);
+
+		/* BOM check */
+		if ((buf[0] & 0xff) == 0xfe && (buf[1] & 0xff) == 0xff) {
+			debug_print("conv_check_file_encoding: UTF-16 BOM (BE) found\n");
+			guess_enc = C_UTF_16; /* UTF-16BE */
+		} else if ((buf[0] & 0xff) == 0xff && (buf[1] & 0xff) == 0xfe) {
+			debug_print("conv_check_file_encoding: UTF-16 BOM (LE) found\n");
+			guess_enc = C_UTF_16; /* UTF-16LE */
+		}
+		if (guess_enc != C_AUTO) {
+			fclose(fp);
+			return guess_enc;
+		}
+
+		/* search UTF-16 CR/LF */
+		if (memchr(buf, 0x00, size * 2) != NULL) {
+			gint i;
+			guchar c1, c2;
+
+			for (i = 0; i < size; i++) {
+				c1 = buf[i * 2] & 0xff;
+				c2 = buf[i * 2 + 1] & 0xff;
+				if (c1 == 0x00 && c2 == 0x0d) { /* UTF-16BE CR */
+					i++;
+					if (i >= size) {
+						break;
+					}
+					c1 = buf[i * 2] & 0xff;
+					c2 = buf[i * 2 + 1] & 0xff;
+					if (c1 == 0x00 && c2 == 0x0a) { /* UTF-16BE LF */
+						guess_enc = C_UTF_16BE;
+						break;
+					}
+				} else if (c1 == 0x0d && c2 == 0x00) { /* UTF-16LE CR */
+					i++;
+					if (i >= size) {
+						break;
+					}
+					c1 = buf[i * 2] & 0xff;
+					c2 = buf[i * 2 + 1] & 0xff;
+					if (c1 == 0x0a && c2 == 0x00) { /* UTF-16LE LF */
+						guess_enc = C_UTF_16LE;
+						break;
+					}
+				} else if (c1 == 0x00 && c2 == 0x0a) { /* UTF-16BE LF */
+					guess_enc = C_UTF_16BE;
+					break;
+				} else if (c1 == 0x0a && c2 == 0x00) { /* UTF-16LE LF */
+					guess_enc = C_UTF_16LE;
+					break;
+				}
+			}
+
+			if (guess_enc != C_AUTO) {
+				debug_print("conv_check_file_encoding: %s detected\n",
+					    conv_get_charset_str(guess_enc));
+				fclose(fp);
+				return guess_enc;
+			}
+		}
+	}
+
+	rewind(fp);
 
 	while (fgets(buf, sizeof(buf), fp) != NULL) {
 		gchar *str;
