@@ -2212,14 +2212,41 @@ static void compose_insert_file(Compose *compose, const gchar *file,
 	FILE *fp;
 	gboolean prev_autowrap;
 	CharSet enc;
+	gchar *tmp_file = NULL;
 
 	g_return_if_fail(file != NULL);
 
 	enc = conv_check_file_encoding(file);
 
-	if ((fp = g_fopen(file, "rb")) == NULL) {
-		FILE_OP_ERROR(file, "fopen");
-		return;
+	if (enc == C_UTF_16 || enc == C_UTF_16BE || enc == C_UTF_16LE) {
+		gchar *src = NULL;
+		gsize len = 0, dlen = 0;
+		gchar *dest;
+
+		g_file_get_contents(file, &src, &len, NULL);
+		dest = g_convert(src, len, CS_UTF_8, conv_get_charset_str(enc), NULL, &dlen, NULL);
+		tmp_file = get_tmp_file();
+		if (g_file_set_contents(tmp_file, dest, dlen, NULL) == FALSE) {
+			g_warning("compose_insert_file: Cannot convert UTF-16 file %s to UTF-8\n", file);
+			g_free(tmp_file);
+			tmp_file = NULL;
+		}
+		g_free(dest);
+		g_free(src);
+	}
+
+	if (tmp_file) {
+		if ((fp = g_fopen(tmp_file, "rb")) == NULL) {
+			FILE_OP_ERROR(tmp_file, "fopen");
+			g_unlink(tmp_file);
+			g_free(tmp_file);
+			return;
+		}
+	} else {
+		if ((fp = g_fopen(file, "rb")) == NULL) {
+			FILE_OP_ERROR(file, "fopen");
+			return;
+		}
 	}
 
 	prev_autowrap = compose->autowrap;
@@ -2263,6 +2290,10 @@ static void compose_insert_file(Compose *compose, const gchar *file,
 	}
 
 	fclose(fp);
+	if (tmp_file) {
+		g_unlink(tmp_file);
+		g_free(tmp_file);
+	}
 
 	compose->autowrap = prev_autowrap;
 	if (compose->autowrap)
