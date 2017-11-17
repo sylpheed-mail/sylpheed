@@ -1875,8 +1875,9 @@ EncodingType procmime_get_encoding_for_text_file(const gchar *file)
 		gint i;
 
 		for (p = buf, i = 0; i < len; ++p, ++i) {
-			if (*p & 0x80)
+			if ((*p & 0x80) || *p == 0x00 || *p == 0x7f) {
 				++octet_chars;
+			}
 		}
 		total_len += len;
 	}
@@ -1914,8 +1915,9 @@ EncodingType procmime_get_encoding_for_str(const gchar *str)
 	total_len = strlen(str);
 
 	for (p = (const guchar *)str; *p != '\0'; ++p) {
-		if (*p & 0x80)
+		if ((*p & 0x80) || *p == 0x7f) {
 			++octet_chars;
+		}
 	}
 
 	if (total_len > 0)
