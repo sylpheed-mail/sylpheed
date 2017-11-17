@@ -2572,7 +2572,7 @@ static gint conv_copy_file_with_gconvert(const gchar *src, const gchar *dest,
 	gchar *src_s = NULL;
 	gsize len = 0, dlen = 0;
 	gchar *dest_s;
-	GError *error;
+	GError *error = NULL;
 
 	g_return_val_if_fail(src != NULL, -1);
 	g_return_val_if_fail(dest != NULL, -1);
