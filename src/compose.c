@@ -2217,22 +2217,13 @@ static void compose_insert_file(Compose *compose, const gchar *file,
 	g_return_if_fail(file != NULL);
 
 	enc = conv_check_file_encoding(file);
-
 	if (enc == C_UTF_16 || enc == C_UTF_16BE || enc == C_UTF_16LE) {
-		gchar *src = NULL;
-		gsize len = 0, dlen = 0;
-		gchar *dest;
-
-		g_file_get_contents(file, &src, &len, NULL);
-		dest = g_convert(src, len, CS_UTF_8, conv_get_charset_str(enc), NULL, &dlen, NULL);
 		tmp_file = get_tmp_file();
-		if (g_file_set_contents(tmp_file, dest, dlen, NULL) == FALSE) {
+		if (conv_copy_file(file, tmp_file, conv_get_charset_str(enc)) < 0) {
 			g_warning("compose_insert_file: Cannot convert UTF-16 file %s to UTF-8\n", file);
 			g_free(tmp_file);
 			tmp_file = NULL;
 		}
-		g_free(dest);
-		g_free(src);
 	}
 
 	if (tmp_file) {
@@ -4671,22 +4662,15 @@ static gint compose_write_attach(Compose *compose, FILE *fp,
 
 		if (content_type == MIME_TEXT || content_type == MIME_TEXT_HTML) {
 			CharSet enc;
-			gchar *src = NULL;
-			gsize len = 0, dlen = 0;
-			gchar *dest;
 
 			enc = conv_check_file_encoding(ainfo->file);
 			if (enc == C_UTF_16 || enc == C_UTF_16BE || enc == C_UTF_16LE) {
-				g_file_get_contents(ainfo->file, &src, &len, NULL);
-				dest = g_convert(src, len, CS_UTF_8, conv_get_charset_str(enc), NULL, &dlen, NULL);
 				tmp_file = get_tmp_file();
-				if (g_file_set_contents(tmp_file, dest, dlen, NULL) == FALSE) {
-					g_warning("Cannot convert UTF-16 file %s to UTF-8\n", ainfo->file);
+				if (conv_copy_file(ainfo->file, tmp_file, conv_get_charset_str(enc)) < 0) {
+					g_warning("compose_write_attach: Cannot convert UTF-16 file %s to UTF-8", ainfo->file);
 					g_free(tmp_file);
 					tmp_file = NULL;
 				}
-				g_free(dest);
-				g_free(src);
 			}
 		}
 

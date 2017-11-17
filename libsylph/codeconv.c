@@ -2566,12 +2566,57 @@ gchar *conv_encode_filename(const gchar *src, const gchar *param_name,
 	return g_string_free(string, FALSE);
 }
 
+static gint conv_copy_file_with_gconvert(const gchar *src, const gchar *dest,
+					 const gchar *encoding)
+{
+	gchar *src_s = NULL;
+	gsize len = 0, dlen = 0;
+	gchar *dest_s;
+	GError *error;
+
+	g_return_val_if_fail(src != NULL, -1);
+	g_return_val_if_fail(dest != NULL, -1);
+	g_return_val_if_fail(encoding != NULL, -1);
+
+	if (g_file_get_contents(src, &src_s, &len, &error) == FALSE) {
+		g_warning("conv_copy_utf16_file(): %s: %s", src, error->message);
+		g_error_free(error);
+		return -1;
+	}
+
+	dest_s = g_convert(src_s, len, CS_UTF_8, encoding, NULL, &dlen, &error);
+	if (!dest_s) {
+		g_warning("conv_copy_utf16_file(): %s: %s", src, error->message);
+		g_error_free(error);
+		g_free(src_s);
+		return -1;
+	}
+
+	if (g_file_set_contents(dest, dest_s, dlen, &error) == FALSE) {
+		g_warning("conv_copy_utf16_file(): %s: %s", dest, error->message);
+		g_error_free(error);
+		g_free(dest_s);
+		g_free(src_s);
+		return -1;
+	}
+
+	g_free(dest_s);
+	g_free(src_s);
+	return 0;
+}
+
 gint conv_copy_file(const gchar *src, const gchar *dest, const gchar *encoding)
 {
 	FILE *src_fp, *dest_fp;
 	gchar buf[BUFFSIZE];
 	CodeConverter *conv;
 	gboolean err = FALSE;
+	CharSet charset;
+
+	charset = conv_get_charset_from_str(encoding);
+	if (charset == C_UTF_16 || charset == C_UTF_16BE || charset == C_UTF_16LE) {
+		return conv_copy_file_with_gconvert(src, dest, encoding);
+	}
 
 	if ((src_fp = g_fopen(src, "rb")) == NULL) {
 		FILE_OP_ERROR(src, "fopen");
