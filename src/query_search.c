@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2014 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2017 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,6 +44,7 @@
 #include <gtk/gtktreeview.h>
 #include <gtk/gtktreeselection.h>
 #include <gtk/gtkcellrenderertext.h>
+#include <gtk/gtkuimanager.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -64,8 +65,12 @@
 #include "procheader.h"
 #include "folder.h"
 #include "filter.h"
+#include "prefs_common.h"
 #include "prefs_filter.h"
 #include "prefs_filter_edit.h"
+#include "compose.h"
+#include "sourcewindow.h"
+#include "printing.h"
 
 enum
 {
@@ -100,6 +105,9 @@ static struct QuerySearchWindow {
 	GtkWidget *save_btn;
 	GtkWidget *close_btn;
 
+	GtkActionGroup *group;
+	GtkUIManager *ui;
+
 	FilterRule *rule;
 	gboolean requires_full_headers;
 
@@ -123,6 +131,38 @@ typedef struct {
 	gboolean cancelled;
 	gboolean finished;
 } QuerySearchSaveDialog;
+
+static const gchar *ui_def =
+	"<ui>"
+	"  <popup name='PopUpMenu'>"
+	"    <menuitem name='Reply' action='ReplyAction'/>"
+	"    <menu name='ReplyTo' action='ReplyToAction'>"
+	"      <menuitem name='ReplyAll' action='ReplyAllAction'/>"
+	"      <menuitem name='ReplySender' action='ReplySenderAction'/>"
+	"      <menuitem name='ReplyList' action='ReplyListAction'/>"
+	"    </menu>"
+	"    <separator />"
+	"    <menuitem name='Forward' action='ForwardAction'/>"
+	"    <menuitem name='ForwardAsAttach' action='ForwardAsAttachAction'/>"
+	"    <menuitem name='Redirect' action='RedirectAction'/>"
+	"    <separator />"
+	"    <menuitem name='MoveMsg' action='MoveMsgAction'/>"
+	"    <menuitem name='CopyMsg' action='CopyMsgAction'/>"
+	"    <separator />"
+	"    <menuitem name='AddAddress' action='AddAddressAction'/>"
+	"    <menu name='CreateFilter' action='CreateFilterAction'>"
+	"      <menuitem name='Auto' action='FilterAutoAction'/>"
+	"      <menuitem name='From' action='FilterFromAction'/>"
+	"      <menuitem name='To' action='FilterToAction'/>"
+	"      <menuitem name='Subject' action='FilterSubjectAction'/>"
+	"    </menu>"
+	"    <separator />"
+	"    <menuitem name='Open' action='OpenAction'/>"
+	"    <menuitem name='OpenSource' action='OpenSourceAction'/>"
+	"    <separator />"
+	"    <menuitem name='Print' action='PrintAction'/>"
+	"  </popup>"
+	"</ui>";
 
 static void query_search_create	(void);
 
@@ -151,6 +191,10 @@ static gboolean row_selected		(GtkTreeSelection	*selection,
 					 gboolean		 cur_selected,
 					 gpointer		 data);
 
+static gboolean treeview_button_pressed	(GtkWidget	*widget,
+					 GdkEventButton	*event,
+					 gpointer	 data);
+
 static void query_search_clear		(GtkButton	*button,
 					 gpointer	 data);
 static void query_select_folder		(GtkButton	*button,
@@ -172,6 +216,27 @@ static gboolean key_pressed		(GtkWidget	*widget,
 					 GdkEventKey	*event,
 					 gpointer	 data);
 
+static void query_search_open_msg	(gboolean	 new_window);
+
+/* Popup menu callbacks */
+static void reply_cb(void);
+static void reply_all_cb(void);
+static void reply_sender_cb(void);
+static void reply_list_cb(void);
+static void forward_cb(void);
+static void forward_attach_cb(void);
+static void redirect_cb(void);
+static void move_cb(void);
+static void copy_cb(void);
+static void add_address_cb(void);
+static void create_filter_auto_cb(void);
+static void create_filter_from_cb(void);
+static void create_filter_to_cb(void);
+static void create_filter_subject_cb(void);
+static void open_cb			(void);
+static void open_source_cb		(void);
+static void print_cb			(void);
+
 static gint query_search_cmp_by_folder	(GtkTreeModel	*model,
 					 GtkTreeIter	*a,
 					 GtkTreeIter	*b,
@@ -188,6 +253,33 @@ static gint query_search_cmp_by_date	(GtkTreeModel	*model,
 					 GtkTreeIter	*a,
 					 GtkTreeIter	*b,
 					 gpointer	 data);
+
+static GtkActionEntry action_entries[] = {
+	{"ReplyAction", NULL, N_("_Reply"), NULL, NULL, reply_cb},
+	{"ReplyToAction", NULL, N_("Repl_y to"), NULL, NULL, NULL},
+	{"ReplyAllAction", NULL, N_("Reply to _all"), NULL, NULL, reply_all_cb},
+	{"ReplySenderAction", NULL, N_("Reply to _sender"), NULL, NULL, reply_sender_cb},
+	{"ReplyListAction", NULL, N_("Reply to _list"), NULL, NULL, reply_list_cb},
+
+	{"ForwardAction", NULL, N_("_Forward"), NULL, NULL, forward_cb},
+	{"ForwardAsAttachAction", NULL, N_("For_ward as attachment"), NULL, NULL, forward_attach_cb},
+	{"RedirectAction", NULL, N_("Redirec_t"), NULL, NULL, redirect_cb},
+
+	{"MoveMsgAction", NULL, N_("M_ove messages to..."), NULL, NULL, move_cb},
+	{"CopyMsgAction", NULL, N_("_Copy messages to..."), NULL, NULL, copy_cb},
+
+	{"AddAddressAction", NULL, N_("Add sender to address boo_k..."), NULL, NULL, add_address_cb},
+	{"CreateFilterAction", NULL, N_("Create f_ilter rule"), NULL, NULL, NULL},
+	{"FilterAutoAction", NULL, N_("_Automatically"), NULL, NULL, create_filter_auto_cb},
+	{"FilterFromAction", NULL, N_("by _From"), NULL, NULL, create_filter_from_cb},
+	{"FilterToAction", NULL, N_("by _To"), NULL, NULL, create_filter_to_cb},
+	{"FilterSubjectAction", NULL, N_("by _Subject"), NULL, NULL, create_filter_subject_cb},
+
+	{"OpenAction", GTK_STOCK_OPEN, N_("_Open in new window"), NULL, NULL, open_cb},
+	{"OpenSourceAction", NULL, N_("View mess_age source"), NULL, NULL, open_source_cb},
+
+	{"PrintAction", GTK_STOCK_PRINT, N_("_Print..."), NULL, NULL, print_cb},
+};
 
 
 void query_search(FolderItem *item)
@@ -248,6 +340,9 @@ static void query_search_create(void)
 	GtkWidget *hbbox;
 	GtkWidget *save_btn;
 	GtkWidget *close_btn;
+
+	GtkActionGroup *group;
+	GtkUIManager *ui;
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_title(GTK_WINDOW (window), _("Search messages"));
@@ -365,6 +460,8 @@ static void query_search_create(void)
 	gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(treeview), TRUE);
 	g_signal_connect(G_OBJECT(treeview), "row-activated",
 			 G_CALLBACK(row_activated), NULL);
+	g_signal_connect(G_OBJECT(treeview), "button-press-event",
+			 G_CALLBACK(treeview_button_pressed), NULL);
 
 	gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(store), COL_FOLDER,
 					query_search_cmp_by_folder, NULL, NULL);
@@ -441,6 +538,16 @@ static void query_search_create(void)
 	g_signal_connect(G_OBJECT(close_btn), "clicked",
 			 G_CALLBACK(query_search_close), NULL);
 
+	group = gtk_action_group_new("main");
+	gtk_action_group_set_translation_domain(group, GETTEXT_PACKAGE);
+	gtk_action_group_add_actions(group, action_entries,
+				     sizeof(action_entries) /
+				     sizeof(action_entries[0]), NULL);
+
+	ui = gtk_ui_manager_new();
+	gtk_ui_manager_insert_action_group(ui, group, 0);
+	gtk_ui_manager_add_ui_from_string(ui, ui_def, -1, NULL);
+
 	search_window.window = window;
 	search_window.bool_optmenu = bool_optmenu;
 
@@ -460,6 +567,9 @@ static void query_search_create(void)
 	search_window.search_btn = search_btn;
 	search_window.save_btn  = save_btn;
 	search_window.close_btn = close_btn;
+
+	search_window.group = group;
+	search_window.ui = ui;
 }
 
 static FilterRule *query_search_dialog_to_rule(const gchar *name,
@@ -843,21 +953,7 @@ static void query_search_hbox_added(CondHBox *hbox)
 static void row_activated(GtkTreeView *treeview, GtkTreePath *path,
 			  GtkTreeViewColumn *column, gpointer data)
 {
-	GtkTreeIter iter;
-	GtkTreeModel *model = GTK_TREE_MODEL(search_window.store);
-	MsgInfo *msginfo;
-	MessageView *msgview;
-
-	if (!gtk_tree_model_get_iter(model, &iter, path))
-		return;
-
-	gtk_tree_model_get(model, &iter, COL_MSGINFO, &msginfo, -1);
-	if (!summary_select_by_msginfo(main_window_get()->summaryview,
-				       msginfo)) {
-		msgview = messageview_create_with_new_window();
-		messageview_show(msgview, msginfo, FALSE);
-		statusbar_pop_all();
-	}
+	query_search_open_msg(FALSE);
 }
 
 static gboolean row_selected(GtkTreeSelection *selection,
@@ -865,6 +961,56 @@ static gboolean row_selected(GtkTreeSelection *selection,
 			     gboolean cur_selected, gpointer data)
 {
 	return TRUE;
+}
+
+static gboolean treeview_button_pressed(GtkWidget *widget,
+					GdkEventButton *event, gpointer data)
+{
+	GtkTreeIter iter;
+	GtkTreeModel *model = GTK_TREE_MODEL(search_window.store);
+	GtkWidget *menu;
+	GtkTreeSelection *selection;
+	GtkTreePath *path;
+	GtkTreeViewColumn *column = NULL;
+	gboolean is_selected;
+	gint px, py;
+
+	debug_print("treeview_button_pressed\n");
+
+	if (!event)
+		return FALSE;
+
+	if (!gtk_tree_view_get_path_at_pos(GTK_TREE_VIEW(widget),
+					   event->x, event->y, &path, &column,
+					   NULL, NULL))
+		return FALSE;
+
+	// ??
+	gtk_widget_get_pointer(widget, &px, &py);
+	if (py == (gint)event->y) {
+		gtk_tree_path_free(path);
+		return FALSE;
+	}
+
+	if (!gtk_tree_model_get_iter(model, &iter, path)) {
+		gtk_tree_path_free(path);
+		return FALSE;
+	}
+
+	selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(widget));
+	is_selected = gtk_tree_selection_path_is_selected(selection, path);
+	gtk_tree_path_free(path);
+
+	if (event->button == 3) {
+		menu = gtk_ui_manager_get_widget(search_window.ui,
+						 "/PopUpMenu");
+		gtk_menu_popup(GTK_MENU(menu), NULL, NULL, NULL, NULL,
+			       event->button, event->time);
+		if (is_selected)
+			return TRUE;
+	}
+
+	return FALSE;
 }
 
 static void query_search_clear(GtkButton *button, gpointer data)
@@ -1204,6 +1350,268 @@ static gboolean key_pressed(GtkWidget *widget, GdkEventKey *event,
 		return TRUE;
 	}
 	return FALSE;
+}
+
+static GSList *query_search_get_selected_msg_list(void)
+{
+	GtkTreeModel *model = GTK_TREE_MODEL(search_window.store);
+	GtkTreeSelection *selection;
+	GList *list, *cur;
+	GtkTreePath *path;
+	GtkTreeIter iter;
+	GSList *mlist = NULL;
+	MsgInfo *msginfo;
+
+	selection = gtk_tree_view_get_selection
+		(GTK_TREE_VIEW(search_window.treeview));
+	list = gtk_tree_selection_get_selected_rows(selection, NULL);
+	if (!list)
+		return NULL;
+
+	for (cur = list; cur != NULL; cur = cur->next) {
+		path = cur->data;
+		if (!gtk_tree_model_get_iter(model, &iter, path))
+			break;
+		msginfo = NULL;
+		gtk_tree_model_get(model, &iter, COL_MSGINFO, &msginfo, -1);
+		if (msginfo)
+			mlist = g_slist_prepend(mlist, msginfo);
+	}
+	mlist = g_slist_reverse(mlist);
+
+	g_list_foreach(list, (GFunc)gtk_tree_path_free, NULL);
+	g_list_free(list);
+
+	return mlist;
+}
+
+static void query_search_open_msg(gboolean new_window)
+{
+	GSList *mlist;
+	MsgInfo *msginfo;
+	MessageView *msgview;
+
+	mlist = query_search_get_selected_msg_list();
+	if (!mlist)
+		return;
+	msginfo = (MsgInfo *)mlist->data;
+	g_slist_free(mlist);
+
+	if (new_window || !summary_select_by_msginfo(main_window_get()->summaryview, msginfo)) {
+		msgview = messageview_create_with_new_window();
+		messageview_show(msgview, msginfo, FALSE);
+		statusbar_pop_all();
+	}
+}
+
+static void query_search_reply_forward(ComposeMode mode)
+{
+	GSList *mlist;
+	MsgInfo *msginfo;
+
+	mlist = query_search_get_selected_msg_list();
+	if (!mlist)
+		return;
+	msginfo = (MsgInfo *)mlist->data;
+
+	if (prefs_common.reply_with_quote)
+		mode |= COMPOSE_WITH_QUOTE;
+
+	switch (COMPOSE_MODE(mode)) {
+	case COMPOSE_REPLY:
+	case COMPOSE_REPLY_TO_SENDER:
+	case COMPOSE_REPLY_TO_ALL:
+	case COMPOSE_REPLY_TO_LIST:
+		compose_reply(msginfo, msginfo->folder, mode, NULL);
+		break;
+	case COMPOSE_FORWARD:
+		compose_forward(mlist, NULL, FALSE, NULL);
+		break;
+	case COMPOSE_FORWARD_AS_ATTACH:
+		compose_forward(mlist, NULL, TRUE, NULL);
+		break;
+	case COMPOSE_REDIRECT:
+		compose_redirect(msginfo, msginfo->folder);
+		break;
+	default:
+		g_warning("query_search_reply_forward: invalid mode: %d", mode);
+	}
+
+	g_slist_free(mlist);
+}
+
+static void query_search_move_copy(gboolean is_copy)
+{
+	GSList *mlist, *cur;
+	FolderItem *dest;
+	MsgInfo *msginfo;
+
+	debug_print("query_search_move_copy: is_copy: %d\n", is_copy);
+
+	mlist = query_search_get_selected_msg_list();
+	if (!mlist)
+		return;
+
+	dest = foldersel_folder_sel_full(NULL, FOLDER_SEL_MOVE, NULL,
+					 _("Select folder to move"));
+	if (!dest || dest->stype == F_VIRTUAL || !FOLDER_ITEM_CAN_ADD(dest)) {
+		g_slist_free(mlist);
+		return;
+	}
+	if (summary_is_locked(main_window_get()->summaryview)) {
+		g_slist_free(mlist);
+		return;
+	}
+
+	for (cur = mlist; cur != NULL; cur = cur->next) {
+		msginfo = (MsgInfo *)cur->data;
+		if (!msginfo)
+			continue;
+
+		if (is_copy) {
+			folder_item_copy_msg(dest, msginfo);
+		} else {
+			folder_item_move_msg(dest, msginfo);
+		}
+	}
+
+	folderview_update_all_updated(TRUE);
+	g_slist_free(mlist);
+}
+
+static void query_search_create_filter(FilterCreateType type)
+{
+	GSList *mlist;
+	MsgInfo *msginfo;
+	gchar *header = NULL;
+	gchar *key = NULL;
+
+	mlist = query_search_get_selected_msg_list();
+	if (!mlist)
+		return;
+	msginfo = (MsgInfo *)mlist->data;
+	g_slist_free(mlist);
+
+	filter_get_keyword_from_msg(msginfo, &header, &key, type);
+	prefs_filter_open(msginfo, header, key);
+
+	g_free(header);
+	g_free(key);
+}
+
+static void reply_cb(void)
+{
+	query_search_reply_forward(COMPOSE_REPLY);
+}
+
+static void reply_all_cb(void)
+{
+	query_search_reply_forward(COMPOSE_REPLY_TO_ALL);
+}
+
+static void reply_sender_cb(void)
+{
+	query_search_reply_forward(COMPOSE_REPLY_TO_SENDER);
+}
+
+static void reply_list_cb(void)
+{
+	query_search_reply_forward(COMPOSE_REPLY_TO_LIST);
+}
+
+static void forward_cb(void)
+{
+	query_search_reply_forward(COMPOSE_FORWARD);
+}
+
+static void forward_attach_cb(void)
+{
+	query_search_reply_forward(COMPOSE_FORWARD_AS_ATTACH);
+}
+
+static void redirect_cb(void)
+{
+	query_search_reply_forward(COMPOSE_REDIRECT);
+}
+
+static void move_cb(void)
+{
+	query_search_move_copy(FALSE);
+}
+
+static void copy_cb(void)
+{
+	query_search_move_copy(TRUE);
+}
+
+static void add_address_cb(void)
+{
+	GSList *mlist;
+	MsgInfo *msginfo;
+	gchar from[BUFFSIZE];
+
+	mlist = query_search_get_selected_msg_list();
+	if (!mlist)
+		return;
+	msginfo = (MsgInfo *)mlist->data;
+	g_slist_free(mlist);
+
+	strncpy2(from, msginfo->from, sizeof(from));
+	extract_address(from);
+	addressbook_add_contact(msginfo->fromname, from, NULL);
+}
+
+static void create_filter_auto_cb(void)
+{
+	query_search_create_filter(FLT_BY_AUTO);
+}
+
+static void create_filter_from_cb(void)
+{
+	query_search_create_filter(FLT_BY_FROM);
+}
+
+static void create_filter_to_cb(void)
+{
+	query_search_create_filter(FLT_BY_TO);
+}
+
+static void create_filter_subject_cb(void)
+{
+	query_search_create_filter(FLT_BY_SUBJECT);
+}
+
+static void open_cb(void)
+{
+	query_search_open_msg(TRUE);
+}
+
+static void open_source_cb(void)
+{
+	GSList *mlist;
+	MsgInfo *msginfo;
+	SourceWindow *srcwin;
+
+	mlist = query_search_get_selected_msg_list();
+	if (!mlist)
+		return;
+	msginfo = (MsgInfo *)mlist->data;
+	g_slist_free(mlist);
+
+	srcwin = source_window_create();
+	source_window_show_msg(srcwin, msginfo);
+	source_window_show(srcwin);
+}
+
+static void print_cb(void)
+{
+	GSList *mlist;
+
+	mlist = query_search_get_selected_msg_list();
+	if (!mlist)
+		return;
+	printing_print_messages(mlist, FALSE);
+	g_slist_free(mlist);
 }
 
 static gint query_search_cmp_by_folder(GtkTreeModel *model,
