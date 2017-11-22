@@ -275,7 +275,7 @@ static GtkActionEntry action_entries[] = {
 	{"FilterToAction", NULL, N_("by _To"), NULL, NULL, create_filter_to_cb},
 	{"FilterSubjectAction", NULL, N_("by _Subject"), NULL, NULL, create_filter_subject_cb},
 
-	{"OpenAction", GTK_STOCK_OPEN, N_("_Open in new window"), NULL, NULL, open_cb},
+	{"OpenAction", GTK_STOCK_OPEN, N_("Open in _new window"), NULL, NULL, open_cb},
 	{"OpenSourceAction", NULL, N_("View mess_age source"), NULL, NULL, open_source_cb},
 
 	{"PrintAction", GTK_STOCK_PRINT, N_("_Print..."), NULL, NULL, print_cb},
