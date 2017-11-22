@@ -1452,8 +1452,12 @@ static void query_search_move_copy(gboolean is_copy)
 	if (!mlist)
 		return;
 
-	dest = foldersel_folder_sel_full(NULL, FOLDER_SEL_MOVE, NULL,
-					 _("Select folder to move"));
+	if (is_copy)
+		dest = foldersel_folder_sel_full(NULL, FOLDER_SEL_COPY, NULL,
+						 _("Select folder to copy"));
+	else
+		dest = foldersel_folder_sel_full(NULL, FOLDER_SEL_MOVE, NULL,
+						 _("Select folder to move"));
 	if (!dest || dest->stype == F_VIRTUAL || !FOLDER_ITEM_CAN_ADD(dest)) {
 		g_slist_free(mlist);
 		return;
