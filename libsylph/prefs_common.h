@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2014 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2017 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -353,6 +353,8 @@ struct _PrefsCommon
 	gint notify_window_period;           /* Receive */
 
 	gint startup_online_mode;            /* Online */
+
+	gint addressbook_col_nickname;
 };
 
 extern PrefsCommon prefs_common;

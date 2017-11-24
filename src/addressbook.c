@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2014 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2017 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -90,6 +90,7 @@ typedef enum
 {
 	COL_NAME,
 	COL_ADDRESS,
+	COL_NICKNAME,
 	COL_REMARKS,
 	COL_L_OBJ,
 	COL_L_PIXBUF,
@@ -346,6 +347,10 @@ static gint addressbook_list_name_compare	(GtkTreeModel	*model,
 						 GtkTreeIter	*b,
 						 gpointer	 data);
 static gint addressbook_list_address_compare	(GtkTreeModel	*model,
+						 GtkTreeIter	*a,
+						 GtkTreeIter	*b,
+						 gpointer	 data);
+static gint addressbook_list_nickname_compare	(GtkTreeModel	*model,
 						 GtkTreeIter	*a,
 						 GtkTreeIter	*b,
 						 gpointer	 data);
@@ -742,7 +747,8 @@ static void addressbook_create(void)
 	/* Address list */
 	list_store = gtk_tree_store_new(N_LIST_COLS, G_TYPE_STRING,
 					G_TYPE_STRING, G_TYPE_STRING,
-					G_TYPE_POINTER, GDK_TYPE_PIXBUF);
+					G_TYPE_STRING, G_TYPE_POINTER,
+					GDK_TYPE_PIXBUF);
 	gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store),
 					COL_NAME,
 					addressbook_list_name_compare,
@@ -750,6 +756,10 @@ static void addressbook_create(void)
 	gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store),
 					COL_ADDRESS,
 					addressbook_list_address_compare,
+					NULL, NULL);
+	gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store),
+					COL_NICKNAME,
+					addressbook_list_nickname_compare,
 					NULL, NULL);
 	gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store),
 					COL_REMARKS,
@@ -821,6 +831,27 @@ static void addressbook_create(void)
 	g_signal_connect(G_OBJECT(column->button), "size-allocate",
 			 G_CALLBACK(addressbook_col_resized),
 			 GINT_TO_POINTER(COL_ADDRESS));
+
+	renderer = gtk_cell_renderer_text_new();
+	g_object_set(renderer,
+#if GTK_CHECK_VERSION(2, 6, 0)
+		     "ellipsize", PANGO_ELLIPSIZE_END,
+#endif
+		     "ypad", 0, NULL);
+	column = gtk_tree_view_column_new_with_attributes
+		(_("Nick Name"), renderer, "text", COL_NICKNAME, NULL);
+	gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
+	gtk_tree_view_column_set_fixed_width
+		(column, prefs_common.addressbook_col_nickname);
+	gtk_tree_view_column_set_resizable(column, TRUE);
+#if GTK_CHECK_VERSION(2, 14, 0)
+	/* gtk_tree_view_column_set_expand(column, TRUE); */
+#endif
+	gtk_tree_view_column_set_sort_column_id(column, COL_NICKNAME);
+	gtk_tree_view_append_column(GTK_TREE_VIEW(listview), column);
+	g_signal_connect(G_OBJECT(column->button), "size-allocate",
+			 G_CALLBACK(addressbook_col_resized),
+			 GINT_TO_POINTER(COL_NICKNAME));
 
 	renderer = gtk_cell_renderer_text_new();
 	g_object_set(renderer,
@@ -2027,6 +2058,9 @@ static void addressbook_col_resized(GtkWidget *widget,
 	case COL_ADDRESS:
 		prefs_common.addressbook_col_addr = width;
 		break;
+	case COL_NICKNAME:
+		prefs_common.addressbook_col_nickname = width;
+		break;
 	case COL_REMARKS:
 		prefs_common.addressbook_col_rem = width;
 		break;
@@ -2902,6 +2936,7 @@ static void addressbook_load_group(ItemGroup *itemGroup)
 		gtk_tree_store_set(GTK_TREE_STORE(model), &iter,
 				   COL_NAME, name,
 				   COL_ADDRESS, email->address ? email->address : "",
+				   COL_NICKNAME, person->nickName ? person->nickName : "",
 				   COL_REMARKS, email->remarks ? email->remarks : "",
 				   COL_L_OBJ, email,
 				   COL_L_PIXBUF, atci->icon_pixbuf,
@@ -2971,6 +3006,7 @@ static void addressbook_folder_load_person(ItemFolder *itemFolder)
 						   &iperson,
 						   COL_NAME, name,
 						   COL_ADDRESS, email->address ? email->address : "",
+						   COL_NICKNAME, person->nickName ? person->nickName : "",
 						   COL_REMARKS, email->remarks ? email->remarks : "",
 						   COL_L_OBJ, person,
 						   COL_L_PIXBUF, atci->icon_pixbuf,
@@ -2985,6 +3021,7 @@ static void addressbook_folder_load_person(ItemFolder *itemFolder)
 						   &iemail,
 						   COL_NAME, name,
 						   COL_ADDRESS, email->address ? email->address : "",
+						   COL_NICKNAME, "",
 						   COL_REMARKS, email->remarks ? email->remarks : "",
 						   COL_L_OBJ, email,
 						   COL_L_PIXBUF, atciMail->icon_pixbuf,
@@ -3001,6 +3038,7 @@ static void addressbook_folder_load_person(ItemFolder *itemFolder)
 					   &iperson,
 					   COL_NAME, ADDRITEM_NAME(person),
 					   COL_ADDRESS, "",
+					   COL_NICKNAME, person->nickName ? person->nickName : "",
 					   COL_REMARKS, "",
 					   COL_L_OBJ, person,
 					   COL_L_PIXBUF, atci->icon_pixbuf,
@@ -3049,6 +3087,7 @@ static void addressbook_folder_load_group(ItemFolder *itemFolder)
 		gtk_tree_store_set(GTK_TREE_STORE(model), &iter,
 				   COL_NAME, ADDRITEM_NAME(group),
 				   COL_ADDRESS, "",
+				   COL_NICKNAME, "",
 				   COL_REMARKS, "",
 				   COL_L_OBJ, group,
 				   COL_L_PIXBUF, atci->icon_pixbuf,
@@ -3800,6 +3839,8 @@ static gint addressbook_list_name_compare(GtkTreeModel *model, GtkTreeIter *a,
 
 	ret = addressbook_list_col_compare(model, a, b, COL_NAME);
 	if (ret == 0)
+		ret = addressbook_list_col_compare(model, a, b, COL_NICKNAME);
+	if (ret == 0)
 		ret = addressbook_list_col_compare(model, a, b, COL_ADDRESS);
 	if (ret == 0)
 		ret = addressbook_list_col_compare(model, a, b, COL_REMARKS);
@@ -3817,6 +3858,25 @@ static gint addressbook_list_address_compare(GtkTreeModel *model,
 	if (ret == 0)
 		ret = addressbook_list_col_compare(model, a, b, COL_NAME);
 	if (ret == 0)
+		ret = addressbook_list_col_compare(model, a, b, COL_NICKNAME);
+	if (ret == 0)
+		ret = addressbook_list_col_compare(model, a, b, COL_REMARKS);
+
+	return ret;
+}
+
+static gint addressbook_list_nickname_compare(GtkTreeModel *model,
+					      GtkTreeIter *a, GtkTreeIter *b,
+					      gpointer data)
+{
+	gint ret;
+
+	ret = addressbook_list_col_compare(model, a, b, COL_NICKNAME);
+	if (ret == 0)
+		ret = addressbook_list_col_compare(model, a, b, COL_NAME);
+	if (ret == 0)
+		ret = addressbook_list_col_compare(model, a, b, COL_ADDRESS);
+	if (ret == 0)
 		ret = addressbook_list_col_compare(model, a, b, COL_REMARKS);
 
 	return ret;
@@ -3831,6 +3891,8 @@ static gint addressbook_list_remarks_compare(GtkTreeModel *model,
 	ret = addressbook_list_col_compare(model, a, b, COL_REMARKS);
 	if (ret == 0)
 		ret = addressbook_list_col_compare(model, a, b, COL_NAME);
+	if (ret == 0)
+		ret = addressbook_list_col_compare(model, a, b, COL_NICKNAME);
 	if (ret == 0)
 		ret = addressbook_list_col_compare(model, a, b, COL_ADDRESS);
 

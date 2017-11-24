@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2014 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2017 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -316,6 +316,7 @@ static PrefParam param[] = {
 	{"addressbook_folder_width", "190", &prefs_common.addressbook_folder_width, P_INT},
 	{"addressbook_col_name", "164", &prefs_common.addressbook_col_name, P_INT},
 	{"addressbook_col_addr", "156", &prefs_common.addressbook_col_addr, P_INT},
+	{"addressbook_col_nickname", "120", &prefs_common.addressbook_col_nickname, P_INT},
 	{"addressbook_col_rem", "100", &prefs_common.addressbook_col_rem, P_INT},
 
 	/* Message */
