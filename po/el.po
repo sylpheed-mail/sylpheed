@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.4.0beta5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-12 13:38+0900\n"
+"POT-Creation-Date: 2017-11-29 16:54+0900\n"
 "PO-Revision-Date: 2007-03-17 00:57+0200\n"
 "Last-Translator: Stavros Giannouris <stavrosg@hellug.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -616,7 +616,7 @@ msgstr "  Θέμα: %s\n"
 msgid "  Issuer: %s\n"
 msgstr "  Εκδότης: %s\n"
 
-#: libsylph/utils.c:2980
+#: libsylph/utils.c:3018
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "η εγγραφή στο %s απέτυχε.\n"
@@ -711,8 +711,8 @@ msgstr ""
 "στη στήλη 'G' για να ενεργοποιήσετε τη λήψη μηνυμάτων με την εντολή 'Λήψη "
 "όλων'."
 
-#: src/account_dialog.c:376 src/addressadd.c:181 src/addressbook.c:776
-#: src/compose.c:5517 src/editaddress.c:777 src/editaddress.c:826
+#: src/account_dialog.c:376 src/addressadd.c:181 src/addressbook.c:788
+#: src/compose.c:5604 src/editaddress.c:777 src/editaddress.c:826
 #: src/editbook.c:198 src/editgroup.c:490 src/editjpilot.c:270
 #: src/editldap.c:307 src/editvcard.c:183 src/mimeview.c:226
 #: src/prefs_filter.c:274 src/prefs_folder_item.c:171 src/select-keys.c:313
@@ -848,13 +848,14 @@ msgstr "Παράμετρος ενέργειας χρήστη"
 msgid "Add Address to Book"
 msgstr "Προσθήκη διεύθυνσης στο ευρετήριο"
 
-#: src/addressadd.c:191 src/compose.c:3419 src/prefs_toolbar.c:89
+#: src/addressadd.c:191 src/compose.c:3441 src/prefs_toolbar.c:89
 #: src/select-keys.c:314
 msgid "Address"
 msgstr "Διεύθυνση"
 
-#: src/addressadd.c:201 src/addressbook.c:832 src/editaddress.c:629
-#: src/editaddress.c:695 src/editgroup.c:492 src/importcsv.c:126
+#: src/addressadd.c:201 src/addressbook.c:865 src/editaddress.c:629
+#: src/editaddress.c:695 src/editgroup.c:492 src/exportcsv.c:213
+#: src/importcsv.c:126
 msgid "Remarks"
 msgstr "Σχόλια"
 
@@ -862,33 +863,33 @@ msgstr "Σχόλια"
 msgid "Select Address Book Folder"
 msgstr "Επιλογή φακέλου από το Ευρετήριο διευθύνσεων"
 
-#: src/addressadd.c:316 src/addressbook.c:1074 src/addressbook.c:3555
+#: src/addressadd.c:316 src/addressbook.c:1107 src/addressbook.c:3596
 #, fuzzy
 msgid "Auto-registered address"
 msgstr "Αποθηκευμένα πρότυπα"
 
-#: src/addressbook.c:405 src/compose.c:583 src/mainwindow.c:558
+#: src/addressbook.c:413 src/compose.c:583 src/mainwindow.c:558
 #: src/messageview.c:166
 msgid "/_File"
 msgstr "/_Αρχείο"
 
-#: src/addressbook.c:406
+#: src/addressbook.c:414
 msgid "/_File/New _Book"
 msgstr "/_Αρχείο/Νέο ε_υρετήριο διευθύνσεων"
 
-#: src/addressbook.c:407
+#: src/addressbook.c:415
 msgid "/_File/New _vCard"
 msgstr "/_Αρχείο/Νέα _vCard"
 
-#: src/addressbook.c:409
+#: src/addressbook.c:417
 msgid "/_File/New _JPilot"
 msgstr "/_Αρχείο/Νέο _JPilot"
 
-#: src/addressbook.c:412
+#: src/addressbook.c:420
 msgid "/_File/New _LDAP Server"
 msgstr "/_Αρχείο/Προσθήκη νέου διακομιστή _LDAP"
 
-#: src/addressbook.c:414 src/addressbook.c:417 src/compose.c:588
+#: src/addressbook.c:422 src/addressbook.c:425 src/compose.c:588
 #: src/compose.c:593 src/compose.c:596 src/compose.c:599 src/mainwindow.c:576
 #: src/mainwindow.c:579 src/mainwindow.c:581 src/mainwindow.c:583
 #: src/mainwindow.c:588 src/mainwindow.c:590 src/messageview.c:168
@@ -896,117 +897,130 @@ msgstr "/_Αρχείο/Προσθήκη νέου διακομιστή _LDAP"
 msgid "/_File/---"
 msgstr "/_Αρχείο/---"
 
-#: src/addressbook.c:415
+#: src/addressbook.c:423
 msgid "/_File/_Edit"
 msgstr "/_Αρχείο/_Επεξεργασία"
 
-#: src/addressbook.c:416
+#: src/addressbook.c:424
 msgid "/_File/_Delete"
 msgstr "/_Αρχείο/_Διαγραφή"
 
-#: src/addressbook.c:418
+#: src/addressbook.c:426
 msgid "/_File/_Save"
 msgstr "/_Αρχείο/_Αποθήκευση"
 
-#: src/addressbook.c:419 src/compose.c:600 src/messageview.c:174
+#: src/addressbook.c:427 src/compose.c:600 src/messageview.c:174
 msgid "/_File/_Close"
 msgstr "/_Αρχείο/_Κλείσιμο"
 
-#: src/addressbook.c:421 src/addressbook.c:468 src/addressbook.c:485
+#: src/addressbook.c:429 src/addressbook.c:475 src/addressbook.c:492
 #: src/compose.c:602 src/mainwindow.c:594 src/messageview.c:176
 msgid "/_Edit"
 msgstr "/_Επεξεργασία"
 
-#: src/addressbook.c:422 src/compose.c:607 src/mainwindow.c:595
+#: src/addressbook.c:430 src/compose.c:607 src/mainwindow.c:595
 #: src/messageview.c:177
 msgid "/_Edit/_Copy"
 msgstr "/_Επεξεργασία/_Αντιγραφή"
 
-#: src/addressbook.c:423 src/compose.c:608
+#: src/addressbook.c:431 src/compose.c:608
 msgid "/_Edit/_Paste"
 msgstr "/_Επεξεργασία/Ε_πικόλληση"
 
-#: src/addressbook.c:425
+#: src/addressbook.c:433
 msgid "/_Address"
 msgstr "/_Διεύθυνση"
 
-#: src/addressbook.c:426
+#: src/addressbook.c:434
 msgid "/_Address/New _Address"
 msgstr "/_Διεύθυνση/Νέα δ_ιεύθυνση"
 
-#: src/addressbook.c:427
+#: src/addressbook.c:435
 msgid "/_Address/New _Group"
 msgstr "/_Διεύθυνση/Νέα ο_μάδα"
 
-#: src/addressbook.c:428
+#: src/addressbook.c:436
 msgid "/_Address/New _Folder"
 msgstr "/_Διεύθυνση/Νέος _φάκελος"
 
-#: src/addressbook.c:429 src/addressbook.c:436
+#: src/addressbook.c:437 src/addressbook.c:444
 msgid "/_Address/---"
 msgstr "/_Διεύθυνση/---"
 
-#: src/addressbook.c:430
+#: src/addressbook.c:438
 #, fuzzy
 msgid "/_Address/Add _to recipient"
 msgstr "/_Διεύθυνση/_Διαγραφή"
 
-#: src/addressbook.c:432
+#: src/addressbook.c:440
 #, fuzzy
 msgid "/_Address/Add to _Cc"
 msgstr "/_Διεύθυνση/_Επεξεργασία"
 
-#: src/addressbook.c:434
+#: src/addressbook.c:442
 #, fuzzy
 msgid "/_Address/Add to _Bcc"
 msgstr "/_Διεύθυνση/_Επεξεργασία"
 
-#: src/addressbook.c:437
+#: src/addressbook.c:445
 msgid "/_Address/_Edit"
 msgstr "/_Διεύθυνση/_Επεξεργασία"
 
-#: src/addressbook.c:438
+#: src/addressbook.c:446
 msgid "/_Address/_Delete"
 msgstr "/_Διεύθυνση/_Διαγραφή"
 
-#: src/addressbook.c:440 src/compose.c:718 src/mainwindow.c:842
+#: src/addressbook.c:448 src/compose.c:718 src/mainwindow.c:842
 #: src/messageview.c:299
 msgid "/_Tools"
 msgstr "/_Εργαλεία"
 
-#: src/addressbook.c:441
+#: src/addressbook.c:449
 msgid "/_Tools/Import _LDIF file"
 msgstr "/_Εργαλεία/Εισαγωγή αρχείου _LDIF"
 
-#: src/addressbook.c:442
+#: src/addressbook.c:450
 #, fuzzy
 msgid "/_Tools/Import _CSV file"
 msgstr "/_Εργαλεία/Εισαγωγή αρχείου _LDIF"
 
-#: src/addressbook.c:444 src/compose.c:742 src/mainwindow.c:904
+#: src/addressbook.c:451 src/compose.c:724 src/compose.c:727 src/compose.c:731
+#: src/compose.c:737 src/mainwindow.c:846 src/mainwindow.c:860
+#: src/mainwindow.c:865 src/mainwindow.c:868 src/mainwindow.c:874
+#: src/mainwindow.c:876 src/mainwindow.c:880 src/messageview.c:303
+#: src/messageview.c:315
+msgid "/_Tools/---"
+msgstr "/_Εργαλεία/---"
+
+#: src/addressbook.c:452
+#, fuzzy
+msgid "/_Tools/Export C_SV file"
+msgstr "/_Εργαλεία/Εισαγωγή αρχείου _LDIF"
+
+#: src/addressbook.c:453 src/compose.c:742 src/mainwindow.c:904
 #: src/messageview.c:319
 msgid "/_Help"
 msgstr "/_Βοήθεια"
 
-#: src/addressbook.c:445 src/compose.c:743 src/mainwindow.c:924
+#: src/addressbook.c:454 src/compose.c:743 src/mainwindow.c:924
 #: src/messageview.c:320
 msgid "/_Help/_About"
 msgstr "/_Βοήθεια/_Σχετικά"
 
-#: src/addressbook.c:464 src/addressbook.c:474
+#: src/addressbook.c:471 src/addressbook.c:481
 msgid "/New _Address"
 msgstr "/Νέα δ_ιεύθυνση"
 
-#: src/addressbook.c:465 src/addressbook.c:475
+#: src/addressbook.c:472 src/addressbook.c:482
 msgid "/New _Group"
 msgstr "/Νέα _ομάδα"
 
-#: src/addressbook.c:466 src/addressbook.c:476
+#: src/addressbook.c:473 src/addressbook.c:483
 msgid "/New _Folder"
 msgstr "/Νέος _φάκελος"
 
-#: src/addressbook.c:467 src/addressbook.c:477 src/addressbook.c:484
-#: src/addressbook.c:487 src/compose.c:574 src/compose.c:577
+#: src/addressbook.c:474 src/addressbook.c:484 src/addressbook.c:491
+#: src/addressbook.c:494 src/compose.c:574 src/compose.c:577
 #: src/folderview.c:258 src/folderview.c:261 src/folderview.c:266
 #: src/folderview.c:269 src/folderview.c:282 src/folderview.c:285
 #: src/folderview.c:287 src/folderview.c:292 src/folderview.c:295
@@ -1018,96 +1032,101 @@ msgstr "/Νέος _φάκελος"
 msgid "/---"
 msgstr "/---"
 
-#: src/addressbook.c:469 src/addressbook.c:486 src/summaryview.c:464
+#: src/addressbook.c:476 src/addressbook.c:493 src/summaryview.c:464
 msgid "/_Delete"
 msgstr "/_Διαγραφή"
 
-#: src/addressbook.c:478
+#: src/addressbook.c:485
 msgid "/Add _to recipient"
 msgstr ""
 
-#: src/addressbook.c:480
+#: src/addressbook.c:487
 msgid "/Add t_o Cc"
 msgstr ""
 
-#: src/addressbook.c:482
+#: src/addressbook.c:489
 msgid "/Add to _Bcc"
 msgstr ""
 
-#: src/addressbook.c:488
+#: src/addressbook.c:495
 msgid "/_Copy"
 msgstr "/_Αντιγραφή"
 
-#: src/addressbook.c:489
+#: src/addressbook.c:496
 msgid "/_Paste"
 msgstr "/Ε_πικόλληση"
 
-#: src/addressbook.c:614 src/prefs_common_dialog.c:2838 src/prefs_toolbar.c:90
+#: src/addressbook.c:621 src/prefs_common_dialog.c:2838 src/prefs_toolbar.c:90
 msgid "Address book"
 msgstr "Κατάλογος διευθύνσεων"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:687 src/addressbook.c:4258 src/folderview.c:398
-#: src/prefs_account_dialog.c:2077 src/query_search.c:401
+#: src/addressbook.c:694 src/addressbook.c:4322 src/folderview.c:398
+#: src/prefs_account_dialog.c:2077 src/query_search.c:498
 msgid "Folder"
 msgstr "Φάκελος"
 
-#: src/addressbook.c:811
+#: src/addressbook.c:823
 msgid "E-Mail address"
 msgstr "Διεύθυνση ηλεκτρονικής αλληλογραφίας"
 
-#: src/addressbook.c:875 src/quick_search.c:128
+#: src/addressbook.c:844 src/editaddress.c:590 src/exportcsv.c:213
+#: src/importcsv.c:124
+msgid "Nick Name"
+msgstr "Ψευδώνυμο"
+
+#: src/addressbook.c:908 src/quick_search.c:128
 msgid "Search:"
 msgstr "Αναζήτηση:"
 
-#: src/addressbook.c:913 src/compose.c:3364 src/headerview.c:57
+#: src/addressbook.c:946 src/compose.c:3386 src/headerview.c:57
 #: src/prefs_folder_item.c:340 src/prefs_template.c:200
 msgid "To:"
 msgstr "Προς:"
 
-#: src/addressbook.c:917 src/compose.c:3381 src/headerview.c:58
+#: src/addressbook.c:950 src/compose.c:3403 src/headerview.c:58
 #: src/prefs_folder_item.c:357 src/prefs_template.c:202
 msgid "Cc:"
 msgstr "Κοινοποίηση:"
 
-#: src/addressbook.c:921 src/compose.c:3398 src/prefs_folder_item.c:368
+#: src/addressbook.c:954 src/compose.c:3420 src/prefs_folder_item.c:368
 #: src/prefs_template.c:204
 msgid "Bcc:"
 msgstr "Κρυφή κοινοποίηση:"
 
 #. Buttons
-#: src/addressbook.c:942 src/addressbook.c:2339 src/editaddress.c:719
+#: src/addressbook.c:975 src/addressbook.c:2375 src/editaddress.c:719
 #: src/editaddress.c:853 src/prefs_actions.c:266
 #: src/prefs_display_header.c:280 src/prefs_display_header.c:336
 #: src/prefs_template.c:267 src/prefs_toolbar.c:65
 msgid "Delete"
 msgstr "Διαγραφή"
 
-#: src/addressbook.c:945 src/editaddress.c:725 src/editaddress.c:859
+#: src/addressbook.c:978 src/editaddress.c:725 src/editaddress.c:859
 #: src/prefs_actions.c:254 src/prefs_customheader.c:232
 #: src/prefs_display_header.c:274 src/prefs_display_header.c:330
 #: src/prefs_filter_edit.c:1607
 msgid "Add"
 msgstr "Προσθήκη"
 
-#: src/addressbook.c:948 src/prefs_toolbar.c:80
+#: src/addressbook.c:981 src/prefs_toolbar.c:80
 msgid "Search"
 msgstr "Αναζήτηση"
 
-#: src/addressbook.c:951
+#: src/addressbook.c:984
 msgid "_Close"
 msgstr "_Κλείσιμο"
 
 #. Confirm deletion
-#: src/addressbook.c:1147
+#: src/addressbook.c:1180
 msgid "Delete address(es)"
 msgstr "Διαγραφή διεύθυνσης (διευθύνσεων)"
 
-#: src/addressbook.c:1148
+#: src/addressbook.c:1181
 msgid "Really delete the address(es)?"
 msgstr "Θέλετε σίγουρα να διαγράψετε τις διευθύνσεις;"
 
-#: src/addressbook.c:2330
+#: src/addressbook.c:2366
 #, fuzzy, c-format
 msgid ""
 "Do you want to delete the folder AND all addresses in `%s' ?\n"
@@ -1116,37 +1135,37 @@ msgstr ""
 "Θέλετε να διαγράψετε το '%s' ; Αν διαγράψετε μόνο το φάκελο, οι διευθύνσεις "
 "που περιέχει θα μετακινηθούν στον γονικό φάκελο."
 
-#: src/addressbook.c:2333 src/folderview.c:2724
+#: src/addressbook.c:2369 src/folderview.c:2724
 msgid "Delete folder"
 msgstr "Διαγραφή φακέλου"
 
-#: src/addressbook.c:2333
+#: src/addressbook.c:2369
 msgid "_Folder only"
 msgstr "_Φάκελος μόνο"
 
-#: src/addressbook.c:2333
+#: src/addressbook.c:2369
 msgid "Folder and _addresses"
 msgstr "Φάκελος και _διευθύνσεις"
 
-#: src/addressbook.c:2338
+#: src/addressbook.c:2374
 #, c-format
 msgid "Really delete `%s' ?"
 msgstr "Σίγουρα να διαγραφεί το '%s' ;"
 
-#: src/addressbook.c:3301 src/addressbook.c:3439
+#: src/addressbook.c:3342 src/addressbook.c:3480
 msgid "New user, could not save index file."
 msgstr "Νέος χρήστης, δεν είναι δυνατή η αποθήκευση του ευρετηρίου."
 
-#: src/addressbook.c:3305 src/addressbook.c:3443
+#: src/addressbook.c:3346 src/addressbook.c:3484
 msgid "New user, could not save address book files."
 msgstr ""
 "Νέος χρήστης, δεν είναι δυνατή η αποθήκευση του ευρετηρίου διευθύνσεων."
 
-#: src/addressbook.c:3315 src/addressbook.c:3453
+#: src/addressbook.c:3356 src/addressbook.c:3494
 msgid "Old address book converted successfully."
 msgstr "Το παλιό ευρετήριο διευθύνσεων μετατράπηκε με επιτυχία."
 
-#: src/addressbook.c:3320
+#: src/addressbook.c:3361
 #, fuzzy
 msgid ""
 "Old address book converted,\n"
@@ -1155,7 +1174,7 @@ msgstr ""
 "Το παλιό βιβλίο διευθύνσεων μετατράπηκε επιτυχώς,\n"
 "δεν είναι δυνατή η αποθήκευση του νέου ευρετηρίου διευθύνσεων"
 
-#: src/addressbook.c:3333
+#: src/addressbook.c:3374
 msgid ""
 "Could not convert address book,\n"
 "but created empty new address book files."
@@ -1163,7 +1182,7 @@ msgstr ""
 "Δεν είναι δυνατή η μετατροπή του ευρετηρίου διευθύνσεων.\n"
 "Δημιουργήθηκε νέο, κενό αρχείο."
 
-#: src/addressbook.c:3339
+#: src/addressbook.c:3380
 #, fuzzy
 msgid ""
 "Could not convert address book,\n"
@@ -1172,7 +1191,7 @@ msgstr ""
 "Δεν είναι δυνατή η μετατροπή του βιβλίου διευθύνσεων,\n"
 "ούτε η δημιουργία νέου."
 
-#: src/addressbook.c:3344
+#: src/addressbook.c:3385
 msgid ""
 "Could not convert address book\n"
 "and could not create new address book files."
@@ -1180,17 +1199,17 @@ msgstr ""
 "Δεν είναι δυνατή η μετατροπή του ευρετηρίου διευθύνσεων,\n"
 "ούτε η δημιουργία νέου."
 
-#: src/addressbook.c:3351
+#: src/addressbook.c:3392
 #, fuzzy
 msgid "Address book conversion error"
 msgstr "Σφάλμα κατά τη μετατροπή του ευρετηρίου διευθύνσεων"
 
-#: src/addressbook.c:3355
+#: src/addressbook.c:3396
 #, fuzzy
 msgid "Address book conversion"
 msgstr "Μετατροπή ευρετηρίου διευθύνσεων"
 
-#: src/addressbook.c:3394
+#: src/addressbook.c:3435
 #, fuzzy, c-format
 msgid ""
 "Could not read address index:\n"
@@ -1198,19 +1217,19 @@ msgid ""
 "%s%c%s"
 msgstr "Δεν είναι δυνατή η ανάγνωση του ευρετηρίου διευθύνσεων"
 
-#: src/addressbook.c:3397
+#: src/addressbook.c:3438
 #, fuzzy
 msgid "Address Book Error"
 msgstr "Σφάλμα ευρετηρίου διευθύνσεων"
 
-#: src/addressbook.c:3458
+#: src/addressbook.c:3499
 #, fuzzy
 msgid "Old address book converted, could not save new address index file"
 msgstr ""
 "Το παλιό βιβλίο διευθύνσεων μετατράπηκε επιτυχώς,\n"
 "δεν είναι δυνατή η αποθήκευση του νέου ευρετηρίου διευθύνσεων"
 
-#: src/addressbook.c:3472
+#: src/addressbook.c:3513
 #, fuzzy
 msgid ""
 "Could not convert address book, but created empty new address book files."
@@ -1218,7 +1237,7 @@ msgstr ""
 "Δεν είναι δυνατή η μετατροπή του βιβλίου διευθύνσεων.\n"
 "Δημιουργήθηκε νέο, κενό αρχείο."
 
-#: src/addressbook.c:3478
+#: src/addressbook.c:3519
 #, fuzzy
 msgid ""
 "Could not convert address book, could not create new address book files."
@@ -1226,7 +1245,7 @@ msgstr ""
 "Δεν είναι δυνατή η μετατροπή του βιβλίου διευθύνσεων,\n"
 "ούτε η δημιουργία νέου."
 
-#: src/addressbook.c:3484
+#: src/addressbook.c:3525
 #, fuzzy
 msgid ""
 "Could not convert address book and could not create new address book files."
@@ -1234,51 +1253,51 @@ msgstr ""
 "Δεν είναι δυνατή η μετατροπή του βιβλίου διευθύνσεων,\n"
 "ούτε η δημιουργία νέου."
 
-#: src/addressbook.c:3496
+#: src/addressbook.c:3537
 msgid "Could not read address index"
 msgstr "Δεν είναι δυνατή η ανάγνωση του ευρετηρίου διευθύνσεων"
 
-#: src/addressbook.c:3502
+#: src/addressbook.c:3543
 #, fuzzy
 msgid "Address Book Conversion Error"
 msgstr "Σφάλμα κατά τη μετατροπή του ευρετηρίου διευθύνσεων"
 
-#: src/addressbook.c:3508
+#: src/addressbook.c:3549
 #, fuzzy
 msgid "Address Book Conversion"
 msgstr "Μετατροπή του ευρετηρίου διευθύνσεων"
 
-#: src/addressbook.c:4188 src/prefs_common_dialog.c:2631
+#: src/addressbook.c:4252 src/prefs_common_dialog.c:2631
 msgid "Interface"
 msgstr "Διεπαφή"
 
-#: src/addressbook.c:4202 src/importcsv.c:676 src/importldif.c:478
+#: src/addressbook.c:4266 src/importcsv.c:676 src/importldif.c:478
 msgid "Address Book"
 msgstr "Ευρετήριο διευθύνσεων"
 
-#: src/addressbook.c:4216
+#: src/addressbook.c:4280
 msgid "Person"
 msgstr "Άτομο"
 
-#: src/addressbook.c:4230
+#: src/addressbook.c:4294
 msgid "EMail Address"
 msgstr "Διεύθυνση ηλεκτρονικής αλληλογραφίας"
 
-#: src/addressbook.c:4244
+#: src/addressbook.c:4308
 msgid "Group"
 msgstr "Ομάδα"
 
 # Untrans.
-#: src/addressbook.c:4272
+#: src/addressbook.c:4336
 msgid "vCard"
 msgstr "vCard"
 
 # Untans.
-#: src/addressbook.c:4286 src/addressbook.c:4300
+#: src/addressbook.c:4350 src/addressbook.c:4364
 msgid "JPilot"
 msgstr "JPilot"
 
-#: src/addressbook.c:4314
+#: src/addressbook.c:4378
 msgid "LDAP Server"
 msgstr "Διακομιστής LDAP"
 
@@ -1290,7 +1309,7 @@ msgstr "Κοινές διευθύνσεις"
 msgid "Personal address"
 msgstr "Προσωπικές διευθύνσεις"
 
-#: src/alertpanel.c:142 src/compose.c:7054 src/main.c:940
+#: src/alertpanel.c:142 src/compose.c:7141 src/main.c:940
 msgid "Notice"
 msgstr "Σημείωση"
 
@@ -1607,13 +1626,6 @@ msgstr "/_Εργαλεία/_Πρότυπο"
 msgid "/_Tools/Actio_ns"
 msgstr "/_Εργαλεία/Ε_νέργειες"
 
-#: src/compose.c:724 src/compose.c:727 src/compose.c:731 src/compose.c:737
-#: src/mainwindow.c:846 src/mainwindow.c:860 src/mainwindow.c:865
-#: src/mainwindow.c:868 src/mainwindow.c:874 src/mainwindow.c:876
-#: src/mainwindow.c:880 src/messageview.c:303 src/messageview.c:315
-msgid "/_Tools/---"
-msgstr "/_Εργαλεία/---"
-
 #: src/compose.c:725
 msgid "/_Tools/Edit with e_xternal editor"
 msgstr "/_Εργαλεία/Επεξεργασία με ε_ξωτερικό πρόγραμμα"
@@ -1655,105 +1667,105 @@ msgstr "Σφάλμα μορφοποίησης σημείωσης παράθεσ�
 msgid "Message reply/forward format error."
 msgstr "Σφάλμα στην απάντηση/προώθηση του μηνύματος."
 
-#: src/compose.c:2288
+#: src/compose.c:2310
 #, c-format
 msgid "File %s doesn't exist\n"
 msgstr "Το αρχείο %s δεν υπάρχει\n"
 
-#: src/compose.c:2292
+#: src/compose.c:2314
 #, c-format
 msgid "Can't get file size of %s\n"
 msgstr "Δεν είναι δυνατή η λήψη του μεγέθους του %s\n"
 
-#: src/compose.c:2297 src/compose.c:4568
+#: src/compose.c:2319 src/compose.c:4595
 #, c-format
 msgid "File %s is empty."
 msgstr "Το αρχείο %s είναι κενό."
 
-#: src/compose.c:2302
+#: src/compose.c:2324
 #, c-format
 msgid "Can't read %s."
 msgstr "Δεν είναι δυνατή η ανάγνωση του %s."
 
-#: src/compose.c:2335
+#: src/compose.c:2357
 #, c-format
 msgid "Message: %s"
 msgstr "Μήνυμα: %s"
 
-#: src/compose.c:2397 src/mimeview.c:579
+#: src/compose.c:2419 src/mimeview.c:579
 msgid "Can't get the part of multipart message."
 msgstr "Δεν είναι δυνατή η λήψη μέρους του πολυτμηματικού μηνύματος."
 
-#: src/compose.c:2887 src/headerview.c:259 src/query_search.c:794
+#: src/compose.c:2909 src/headerview.c:259 src/query_search.c:904
 #: src/rpop3.c:704 src/summaryview.c:2521
 msgid "(No Subject)"
 msgstr "(Χωρίς θέμα)"
 
-#: src/compose.c:2890
+#: src/compose.c:2912
 #, c-format
 msgid "%s - Compose%s"
 msgstr "%s - Σύνθεση μηνύματος%s"
 
-#: src/compose.c:2993 src/compose.c:6129 src/prefs_account_dialog.c:1352
+#: src/compose.c:3015 src/compose.c:6216 src/prefs_account_dialog.c:1352
 #, fuzzy, c-format
 msgid "Signature %d"
 msgstr "Yπογραφή"
 
-#: src/compose.c:3059
+#: src/compose.c:3081
 msgid "Recipient is not specified."
 msgstr "Δεν έχει οριστεί παραλήπτης."
 
-#: src/compose.c:3067
+#: src/compose.c:3089
 msgid "Empty subject"
 msgstr "Κενό θέμα"
 
-#: src/compose.c:3068
+#: src/compose.c:3090
 msgid "Subject is empty. Send it anyway?"
 msgstr "Το θέμα είναι κενό. Να γίνει η αποστολή;"
 
-#: src/compose.c:3132
+#: src/compose.c:3154
 #, fuzzy
 msgid "Attachment is missing"
 msgstr "Συνημμένα"
 
-#: src/compose.c:3133
+#: src/compose.c:3155
 msgid "There is no attachment. Send it without attachments?"
 msgstr ""
 
-#: src/compose.c:3250 src/compose.c:3276
+#: src/compose.c:3272 src/compose.c:3298
 msgid "Check recipients"
 msgstr ""
 
-#: src/compose.c:3296
+#: src/compose.c:3318
 #, fuzzy
 msgid "Really send this mail to the following addresses?"
 msgstr "Αυτόματος ορισμός αυτών των διευθύνσεων"
 
-#: src/compose.c:3309 src/compose.c:5377 src/headerview.c:56
+#: src/compose.c:3331 src/compose.c:5464 src/headerview.c:56
 msgid "From:"
 msgstr "Από:"
 
-#: src/compose.c:3331 src/headerview.c:60 src/prefs_template.c:208
+#: src/compose.c:3353 src/headerview.c:60 src/prefs_template.c:208
 msgid "Subject:"
 msgstr "Θέμα:"
 
-#: src/compose.c:3424
+#: src/compose.c:3446
 #, fuzzy
 msgid "_Send"
 msgstr "Αποστολή"
 
-#: src/compose.c:3454
+#: src/compose.c:3476
 #, fuzzy
 msgid ""
 "Checking for new messages is currently running.\n"
 "Please try again later."
 msgstr "Έλεγχος για νέα μηνύματα σε όλους τους φακέλους..."
 
-#: src/compose.c:3590
+#: src/compose.c:3612
 msgid "can't get recipient list."
 msgstr "δεν είναι δυνατή η λήψη λίστας παραληπτών."
 
-#: src/compose.c:3618
+#: src/compose.c:3640
 msgid ""
 "Account for sending mail is not specified.\n"
 "Please select a mail account before sending."
@@ -1761,45 +1773,45 @@ msgstr ""
 "Ο λογαριασμός για αποστολή μηνύματος δεν έχει οριστεί.\n"
 "Παρακαλώ επιλέξτε ένα λογαριασμό πριν στείλετε."
 
-#: src/compose.c:3638 src/send_message.c:353
+#: src/compose.c:3660 src/send_message.c:353
 #, c-format
 msgid "Error occurred while posting the message to %s ."
 msgstr "Δημιουργήθηκε σφάλμα κατά την αποστολή του μηνύματος στο %s ."
 
-#: src/compose.c:3688
+#: src/compose.c:3710
 msgid ""
 "Sending of message was completed, but the message could not be saved to "
 "outbox."
 msgstr ""
 
-#: src/compose.c:3743
+#: src/compose.c:3765
 #, c-format
 msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr ""
 "Δεν ήταν δυνατή η εύρεση του κλειδιού που σχετίζεται με το επιλεγμένο "
 "αναγνωριστικό `%s'."
 
-#: src/compose.c:3786 src/compose.c:4180
+#: src/compose.c:3808 src/compose.c:4202
 #, fuzzy
 msgid "Can't sign the message."
 msgstr "Δεν είναι δυνατή η τοποθέτηση του μηνύματος στην ουρά."
 
-#: src/compose.c:3816 src/compose.c:4231
+#: src/compose.c:3838 src/compose.c:4253
 #, fuzzy
 msgid "Can't encrypt the message."
 msgstr "Δεν είναι δυνατή η τοποθέτηση του μηνύματος στην ουρά."
 
-#: src/compose.c:3855 src/compose.c:4225
+#: src/compose.c:3877 src/compose.c:4247
 #, fuzzy
 msgid "Can't encrypt or sign the message."
 msgstr "Δεν είναι δυνατή η τοποθέτηση του μηνύματος στην ουρά."
 
-#: src/compose.c:3903 src/compose.c:4262 src/compose.c:4325 src/compose.c:4445
+#: src/compose.c:3925 src/compose.c:4284 src/compose.c:4347 src/compose.c:4467
 #, fuzzy
 msgid "can't change file mode\n"
 msgstr "Η αλλαγή της κατάστασης του `%s' απέτυχε"
 
-#: src/compose.c:3936
+#: src/compose.c:3958
 #, fuzzy, c-format
 msgid ""
 "Can't convert the character encoding of the message body from %s to %s.\n"
@@ -1810,11 +1822,11 @@ msgstr ""
 "του μηνύματος στο προσδιορισμένο σύνολο %s.\n"
 "Να αποσταλεί ως %s;"
 
-#: src/compose.c:3942
+#: src/compose.c:3964
 msgid "Code conversion error"
 msgstr "Σφάλμα μετατροπής κώδικα"
 
-#: src/compose.c:4028
+#: src/compose.c:4050
 #, c-format
 msgid ""
 "Line %d exceeds the line length limit (998 bytes).\n"
@@ -1827,15 +1839,15 @@ msgstr ""
 "\n"
 "Να γίνει αποστολή;"
 
-#: src/compose.c:4032
+#: src/compose.c:4054
 msgid "Line length limit"
 msgstr "Όριο μήκους γραμμής"
 
-#: src/compose.c:4199
+#: src/compose.c:4221
 msgid "Encrypting with Bcc"
 msgstr "Κρυπτογράφηση στους κρυφούς παραλήπτες"
 
-#: src/compose.c:4200
+#: src/compose.c:4222
 msgid ""
 "This message has Bcc recipients. If this message is encrypted, all Bcc "
 "recipients will be visible by examing the encryption key list, leading to "
@@ -1849,107 +1861,107 @@ msgstr ""
 "\n"
 "Να γίνει η αποστολή;"
 
-#: src/compose.c:4405
+#: src/compose.c:4427
 msgid "can't remove the old message\n"
 msgstr "Δεν είναι δυνατή η διαγραφή του παλιού μηνύματος\n"
 
-#: src/compose.c:4423
+#: src/compose.c:4445
 msgid "queueing message...\n"
 msgstr "προσθήκη στην ουρά...\n"
 
-#: src/compose.c:4511
+#: src/compose.c:4533
 #, fuzzy
 msgid "can't find queue folder\n"
 msgstr "Δεν είναι δυνατή η εύρεση του πηγαίου φακέλου."
 
-#: src/compose.c:4518
+#: src/compose.c:4540
 msgid "can't queue the message\n"
 msgstr "δεν είναι δυνατή η τοποθέτηση του μηνύματος στην ουρά\n"
 
-#: src/compose.c:4563
+#: src/compose.c:4590
 #, fuzzy, c-format
 msgid "File %s doesn't exist."
 msgstr "Το αρχείο %s δεν υπάρχει\n"
 
-#: src/compose.c:4572
+#: src/compose.c:4599
 #, fuzzy, c-format
 msgid "Can't open file %s."
 msgstr "Δεν είναι δυνατή η σημείωση του αρχείου.\n"
 
-#: src/compose.c:5324
+#: src/compose.c:5411
 msgid "Creating compose window...\n"
 msgstr "Δημιουργία παραθύρου σύνθεσης...\n"
 
-#: src/compose.c:5457
+#: src/compose.c:5544
 msgid "PGP Sign"
 msgstr "Υπογραφή PGP"
 
-#: src/compose.c:5460
+#: src/compose.c:5547
 msgid "PGP Encrypt"
 msgstr "Κρυπτογράφηση PGP"
 
-#: src/compose.c:5498 src/mimeview.c:209
+#: src/compose.c:5585 src/mimeview.c:209
 #, fuzzy
 msgid "Data type"
 msgstr "Ημερομηνία"
 
 #. S_COL_DATE
-#: src/compose.c:5507 src/mimeview.c:217 src/prefs_filter_edit.c:511
+#: src/compose.c:5594 src/mimeview.c:217 src/prefs_filter_edit.c:511
 #: src/prefs_summary_column.c:72 src/rpop3.c:440 src/select-keys.c:311
 #: src/summaryview.c:5525
 msgid "Size"
 msgstr "Μέγεθος"
 
-#: src/compose.c:6121
+#: src/compose.c:6208
 #, fuzzy
 msgid "Signature:"
 msgstr "Yπογραφή"
 
-#: src/compose.c:6136
+#: src/compose.c:6223
 #, fuzzy
 msgid "Change signature"
 msgstr "Έλεγχος υπογραφής."
 
-#: src/compose.c:6716
+#: src/compose.c:6803
 msgid "Invalid MIME type."
 msgstr "Μη έγκυρος τύπος MIME"
 
-#: src/compose.c:6734
+#: src/compose.c:6821
 msgid "File doesn't exist or is empty."
 msgstr "Το αρχείο δεν υπάρχει ή είναι άδειο."
 
-#: src/compose.c:6803
+#: src/compose.c:6890
 msgid "Properties"
 msgstr "Ιδιότητες"
 
-#: src/compose.c:6821
+#: src/compose.c:6908
 msgid "MIME type"
 msgstr "τύπος MIME"
 
 #. Encoding
-#: src/compose.c:6823 src/prefs_common_dialog.c:1203
+#: src/compose.c:6910 src/prefs_common_dialog.c:1203
 #: src/prefs_common_dialog.c:1870
 msgid "Encoding"
 msgstr "Κωδικοποίηση"
 
-#: src/compose.c:6846 src/prefs_folder_item.c:202
+#: src/compose.c:6933 src/prefs_folder_item.c:202
 msgid "Path"
 msgstr "Διαδρομή"
 
-#: src/compose.c:6847
+#: src/compose.c:6934
 msgid "File name"
 msgstr "Όνομα αρχείου"
 
-#: src/compose.c:6936
+#: src/compose.c:7023
 #, fuzzy
 msgid "File not exist."
 msgstr "%s: το αρχείο δεν υπάρχει\n"
 
-#: src/compose.c:6946 src/mimeview.c:1259 src/mimeview.c:1274
+#: src/compose.c:7033 src/mimeview.c:1259 src/mimeview.c:1274
 msgid "Opening executable file"
 msgstr "Άνοιγμα εκτελέσιμου αρχείου"
 
-#: src/compose.c:6947 src/mimeview.c:1260 src/mimeview.c:1275
+#: src/compose.c:7034 src/mimeview.c:1260 src/mimeview.c:1275
 msgid ""
 "This is an executable file. Opening executable file is restricted for "
 "security.\n"
@@ -1957,14 +1969,14 @@ msgid ""
 "virus or something like a malicious program."
 msgstr ""
 
-#: src/compose.c:6989
+#: src/compose.c:7076
 #, fuzzy, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr ""
 "Η εντολή εκτύπωσης είναι άκυρη:\n"
 "'%s'"
 
-#: src/compose.c:7051
+#: src/compose.c:7138
 #, fuzzy, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1974,49 +1986,49 @@ msgstr ""
 "Να επιβάλω τερματισμό της διεργασίας;\n"
 "process group id: %d"
 
-#: src/compose.c:7391 src/mainwindow.c:3080
+#: src/compose.c:7478 src/mainwindow.c:3080
 msgid "_Customize toolbar..."
 msgstr "Προσαρμο_γή εργαλειοθήκης..."
 
-#: src/compose.c:7567 src/compose.c:7573 src/compose.c:7595
+#: src/compose.c:7654 src/compose.c:7660 src/compose.c:7682
 msgid "Can't queue the message."
 msgstr "Δεν είναι δυνατή η τοποθέτηση του μηνύματος στην ουρά."
 
-#: src/compose.c:7708
+#: src/compose.c:7795
 msgid "Select files"
 msgstr "Επιλογή αρχείων"
 
-#: src/compose.c:7731 src/inputdialog.c:372 src/prefs_common_dialog.c:4750
+#: src/compose.c:7818 src/inputdialog.c:372 src/prefs_common_dialog.c:4750
 msgid "Select file"
 msgstr "Επιλογή αρχείου"
 
-#: src/compose.c:7785
+#: src/compose.c:7872
 msgid "Save message"
 msgstr "Αποθήκευση μηνύματος"
 
-#: src/compose.c:7786
+#: src/compose.c:7873
 msgid "This message has been modified. Save it to draft folder?"
 msgstr ""
 "Αυτό το μήνυμα έχει τροποποιηθεί. Θέλετε να το αποθηκεύσετε στα πρόχειρα;"
 
-#: src/compose.c:7788 src/compose.c:7792
+#: src/compose.c:7875 src/compose.c:7879
 msgid "Close _without saving"
 msgstr "Κλείσιμο _χωρίς αποθήκευση"
 
-#: src/compose.c:7839
+#: src/compose.c:7926
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "Θέλετε να εφαρμόσετε το πρότυπο '%s' ;"
 
-#: src/compose.c:7841
+#: src/compose.c:7928
 msgid "Apply template"
 msgstr "Εφαρμογή προτύπου"
 
-#: src/compose.c:7842
+#: src/compose.c:7929
 msgid "_Replace"
 msgstr "_Αντικατάσταση"
 
-#: src/compose.c:7842
+#: src/compose.c:7929
 msgid "_Insert"
 msgstr "_Εισαγωγή"
 
@@ -2040,28 +2052,27 @@ msgstr "Πρέπει να προσδιοριστεί όνομα και τιμή.
 msgid "Edit Person Data"
 msgstr "Επεξεργασία δεδομένων"
 
-#: src/editaddress.c:578 src/importcsv.c:123
+#: src/editaddress.c:578 src/exportcsv.c:213 src/importcsv.c:123
 msgid "Display Name"
 msgstr "Εμφανιζόμενο όνομα"
 
-#: src/editaddress.c:584 src/editaddress.c:588 src/importcsv.c:122
+#: src/editaddress.c:584 src/editaddress.c:588 src/exportcsv.c:213
+#: src/importcsv.c:122
 msgid "Last Name"
 msgstr "Επώνυμο"
 
-#: src/editaddress.c:585 src/editaddress.c:587 src/importcsv.c:121
+#: src/editaddress.c:585 src/editaddress.c:587 src/exportcsv.c:213
+#: src/importcsv.c:121
 msgid "First Name"
 msgstr "Όνομα"
 
-#: src/editaddress.c:590 src/importcsv.c:124
-msgid "Nick Name"
-msgstr "Ψευδώνυμο"
-
 #: src/editaddress.c:627 src/editaddress.c:677 src/editaddress.c:887
-#: src/editgroup.c:491 src/importcsv.c:125
+#: src/editgroup.c:491 src/exportcsv.c:213 src/importcsv.c:125
 msgid "E-Mail Address"
 msgstr "Διεύθυνση ηλεκτρονικής αλληλογραφίας"
 
-#: src/editaddress.c:628 src/editaddress.c:686 src/importcsv.c:127
+#: src/editaddress.c:628 src/editaddress.c:686 src/exportcsv.c:213
+#: src/importcsv.c:127
 msgid "Alias"
 msgstr "Ψευδώνυμο"
 
@@ -2197,8 +2208,8 @@ msgid "Edit JPilot Entry"
 msgstr "Επεξεργασία εγγραφής JPilot"
 
 #: src/editjpilot.c:289 src/editldap.c:349 src/editvcard.c:202
-#: src/importcsv.c:696 src/importldif.c:498 src/prefs_account_dialog.c:2105
-#: src/prefs_common_dialog.c:2424
+#: src/exportcsv.c:408 src/importcsv.c:696 src/importldif.c:498
+#: src/prefs_account_dialog.c:2105 src/prefs_common_dialog.c:2424
 msgid " ... "
 msgstr " ... "
 
@@ -2380,6 +2391,70 @@ msgstr "Επιλογή αρχείου εξαγωγής"
 msgid "Select destination folder"
 msgstr "Επιλογή αρχείου εξαγωγής"
 
+#: src/exportcsv.c:101
+#, fuzzy
+msgid "Please specify file to export."
+msgstr ""
+"Παρακαλώ προσδιορίστε όνομα ευρετηρίου διευθύνσεων και αρχείο για εισαγωγή."
+
+#: src/exportcsv.c:104
+#, fuzzy
+msgid "File exported."
+msgstr "Το αρχείο εισήχθη."
+
+#: src/exportcsv.c:284 src/importcsv.c:518 src/importldif.c:317
+msgid "Please select a file."
+msgstr "Παρακαλώ επιλέξτε ένα αρχείο."
+
+#: src/exportcsv.c:309
+#, fuzzy
+msgid "CSV file exported successfully."
+msgstr "Το αρχείο LDIF εισήχθη επιτυχώς."
+
+#: src/exportcsv.c:345
+#, fuzzy
+msgid "Enter CSV File Name"
+msgstr "Όνομα αρχείου"
+
+#: src/exportcsv.c:399 src/importcsv.c:687 src/importldif.c:489
+msgid "File Name"
+msgstr "Όνομα αρχείου"
+
+#: src/exportcsv.c:417 src/importcsv.c:705
+msgid "Comma-separated"
+msgstr ""
+
+#: src/exportcsv.c:421 src/importcsv.c:709
+msgid "Tab-separated"
+msgstr ""
+
+#: src/exportcsv.c:461 src/importcsv.c:848 src/importldif.c:663
+msgid "File Name :"
+msgstr "Όνομα αρχείου :"
+
+#: src/exportcsv.c:472 src/importcsv.c:859 src/importldif.c:673
+msgid "Records :"
+msgstr "Εγγραφές :"
+
+#: src/exportcsv.c:498
+#, fuzzy
+msgid "Export Address Book into CSV file"
+msgstr "Επιλογή φακέλου από το Ευρετήριο διευθύνσεων"
+
+#. Button panel
+#: src/exportcsv.c:530 src/importcsv.c:919 src/importldif.c:733
+#: src/prefs_toolbar.c:74
+msgid "Next"
+msgstr "Επόμενο"
+
+#: src/exportcsv.c:560 src/importcsv.c:952 src/importldif.c:766
+msgid "File Info"
+msgstr "Πληροφορίες αρχείου"
+
+#: src/exportcsv.c:561 src/importcsv.c:954 src/importldif.c:768
+msgid "Finish"
+msgstr "Τέλος"
+
 #: src/filesel.c:221
 #, fuzzy
 msgid "File type:"
@@ -2443,7 +2518,7 @@ msgid "`%c' can't be included in folder name."
 msgstr "Το `%c' δεν μπορεί να συμπεριλαμβάνεται σε όνομα φακέλου."
 
 #: src/foldersel.c:622 src/folderview.c:2490 src/folderview.c:2549
-#: src/query_search.c:1160
+#: src/query_search.c:1306
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "Ο φάκελος `%s' υπάρχει ήδη."
@@ -2729,7 +2804,7 @@ msgstr "Ομάδες συζητήσεων:"
 msgid "Creating header view...\n"
 msgstr "Δημιουργία προβολής κεφαλίδων...\n"
 
-#: src/headerview.c:228 src/query_search.c:795 src/rpop3.c:705
+#: src/headerview.c:228 src/query_search.c:905 src/rpop3.c:705
 #: src/summaryview.c:2524
 msgid "(No From)"
 msgstr "(Χωρίς αποστολέα)"
@@ -2837,10 +2912,6 @@ msgstr "Επιλέξτε και μετονομάστε τα πεδία LDIF πο
 msgid "File imported."
 msgstr "Το αρχείο εισήχθη."
 
-#: src/importcsv.c:518 src/importldif.c:317
-msgid "Please select a file."
-msgstr "Παρακαλώ επιλέξτε ένα αρχείο."
-
 #: src/importcsv.c:524 src/importldif.c:323
 msgid "Address book name must be supplied."
 msgstr "Πρέπει να δώσετε όνομα ευρετηρίου διευθύνσεων."
@@ -2859,18 +2930,6 @@ msgstr "Το αρχείο LDIF εισήχθη επιτυχώς."
 #, fuzzy
 msgid "Select CSV File"
 msgstr "Επιλογή αρχείου vCard"
-
-#: src/importcsv.c:687 src/importldif.c:489
-msgid "File Name"
-msgstr "Όνομα αρχείου"
-
-#: src/importcsv.c:705
-msgid "Comma-separated"
-msgstr ""
-
-#: src/importcsv.c:709
-msgid "Tab-separated"
-msgstr ""
 
 #: src/importcsv.c:740 src/importldif.c:530
 msgid "S"
@@ -2906,40 +2965,19 @@ msgstr "Κάτω"
 msgid "Address Book :"
 msgstr "Ευρετήριο διευθύνσεων :"
 
-#: src/importcsv.c:848 src/importldif.c:663
-msgid "File Name :"
-msgstr "Όνομα αρχείου :"
-
-#: src/importcsv.c:859 src/importldif.c:673
-msgid "Records :"
-msgstr "Εγγραφές :"
-
 #: src/importcsv.c:887
 #, fuzzy
 msgid "Import CSV file into Address Book"
 msgstr "Εισαγωγή αρχείου LDIF στο ευρετήριο διευθύνσεων"
 
-#. Button panel
-#: src/importcsv.c:919 src/importldif.c:733 src/prefs_toolbar.c:74
-msgid "Next"
-msgstr "Επόμενο"
-
 #: src/importcsv.c:920 src/importldif.c:734 src/prefs_toolbar.c:77
 msgid "Prev"
 msgstr "Προηγ"
-
-#: src/importcsv.c:952 src/importldif.c:766
-msgid "File Info"
-msgstr "Πληροφορίες αρχείου"
 
 #: src/importcsv.c:953
 #, fuzzy
 msgid "Fields"
 msgstr "Πεδίο LDIF"
-
-#: src/importcsv.c:954 src/importldif.c:768
-msgid "Finish"
-msgstr "Τέλος"
 
 #: src/importldif.c:125
 msgid "Select and rename LDIF field names to import."
@@ -4314,7 +4352,7 @@ msgid "Find text:"
 msgstr "Εύρεση κειμένου:"
 
 #: src/message_search.c:153 src/prefs_search_folder.c:253
-#: src/query_search.c:346
+#: src/query_search.c:441
 msgid "Case sensitive"
 msgstr "Διαχωρισμός πεζών/κεφαλαίων"
 
@@ -6604,19 +6642,19 @@ msgstr "Απάντηση-Σε:"
 msgid "%s - Edit search condition"
 msgstr "%s - Επεξεργασία συνθήκης αναζήτησης"
 
-#: src/prefs_search_folder.c:209 src/query_search.c:276
+#: src/prefs_search_folder.c:209 src/query_search.c:371
 msgid "Match any of the following"
 msgstr "Ταίριασμα οποιουδήποτε από τα παρακάτω"
 
-#: src/prefs_search_folder.c:211 src/query_search.c:278
+#: src/prefs_search_folder.c:211 src/query_search.c:373
 msgid "Match all of the following"
 msgstr "Ταίριασμα όλων των παρακάτω"
 
-#: src/prefs_search_folder.c:231 src/query_search.c:323
+#: src/prefs_search_folder.c:231 src/query_search.c:418
 msgid "Folder:"
 msgstr "Φάκελος:"
 
-#: src/prefs_search_folder.c:248 src/query_search.c:341
+#: src/prefs_search_folder.c:248 src/query_search.c:436
 msgid "Search subfolders"
 msgstr "Αναζήτηση στους υποφακέλους"
 
@@ -6625,19 +6663,19 @@ msgid "Mark"
 msgstr "Σημείωση"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:69 src/query_search.c:402 src/rpop3.c:434
+#: src/prefs_summary_column.c:69 src/query_search.c:499 src/rpop3.c:434
 #: src/summaryview.c:5515
 msgid "Subject"
 msgstr "Θέμα"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:70 src/query_search.c:406 src/rpop3.c:438
+#: src/prefs_summary_column.c:70 src/query_search.c:503 src/rpop3.c:438
 #: src/summaryview.c:5521
 msgid "From"
 msgstr "Από"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:71 src/query_search.c:407 src/rpop3.c:439
+#: src/prefs_summary_column.c:71 src/query_search.c:504 src/rpop3.c:439
 #: src/summaryview.c:5523
 msgid "Date"
 msgstr "Ημερομηνία"
@@ -6805,11 +6843,11 @@ msgstr "Επόμενο μη αναγνωσμένο μήνυμα"
 msgid "Previous unread message"
 msgstr "Προηγούμενο μη αναγνωσμένο μήνυμα"
 
-#: src/prefs_toolbar.c:81 src/query_search.c:253
+#: src/prefs_toolbar.c:81 src/query_search.c:348
 msgid "Search messages"
 msgstr "Αναζήτηση"
 
-#: src/prefs_toolbar.c:83 src/printing.c:658
+#: src/prefs_toolbar.c:83 src/printing.c:675
 msgid "Print"
 msgstr "Εκτύπωση"
 
@@ -6905,15 +6943,15 @@ msgid ""
 "the order by using the Up / Down button."
 msgstr ""
 
-#: src/printing.c:655
+#: src/printing.c:672
 msgid "The message will be printed with the following command:"
 msgstr "Το μήνυμα θα εκτυπωθεί με την εξής εντολή:"
 
-#: src/printing.c:656
+#: src/printing.c:673
 msgid "(Default print command)"
 msgstr "(Προεπιλεγμένη εντολή εκτύπωσης)"
 
-#: src/printing.c:666
+#: src/printing.c:683
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -6931,52 +6969,156 @@ msgstr "Κατάσταση"
 msgid "Progress"
 msgstr "Ιδιότητες"
 
-#: src/query_search.c:429
+#: src/query_search.c:258
+#, fuzzy
+msgid "_Reply"
+msgstr "/_Απάντηση"
+
+#: src/query_search.c:259
+#, fuzzy
+msgid "Repl_y to"
+msgstr "/Απάντ_ηση σε"
+
+#: src/query_search.c:260
+#, fuzzy
+msgid "Reply to _all"
+msgstr "Απάντηση σε Ό_λους"
+
+#: src/query_search.c:261
+#, fuzzy
+msgid "Reply to _sender"
+msgstr "/Απάντηση στον απο_στολέα"
+
+#: src/query_search.c:262
+#, fuzzy
+msgid "Reply to _list"
+msgstr "Απάντηση σε Ό_λους"
+
+#: src/query_search.c:264
+#, fuzzy
+msgid "_Forward"
+msgstr "/Πρ_οώθηση"
+
+#: src/query_search.c:265
+#, fuzzy
+msgid "For_ward as attachment"
+msgstr "/Προώθηση ως συ_νημμένο"
+
+#: src/query_search.c:266
+#, fuzzy
+msgid "Redirec_t"
+msgstr "/Ε_κτροπή"
+
+#: src/query_search.c:268
+#, fuzzy
+msgid "M_ove messages to..."
+msgstr "Μετακίνηση μηνυμάτων %s στο %s ..."
+
+#: src/query_search.c:269
+#, fuzzy
+msgid "_Copy messages to..."
+msgstr "Αντιγραφή μηνυμάτων %s στο %s ..."
+
+#: src/query_search.c:271
+#, fuzzy
+msgid "Add sender to address boo_k..."
+msgstr "Προσθήκη Αποστολέα στο Βιβλίο Διευθύνσεων"
+
+#: src/query_search.c:272
+#, fuzzy
+msgid "Create f_ilter rule"
+msgstr "/Δημιουργία _φίλτρου"
+
+#: src/query_search.c:273
+#, fuzzy
+msgid "_Automatically"
+msgstr "Αυτόματη"
+
+#: src/query_search.c:274
+#, fuzzy
+msgid "by _From"
+msgstr "Από"
+
+#: src/query_search.c:275
+msgid "by _To"
+msgstr ""
+
+#: src/query_search.c:276
+#, fuzzy
+msgid "by _Subject"
+msgstr "Θέμα"
+
+#: src/query_search.c:278
+#, fuzzy
+msgid "Open in _new window"
+msgstr "/_Προβολή/Άνοι_γμα σε νέο παράθυρο"
+
+#: src/query_search.c:279
+#, fuzzy
+msgid "View mess_age source"
+msgstr "/_Προβολή/Πηγαίος _κώδικας μηνύματος"
+
+#: src/query_search.c:281
+#, fuzzy
+msgid "_Print..."
+msgstr "/Ε_κτύπωση..."
+
+#: src/query_search.c:526
 #, fuzzy
 msgid "_Save as search folder"
 msgstr "Αποθήκευση Αποτελεσμάτων Αναζήτησης Ως..."
 
-#: src/query_search.c:551
+#: src/query_search.c:661
 #, fuzzy, c-format
 msgid "Message not found."
 msgstr "Βρέθηκαν %d μηνύματα.\n"
 
-#: src/query_search.c:553
+#: src/query_search.c:663
 #, fuzzy, c-format
 msgid "1 message found."
 msgstr "Βρέθηκαν %d μηνύματα.\n"
 
-#: src/query_search.c:555
+#: src/query_search.c:665
 #, fuzzy, c-format
 msgid "%d messages found."
 msgstr "Βρέθηκαν %d μηνύματα.\n"
 
-#: src/query_search.c:590
+#: src/query_search.c:700
 #, c-format
 msgid "Searching %s (%d / %d)..."
 msgstr "Αναζήτηση για %s (%d / %d)..."
 
-#: src/query_search.c:712
+#: src/query_search.c:822
 #, c-format
 msgid "Searching %s ..."
 msgstr "Αναζήτηση για %s..."
 
-#: src/query_search.c:803 src/rpop3.c:713 src/summaryview.c:2441
+#: src/query_search.c:913 src/rpop3.c:713 src/summaryview.c:2441
 msgid "(No Date)"
 msgstr "(Χωρίς ημερομηνία)"
 
-#: src/query_search.c:998
+#: src/query_search.c:1144
 #, fuzzy
 msgid "Save as search folder"
 msgstr "Αποθήκευση Αποτελεσμάτων Αναζήτησης Ως..."
 
-#: src/query_search.c:1019
+#: src/query_search.c:1165
 msgid "Location:"
 msgstr "Τοποθεσία: "
 
-#: src/query_search.c:1034
+#: src/query_search.c:1180
 msgid "Folder name:"
 msgstr "Όνομα φακέλου:"
+
+#: src/query_search.c:1457 src/summaryview.c:3828
+#, fuzzy
+msgid "Select folder to copy"
+msgstr "Επιλογή φακέλου"
+
+#: src/query_search.c:1460 src/summaryview.c:3727
+#, fuzzy
+msgid "Select folder to move"
+msgstr "Επιλογή φακέλου"
 
 #: src/quick_search.c:108
 msgid "All"
@@ -8017,11 +8159,6 @@ msgstr "Αποτυχία ορισμού μετακίνησης ποντικιο�
 msgid "Destination is same as current folder."
 msgstr "Ο προορισμός είναι ίδιος με τον τρέχοντα κατάλογο."
 
-#: src/summaryview.c:3727
-#, fuzzy
-msgid "Select folder to move"
-msgstr "Επιλογή φακέλου"
-
 #: src/summaryview.c:3761
 #, fuzzy, c-format
 msgid "Message %d is set to copy to %s\n"
@@ -8030,11 +8167,6 @@ msgstr "Αντιγραφή επιλεγμένων μηνυμάτων στο πρ
 #: src/summaryview.c:3792
 msgid "Destination for copy is same as current folder."
 msgstr "Ο προορισμός αντιγραφής είναι ίδιος με τον τρέχοντα κατάλογο."
-
-#: src/summaryview.c:3828
-#, fuzzy
-msgid "Select folder to copy"
-msgstr "Επιλογή φακέλου"
 
 #: src/summaryview.c:4003
 msgid "Error occurred while processing messages."

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 2.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-12 13:38+0900\n"
+"POT-Creation-Date: 2017-11-29 16:54+0900\n"
 "PO-Revision-Date: 2011-01-07 12:00+0100\n"
 "Last-Translator: Jan Stępień <jstepien@users.sourceforge.net>\n"
 "Language-Team: Jan Stępień <jstepien@users.sourceforge.net>\n"
@@ -595,7 +595,7 @@ msgstr "Temat: %s\n"
 msgid "  Issuer: %s\n"
 msgstr "  Nadawca: %s\n"
 
-#: libsylph/utils.c:2980
+#: libsylph/utils.c:3018
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "błąd zapisu do %s.\n"
@@ -687,8 +687,8 @@ msgstr ""
 "Nowe wiadomości zostaną sprawdzone w tej kolejności. Zaznacz\n"
 "w kolumnie \"G\" konta, które mają być sprawdzone przez 'Odbierz wsz.'"
 
-#: src/account_dialog.c:376 src/addressadd.c:181 src/addressbook.c:776
-#: src/compose.c:5517 src/editaddress.c:777 src/editaddress.c:826
+#: src/account_dialog.c:376 src/addressadd.c:181 src/addressbook.c:788
+#: src/compose.c:5604 src/editaddress.c:777 src/editaddress.c:826
 #: src/editbook.c:198 src/editgroup.c:490 src/editjpilot.c:270
 #: src/editldap.c:307 src/editvcard.c:183 src/mimeview.c:226
 #: src/prefs_filter.c:274 src/prefs_folder_item.c:171 src/select-keys.c:313
@@ -823,13 +823,14 @@ msgstr "Argumenty użytkownika dla akcji"
 msgid "Add Address to Book"
 msgstr "Dodaj do książki adresowej"
 
-#: src/addressadd.c:191 src/compose.c:3419 src/prefs_toolbar.c:89
+#: src/addressadd.c:191 src/compose.c:3441 src/prefs_toolbar.c:89
 #: src/select-keys.c:314
 msgid "Address"
 msgstr "Adres"
 
-#: src/addressadd.c:201 src/addressbook.c:832 src/editaddress.c:629
-#: src/editaddress.c:695 src/editgroup.c:492 src/importcsv.c:126
+#: src/addressadd.c:201 src/addressbook.c:865 src/editaddress.c:629
+#: src/editaddress.c:695 src/editgroup.c:492 src/exportcsv.c:213
+#: src/importcsv.c:126
 msgid "Remarks"
 msgstr "Uwagi"
 
@@ -837,32 +838,32 @@ msgstr "Uwagi"
 msgid "Select Address Book Folder"
 msgstr "Wybierz katalog książki adresowej"
 
-#: src/addressadd.c:316 src/addressbook.c:1074 src/addressbook.c:3555
+#: src/addressadd.c:316 src/addressbook.c:1107 src/addressbook.c:3596
 msgid "Auto-registered address"
 msgstr "Adresy zebrane automatycznie"
 
-#: src/addressbook.c:405 src/compose.c:583 src/mainwindow.c:558
+#: src/addressbook.c:413 src/compose.c:583 src/mainwindow.c:558
 #: src/messageview.c:166
 msgid "/_File"
 msgstr "/_Plik"
 
-#: src/addressbook.c:406
+#: src/addressbook.c:414
 msgid "/_File/New _Book"
 msgstr "/_Plik/Nowa _książka"
 
-#: src/addressbook.c:407
+#: src/addressbook.c:415
 msgid "/_File/New _vCard"
 msgstr "/_Plik/Nowy _vCard"
 
-#: src/addressbook.c:409
+#: src/addressbook.c:417
 msgid "/_File/New _JPilot"
 msgstr "/_Plik/Nowy _J-Pilot"
 
-#: src/addressbook.c:412
+#: src/addressbook.c:420
 msgid "/_File/New _LDAP Server"
 msgstr "/_Plik/Nowy serwer _LDAP"
 
-#: src/addressbook.c:414 src/addressbook.c:417 src/compose.c:588
+#: src/addressbook.c:422 src/addressbook.c:425 src/compose.c:588
 #: src/compose.c:593 src/compose.c:596 src/compose.c:599 src/mainwindow.c:576
 #: src/mainwindow.c:579 src/mainwindow.c:581 src/mainwindow.c:583
 #: src/mainwindow.c:588 src/mainwindow.c:590 src/messageview.c:168
@@ -870,116 +871,129 @@ msgstr "/_Plik/Nowy serwer _LDAP"
 msgid "/_File/---"
 msgstr "/_Plik/---"
 
-#: src/addressbook.c:415
+#: src/addressbook.c:423
 msgid "/_File/_Edit"
 msgstr "/_Plik/_Edycja"
 
-#: src/addressbook.c:416
+#: src/addressbook.c:424
 msgid "/_File/_Delete"
 msgstr "/_Plik/_Usuń"
 
-#: src/addressbook.c:418
+#: src/addressbook.c:426
 msgid "/_File/_Save"
 msgstr "/_Plik/Zapi_sz"
 
-#: src/addressbook.c:419 src/compose.c:600 src/messageview.c:174
+#: src/addressbook.c:427 src/compose.c:600 src/messageview.c:174
 msgid "/_File/_Close"
 msgstr "/_Plik/_Zamknij"
 
-#: src/addressbook.c:421 src/addressbook.c:468 src/addressbook.c:485
+#: src/addressbook.c:429 src/addressbook.c:475 src/addressbook.c:492
 #: src/compose.c:602 src/mainwindow.c:594 src/messageview.c:176
 msgid "/_Edit"
 msgstr "/_Edycja"
 
-#: src/addressbook.c:422 src/compose.c:607 src/mainwindow.c:595
+#: src/addressbook.c:430 src/compose.c:607 src/mainwindow.c:595
 #: src/messageview.c:177
 msgid "/_Edit/_Copy"
 msgstr "/_Edycja/_Kopiuj"
 
-#: src/addressbook.c:423 src/compose.c:608
+#: src/addressbook.c:431 src/compose.c:608
 msgid "/_Edit/_Paste"
 msgstr "/_Edycja/_Wstaw"
 
-#: src/addressbook.c:425
+#: src/addressbook.c:433
 msgid "/_Address"
 msgstr "/_Adres"
 
-#: src/addressbook.c:426
+#: src/addressbook.c:434
 msgid "/_Address/New _Address"
 msgstr "/_Plik/Nowy _adres"
 
-#: src/addressbook.c:427
+#: src/addressbook.c:435
 msgid "/_Address/New _Group"
 msgstr "/_Plik/Nowa _grupa"
 
-#: src/addressbook.c:428
+#: src/addressbook.c:436
 msgid "/_Address/New _Folder"
 msgstr "/_Plik/Nowy _katalog"
 
-#: src/addressbook.c:429 src/addressbook.c:436
+#: src/addressbook.c:437 src/addressbook.c:444
 msgid "/_Address/---"
 msgstr "/_Adres/---"
 
-#: src/addressbook.c:430
+#: src/addressbook.c:438
 #, fuzzy
 msgid "/_Address/Add _to recipient"
 msgstr "/_Adres/_Usuń"
 
-#: src/addressbook.c:432
+#: src/addressbook.c:440
 #, fuzzy
 msgid "/_Address/Add to _Cc"
 msgstr "/_Adres/_Edycja"
 
-#: src/addressbook.c:434
+#: src/addressbook.c:442
 #, fuzzy
 msgid "/_Address/Add to _Bcc"
 msgstr "/_Adres/_Edycja"
 
-#: src/addressbook.c:437
+#: src/addressbook.c:445
 msgid "/_Address/_Edit"
 msgstr "/_Adres/_Edycja"
 
-#: src/addressbook.c:438
+#: src/addressbook.c:446
 msgid "/_Address/_Delete"
 msgstr "/_Adres/_Usuń"
 
-#: src/addressbook.c:440 src/compose.c:718 src/mainwindow.c:842
+#: src/addressbook.c:448 src/compose.c:718 src/mainwindow.c:842
 #: src/messageview.c:299
 msgid "/_Tools"
 msgstr "/_Narzędzia"
 
-#: src/addressbook.c:441
+#: src/addressbook.c:449
 msgid "/_Tools/Import _LDIF file"
 msgstr "/_Plik/Importuj plik _LDIF"
 
-#: src/addressbook.c:442
+#: src/addressbook.c:450
 msgid "/_Tools/Import _CSV file"
 msgstr "/_Narzędzia/Importuj plik _CSV"
 
-#: src/addressbook.c:444 src/compose.c:742 src/mainwindow.c:904
+#: src/addressbook.c:451 src/compose.c:724 src/compose.c:727 src/compose.c:731
+#: src/compose.c:737 src/mainwindow.c:846 src/mainwindow.c:860
+#: src/mainwindow.c:865 src/mainwindow.c:868 src/mainwindow.c:874
+#: src/mainwindow.c:876 src/mainwindow.c:880 src/messageview.c:303
+#: src/messageview.c:315
+msgid "/_Tools/---"
+msgstr "/_Narzędzia/---"
+
+#: src/addressbook.c:452
+#, fuzzy
+msgid "/_Tools/Export C_SV file"
+msgstr "/_Narzędzia/Importuj plik _CSV"
+
+#: src/addressbook.c:453 src/compose.c:742 src/mainwindow.c:904
 #: src/messageview.c:319
 msgid "/_Help"
 msgstr "/Pomo_c"
 
-#: src/addressbook.c:445 src/compose.c:743 src/mainwindow.c:924
+#: src/addressbook.c:454 src/compose.c:743 src/mainwindow.c:924
 #: src/messageview.c:320
 msgid "/_Help/_About"
 msgstr "/Pomo_c/_O programie"
 
-#: src/addressbook.c:464 src/addressbook.c:474
+#: src/addressbook.c:471 src/addressbook.c:481
 msgid "/New _Address"
 msgstr "/Nowy _adres"
 
-#: src/addressbook.c:465 src/addressbook.c:475
+#: src/addressbook.c:472 src/addressbook.c:482
 msgid "/New _Group"
 msgstr "/Nowa _grupa"
 
-#: src/addressbook.c:466 src/addressbook.c:476
+#: src/addressbook.c:473 src/addressbook.c:483
 msgid "/New _Folder"
 msgstr "/Nowy _katalog"
 
-#: src/addressbook.c:467 src/addressbook.c:477 src/addressbook.c:484
-#: src/addressbook.c:487 src/compose.c:574 src/compose.c:577
+#: src/addressbook.c:474 src/addressbook.c:484 src/addressbook.c:491
+#: src/addressbook.c:494 src/compose.c:574 src/compose.c:577
 #: src/folderview.c:258 src/folderview.c:261 src/folderview.c:266
 #: src/folderview.c:269 src/folderview.c:282 src/folderview.c:285
 #: src/folderview.c:287 src/folderview.c:292 src/folderview.c:295
@@ -991,96 +1005,101 @@ msgstr "/Nowy _katalog"
 msgid "/---"
 msgstr "/---"
 
-#: src/addressbook.c:469 src/addressbook.c:486 src/summaryview.c:464
+#: src/addressbook.c:476 src/addressbook.c:493 src/summaryview.c:464
 msgid "/_Delete"
 msgstr "/_Usuń"
 
-#: src/addressbook.c:478
+#: src/addressbook.c:485
 msgid "/Add _to recipient"
 msgstr ""
 
-#: src/addressbook.c:480
+#: src/addressbook.c:487
 msgid "/Add t_o Cc"
 msgstr ""
 
-#: src/addressbook.c:482
+#: src/addressbook.c:489
 msgid "/Add to _Bcc"
 msgstr ""
 
-#: src/addressbook.c:488
+#: src/addressbook.c:495
 msgid "/_Copy"
 msgstr "/_Kopiuj"
 
-#: src/addressbook.c:489
+#: src/addressbook.c:496
 msgid "/_Paste"
 msgstr "/_Wklej"
 
-#: src/addressbook.c:614 src/prefs_common_dialog.c:2838 src/prefs_toolbar.c:90
+#: src/addressbook.c:621 src/prefs_common_dialog.c:2838 src/prefs_toolbar.c:90
 msgid "Address book"
 msgstr "Książka adresowa"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:687 src/addressbook.c:4258 src/folderview.c:398
-#: src/prefs_account_dialog.c:2077 src/query_search.c:401
+#: src/addressbook.c:694 src/addressbook.c:4322 src/folderview.c:398
+#: src/prefs_account_dialog.c:2077 src/query_search.c:498
 msgid "Folder"
 msgstr "Katalog"
 
-#: src/addressbook.c:811
+#: src/addressbook.c:823
 msgid "E-Mail address"
 msgstr "Adres e-mail"
 
-#: src/addressbook.c:875 src/quick_search.c:128
+#: src/addressbook.c:844 src/editaddress.c:590 src/exportcsv.c:213
+#: src/importcsv.c:124
+msgid "Nick Name"
+msgstr "Pseudonim"
+
+#: src/addressbook.c:908 src/quick_search.c:128
 msgid "Search:"
 msgstr "Szukaj: "
 
-#: src/addressbook.c:913 src/compose.c:3364 src/headerview.c:57
+#: src/addressbook.c:946 src/compose.c:3386 src/headerview.c:57
 #: src/prefs_folder_item.c:340 src/prefs_template.c:200
 msgid "To:"
 msgstr "Do:"
 
-#: src/addressbook.c:917 src/compose.c:3381 src/headerview.c:58
+#: src/addressbook.c:950 src/compose.c:3403 src/headerview.c:58
 #: src/prefs_folder_item.c:357 src/prefs_template.c:202
 msgid "Cc:"
 msgstr "Kopia:"
 
-#: src/addressbook.c:921 src/compose.c:3398 src/prefs_folder_item.c:368
+#: src/addressbook.c:954 src/compose.c:3420 src/prefs_folder_item.c:368
 #: src/prefs_template.c:204
 msgid "Bcc:"
 msgstr "Ukryta kopia:"
 
 #. Buttons
-#: src/addressbook.c:942 src/addressbook.c:2339 src/editaddress.c:719
+#: src/addressbook.c:975 src/addressbook.c:2375 src/editaddress.c:719
 #: src/editaddress.c:853 src/prefs_actions.c:266
 #: src/prefs_display_header.c:280 src/prefs_display_header.c:336
 #: src/prefs_template.c:267 src/prefs_toolbar.c:65
 msgid "Delete"
 msgstr "Usuń"
 
-#: src/addressbook.c:945 src/editaddress.c:725 src/editaddress.c:859
+#: src/addressbook.c:978 src/editaddress.c:725 src/editaddress.c:859
 #: src/prefs_actions.c:254 src/prefs_customheader.c:232
 #: src/prefs_display_header.c:274 src/prefs_display_header.c:330
 #: src/prefs_filter_edit.c:1607
 msgid "Add"
 msgstr "Dodaj"
 
-#: src/addressbook.c:948 src/prefs_toolbar.c:80
+#: src/addressbook.c:981 src/prefs_toolbar.c:80
 msgid "Search"
 msgstr "Szukaj"
 
-#: src/addressbook.c:951
+#: src/addressbook.c:984
 msgid "_Close"
 msgstr "_Zamknij"
 
 #. Confirm deletion
-#: src/addressbook.c:1147
+#: src/addressbook.c:1180
 msgid "Delete address(es)"
 msgstr "Usuń adres(y)"
 
-#: src/addressbook.c:1148
+#: src/addressbook.c:1181
 msgid "Really delete the address(es)?"
 msgstr "Czy naprawdę chcesz usunąć ten adres(y)?"
 
-#: src/addressbook.c:2330
+#: src/addressbook.c:2366
 #, c-format
 msgid ""
 "Do you want to delete the folder AND all addresses in `%s' ?\n"
@@ -1090,36 +1109,36 @@ msgstr ""
 "Jeśli usuniesz tylko katalog, adresy zostaną przeniesione do nadrzędnego "
 "katalogu."
 
-#: src/addressbook.c:2333 src/folderview.c:2724
+#: src/addressbook.c:2369 src/folderview.c:2724
 msgid "Delete folder"
 msgstr "Usuń katalog"
 
-#: src/addressbook.c:2333
+#: src/addressbook.c:2369
 msgid "_Folder only"
 msgstr "_Tylko katalog"
 
-#: src/addressbook.c:2333
+#: src/addressbook.c:2369
 msgid "Folder and _addresses"
 msgstr "Katalog i _adresy"
 
-#: src/addressbook.c:2338
+#: src/addressbook.c:2374
 #, c-format
 msgid "Really delete `%s' ?"
 msgstr "Czy naprawdę usunąć \"%s\" ?"
 
-#: src/addressbook.c:3301 src/addressbook.c:3439
+#: src/addressbook.c:3342 src/addressbook.c:3480
 msgid "New user, could not save index file."
 msgstr "Nowy użytkownik, nie można było zapisać pliku indeksu."
 
-#: src/addressbook.c:3305 src/addressbook.c:3443
+#: src/addressbook.c:3346 src/addressbook.c:3484
 msgid "New user, could not save address book files."
 msgstr "Nowy użytkownik, nie można było zapisać plików książki adresowej."
 
-#: src/addressbook.c:3315 src/addressbook.c:3453
+#: src/addressbook.c:3356 src/addressbook.c:3494
 msgid "Old address book converted successfully."
 msgstr "Konwersja starej książki adresowej została zakończona pomyślnie."
 
-#: src/addressbook.c:3320
+#: src/addressbook.c:3361
 msgid ""
 "Old address book converted,\n"
 "could not save new address index file"
@@ -1127,7 +1146,7 @@ msgstr ""
 "Stara książka adresowa została skonwertowana,\n"
 "nie można było zapisać nowego pliku indeksu adresów."
 
-#: src/addressbook.c:3333
+#: src/addressbook.c:3374
 msgid ""
 "Could not convert address book,\n"
 "but created empty new address book files."
@@ -1135,7 +1154,7 @@ msgstr ""
 "Nie można było skonwertować książki adresowej,\n"
 "utworzono puste pliki nowej książki adresowej."
 
-#: src/addressbook.c:3339
+#: src/addressbook.c:3380
 msgid ""
 "Could not convert address book,\n"
 "could not create new address book files."
@@ -1143,7 +1162,7 @@ msgstr ""
 "Nie można było skonwertować książki adresowej,\n"
 "nie można było utworzyć nowych plików książki adresowej."
 
-#: src/addressbook.c:3344
+#: src/addressbook.c:3385
 msgid ""
 "Could not convert address book\n"
 "and could not create new address book files."
@@ -1151,15 +1170,15 @@ msgstr ""
 "Nie można było skonwertować książki adresowej\n"
 "oraz utworzyć nowych plików książki adresowej."
 
-#: src/addressbook.c:3351
+#: src/addressbook.c:3392
 msgid "Address book conversion error"
 msgstr "Błąd konwersji książki adresowej"
 
-#: src/addressbook.c:3355
+#: src/addressbook.c:3396
 msgid "Address book conversion"
 msgstr "Konwersja książki adresowej"
 
-#: src/addressbook.c:3394
+#: src/addressbook.c:3435
 #, fuzzy, c-format
 msgid ""
 "Could not read address index:\n"
@@ -1167,78 +1186,78 @@ msgid ""
 "%s%c%s"
 msgstr "Nie można odczytać książki adresowej"
 
-#: src/addressbook.c:3397
+#: src/addressbook.c:3438
 msgid "Address Book Error"
 msgstr "Błąd książki adresowej"
 
-#: src/addressbook.c:3458
+#: src/addressbook.c:3499
 msgid "Old address book converted, could not save new address index file"
 msgstr ""
 "Stara książka adresowa została skonwertowana, nie można było zapisać nowego "
 "pliku indeksów adresowych."
 
-#: src/addressbook.c:3472
+#: src/addressbook.c:3513
 msgid ""
 "Could not convert address book, but created empty new address book files."
 msgstr ""
 "Nie można było skonwertować książki adresowej lecz utworzono puste pliki "
 "nowej książki adresowej."
 
-#: src/addressbook.c:3478
+#: src/addressbook.c:3519
 msgid ""
 "Could not convert address book, could not create new address book files."
 msgstr ""
 "Nie można było skonwertować książki adresowej oraz utworzyć nowych plików "
 "książki adresowej."
 
-#: src/addressbook.c:3484
+#: src/addressbook.c:3525
 msgid ""
 "Could not convert address book and could not create new address book files."
 msgstr ""
 "Nie można było skonwertować książki adresowej i utworzyć nowych plików "
 "książki adresowej"
 
-#: src/addressbook.c:3496
+#: src/addressbook.c:3537
 msgid "Could not read address index"
 msgstr "Nie można odczytać książki adresowej"
 
-#: src/addressbook.c:3502
+#: src/addressbook.c:3543
 msgid "Address Book Conversion Error"
 msgstr "Błąd konwersji książki adresowej"
 
-#: src/addressbook.c:3508
+#: src/addressbook.c:3549
 msgid "Address Book Conversion"
 msgstr "Konwersja książki adresowej"
 
-#: src/addressbook.c:4188 src/prefs_common_dialog.c:2631
+#: src/addressbook.c:4252 src/prefs_common_dialog.c:2631
 msgid "Interface"
 msgstr "Interfejs"
 
-#: src/addressbook.c:4202 src/importcsv.c:676 src/importldif.c:478
+#: src/addressbook.c:4266 src/importcsv.c:676 src/importldif.c:478
 msgid "Address Book"
 msgstr "Książka adresowa"
 
-#: src/addressbook.c:4216
+#: src/addressbook.c:4280
 msgid "Person"
 msgstr "Osoba"
 
-#: src/addressbook.c:4230
+#: src/addressbook.c:4294
 msgid "EMail Address"
 msgstr "Adres e-mail"
 
-#: src/addressbook.c:4244
+#: src/addressbook.c:4308
 msgid "Group"
 msgstr "Grupa"
 
-#: src/addressbook.c:4272
+#: src/addressbook.c:4336
 msgid "vCard"
 msgstr "vCard"
 
-#: src/addressbook.c:4286 src/addressbook.c:4300
+#: src/addressbook.c:4350 src/addressbook.c:4364
 msgid "JPilot"
 msgstr "JPilot"
 
-#: src/addressbook.c:4314
+#: src/addressbook.c:4378
 msgid "LDAP Server"
 msgstr "Serwer LDAP"
 
@@ -1250,7 +1269,7 @@ msgstr "Wspólny adres:"
 msgid "Personal address"
 msgstr "Osobisty adres:"
 
-#: src/alertpanel.c:142 src/compose.c:7054 src/main.c:940
+#: src/alertpanel.c:142 src/compose.c:7141 src/main.c:940
 msgid "Notice"
 msgstr "Notatka"
 
@@ -1565,13 +1584,6 @@ msgstr "/_Narzędzia/_Szablon"
 msgid "/_Tools/Actio_ns"
 msgstr "/_Narzędzia/Polecen_ia"
 
-#: src/compose.c:724 src/compose.c:727 src/compose.c:731 src/compose.c:737
-#: src/mainwindow.c:846 src/mainwindow.c:860 src/mainwindow.c:865
-#: src/mainwindow.c:868 src/mainwindow.c:874 src/mainwindow.c:876
-#: src/mainwindow.c:880 src/messageview.c:303 src/messageview.c:315
-msgid "/_Tools/---"
-msgstr "/_Narzędzia/---"
-
 #: src/compose.c:725
 msgid "/_Tools/Edit with e_xternal editor"
 msgstr "/_Narzędzia/Edytuj za pomocą z_ewnętrznego edytora"
@@ -1613,102 +1625,102 @@ msgstr "Błąd formatu znacznika cytatu."
 msgid "Message reply/forward format error."
 msgstr "Błąd formatu odpowiedz/przekaż wiadomość."
 
-#: src/compose.c:2288
+#: src/compose.c:2310
 #, c-format
 msgid "File %s doesn't exist\n"
 msgstr "Plik %s nie istnieje\n"
 
-#: src/compose.c:2292
+#: src/compose.c:2314
 #, c-format
 msgid "Can't get file size of %s\n"
 msgstr "Nie można odczytać wielkości pliku %s\n"
 
-#: src/compose.c:2297 src/compose.c:4568
+#: src/compose.c:2319 src/compose.c:4595
 #, c-format
 msgid "File %s is empty."
 msgstr "Plik %s jest pusty."
 
-#: src/compose.c:2302
+#: src/compose.c:2324
 #, c-format
 msgid "Can't read %s."
 msgstr "Nie można odczytać %s."
 
-#: src/compose.c:2335
+#: src/compose.c:2357
 #, c-format
 msgid "Message: %s"
 msgstr "Wiadomość: %s"
 
-#: src/compose.c:2397 src/mimeview.c:579
+#: src/compose.c:2419 src/mimeview.c:579
 msgid "Can't get the part of multipart message."
 msgstr "Nie można pobrać części wiadomości wieloczęściowej."
 
-#: src/compose.c:2887 src/headerview.c:259 src/query_search.c:794
+#: src/compose.c:2909 src/headerview.c:259 src/query_search.c:904
 #: src/rpop3.c:704 src/summaryview.c:2521
 msgid "(No Subject)"
 msgstr "(Bez tematu)"
 
-#: src/compose.c:2890
+#: src/compose.c:2912
 #, c-format
 msgid "%s - Compose%s"
 msgstr "%s - Tworzenie wiadomości%s"
 
-#: src/compose.c:2993 src/compose.c:6129 src/prefs_account_dialog.c:1352
+#: src/compose.c:3015 src/compose.c:6216 src/prefs_account_dialog.c:1352
 #, fuzzy, c-format
 msgid "Signature %d"
 msgstr "Podpis"
 
-#: src/compose.c:3059
+#: src/compose.c:3081
 msgid "Recipient is not specified."
 msgstr "Nie podano odbiorcy."
 
-#: src/compose.c:3067
+#: src/compose.c:3089
 msgid "Empty subject"
 msgstr "Pusty temat"
 
-#: src/compose.c:3068
+#: src/compose.c:3090
 msgid "Subject is empty. Send it anyway?"
 msgstr "Wiadomość nie posiada tematu. Czy wysłać ją mimo tego ?"
 
-#: src/compose.c:3132
+#: src/compose.c:3154
 msgid "Attachment is missing"
 msgstr "Brak załącznika"
 
-#: src/compose.c:3133
+#: src/compose.c:3155
 msgid "There is no attachment. Send it without attachments?"
 msgstr "Nie ma załączników. Wysłać bez załącznika?"
 
-#: src/compose.c:3250 src/compose.c:3276
+#: src/compose.c:3272 src/compose.c:3298
 msgid "Check recipients"
 msgstr "Sprawdź odbiorców"
 
-#: src/compose.c:3296
+#: src/compose.c:3318
 msgid "Really send this mail to the following addresses?"
 msgstr "Na pewno wysłać tę wiadomość do następujących odbiorców?"
 
-#: src/compose.c:3309 src/compose.c:5377 src/headerview.c:56
+#: src/compose.c:3331 src/compose.c:5464 src/headerview.c:56
 msgid "From:"
 msgstr "Od:"
 
-#: src/compose.c:3331 src/headerview.c:60 src/prefs_template.c:208
+#: src/compose.c:3353 src/headerview.c:60 src/prefs_template.c:208
 msgid "Subject:"
 msgstr "Temat:"
 
-#: src/compose.c:3424
+#: src/compose.c:3446
 msgid "_Send"
 msgstr "_Wyślij"
 
-#: src/compose.c:3454
+#: src/compose.c:3476
 #, fuzzy
 msgid ""
 "Checking for new messages is currently running.\n"
 "Please try again later."
 msgstr "Sprawdzanie nowych wiadomości we wszystkich katalogach..."
 
-#: src/compose.c:3590
+#: src/compose.c:3612
 msgid "can't get recipient list."
 msgstr "nie można pobrać listy odbiorców."
 
-#: src/compose.c:3618
+#: src/compose.c:3640
 msgid ""
 "Account for sending mail is not specified.\n"
 "Please select a mail account before sending."
@@ -1716,40 +1728,40 @@ msgstr ""
 "Nie podano konta pocztowego do wysyłania wiadomości.\n"
 "Należy wybrać konto przed wysłaniem."
 
-#: src/compose.c:3638 src/send_message.c:353
+#: src/compose.c:3660 src/send_message.c:353
 #, c-format
 msgid "Error occurred while posting the message to %s ."
 msgstr "Błąd podczas wysyłania wiadomości do %s."
 
-#: src/compose.c:3688
+#: src/compose.c:3710
 msgid ""
 "Sending of message was completed, but the message could not be saved to "
 "outbox."
 msgstr ""
 
-#: src/compose.c:3743
+#: src/compose.c:3765
 #, c-format
 msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr ""
 "Nie można znaleźć klucza związanego z wybranym identyfikatorem klucza \"%s\"."
 
-#: src/compose.c:3786 src/compose.c:4180
+#: src/compose.c:3808 src/compose.c:4202
 msgid "Can't sign the message."
 msgstr "Nie można podpisać wiadomości."
 
-#: src/compose.c:3816 src/compose.c:4231
+#: src/compose.c:3838 src/compose.c:4253
 msgid "Can't encrypt the message."
 msgstr "Nie można zaszyfrować wiadomości."
 
-#: src/compose.c:3855 src/compose.c:4225
+#: src/compose.c:3877 src/compose.c:4247
 msgid "Can't encrypt or sign the message."
 msgstr "Nie można zaszyfrować lub podpisać wiadomości."
 
-#: src/compose.c:3903 src/compose.c:4262 src/compose.c:4325 src/compose.c:4445
+#: src/compose.c:3925 src/compose.c:4284 src/compose.c:4347 src/compose.c:4467
 msgid "can't change file mode\n"
 msgstr "nie można zmienić trybu pliku\n"
 
-#: src/compose.c:3936
+#: src/compose.c:3958
 #, c-format
 msgid ""
 "Can't convert the character encoding of the message body from %s to %s.\n"
@@ -1759,11 +1771,11 @@ msgstr ""
 "Nie można przekonwertować treści wiadomości z %s na %s.\n"
 "Wysłać wiadomość mimo to w %s ?"
 
-#: src/compose.c:3942
+#: src/compose.c:3964
 msgid "Code conversion error"
 msgstr ""
 
-#: src/compose.c:4028
+#: src/compose.c:4050
 #, c-format
 msgid ""
 "Line %d exceeds the line length limit (998 bytes).\n"
@@ -1772,15 +1784,15 @@ msgid ""
 "Send it anyway?"
 msgstr ""
 
-#: src/compose.c:4032
+#: src/compose.c:4054
 msgid "Line length limit"
 msgstr "Limit długości linii"
 
-#: src/compose.c:4199
+#: src/compose.c:4221
 msgid "Encrypting with Bcc"
 msgstr "Szyfrowanie z odbiorcami ukrytej kopii"
 
-#: src/compose.c:4200
+#: src/compose.c:4222
 #, fuzzy
 msgid ""
 "This message has Bcc recipients. If this message is encrypted, all Bcc "
@@ -1796,104 +1808,104 @@ msgstr ""
 "\n"
 "Wysłać mimo to?"
 
-#: src/compose.c:4405
+#: src/compose.c:4427
 msgid "can't remove the old message\n"
 msgstr "nie można usunąć starej wiadomości\n"
 
-#: src/compose.c:4423
+#: src/compose.c:4445
 msgid "queueing message...\n"
 msgstr "kolejkowanie wiadomości...\n"
 
-#: src/compose.c:4511
+#: src/compose.c:4533
 msgid "can't find queue folder\n"
 msgstr "nie można znaleźć katalogu kolejki\n"
 
-#: src/compose.c:4518
+#: src/compose.c:4540
 msgid "can't queue the message\n"
 msgstr "nie można zapisać wiadomości do kolejki\n"
 
-#: src/compose.c:4563
+#: src/compose.c:4590
 #, c-format
 msgid "File %s doesn't exist."
 msgstr "Plik %s nie istnieje."
 
-#: src/compose.c:4572
+#: src/compose.c:4599
 #, c-format
 msgid "Can't open file %s."
 msgstr "Nie można otworzyć pliku %s."
 
-#: src/compose.c:5324
+#: src/compose.c:5411
 msgid "Creating compose window...\n"
 msgstr "Tworzenie okna edycji...\n"
 
-#: src/compose.c:5457
+#: src/compose.c:5544
 msgid "PGP Sign"
 msgstr "Podpis PGP"
 
-#: src/compose.c:5460
+#: src/compose.c:5547
 msgid "PGP Encrypt"
 msgstr "Szyfrowanie PGP"
 
-#: src/compose.c:5498 src/mimeview.c:209
+#: src/compose.c:5585 src/mimeview.c:209
 msgid "Data type"
 msgstr "Typ danych"
 
 #. S_COL_DATE
-#: src/compose.c:5507 src/mimeview.c:217 src/prefs_filter_edit.c:511
+#: src/compose.c:5594 src/mimeview.c:217 src/prefs_filter_edit.c:511
 #: src/prefs_summary_column.c:72 src/rpop3.c:440 src/select-keys.c:311
 #: src/summaryview.c:5525
 msgid "Size"
 msgstr "Rozmiar"
 
-#: src/compose.c:6121
+#: src/compose.c:6208
 #, fuzzy
 msgid "Signature:"
 msgstr "Podpis"
 
-#: src/compose.c:6136
+#: src/compose.c:6223
 #, fuzzy
 msgid "Change signature"
 msgstr "Sprawdzanie podpisu"
 
-#: src/compose.c:6716
+#: src/compose.c:6803
 msgid "Invalid MIME type."
 msgstr "Niepoprawny typ MIME."
 
-#: src/compose.c:6734
+#: src/compose.c:6821
 msgid "File doesn't exist or is empty."
 msgstr "Brak pliku lub pusty plik."
 
-#: src/compose.c:6803
+#: src/compose.c:6890
 msgid "Properties"
 msgstr "Właściwości"
 
-#: src/compose.c:6821
+#: src/compose.c:6908
 msgid "MIME type"
 msgstr "typ MIME"
 
 #. Encoding
-#: src/compose.c:6823 src/prefs_common_dialog.c:1203
+#: src/compose.c:6910 src/prefs_common_dialog.c:1203
 #: src/prefs_common_dialog.c:1870
 msgid "Encoding"
 msgstr "Kodowanie"
 
-#: src/compose.c:6846 src/prefs_folder_item.c:202
+#: src/compose.c:6933 src/prefs_folder_item.c:202
 msgid "Path"
 msgstr "Ścieżka"
 
-#: src/compose.c:6847
+#: src/compose.c:6934
 msgid "File name"
 msgstr "Nazwa pliku"
 
-#: src/compose.c:6936
+#: src/compose.c:7023
 msgid "File not exist."
 msgstr "Plik nie istnieje."
 
-#: src/compose.c:6946 src/mimeview.c:1259 src/mimeview.c:1274
+#: src/compose.c:7033 src/mimeview.c:1259 src/mimeview.c:1274
 msgid "Opening executable file"
 msgstr "Otwieranie pliku wykonywalnego"
 
-#: src/compose.c:6947 src/mimeview.c:1260 src/mimeview.c:1275
+#: src/compose.c:7034 src/mimeview.c:1260 src/mimeview.c:1275
 msgid ""
 "This is an executable file. Opening executable file is restricted for "
 "security.\n"
@@ -1905,12 +1917,12 @@ msgstr ""
 "Aby go uruchomić, zapisz go gdzieś i upewnij się, że nie jest to wirus bądź "
 "inny niepożądany program."
 
-#: src/compose.c:6989
+#: src/compose.c:7076
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "Niepoprawna linia wywołania zewnętrznego edytora: \"%s\"\n"
 
-#: src/compose.c:7051
+#: src/compose.c:7138
 #, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1919,48 +1931,48 @@ msgstr ""
 "Zewnętrzny edytor wciąż pracuje.\n"
 "Czy wymusić zakończenie procesu (pid: %d)?\n"
 
-#: src/compose.c:7391 src/mainwindow.c:3080
+#: src/compose.c:7478 src/mainwindow.c:3080
 msgid "_Customize toolbar..."
 msgstr "_Dostosuj pasek narzędzi..."
 
-#: src/compose.c:7567 src/compose.c:7573 src/compose.c:7595
+#: src/compose.c:7654 src/compose.c:7660 src/compose.c:7682
 msgid "Can't queue the message."
 msgstr "Nie można wstawić wiadomości do kolejki."
 
-#: src/compose.c:7708
+#: src/compose.c:7795
 msgid "Select files"
 msgstr "Wybierz pliki"
 
-#: src/compose.c:7731 src/inputdialog.c:372 src/prefs_common_dialog.c:4750
+#: src/compose.c:7818 src/inputdialog.c:372 src/prefs_common_dialog.c:4750
 msgid "Select file"
 msgstr "Wybierz plik"
 
-#: src/compose.c:7785
+#: src/compose.c:7872
 msgid "Save message"
 msgstr "Zapisz wiadomość"
 
-#: src/compose.c:7786
+#: src/compose.c:7873
 msgid "This message has been modified. Save it to draft folder?"
 msgstr "Wiadomość została zmodyfikowana. Zapisać ją w folderze szkiców?"
 
-#: src/compose.c:7788 src/compose.c:7792
+#: src/compose.c:7875 src/compose.c:7879
 msgid "Close _without saving"
 msgstr "Zamknij _bez zapisywania"
 
-#: src/compose.c:7839
+#: src/compose.c:7926
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "Czy chcesz zastosować szablon \"%s\"?"
 
-#: src/compose.c:7841
+#: src/compose.c:7928
 msgid "Apply template"
 msgstr "Zastosuj szablon"
 
-#: src/compose.c:7842
+#: src/compose.c:7929
 msgid "_Replace"
 msgstr "_Zamień"
 
-#: src/compose.c:7842
+#: src/compose.c:7929
 msgid "_Insert"
 msgstr "_Wstaw"
 
@@ -1984,28 +1996,27 @@ msgstr "Należy podać nazwę i wartość."
 msgid "Edit Person Data"
 msgstr "Edytuj dane osoby"
 
-#: src/editaddress.c:578 src/importcsv.c:123
+#: src/editaddress.c:578 src/exportcsv.c:213 src/importcsv.c:123
 msgid "Display Name"
 msgstr "Wyświetlana nazwa"
 
-#: src/editaddress.c:584 src/editaddress.c:588 src/importcsv.c:122
+#: src/editaddress.c:584 src/editaddress.c:588 src/exportcsv.c:213
+#: src/importcsv.c:122
 msgid "Last Name"
 msgstr "Nazwisko"
 
-#: src/editaddress.c:585 src/editaddress.c:587 src/importcsv.c:121
+#: src/editaddress.c:585 src/editaddress.c:587 src/exportcsv.c:213
+#: src/importcsv.c:121
 msgid "First Name"
 msgstr "Imię"
 
-#: src/editaddress.c:590 src/importcsv.c:124
-msgid "Nick Name"
-msgstr "Pseudonim"
-
 #: src/editaddress.c:627 src/editaddress.c:677 src/editaddress.c:887
-#: src/editgroup.c:491 src/importcsv.c:125
+#: src/editgroup.c:491 src/exportcsv.c:213 src/importcsv.c:125
 msgid "E-Mail Address"
 msgstr "Adres e-mail"
 
-#: src/editaddress.c:628 src/editaddress.c:686 src/importcsv.c:127
+#: src/editaddress.c:628 src/editaddress.c:686 src/exportcsv.c:213
+#: src/importcsv.c:127
 msgid "Alias"
 msgstr "Zwany inaczej"
 
@@ -2139,8 +2150,8 @@ msgid "Edit JPilot Entry"
 msgstr "Edytuj wpis JPilot"
 
 #: src/editjpilot.c:289 src/editldap.c:349 src/editvcard.c:202
-#: src/importcsv.c:696 src/importldif.c:498 src/prefs_account_dialog.c:2105
-#: src/prefs_common_dialog.c:2424
+#: src/exportcsv.c:408 src/importcsv.c:696 src/importldif.c:498
+#: src/prefs_account_dialog.c:2105 src/prefs_common_dialog.c:2424
 msgid " ... "
 msgstr " ... "
 
@@ -2311,6 +2322,69 @@ msgstr "Wybierz plik docelowy"
 msgid "Select destination folder"
 msgstr "Wybierz katalog docelowy"
 
+#: src/exportcsv.c:101
+#, fuzzy
+msgid "Please specify file to export."
+msgstr "Określ nazwę książki adresowej i pliku do importu."
+
+#: src/exportcsv.c:104
+#, fuzzy
+msgid "File exported."
+msgstr "Plik zaimportowano."
+
+#: src/exportcsv.c:284 src/importcsv.c:518 src/importldif.c:317
+msgid "Please select a file."
+msgstr "Wybierz plik."
+
+#: src/exportcsv.c:309
+#, fuzzy
+msgid "CSV file exported successfully."
+msgstr "Plik CSV został pomyślnie zaimportowany."
+
+#: src/exportcsv.c:345
+#, fuzzy
+msgid "Enter CSV File Name"
+msgstr "Nazwa pliku"
+
+#: src/exportcsv.c:399 src/importcsv.c:687 src/importldif.c:489
+msgid "File Name"
+msgstr "Nazwa pliku"
+
+#: src/exportcsv.c:417 src/importcsv.c:705
+msgid "Comma-separated"
+msgstr "Rozdzielone przecinkami"
+
+#: src/exportcsv.c:421 src/importcsv.c:709
+msgid "Tab-separated"
+msgstr "Rozdzielone znakami tabulacji"
+
+#: src/exportcsv.c:461 src/importcsv.c:848 src/importldif.c:663
+msgid "File Name :"
+msgstr "Nazwa pliku :"
+
+#: src/exportcsv.c:472 src/importcsv.c:859 src/importldif.c:673
+msgid "Records :"
+msgstr "Rekordy :"
+
+#: src/exportcsv.c:498
+#, fuzzy
+msgid "Export Address Book into CSV file"
+msgstr "Wybierz katalog książki adresowej"
+
+#. Button panel
+#: src/exportcsv.c:530 src/importcsv.c:919 src/importldif.c:733
+#: src/prefs_toolbar.c:74
+msgid "Next"
+msgstr "Następna"
+
+#: src/exportcsv.c:560 src/importcsv.c:952 src/importldif.c:766
+msgid "File Info"
+msgstr "Informacja o pliku"
+
+#: src/exportcsv.c:561 src/importcsv.c:954 src/importldif.c:768
+msgid "Finish"
+msgstr "Koniec"
+
 #: src/filesel.c:221
 #, fuzzy
 msgid "File type:"
@@ -2373,7 +2447,7 @@ msgid "`%c' can't be included in folder name."
 msgstr "'%c' nie może wystąpić w nazwie katalogu."
 
 #: src/foldersel.c:622 src/folderview.c:2490 src/folderview.c:2549
-#: src/query_search.c:1160
+#: src/query_search.c:1306
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "Katalog '%s' już istnieje."
@@ -2654,7 +2728,7 @@ msgstr "Grupy dyskusyjne:"
 msgid "Creating header view...\n"
 msgstr "Tworzenie widoku nagłówków...\n"
 
-#: src/headerview.c:228 src/query_search.c:795 src/rpop3.c:705
+#: src/headerview.c:228 src/query_search.c:905 src/rpop3.c:705
 #: src/summaryview.c:2524
 msgid "(No From)"
 msgstr "(Bez Od)"
@@ -2759,10 +2833,6 @@ msgstr "Wybierz i zmień kolejność pól CSV do importu."
 msgid "File imported."
 msgstr "Plik zaimportowano."
 
-#: src/importcsv.c:518 src/importldif.c:317
-msgid "Please select a file."
-msgstr "Wybierz plik."
-
 #: src/importcsv.c:524 src/importldif.c:323
 msgid "Address book name must be supplied."
 msgstr "Należy podać nazwę książki adresowej."
@@ -2778,18 +2848,6 @@ msgstr "Plik CSV został pomyślnie zaimportowany."
 #: src/importcsv.c:621
 msgid "Select CSV File"
 msgstr "Wybierz plik CSV"
-
-#: src/importcsv.c:687 src/importldif.c:489
-msgid "File Name"
-msgstr "Nazwa pliku"
-
-#: src/importcsv.c:705
-msgid "Comma-separated"
-msgstr "Rozdzielone przecinkami"
-
-#: src/importcsv.c:709
-msgid "Tab-separated"
-msgstr "Rozdzielone znakami tabulacji"
 
 #: src/importcsv.c:740 src/importldif.c:530
 msgid "S"
@@ -2825,38 +2883,17 @@ msgstr "W dół"
 msgid "Address Book :"
 msgstr "Książka adresowa :"
 
-#: src/importcsv.c:848 src/importldif.c:663
-msgid "File Name :"
-msgstr "Nazwa pliku :"
-
-#: src/importcsv.c:859 src/importldif.c:673
-msgid "Records :"
-msgstr "Rekordy :"
-
 #: src/importcsv.c:887
 msgid "Import CSV file into Address Book"
 msgstr "Importuj plik CSV do książki adresowej"
-
-#. Button panel
-#: src/importcsv.c:919 src/importldif.c:733 src/prefs_toolbar.c:74
-msgid "Next"
-msgstr "Następna"
 
 #: src/importcsv.c:920 src/importldif.c:734 src/prefs_toolbar.c:77
 msgid "Prev"
 msgstr "Poprzednia"
 
-#: src/importcsv.c:952 src/importldif.c:766
-msgid "File Info"
-msgstr "Informacja o pliku"
-
 #: src/importcsv.c:953
 msgid "Fields"
 msgstr "Pola"
-
-#: src/importcsv.c:954 src/importldif.c:768
-msgid "Finish"
-msgstr "Koniec"
 
 #: src/importldif.c:125
 msgid "Select and rename LDIF field names to import."
@@ -4195,7 +4232,7 @@ msgid "Find text:"
 msgstr "Znajdź tekst:"
 
 #: src/message_search.c:153 src/prefs_search_folder.c:253
-#: src/query_search.c:346
+#: src/query_search.c:441
 msgid "Case sensitive"
 msgstr "Rozróżnianie wielkości liter"
 
@@ -6537,20 +6574,20 @@ msgstr "Adres zwrotny:"
 msgid "%s - Edit search condition"
 msgstr "%s - edytuj warunek wyszukiwania"
 
-#: src/prefs_search_folder.c:209 src/query_search.c:276
+#: src/prefs_search_folder.c:209 src/query_search.c:371
 msgid "Match any of the following"
 msgstr "Spełnij dowolne kryterium"
 
-#: src/prefs_search_folder.c:211 src/query_search.c:278
+#: src/prefs_search_folder.c:211 src/query_search.c:373
 msgid "Match all of the following"
 msgstr "Spełnij wszystkie kryteria"
 
-#: src/prefs_search_folder.c:231 src/query_search.c:323
+#: src/prefs_search_folder.c:231 src/query_search.c:418
 #, fuzzy
 msgid "Folder:"
 msgstr "Katalog"
 
-#: src/prefs_search_folder.c:248 src/query_search.c:341
+#: src/prefs_search_folder.c:248 src/query_search.c:436
 #, fuzzy
 msgid "Search subfolders"
 msgstr "Błąd wyszukiwania"
@@ -6560,19 +6597,19 @@ msgid "Mark"
 msgstr "Zaznacz"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:69 src/query_search.c:402 src/rpop3.c:434
+#: src/prefs_summary_column.c:69 src/query_search.c:499 src/rpop3.c:434
 #: src/summaryview.c:5515
 msgid "Subject"
 msgstr "Temat"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:70 src/query_search.c:406 src/rpop3.c:438
+#: src/prefs_summary_column.c:70 src/query_search.c:503 src/rpop3.c:438
 #: src/summaryview.c:5521
 msgid "From"
 msgstr "Od"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:71 src/query_search.c:407 src/rpop3.c:439
+#: src/prefs_summary_column.c:71 src/query_search.c:504 src/rpop3.c:439
 #: src/summaryview.c:5523
 msgid "Date"
 msgstr "Data"
@@ -6745,11 +6782,11 @@ msgstr "Następna nieprzeczytana wiadomość"
 msgid "Previous unread message"
 msgstr "Następna nieprzeczytana wiadomość"
 
-#: src/prefs_toolbar.c:81 src/query_search.c:253
+#: src/prefs_toolbar.c:81 src/query_search.c:348
 msgid "Search messages"
 msgstr "Wyszukaj wiadomości"
 
-#: src/prefs_toolbar.c:83 src/printing.c:658
+#: src/prefs_toolbar.c:83 src/printing.c:675
 msgid "Print"
 msgstr "Drukuj"
 
@@ -6851,16 +6888,16 @@ msgstr ""
 "Wybierz pozycje wyświetlane w widoku podsumowania.\n"
 "Można zmienić ich kolejność przyciskami Góra / Dół lub przeciągając elementy."
 
-#: src/printing.c:655
+#: src/printing.c:672
 msgid "The message will be printed with the following command:"
 msgstr "Wiadomość zostanie wydrukowana przy pomocy następującego polecenia:"
 
-#: src/printing.c:656
+#: src/printing.c:673
 #, fuzzy
 msgid "(Default print command)"
 msgstr "Wynik polecenia"
 
-#: src/printing.c:666
+#: src/printing.c:683
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -6878,53 +6915,157 @@ msgstr "Stan"
 msgid "Progress"
 msgstr "Właściwości"
 
-#: src/query_search.c:429
+#: src/query_search.c:258
+#, fuzzy
+msgid "_Reply"
+msgstr "/_Odpowiedz"
+
+#: src/query_search.c:259
+#, fuzzy
+msgid "Repl_y to"
+msgstr "/Odpowied_z"
+
+#: src/query_search.c:260
+#, fuzzy
+msgid "Reply to _all"
+msgstr "/Odpowiedz wszystkim"
+
+#: src/query_search.c:261
+#, fuzzy
+msgid "Reply to _sender"
+msgstr "/Odpowiedz nadawcy"
+
+#: src/query_search.c:262
+#, fuzzy
+msgid "Reply to _list"
+msgstr "/Odpowiedz wszystkim"
+
+#: src/query_search.c:264
+#, fuzzy
+msgid "_Forward"
+msgstr "/Prze_każ"
+
+#: src/query_search.c:265
+#, fuzzy
+msgid "For_ward as attachment"
+msgstr "/Przekaż jako załącznik"
+
+#: src/query_search.c:266
+#, fuzzy
+msgid "Redirec_t"
+msgstr "/Prze_kieruj"
+
+#: src/query_search.c:268
+#, fuzzy
+msgid "M_ove messages to..."
+msgstr "Przenoszenie wiadomości %s do %s"
+
+#: src/query_search.c:269
+#, fuzzy
+msgid "_Copy messages to..."
+msgstr "Kopiowanie wiadomości %s do %s"
+
+#: src/query_search.c:271
+#, fuzzy
+msgid "Add sender to address boo_k..."
+msgstr "/Dodaj nadawcę do _książki adresowej"
+
+#: src/query_search.c:272
+#, fuzzy
+msgid "Create f_ilter rule"
+msgstr "/_Narzędzia/_Utwórz regułę filtrowania"
+
+#: src/query_search.c:273
+#, fuzzy
+msgid "_Automatically"
+msgstr "Automatycznie"
+
+#: src/query_search.c:274
+#, fuzzy
+msgid "by _From"
+msgstr "Od"
+
+#: src/query_search.c:275
+msgid "by _To"
+msgstr ""
+
+#: src/query_search.c:276
+#, fuzzy
+msgid "by _Subject"
+msgstr "Temat"
+
+#: src/query_search.c:278
+#, fuzzy
+msgid "Open in _new window"
+msgstr "/W_Widok/Ot_wórz w nowym oknie"
+
+#: src/query_search.c:279
+#, fuzzy
+msgid "View mess_age source"
+msgstr "/_Widok/P_okaż źródło"
+
+#: src/query_search.c:281
+#, fuzzy
+msgid "_Print..."
+msgstr "/_Drukuj..."
+
+#: src/query_search.c:526
 #, fuzzy
 msgid "_Save as search folder"
 msgstr "Zapisz w katalogu szablonów"
 
-#: src/query_search.c:551
+#: src/query_search.c:661
 #, fuzzy, c-format
 msgid "Message not found."
 msgstr "znaleziono %d wiadomości.\n"
 
-#: src/query_search.c:553
+#: src/query_search.c:663
 #, fuzzy, c-format
 msgid "1 message found."
 msgstr "znaleziono %d wiadomości.\n"
 
-#: src/query_search.c:555
+#: src/query_search.c:665
 #, fuzzy, c-format
 msgid "%d messages found."
 msgstr "znaleziono %d wiadomości.\n"
 
-#: src/query_search.c:590
+#: src/query_search.c:700
 #, fuzzy, c-format
 msgid "Searching %s (%d / %d)..."
 msgstr "Filtowanie..."
 
-#: src/query_search.c:712
+#: src/query_search.c:822
 #, fuzzy, c-format
 msgid "Searching %s ..."
 msgstr "Przeszukiwanie katalogu %s ..."
 
-#: src/query_search.c:803 src/rpop3.c:713 src/summaryview.c:2441
+#: src/query_search.c:913 src/rpop3.c:713 src/summaryview.c:2441
 msgid "(No Date)"
 msgstr "(Bez daty)"
 
-#: src/query_search.c:998
+#: src/query_search.c:1144
 #, fuzzy
 msgid "Save as search folder"
 msgstr "Zapisz w katalogu szablonów"
 
-#: src/query_search.c:1019
+#: src/query_search.c:1165
 msgid "Location:"
 msgstr "Miejsce:"
 
-#: src/query_search.c:1034
+#: src/query_search.c:1180
 #, fuzzy
 msgid "Folder name:"
 msgstr "Nazwa pliku"
+
+#: src/query_search.c:1457 src/summaryview.c:3828
+#, fuzzy
+msgid "Select folder to copy"
+msgstr "Wybierz katalog"
+
+#: src/query_search.c:1460 src/summaryview.c:3727
+#, fuzzy
+msgid "Select folder to move"
+msgstr "Wybierz katalog"
 
 #: src/quick_search.c:108
 #, fuzzy
@@ -7983,11 +8124,6 @@ msgstr "Wiadomość %d ustawiona do przesunięcia do %s\n"
 msgid "Destination is same as current folder."
 msgstr "Katalog docelowy taki sam jak bieżący."
 
-#: src/summaryview.c:3727
-#, fuzzy
-msgid "Select folder to move"
-msgstr "Wybierz katalog"
-
 #: src/summaryview.c:3761
 #, c-format
 msgid "Message %d is set to copy to %s\n"
@@ -7996,11 +8132,6 @@ msgstr "Wiadomość %d ustawiona do kopiowania do %s\n"
 #: src/summaryview.c:3792
 msgid "Destination for copy is same as current folder."
 msgstr "Katalog docelowy kopiowania jest taki sam jak bieżący."
-
-#: src/summaryview.c:3828
-#, fuzzy
-msgid "Select folder to copy"
-msgstr "Wybierz katalog"
 
 #: src/summaryview.c:4003
 msgid "Error occurred while processing messages."

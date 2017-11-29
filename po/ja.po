@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-22 09:51+0900\n"
+"POT-Creation-Date: 2017-11-29 16:54+0900\n"
 "PO-Revision-Date: 1999-10-12\n"
 "Last-Translator: Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -602,7 +602,7 @@ msgstr "  所有者: %s\n"
 msgid "  Issuer: %s\n"
 msgstr "  発行者: %s\n"
 
-#: libsylph/utils.c:2980
+#: libsylph/utils.c:3018
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "%s への書き込みに失敗しました。\n"
@@ -693,7 +693,7 @@ msgstr ""
 "新着メッセージはこの順番でチェックされます。「全受信」によるメッセージ\n"
 "の取得を有効にするには、「G」カラムのボックスをチェックしてください。"
 
-#: src/account_dialog.c:376 src/addressadd.c:181 src/addressbook.c:776
+#: src/account_dialog.c:376 src/addressadd.c:181 src/addressbook.c:788
 #: src/compose.c:5604 src/editaddress.c:777 src/editaddress.c:826
 #: src/editbook.c:198 src/editgroup.c:490 src/editjpilot.c:270
 #: src/editldap.c:307 src/editvcard.c:183 src/mimeview.c:226
@@ -834,8 +834,9 @@ msgstr "アドレスをアドレス帳に追加"
 msgid "Address"
 msgstr "アドレス"
 
-#: src/addressadd.c:201 src/addressbook.c:832 src/editaddress.c:629
-#: src/editaddress.c:695 src/editgroup.c:492 src/importcsv.c:126
+#: src/addressadd.c:201 src/addressbook.c:865 src/editaddress.c:629
+#: src/editaddress.c:695 src/editgroup.c:492 src/exportcsv.c:213
+#: src/importcsv.c:126
 msgid "Remarks"
 msgstr "備考"
 
@@ -843,32 +844,32 @@ msgstr "備考"
 msgid "Select Address Book Folder"
 msgstr "アドレス帳フォルダを選択"
 
-#: src/addressadd.c:316 src/addressbook.c:1074 src/addressbook.c:3555
+#: src/addressadd.c:316 src/addressbook.c:1107 src/addressbook.c:3596
 msgid "Auto-registered address"
 msgstr "自動登録アドレス"
 
-#: src/addressbook.c:405 src/compose.c:583 src/mainwindow.c:558
+#: src/addressbook.c:413 src/compose.c:583 src/mainwindow.c:558
 #: src/messageview.c:166
 msgid "/_File"
 msgstr "/ファイル(_F)"
 
-#: src/addressbook.c:406
+#: src/addressbook.c:414
 msgid "/_File/New _Book"
 msgstr "/ファイル(_F)/新規アドレス帳(_B)"
 
-#: src/addressbook.c:407
+#: src/addressbook.c:415
 msgid "/_File/New _vCard"
 msgstr "/ファイル(_F)/新規_vCard"
 
-#: src/addressbook.c:409
+#: src/addressbook.c:417
 msgid "/_File/New _JPilot"
 msgstr "/ファイル(_F)/新規_JPilot"
 
-#: src/addressbook.c:412
+#: src/addressbook.c:420
 msgid "/_File/New _LDAP Server"
 msgstr "/ファイル(_F)/新規LDAPサーバ(_L)"
 
-#: src/addressbook.c:414 src/addressbook.c:417 src/compose.c:588
+#: src/addressbook.c:422 src/addressbook.c:425 src/compose.c:588
 #: src/compose.c:593 src/compose.c:596 src/compose.c:599 src/mainwindow.c:576
 #: src/mainwindow.c:579 src/mainwindow.c:581 src/mainwindow.c:583
 #: src/mainwindow.c:588 src/mainwindow.c:590 src/messageview.c:168
@@ -876,113 +877,125 @@ msgstr "/ファイル(_F)/新規LDAPサーバ(_L)"
 msgid "/_File/---"
 msgstr "/ファイル(_F)/---"
 
-#: src/addressbook.c:415
+#: src/addressbook.c:423
 msgid "/_File/_Edit"
 msgstr "/ファイル(_F)/編集(_E)"
 
-#: src/addressbook.c:416
+#: src/addressbook.c:424
 msgid "/_File/_Delete"
 msgstr "/ファイル(_F)/削除(_D)"
 
-#: src/addressbook.c:418
+#: src/addressbook.c:426
 msgid "/_File/_Save"
 msgstr "/ファイル(_F)/保存(_S)"
 
-#: src/addressbook.c:419 src/compose.c:600 src/messageview.c:174
+#: src/addressbook.c:427 src/compose.c:600 src/messageview.c:174
 msgid "/_File/_Close"
 msgstr "/ファイル(_F)/閉じる(_C)"
 
-#: src/addressbook.c:421 src/addressbook.c:468 src/addressbook.c:485
+#: src/addressbook.c:429 src/addressbook.c:475 src/addressbook.c:492
 #: src/compose.c:602 src/mainwindow.c:594 src/messageview.c:176
 msgid "/_Edit"
 msgstr "/編集(_E)"
 
-#: src/addressbook.c:422 src/compose.c:607 src/mainwindow.c:595
+#: src/addressbook.c:430 src/compose.c:607 src/mainwindow.c:595
 #: src/messageview.c:177
 msgid "/_Edit/_Copy"
 msgstr "/編集(_E)/コピー(_C)"
 
-#: src/addressbook.c:423 src/compose.c:608
+#: src/addressbook.c:431 src/compose.c:608
 msgid "/_Edit/_Paste"
 msgstr "/編集(_E)/ペースト(_P)"
 
-#: src/addressbook.c:425
+#: src/addressbook.c:433
 msgid "/_Address"
 msgstr "/アドレス(_A)"
 
-#: src/addressbook.c:426
+#: src/addressbook.c:434
 msgid "/_Address/New _Address"
 msgstr "/アドレス(_A)/新規アドレス(_A)"
 
-#: src/addressbook.c:427
+#: src/addressbook.c:435
 msgid "/_Address/New _Group"
 msgstr "/アドレス(_A)/新規グループ(_G)"
 
-#: src/addressbook.c:428
+#: src/addressbook.c:436
 msgid "/_Address/New _Folder"
 msgstr "/アドレス(_A)/新規フォルダ(_F)"
 
-#: src/addressbook.c:429 src/addressbook.c:436
+#: src/addressbook.c:437 src/addressbook.c:444
 msgid "/_Address/---"
 msgstr "/アドレス(_A)/---"
 
-#: src/addressbook.c:430
+#: src/addressbook.c:438
 msgid "/_Address/Add _to recipient"
 msgstr "/アドレス(_A)/宛先に追加(_T)"
 
-#: src/addressbook.c:432
+#: src/addressbook.c:440
 msgid "/_Address/Add to _Cc"
 msgstr "/アドレス(_A)/_Ccに追加"
 
-#: src/addressbook.c:434
+#: src/addressbook.c:442
 msgid "/_Address/Add to _Bcc"
 msgstr "/アドレス(_A)/_Bccに追加"
 
-#: src/addressbook.c:437
+#: src/addressbook.c:445
 msgid "/_Address/_Edit"
 msgstr "/アドレス(_A)/編集(_E)"
 
-#: src/addressbook.c:438
+#: src/addressbook.c:446
 msgid "/_Address/_Delete"
 msgstr "/アドレス(_A)/削除(_D)"
 
-#: src/addressbook.c:440 src/compose.c:718 src/mainwindow.c:842
+#: src/addressbook.c:448 src/compose.c:718 src/mainwindow.c:842
 #: src/messageview.c:299
 msgid "/_Tools"
 msgstr "/ツール(_T)"
 
-#: src/addressbook.c:441
+#: src/addressbook.c:449
 msgid "/_Tools/Import _LDIF file"
 msgstr "/ツール(_T)/_LDIFファイルをインポート"
 
-#: src/addressbook.c:442
+#: src/addressbook.c:450
 msgid "/_Tools/Import _CSV file"
 msgstr "/ツール(_T)/_CSVファイルをインポート"
 
-#: src/addressbook.c:444 src/compose.c:742 src/mainwindow.c:904
+#: src/addressbook.c:451 src/compose.c:724 src/compose.c:727 src/compose.c:731
+#: src/compose.c:737 src/mainwindow.c:846 src/mainwindow.c:860
+#: src/mainwindow.c:865 src/mainwindow.c:868 src/mainwindow.c:874
+#: src/mainwindow.c:876 src/mainwindow.c:880 src/messageview.c:303
+#: src/messageview.c:315
+msgid "/_Tools/---"
+msgstr "/ツール(_T)/---"
+
+#: src/addressbook.c:452
+msgid "/_Tools/Export C_SV file"
+msgstr "/ツール(_T)/C_SVファイルをエクスポート"
+
+#: src/addressbook.c:453 src/compose.c:742 src/mainwindow.c:904
 #: src/messageview.c:319
 msgid "/_Help"
 msgstr "/ヘルプ(_H)"
 
-#: src/addressbook.c:445 src/compose.c:743 src/mainwindow.c:924
+#: src/addressbook.c:454 src/compose.c:743 src/mainwindow.c:924
 #: src/messageview.c:320
 msgid "/_Help/_About"
 msgstr "/ヘルプ(_H)/このプログラムについて(_A)"
 
-#: src/addressbook.c:464 src/addressbook.c:474
+#: src/addressbook.c:471 src/addressbook.c:481
 msgid "/New _Address"
 msgstr "/新規アドレス(_A)"
 
-#: src/addressbook.c:465 src/addressbook.c:475
+#: src/addressbook.c:472 src/addressbook.c:482
 msgid "/New _Group"
 msgstr "/新規グループ(_G)"
 
-#: src/addressbook.c:466 src/addressbook.c:476
+#: src/addressbook.c:473 src/addressbook.c:483
 msgid "/New _Folder"
 msgstr "/新規フォルダ(_F)"
 
-#: src/addressbook.c:467 src/addressbook.c:477 src/addressbook.c:484
-#: src/addressbook.c:487 src/compose.c:574 src/compose.c:577
+#: src/addressbook.c:474 src/addressbook.c:484 src/addressbook.c:491
+#: src/addressbook.c:494 src/compose.c:574 src/compose.c:577
 #: src/folderview.c:258 src/folderview.c:261 src/folderview.c:266
 #: src/folderview.c:269 src/folderview.c:282 src/folderview.c:285
 #: src/folderview.c:287 src/folderview.c:292 src/folderview.c:295
@@ -994,96 +1007,101 @@ msgstr "/新規フォルダ(_F)"
 msgid "/---"
 msgstr "/---"
 
-#: src/addressbook.c:469 src/addressbook.c:486 src/summaryview.c:464
+#: src/addressbook.c:476 src/addressbook.c:493 src/summaryview.c:464
 msgid "/_Delete"
 msgstr "/削除(_D)"
 
-#: src/addressbook.c:478
+#: src/addressbook.c:485
 msgid "/Add _to recipient"
 msgstr "宛先に追加(_T)"
 
-#: src/addressbook.c:480
+#: src/addressbook.c:487
 msgid "/Add t_o Cc"
 msgstr "_Ccに追加"
 
-#: src/addressbook.c:482
+#: src/addressbook.c:489
 msgid "/Add to _Bcc"
 msgstr "_Bccに追加"
 
-#: src/addressbook.c:488
+#: src/addressbook.c:495
 msgid "/_Copy"
 msgstr "/コピー(_C)"
 
-#: src/addressbook.c:489
+#: src/addressbook.c:496
 msgid "/_Paste"
 msgstr "/ペースト(_P)"
 
-#: src/addressbook.c:614 src/prefs_common_dialog.c:2838 src/prefs_toolbar.c:90
+#: src/addressbook.c:621 src/prefs_common_dialog.c:2838 src/prefs_toolbar.c:90
 msgid "Address book"
 msgstr "アドレス帳"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:687 src/addressbook.c:4258 src/folderview.c:398
+#: src/addressbook.c:694 src/addressbook.c:4322 src/folderview.c:398
 #: src/prefs_account_dialog.c:2077 src/query_search.c:498
 msgid "Folder"
 msgstr "フォルダ"
 
-#: src/addressbook.c:811
+#: src/addressbook.c:823
 msgid "E-Mail address"
 msgstr "電子メール アドレス"
 
-#: src/addressbook.c:875 src/quick_search.c:128
+#: src/addressbook.c:844 src/editaddress.c:590 src/exportcsv.c:213
+#: src/importcsv.c:124
+msgid "Nick Name"
+msgstr "ニックネーム"
+
+#: src/addressbook.c:908 src/quick_search.c:128
 msgid "Search:"
 msgstr "検索:"
 
-#: src/addressbook.c:913 src/compose.c:3386 src/headerview.c:57
+#: src/addressbook.c:946 src/compose.c:3386 src/headerview.c:57
 #: src/prefs_folder_item.c:340 src/prefs_template.c:200
 msgid "To:"
 msgstr "宛先:"
 
-#: src/addressbook.c:917 src/compose.c:3403 src/headerview.c:58
+#: src/addressbook.c:950 src/compose.c:3403 src/headerview.c:58
 #: src/prefs_folder_item.c:357 src/prefs_template.c:202
 msgid "Cc:"
 msgstr "Cc:"
 
-#: src/addressbook.c:921 src/compose.c:3420 src/prefs_folder_item.c:368
+#: src/addressbook.c:954 src/compose.c:3420 src/prefs_folder_item.c:368
 #: src/prefs_template.c:204
 msgid "Bcc:"
 msgstr "Bcc:"
 
 #. Buttons
-#: src/addressbook.c:942 src/addressbook.c:2339 src/editaddress.c:719
+#: src/addressbook.c:975 src/addressbook.c:2375 src/editaddress.c:719
 #: src/editaddress.c:853 src/prefs_actions.c:266
 #: src/prefs_display_header.c:280 src/prefs_display_header.c:336
 #: src/prefs_template.c:267 src/prefs_toolbar.c:65
 msgid "Delete"
 msgstr "削除"
 
-#: src/addressbook.c:945 src/editaddress.c:725 src/editaddress.c:859
+#: src/addressbook.c:978 src/editaddress.c:725 src/editaddress.c:859
 #: src/prefs_actions.c:254 src/prefs_customheader.c:232
 #: src/prefs_display_header.c:274 src/prefs_display_header.c:330
 #: src/prefs_filter_edit.c:1607
 msgid "Add"
 msgstr "追加"
 
-#: src/addressbook.c:948 src/prefs_toolbar.c:80
+#: src/addressbook.c:981 src/prefs_toolbar.c:80
 msgid "Search"
 msgstr "検索"
 
-#: src/addressbook.c:951
+#: src/addressbook.c:984
 msgid "_Close"
 msgstr "閉じる(_C)"
 
 #. Confirm deletion
-#: src/addressbook.c:1147
+#: src/addressbook.c:1180
 msgid "Delete address(es)"
 msgstr "アドレスの削除"
 
-#: src/addressbook.c:1148
+#: src/addressbook.c:1181
 msgid "Really delete the address(es)?"
 msgstr "本当にこのアドレスを削除しますか?"
 
-#: src/addressbook.c:2330
+#: src/addressbook.c:2366
 #, c-format
 msgid ""
 "Do you want to delete the folder AND all addresses in `%s' ?\n"
@@ -1092,36 +1110,36 @@ msgstr ""
 "`%s' 内のすべてのフォルダとアドレスを削除してもいいですか?\n"
 "フォルダのみを削除する場合、アドレスは親フォルダに移動します。"
 
-#: src/addressbook.c:2333 src/folderview.c:2724
+#: src/addressbook.c:2369 src/folderview.c:2724
 msgid "Delete folder"
 msgstr "フォルダの削除"
 
-#: src/addressbook.c:2333
+#: src/addressbook.c:2369
 msgid "_Folder only"
 msgstr "フォルダのみ(_F)"
 
-#: src/addressbook.c:2333
+#: src/addressbook.c:2369
 msgid "Folder and _addresses"
 msgstr "フォルダとアドレス(_A)"
 
-#: src/addressbook.c:2338
+#: src/addressbook.c:2374
 #, c-format
 msgid "Really delete `%s' ?"
 msgstr "本当に `%s' を削除しますか?"
 
-#: src/addressbook.c:3301 src/addressbook.c:3439
+#: src/addressbook.c:3342 src/addressbook.c:3480
 msgid "New user, could not save index file."
 msgstr "新規ユーザ、インデックスファイルを保存できません。"
 
-#: src/addressbook.c:3305 src/addressbook.c:3443
+#: src/addressbook.c:3346 src/addressbook.c:3484
 msgid "New user, could not save address book files."
 msgstr "新規ユーザ、アドレス帳ファイルを保存できません。"
 
-#: src/addressbook.c:3315 src/addressbook.c:3453
+#: src/addressbook.c:3356 src/addressbook.c:3494
 msgid "Old address book converted successfully."
 msgstr "旧形式のアドレス帳は正しく変換されました。"
 
-#: src/addressbook.c:3320
+#: src/addressbook.c:3361
 msgid ""
 "Old address book converted,\n"
 "could not save new address index file"
@@ -1129,7 +1147,7 @@ msgstr ""
 "旧形式のアドレス帳は変換されました。\n"
 "新規アドレスインデックスファイルに保存できません"
 
-#: src/addressbook.c:3333
+#: src/addressbook.c:3374
 msgid ""
 "Could not convert address book,\n"
 "but created empty new address book files."
@@ -1137,7 +1155,7 @@ msgstr ""
 "アドレス帳を変換できません。\n"
 "しかし空の新規アドレス帳ファイルが作成されました。"
 
-#: src/addressbook.c:3339
+#: src/addressbook.c:3380
 msgid ""
 "Could not convert address book,\n"
 "could not create new address book files."
@@ -1145,7 +1163,7 @@ msgstr ""
 "アドレス帳を変換できません。\n"
 "新規アドレス帳ファイルを作成できません。"
 
-#: src/addressbook.c:3344
+#: src/addressbook.c:3385
 msgid ""
 "Could not convert address book\n"
 "and could not create new address book files."
@@ -1153,15 +1171,15 @@ msgstr ""
 "アドレス帳を変換できません。\n"
 "新規アドレス帳ファイルを作成できません。"
 
-#: src/addressbook.c:3351
+#: src/addressbook.c:3392
 msgid "Address book conversion error"
 msgstr "アドレス帳の変換エラー"
 
-#: src/addressbook.c:3355
+#: src/addressbook.c:3396
 msgid "Address book conversion"
 msgstr "アドレス帳の変換"
 
-#: src/addressbook.c:3394
+#: src/addressbook.c:3435
 #, c-format
 msgid ""
 "Could not read address index:\n"
@@ -1172,76 +1190,76 @@ msgstr ""
 "\n"
 "%s%c%s"
 
-#: src/addressbook.c:3397
+#: src/addressbook.c:3438
 msgid "Address Book Error"
 msgstr "アドレス帳のエラー"
 
-#: src/addressbook.c:3458
+#: src/addressbook.c:3499
 msgid "Old address book converted, could not save new address index file"
 msgstr ""
 "旧形式のアドレス帳は変換されましたが、新規アドレスインデックスファイルを保存"
 "できません"
 
-#: src/addressbook.c:3472
+#: src/addressbook.c:3513
 msgid ""
 "Could not convert address book, but created empty new address book files."
 msgstr ""
 "アドレス帳を変換できませんでしたが、空の新規アドレス帳ファイルが作成されまし"
 "た。"
 
-#: src/addressbook.c:3478
+#: src/addressbook.c:3519
 msgid ""
 "Could not convert address book, could not create new address book files."
 msgstr ""
 "アドレス帳を変換できません。新規アドレス帳ファイルを作成できませんでした。"
 
-#: src/addressbook.c:3484
+#: src/addressbook.c:3525
 msgid ""
 "Could not convert address book and could not create new address book files."
 msgstr ""
 "アドレス帳を変換できません。新規アドレス帳ファイルを作成できませんでした。"
 
-#: src/addressbook.c:3496
+#: src/addressbook.c:3537
 msgid "Could not read address index"
 msgstr "アドレスインデックスを読み込めません"
 
-#: src/addressbook.c:3502
+#: src/addressbook.c:3543
 msgid "Address Book Conversion Error"
 msgstr "アドレス帳変換エラー"
 
-#: src/addressbook.c:3508
+#: src/addressbook.c:3549
 msgid "Address Book Conversion"
 msgstr "アドレス帳変換"
 
-#: src/addressbook.c:4188 src/prefs_common_dialog.c:2631
+#: src/addressbook.c:4252 src/prefs_common_dialog.c:2631
 msgid "Interface"
 msgstr "インタフェース"
 
-#: src/addressbook.c:4202 src/importcsv.c:676 src/importldif.c:478
+#: src/addressbook.c:4266 src/importcsv.c:676 src/importldif.c:478
 msgid "Address Book"
 msgstr "アドレス帳"
 
-#: src/addressbook.c:4216
+#: src/addressbook.c:4280
 msgid "Person"
 msgstr "人物"
 
-#: src/addressbook.c:4230
+#: src/addressbook.c:4294
 msgid "EMail Address"
 msgstr "電子メール アドレス"
 
-#: src/addressbook.c:4244
+#: src/addressbook.c:4308
 msgid "Group"
 msgstr "グループ"
 
-#: src/addressbook.c:4272
+#: src/addressbook.c:4336
 msgid "vCard"
 msgstr "vCard"
 
-#: src/addressbook.c:4286 src/addressbook.c:4300
+#: src/addressbook.c:4350 src/addressbook.c:4364
 msgid "JPilot"
 msgstr "JPilot"
 
-#: src/addressbook.c:4314
+#: src/addressbook.c:4378
 msgid "LDAP Server"
 msgstr "LDAPサーバ"
 
@@ -1566,13 +1584,6 @@ msgstr "/ツール(_T)/テンプレート(_T)"
 #: src/compose.c:722 src/mainwindow.c:867 src/messageview.c:316
 msgid "/_Tools/Actio_ns"
 msgstr "/ツール(_T)/アクション(_N)"
-
-#: src/compose.c:724 src/compose.c:727 src/compose.c:731 src/compose.c:737
-#: src/mainwindow.c:846 src/mainwindow.c:860 src/mainwindow.c:865
-#: src/mainwindow.c:868 src/mainwindow.c:874 src/mainwindow.c:876
-#: src/mainwindow.c:880 src/messageview.c:303 src/messageview.c:315
-msgid "/_Tools/---"
-msgstr "/ツール(_T)/---"
 
 #: src/compose.c:725
 msgid "/_Tools/Edit with e_xternal editor"
@@ -1988,28 +1999,27 @@ msgstr "名前と値を指定する必要があります。"
 msgid "Edit Person Data"
 msgstr "人物のデータを編集"
 
-#: src/editaddress.c:578 src/importcsv.c:123
+#: src/editaddress.c:578 src/exportcsv.c:213 src/importcsv.c:123
 msgid "Display Name"
 msgstr "表示名"
 
-#: src/editaddress.c:584 src/editaddress.c:588 src/importcsv.c:122
+#: src/editaddress.c:584 src/editaddress.c:588 src/exportcsv.c:213
+#: src/importcsv.c:122
 msgid "Last Name"
 msgstr "姓"
 
-#: src/editaddress.c:585 src/editaddress.c:587 src/importcsv.c:121
+#: src/editaddress.c:585 src/editaddress.c:587 src/exportcsv.c:213
+#: src/importcsv.c:121
 msgid "First Name"
 msgstr "名"
 
-#: src/editaddress.c:590 src/importcsv.c:124
-msgid "Nick Name"
-msgstr "ニックネーム"
-
 #: src/editaddress.c:627 src/editaddress.c:677 src/editaddress.c:887
-#: src/editgroup.c:491 src/importcsv.c:125
+#: src/editgroup.c:491 src/exportcsv.c:213 src/importcsv.c:125
 msgid "E-Mail Address"
 msgstr "電子メール アドレス"
 
-#: src/editaddress.c:628 src/editaddress.c:686 src/importcsv.c:127
+#: src/editaddress.c:628 src/editaddress.c:686 src/exportcsv.c:213
+#: src/importcsv.c:127
 msgid "Alias"
 msgstr "別名"
 
@@ -2143,8 +2153,8 @@ msgid "Edit JPilot Entry"
 msgstr "JPilotエントリを編集"
 
 #: src/editjpilot.c:289 src/editldap.c:349 src/editvcard.c:202
-#: src/importcsv.c:696 src/importldif.c:498 src/prefs_account_dialog.c:2105
-#: src/prefs_common_dialog.c:2424
+#: src/exportcsv.c:408 src/importcsv.c:696 src/importldif.c:498
+#: src/prefs_account_dialog.c:2105 src/prefs_common_dialog.c:2424
 msgid " ... "
 msgstr " ... "
 
@@ -2313,6 +2323,64 @@ msgstr "エクスポート先のファイルを選択"
 #: src/export.c:504
 msgid "Select destination folder"
 msgstr "エクスポート先のフォルダを選択"
+
+#: src/exportcsv.c:101
+msgid "Please specify file to export."
+msgstr "エクスポートするファイルを指定して下さい。"
+
+#: src/exportcsv.c:104
+msgid "File exported."
+msgstr "ファイルにエクスポートしました。"
+
+#: src/exportcsv.c:284 src/importcsv.c:518 src/importldif.c:317
+msgid "Please select a file."
+msgstr "ファイルを選択してください。"
+
+#: src/exportcsv.c:309
+msgid "CSV file exported successfully."
+msgstr "CSVファイルは正しく出力されました。"
+
+#: src/exportcsv.c:345
+msgid "Enter CSV File Name"
+msgstr "CSVファイル名を入力してください"
+
+#: src/exportcsv.c:399 src/importcsv.c:687 src/importldif.c:489
+msgid "File Name"
+msgstr "ファイル名"
+
+#: src/exportcsv.c:417 src/importcsv.c:705
+msgid "Comma-separated"
+msgstr "カンマ区切り"
+
+#: src/exportcsv.c:421 src/importcsv.c:709
+msgid "Tab-separated"
+msgstr "タブ区切り"
+
+#: src/exportcsv.c:461 src/importcsv.c:848 src/importldif.c:663
+msgid "File Name :"
+msgstr "ファイル名 :"
+
+#: src/exportcsv.c:472 src/importcsv.c:859 src/importldif.c:673
+msgid "Records :"
+msgstr "レコード :"
+
+#: src/exportcsv.c:498
+msgid "Export Address Book into CSV file"
+msgstr "アドレス帳をCSVファイルにエクスポート"
+
+#. Button panel
+#: src/exportcsv.c:530 src/importcsv.c:919 src/importldif.c:733
+#: src/prefs_toolbar.c:74
+msgid "Next"
+msgstr "次へ"
+
+#: src/exportcsv.c:560 src/importcsv.c:952 src/importldif.c:766
+msgid "File Info"
+msgstr "ファイル情報"
+
+#: src/exportcsv.c:561 src/importcsv.c:954 src/importldif.c:768
+msgid "Finish"
+msgstr "完了"
 
 #: src/filesel.c:221
 msgid "File type:"
@@ -2750,10 +2818,6 @@ msgstr "インポートするCSVフィールド名を選択して並べ替えて
 msgid "File imported."
 msgstr "ファイルをインポートしました。"
 
-#: src/importcsv.c:518 src/importldif.c:317
-msgid "Please select a file."
-msgstr "ファイルを選択してください。"
-
 #: src/importcsv.c:524 src/importldif.c:323
 msgid "Address book name must be supplied."
 msgstr "アドレス帳の名前を指定する必要があります。"
@@ -2769,18 +2833,6 @@ msgstr "CSVファイルは正しく読み込まれました。"
 #: src/importcsv.c:621
 msgid "Select CSV File"
 msgstr "CSVファイルの選択"
-
-#: src/importcsv.c:687 src/importldif.c:489
-msgid "File Name"
-msgstr "ファイル名"
-
-#: src/importcsv.c:705
-msgid "Comma-separated"
-msgstr "カンマ区切り"
-
-#: src/importcsv.c:709
-msgid "Tab-separated"
-msgstr "タブ区切り"
 
 #: src/importcsv.c:740 src/importldif.c:530
 msgid "S"
@@ -2814,38 +2866,17 @@ msgstr "  ↓  "
 msgid "Address Book :"
 msgstr "アドレス帳 :"
 
-#: src/importcsv.c:848 src/importldif.c:663
-msgid "File Name :"
-msgstr "ファイル名 :"
-
-#: src/importcsv.c:859 src/importldif.c:673
-msgid "Records :"
-msgstr "レコード :"
-
 #: src/importcsv.c:887
 msgid "Import CSV file into Address Book"
 msgstr "CSVファイルをアドレス帳へインポート"
-
-#. Button panel
-#: src/importcsv.c:919 src/importldif.c:733 src/prefs_toolbar.c:74
-msgid "Next"
-msgstr "次へ"
 
 #: src/importcsv.c:920 src/importldif.c:734 src/prefs_toolbar.c:77
 msgid "Prev"
 msgstr "前へ"
 
-#: src/importcsv.c:952 src/importldif.c:766
-msgid "File Info"
-msgstr "ファイル情報"
-
 #: src/importcsv.c:953
 msgid "Fields"
 msgstr "フィールド"
-
-#: src/importcsv.c:954 src/importldif.c:768
-msgid "Finish"
-msgstr "完了"
 
 #: src/importldif.c:125
 msgid "Select and rename LDIF field names to import."
@@ -6874,7 +6905,11 @@ msgstr "場所:"
 msgid "Folder name:"
 msgstr "フォルダ名:"
 
-#: src/query_search.c:1456 src/summaryview.c:3727
+#: src/query_search.c:1457 src/summaryview.c:3828
+msgid "Select folder to copy"
+msgstr "コピー先のフォルダを選択してください"
+
+#: src/query_search.c:1460 src/summaryview.c:3727
 msgid "Select folder to move"
 msgstr "移動先のフォルダを選択してください"
 
@@ -7889,10 +7924,6 @@ msgstr "メッセージ %d を %s にコピーするようにセットしまし�
 #: src/summaryview.c:3792
 msgid "Destination for copy is same as current folder."
 msgstr "コピー先が現在のフォルダと同じです。"
-
-#: src/summaryview.c:3828
-msgid "Select folder to copy"
-msgstr "コピー先のフォルダを選択してください"
 
 #: src/summaryview.c:4003
 msgid "Error occurred while processing messages."

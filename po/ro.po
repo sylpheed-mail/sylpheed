@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 3.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-12 13:38+0900\n"
+"POT-Creation-Date: 2017-11-29 16:54+0900\n"
 "PO-Revision-Date: 2011-12-13 17:35+0200\n"
 "Last-Translator: Cristian Secară <cristi AT secarica DOT ro>\n"
 "Language-Team: Gnome Romanian Team <gnomero-list@lists.sourceforge.net>\n"
@@ -613,7 +613,7 @@ msgstr "  Subiect: %s\n"
 msgid "  Issuer: %s\n"
 msgstr "  Emitent: %s\n"
 
-#: libsylph/utils.c:2980
+#: libsylph/utils.c:3018
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "scrierea în %s a eșuat.\n"
@@ -706,8 +706,8 @@ msgstr ""
 "coloana „G”\n"
 "pentru a activa recepționarea mesajelor la comanda „Verifică tot”."
 
-#: src/account_dialog.c:376 src/addressadd.c:181 src/addressbook.c:776
-#: src/compose.c:5517 src/editaddress.c:777 src/editaddress.c:826
+#: src/account_dialog.c:376 src/addressadd.c:181 src/addressbook.c:788
+#: src/compose.c:5604 src/editaddress.c:777 src/editaddress.c:826
 #: src/editbook.c:198 src/editgroup.c:490 src/editjpilot.c:270
 #: src/editldap.c:307 src/editvcard.c:183 src/mimeview.c:226
 #: src/prefs_filter.c:274 src/prefs_folder_item.c:171 src/select-keys.c:313
@@ -851,13 +851,14 @@ msgid "Add Address to Book"
 msgstr "Adăugare în agendă"
 
 # în meniu la compunere
-#: src/addressadd.c:191 src/compose.c:3419 src/prefs_toolbar.c:89
+#: src/addressadd.c:191 src/compose.c:3441 src/prefs_toolbar.c:89
 #: src/select-keys.c:314
 msgid "Address"
 msgstr "Agendă"
 
-#: src/addressadd.c:201 src/addressbook.c:832 src/editaddress.c:629
-#: src/editaddress.c:695 src/editgroup.c:492 src/importcsv.c:126
+#: src/addressadd.c:201 src/addressbook.c:865 src/editaddress.c:629
+#: src/editaddress.c:695 src/editgroup.c:492 src/exportcsv.c:213
+#: src/importcsv.c:126
 msgid "Remarks"
 msgstr "Observații"
 
@@ -865,32 +866,32 @@ msgstr "Observații"
 msgid "Select Address Book Folder"
 msgstr "Selectați dosarul pentru agendă"
 
-#: src/addressadd.c:316 src/addressbook.c:1074 src/addressbook.c:3555
+#: src/addressadd.c:316 src/addressbook.c:1107 src/addressbook.c:3596
 msgid "Auto-registered address"
 msgstr "Adrese înregistrate automat"
 
-#: src/addressbook.c:405 src/compose.c:583 src/mainwindow.c:558
+#: src/addressbook.c:413 src/compose.c:583 src/mainwindow.c:558
 #: src/messageview.c:166
 msgid "/_File"
 msgstr "/_Fișier"
 
-#: src/addressbook.c:406
+#: src/addressbook.c:414
 msgid "/_File/New _Book"
 msgstr "/_Fișier/A_gendă nouă"
 
-#: src/addressbook.c:407
+#: src/addressbook.c:415
 msgid "/_File/New _vCard"
 msgstr "/_Fișier/_vCard nou"
 
-#: src/addressbook.c:409
+#: src/addressbook.c:417
 msgid "/_File/New _JPilot"
 msgstr "/_Fișier/_JPilot nou"
 
-#: src/addressbook.c:412
+#: src/addressbook.c:420
 msgid "/_File/New _LDAP Server"
 msgstr "/_Fișier/Server _LDAP nou"
 
-#: src/addressbook.c:414 src/addressbook.c:417 src/compose.c:588
+#: src/addressbook.c:422 src/addressbook.c:425 src/compose.c:588
 #: src/compose.c:593 src/compose.c:596 src/compose.c:599 src/mainwindow.c:576
 #: src/mainwindow.c:579 src/mainwindow.c:581 src/mainwindow.c:583
 #: src/mainwindow.c:588 src/mainwindow.c:590 src/messageview.c:168
@@ -898,117 +899,130 @@ msgstr "/_Fișier/Server _LDAP nou"
 msgid "/_File/---"
 msgstr "/_Fișier/---"
 
-#: src/addressbook.c:415
+#: src/addressbook.c:423
 msgid "/_File/_Edit"
 msgstr "/_Fișier/_Editează"
 
-#: src/addressbook.c:416
+#: src/addressbook.c:424
 msgid "/_File/_Delete"
 msgstr "/_Fișier/Ș_terge"
 
-#: src/addressbook.c:418
+#: src/addressbook.c:426
 msgid "/_File/_Save"
 msgstr "/_Fișier/_Salvează"
 
-#: src/addressbook.c:419 src/compose.c:600 src/messageview.c:174
+#: src/addressbook.c:427 src/compose.c:600 src/messageview.c:174
 msgid "/_File/_Close"
 msgstr "/_Fișier/În_chide"
 
 # comun și în main menu și în rmb agendă
-#: src/addressbook.c:421 src/addressbook.c:468 src/addressbook.c:485
+#: src/addressbook.c:429 src/addressbook.c:475 src/addressbook.c:492
 #: src/compose.c:602 src/mainwindow.c:594 src/messageview.c:176
 msgid "/_Edit"
 msgstr "/_Editare"
 
-#: src/addressbook.c:422 src/compose.c:607 src/mainwindow.c:595
+#: src/addressbook.c:430 src/compose.c:607 src/mainwindow.c:595
 #: src/messageview.c:177
 msgid "/_Edit/_Copy"
 msgstr "/_Editare/_Copiază"
 
-#: src/addressbook.c:423 src/compose.c:608
+#: src/addressbook.c:431 src/compose.c:608
 msgid "/_Edit/_Paste"
 msgstr "/_Editare/Li_pește"
 
-#: src/addressbook.c:425
+#: src/addressbook.c:433
 msgid "/_Address"
 msgstr "/A_dresă"
 
-#: src/addressbook.c:426
+#: src/addressbook.c:434
 msgid "/_Address/New _Address"
 msgstr "/A_dresă/_Adresă nouă"
 
-#: src/addressbook.c:427
+#: src/addressbook.c:435
 msgid "/_Address/New _Group"
 msgstr "/A_dresă/_Grup nou"
 
-#: src/addressbook.c:428
+#: src/addressbook.c:436
 msgid "/_Address/New _Folder"
 msgstr "/A_dresă/_Dosar nou"
 
-#: src/addressbook.c:429 src/addressbook.c:436
+#: src/addressbook.c:437 src/addressbook.c:444
 msgid "/_Address/---"
 msgstr "/A_dresă/---"
 
 # acceleratorul pe a este luat de _Ajutor
-#: src/addressbook.c:430
+#: src/addressbook.c:438
 msgid "/_Address/Add _to recipient"
 msgstr "/A_dresă/Adaugă la destina_tar"
 
 # acceleratorul pe a este luat de _Ajutor
-#: src/addressbook.c:432
+#: src/addressbook.c:440
 msgid "/_Address/Add to _Cc"
 msgstr "/A_dresă/Ada_ugă la Cc"
 
 # acceleratorul pe a este luat de _Ajutor
-#: src/addressbook.c:434
+#: src/addressbook.c:442
 msgid "/_Address/Add to _Bcc"
 msgstr "/A_dresă/Adaugă la _Bcc"
 
-#: src/addressbook.c:437
+#: src/addressbook.c:445
 msgid "/_Address/_Edit"
 msgstr "/A_dresă/_Editează"
 
-#: src/addressbook.c:438
+#: src/addressbook.c:446
 msgid "/_Address/_Delete"
 msgstr "/A_dresă/Ș_terge"
 
-#: src/addressbook.c:440 src/compose.c:718 src/mainwindow.c:842
+#: src/addressbook.c:448 src/compose.c:718 src/mainwindow.c:842
 #: src/messageview.c:299
 msgid "/_Tools"
 msgstr "/_Unelte"
 
-#: src/addressbook.c:441
+#: src/addressbook.c:449
 msgid "/_Tools/Import _LDIF file"
 msgstr "/_Unelte/Importă un fișier _LDIF"
 
-#: src/addressbook.c:442
+#: src/addressbook.c:450
 msgid "/_Tools/Import _CSV file"
 msgstr "/_Unelte/Importă un fișier _CSV"
 
-#: src/addressbook.c:444 src/compose.c:742 src/mainwindow.c:904
+#: src/addressbook.c:451 src/compose.c:724 src/compose.c:727 src/compose.c:731
+#: src/compose.c:737 src/mainwindow.c:846 src/mainwindow.c:860
+#: src/mainwindow.c:865 src/mainwindow.c:868 src/mainwindow.c:874
+#: src/mainwindow.c:876 src/mainwindow.c:880 src/messageview.c:303
+#: src/messageview.c:315
+msgid "/_Tools/---"
+msgstr "/_Unelte/---"
+
+#: src/addressbook.c:452
+#, fuzzy
+msgid "/_Tools/Export C_SV file"
+msgstr "/_Unelte/Importă un fișier _CSV"
+
+#: src/addressbook.c:453 src/compose.c:742 src/mainwindow.c:904
 #: src/messageview.c:319
 msgid "/_Help"
 msgstr "/_Ajutor"
 
-#: src/addressbook.c:445 src/compose.c:743 src/mainwindow.c:924
+#: src/addressbook.c:454 src/compose.c:743 src/mainwindow.c:924
 #: src/messageview.c:320
 msgid "/_Help/_About"
 msgstr "/_Ajutor/_Despre"
 
-#: src/addressbook.c:464 src/addressbook.c:474
+#: src/addressbook.c:471 src/addressbook.c:481
 msgid "/New _Address"
 msgstr "/_Adresă nouă"
 
-#: src/addressbook.c:465 src/addressbook.c:475
+#: src/addressbook.c:472 src/addressbook.c:482
 msgid "/New _Group"
 msgstr "/_Grup nou"
 
-#: src/addressbook.c:466 src/addressbook.c:476
+#: src/addressbook.c:473 src/addressbook.c:483
 msgid "/New _Folder"
 msgstr "/_Dosar nou"
 
-#: src/addressbook.c:467 src/addressbook.c:477 src/addressbook.c:484
-#: src/addressbook.c:487 src/compose.c:574 src/compose.c:577
+#: src/addressbook.c:474 src/addressbook.c:484 src/addressbook.c:491
+#: src/addressbook.c:494 src/compose.c:574 src/compose.c:577
 #: src/folderview.c:258 src/folderview.c:261 src/folderview.c:266
 #: src/folderview.c:269 src/folderview.c:282 src/folderview.c:285
 #: src/folderview.c:287 src/folderview.c:292 src/folderview.c:295
@@ -1021,97 +1035,102 @@ msgid "/---"
 msgstr "/---"
 
 # comun și la intrare în agendă și la rmb pe mesaj
-#: src/addressbook.c:469 src/addressbook.c:486 src/summaryview.c:464
+#: src/addressbook.c:476 src/addressbook.c:493 src/summaryview.c:464
 msgid "/_Delete"
 msgstr "/Șter_ge"
 
-#: src/addressbook.c:478
+#: src/addressbook.c:485
 msgid "/Add _to recipient"
 msgstr "/Adaugă la destina_tar"
 
-#: src/addressbook.c:480
+#: src/addressbook.c:487
 msgid "/Add t_o Cc"
 msgstr "/Ada_ugă la Cc"
 
-#: src/addressbook.c:482
+#: src/addressbook.c:489
 msgid "/Add to _Bcc"
 msgstr "/Adaugă la _Bcc"
 
-#: src/addressbook.c:488
+#: src/addressbook.c:495
 msgid "/_Copy"
 msgstr "/_Copiază"
 
-#: src/addressbook.c:489
+#: src/addressbook.c:496
 msgid "/_Paste"
 msgstr "/Li_pește"
 
 # tooltip peste butonul Agendă
-#: src/addressbook.c:614 src/prefs_common_dialog.c:2838 src/prefs_toolbar.c:90
+#: src/addressbook.c:621 src/prefs_common_dialog.c:2838 src/prefs_toolbar.c:90
 msgid "Address book"
 msgstr "Agendă"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:687 src/addressbook.c:4258 src/folderview.c:398
-#: src/prefs_account_dialog.c:2077 src/query_search.c:401
+#: src/addressbook.c:694 src/addressbook.c:4322 src/folderview.c:398
+#: src/prefs_account_dialog.c:2077 src/query_search.c:498
 msgid "Folder"
 msgstr "Dosar"
 
-#: src/addressbook.c:811
+#: src/addressbook.c:823
 msgid "E-Mail address"
 msgstr "Adresă de e-mail"
 
-#: src/addressbook.c:875 src/quick_search.c:128
+#: src/addressbook.c:844 src/editaddress.c:590 src/exportcsv.c:213
+#: src/importcsv.c:124
+msgid "Nick Name"
+msgstr "Pseudonim"
+
+#: src/addressbook.c:908 src/quick_search.c:128
 msgid "Search:"
 msgstr "Caută:"
 
-#: src/addressbook.c:913 src/compose.c:3364 src/headerview.c:57
+#: src/addressbook.c:946 src/compose.c:3386 src/headerview.c:57
 #: src/prefs_folder_item.c:340 src/prefs_template.c:200
 msgid "To:"
 msgstr "Către:"
 
-#: src/addressbook.c:917 src/compose.c:3381 src/headerview.c:58
+#: src/addressbook.c:950 src/compose.c:3403 src/headerview.c:58
 #: src/prefs_folder_item.c:357 src/prefs_template.c:202
 msgid "Cc:"
 msgstr "Cc:"
 
-#: src/addressbook.c:921 src/compose.c:3398 src/prefs_folder_item.c:368
+#: src/addressbook.c:954 src/compose.c:3420 src/prefs_folder_item.c:368
 #: src/prefs_template.c:204
 msgid "Bcc:"
 msgstr "Bcc:"
 
 #. Buttons
-#: src/addressbook.c:942 src/addressbook.c:2339 src/editaddress.c:719
+#: src/addressbook.c:975 src/addressbook.c:2375 src/editaddress.c:719
 #: src/editaddress.c:853 src/prefs_actions.c:266
 #: src/prefs_display_header.c:280 src/prefs_display_header.c:336
 #: src/prefs_template.c:267 src/prefs_toolbar.c:65
 msgid "Delete"
 msgstr "Șterge"
 
-#: src/addressbook.c:945 src/editaddress.c:725 src/editaddress.c:859
+#: src/addressbook.c:978 src/editaddress.c:725 src/editaddress.c:859
 #: src/prefs_actions.c:254 src/prefs_customheader.c:232
 #: src/prefs_display_header.c:274 src/prefs_display_header.c:330
 #: src/prefs_filter_edit.c:1607
 msgid "Add"
 msgstr "Adaugă"
 
-#: src/addressbook.c:948 src/prefs_toolbar.c:80
+#: src/addressbook.c:981 src/prefs_toolbar.c:80
 msgid "Search"
 msgstr "Caută"
 
-#: src/addressbook.c:951
+#: src/addressbook.c:984
 msgid "_Close"
 msgstr "În_chide"
 
 #. Confirm deletion
-#: src/addressbook.c:1147
+#: src/addressbook.c:1180
 msgid "Delete address(es)"
 msgstr "Ștergere adresă (adrese)"
 
-#: src/addressbook.c:1148
+#: src/addressbook.c:1181
 msgid "Really delete the address(es)?"
 msgstr "Sigur doriți să ștergeți adresa (adresele) ?"
 
-#: src/addressbook.c:2330
+#: src/addressbook.c:2366
 #, c-format
 msgid ""
 "Do you want to delete the folder AND all addresses in `%s' ?\n"
@@ -1120,36 +1139,36 @@ msgstr ""
 "Vreți să ștergeți dosarul ȘI toate adresele din „%s” ?\n"
 "Dacă ștergeți doar dosarul, adresele vor fi mutate în dosarul părinte."
 
-#: src/addressbook.c:2333 src/folderview.c:2724
+#: src/addressbook.c:2369 src/folderview.c:2724
 msgid "Delete folder"
 msgstr "Ștergere dosar"
 
-#: src/addressbook.c:2333
+#: src/addressbook.c:2369
 msgid "_Folder only"
 msgstr "Doar _dosar"
 
-#: src/addressbook.c:2333
+#: src/addressbook.c:2369
 msgid "Folder and _addresses"
 msgstr "Dosar și _adrese"
 
-#: src/addressbook.c:2338
+#: src/addressbook.c:2374
 #, c-format
 msgid "Really delete `%s' ?"
 msgstr "Sigur doriți să ștergeți „%s” ?"
 
-#: src/addressbook.c:3301 src/addressbook.c:3439
+#: src/addressbook.c:3342 src/addressbook.c:3480
 msgid "New user, could not save index file."
 msgstr "Utilizator nou, fișierul index nu a putut fi salvat."
 
-#: src/addressbook.c:3305 src/addressbook.c:3443
+#: src/addressbook.c:3346 src/addressbook.c:3484
 msgid "New user, could not save address book files."
 msgstr "Utilizator nou, fișierele agendei nu au putut fi salvate."
 
-#: src/addressbook.c:3315 src/addressbook.c:3453
+#: src/addressbook.c:3356 src/addressbook.c:3494
 msgid "Old address book converted successfully."
 msgstr "Agenda veche a fost convertită cu succes."
 
-#: src/addressbook.c:3320
+#: src/addressbook.c:3361
 msgid ""
 "Old address book converted,\n"
 "could not save new address index file"
@@ -1157,7 +1176,7 @@ msgstr ""
 "Agenda veche a fost convertită, dar\n"
 "fișierul index al noii agende nu a putut fi salvat."
 
-#: src/addressbook.c:3333
+#: src/addressbook.c:3374
 msgid ""
 "Could not convert address book,\n"
 "but created empty new address book files."
@@ -1165,7 +1184,7 @@ msgstr ""
 "Agenda nu a putut fi convertită, dar\n"
 "au fost create fișierele noi de agendă goală."
 
-#: src/addressbook.c:3339
+#: src/addressbook.c:3380
 msgid ""
 "Could not convert address book,\n"
 "could not create new address book files."
@@ -1173,7 +1192,7 @@ msgstr ""
 "Agenda nu a putut fi convertită, iar\n"
 "fișierele noi de agendă nu au putut fi create."
 
-#: src/addressbook.c:3344
+#: src/addressbook.c:3385
 msgid ""
 "Could not convert address book\n"
 "and could not create new address book files."
@@ -1181,15 +1200,15 @@ msgstr ""
 "Agenda nu a putut fi convertită\n"
 "și fișierele noi de agendă nu au putut fi create."
 
-#: src/addressbook.c:3351
+#: src/addressbook.c:3392
 msgid "Address book conversion error"
 msgstr "Eroare de conversie a agendei"
 
-#: src/addressbook.c:3355
+#: src/addressbook.c:3396
 msgid "Address book conversion"
 msgstr "Conversie agendă"
 
-#: src/addressbook.c:3394
+#: src/addressbook.c:3435
 #, c-format
 msgid ""
 "Could not read address index:\n"
@@ -1200,78 +1219,78 @@ msgstr ""
 "\n"
 "%s%c%s"
 
-#: src/addressbook.c:3397
+#: src/addressbook.c:3438
 msgid "Address Book Error"
 msgstr "Eroare agendă"
 
-#: src/addressbook.c:3458
+#: src/addressbook.c:3499
 msgid "Old address book converted, could not save new address index file"
 msgstr ""
 "Agenda veche a fost convertită, iar fișierul index al noii agende nu a putut "
 "fi salvat."
 
-#: src/addressbook.c:3472
+#: src/addressbook.c:3513
 msgid ""
 "Could not convert address book, but created empty new address book files."
 msgstr ""
 "Agenda nu a putut fi convertită, dar au fost create fișierele noi de agendă "
 "goală."
 
-#: src/addressbook.c:3478
+#: src/addressbook.c:3519
 msgid ""
 "Could not convert address book, could not create new address book files."
 msgstr ""
 "Agenda nu a putut fi convertită, iar fișierele noi de agendă nu au putut fi "
 "create."
 
-#: src/addressbook.c:3484
+#: src/addressbook.c:3525
 msgid ""
 "Could not convert address book and could not create new address book files."
 msgstr ""
 "Agenda nu a putut fi convertită și fișierele noi de agendă nu au putut fi "
 "create."
 
-#: src/addressbook.c:3496
+#: src/addressbook.c:3537
 msgid "Could not read address index"
 msgstr "Fișierul index al agendei nu a putut fi citit"
 
-#: src/addressbook.c:3502
+#: src/addressbook.c:3543
 msgid "Address Book Conversion Error"
 msgstr "Eroare de conversie a agendei"
 
-#: src/addressbook.c:3508
+#: src/addressbook.c:3549
 msgid "Address Book Conversion"
 msgstr "Conversie agendă"
 
-#: src/addressbook.c:4188 src/prefs_common_dialog.c:2631
+#: src/addressbook.c:4252 src/prefs_common_dialog.c:2631
 msgid "Interface"
 msgstr "Interfață"
 
-#: src/addressbook.c:4202 src/importcsv.c:676 src/importldif.c:478
+#: src/addressbook.c:4266 src/importcsv.c:676 src/importldif.c:478
 msgid "Address Book"
 msgstr "Agendă"
 
-#: src/addressbook.c:4216
+#: src/addressbook.c:4280
 msgid "Person"
 msgstr "Persoană"
 
-#: src/addressbook.c:4230
+#: src/addressbook.c:4294
 msgid "EMail Address"
 msgstr "Adresă de e-mail"
 
-#: src/addressbook.c:4244
+#: src/addressbook.c:4308
 msgid "Group"
 msgstr "Grupă"
 
-#: src/addressbook.c:4272
+#: src/addressbook.c:4336
 msgid "vCard"
 msgstr "vCard"
 
-#: src/addressbook.c:4286 src/addressbook.c:4300
+#: src/addressbook.c:4350 src/addressbook.c:4364
 msgid "JPilot"
 msgstr "JPilot"
 
-#: src/addressbook.c:4314
+#: src/addressbook.c:4378
 msgid "LDAP Server"
 msgstr "Server LDAP"
 
@@ -1283,7 +1302,7 @@ msgstr "Adrese comune"
 msgid "Personal address"
 msgstr "Adrese personale"
 
-#: src/alertpanel.c:142 src/compose.c:7054 src/main.c:940
+#: src/alertpanel.c:142 src/compose.c:7141 src/main.c:940
 msgid "Notice"
 msgstr "Notificare"
 
@@ -1600,13 +1619,6 @@ msgstr "/_Unelte/_Șablon"
 msgid "/_Tools/Actio_ns"
 msgstr "/_Unelte/Acțiu_ni"
 
-#: src/compose.c:724 src/compose.c:727 src/compose.c:731 src/compose.c:737
-#: src/mainwindow.c:846 src/mainwindow.c:860 src/mainwindow.c:865
-#: src/mainwindow.c:868 src/mainwindow.c:874 src/mainwindow.c:876
-#: src/mainwindow.c:880 src/messageview.c:303 src/messageview.c:315
-msgid "/_Tools/---"
-msgstr "/_Unelte/---"
-
 #: src/compose.c:725
 msgid "/_Tools/Edit with e_xternal editor"
 msgstr "/_Unelte/Editează cu un editor e_xtern"
@@ -1648,94 +1660,94 @@ msgstr "Eroare de formatare a citației."
 msgid "Message reply/forward format error."
 msgstr "Eroare de format al mesajului de răspuns sau înaintat."
 
-#: src/compose.c:2288
+#: src/compose.c:2310
 #, c-format
 msgid "File %s doesn't exist\n"
 msgstr "Fișierul %s nu există\n"
 
-#: src/compose.c:2292
+#: src/compose.c:2314
 #, c-format
 msgid "Can't get file size of %s\n"
 msgstr "Nu se poate obține dimensiunea fișierului %s\n"
 
-#: src/compose.c:2297 src/compose.c:4568
+#: src/compose.c:2319 src/compose.c:4595
 #, c-format
 msgid "File %s is empty."
 msgstr "Fișierul %s este gol."
 
-#: src/compose.c:2302
+#: src/compose.c:2324
 #, c-format
 msgid "Can't read %s."
 msgstr "Nu se poate citi %s."
 
-#: src/compose.c:2335
+#: src/compose.c:2357
 #, c-format
 msgid "Message: %s"
 msgstr "Mesaj: %s"
 
-#: src/compose.c:2397 src/mimeview.c:579
+#: src/compose.c:2419 src/mimeview.c:579
 msgid "Can't get the part of multipart message."
 msgstr "Nu se poate obține o parte a mesajului multiparte."
 
-#: src/compose.c:2887 src/headerview.c:259 src/query_search.c:794
+#: src/compose.c:2909 src/headerview.c:259 src/query_search.c:904
 #: src/rpop3.c:704 src/summaryview.c:2521
 msgid "(No Subject)"
 msgstr "(Fără subiect)"
 
-#: src/compose.c:2890
+#: src/compose.c:2912
 #, c-format
 msgid "%s - Compose%s"
 msgstr "%s - Compune%s"
 
-#: src/compose.c:2993 src/compose.c:6129 src/prefs_account_dialog.c:1352
+#: src/compose.c:3015 src/compose.c:6216 src/prefs_account_dialog.c:1352
 #, fuzzy, c-format
 msgid "Signature %d"
 msgstr "Semnătură"
 
-#: src/compose.c:3059
+#: src/compose.c:3081
 msgid "Recipient is not specified."
 msgstr "Destinatarul nu este specificat."
 
-#: src/compose.c:3067
+#: src/compose.c:3089
 msgid "Empty subject"
 msgstr "Subiect gol"
 
-#: src/compose.c:3068
+#: src/compose.c:3090
 msgid "Subject is empty. Send it anyway?"
 msgstr "Subiectul este gol. Trimiteți mesajul oricum ?"
 
-#: src/compose.c:3132
+#: src/compose.c:3154
 msgid "Attachment is missing"
 msgstr "Lipsă atașament"
 
-#: src/compose.c:3133
+#: src/compose.c:3155
 msgid "There is no attachment. Send it without attachments?"
 msgstr "Nu este atașat niciun fișier. Trimiteți fără atașamente ?"
 
-#: src/compose.c:3250 src/compose.c:3276
+#: src/compose.c:3272 src/compose.c:3298
 msgid "Check recipients"
 msgstr "Confirmare destinatari"
 
-#: src/compose.c:3296
+#: src/compose.c:3318
 msgid "Really send this mail to the following addresses?"
 msgstr "Sigur trimiteți acest mesaj către următoarele adrese ?"
 
-#: src/compose.c:3309 src/compose.c:5377 src/headerview.c:56
+#: src/compose.c:3331 src/compose.c:5464 src/headerview.c:56
 msgid "From:"
 msgstr "De la:"
 
-#: src/compose.c:3331 src/headerview.c:60 src/prefs_template.c:208
+#: src/compose.c:3353 src/headerview.c:60 src/prefs_template.c:208
 msgid "Subject:"
 msgstr "Subiect:"
 
 # butonul de la confirmarea cui se trimite
-#: src/compose.c:3424
+#: src/compose.c:3446
 msgid "_Send"
 msgstr "_Trimite"
 
 # nu este clar unde apare
 # (IMAP ?)
-#: src/compose.c:3454
+#: src/compose.c:3476
 #, fuzzy
 msgid ""
 "Checking for new messages is currently running.\n"
@@ -1743,11 +1755,11 @@ msgid ""
 msgstr "Se verifică pentru mesaje noi în toate dosarele..."
 
 # hm ?
-#: src/compose.c:3590
+#: src/compose.c:3612
 msgid "can't get recipient list."
 msgstr "nu se poate obține lista destinatarilor."
 
-#: src/compose.c:3618
+#: src/compose.c:3640
 msgid ""
 "Account for sending mail is not specified.\n"
 "Please select a mail account before sending."
@@ -1755,13 +1767,13 @@ msgstr ""
 "Contul pentru trimitere de mesaje nu este specificat.\n"
 "Vă rugăm să selectați un cont înainte de a trimite."
 
-#: src/compose.c:3638 src/send_message.c:353
+#: src/compose.c:3660 src/send_message.c:353
 #, c-format
 msgid "Error occurred while posting the message to %s ."
 msgstr "A apărut o eroare în timpul trimiterii mesajului către %s ."
 
 # !!! dependent de traducerea lui Outbox !!!
-#: src/compose.c:3688
+#: src/compose.c:3710
 msgid ""
 "Sending of message was completed, but the message could not be saved to "
 "outbox."
@@ -1769,28 +1781,28 @@ msgstr ""
 "Trimiterea mesajului s-a terminat, dar mesajul nu a putut fi salvat în "
 "dosarul „Trimise”."
 
-#: src/compose.c:3743
+#: src/compose.c:3765
 #, c-format
 msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr "Nu s-a putut găsi nicio cheie asociată cu ID-ul cheii selectate „%s”."
 
-#: src/compose.c:3786 src/compose.c:4180
+#: src/compose.c:3808 src/compose.c:4202
 msgid "Can't sign the message."
 msgstr "Nu se poate semna mesajul."
 
-#: src/compose.c:3816 src/compose.c:4231
+#: src/compose.c:3838 src/compose.c:4253
 msgid "Can't encrypt the message."
 msgstr "Nu se poate cripta mesajul."
 
-#: src/compose.c:3855 src/compose.c:4225
+#: src/compose.c:3877 src/compose.c:4247
 msgid "Can't encrypt or sign the message."
 msgstr "Nu se poate cripta sau semna mesajul."
 
-#: src/compose.c:3903 src/compose.c:4262 src/compose.c:4325 src/compose.c:4445
+#: src/compose.c:3925 src/compose.c:4284 src/compose.c:4347 src/compose.c:4467
 msgid "can't change file mode\n"
 msgstr "nu se pot schimba permisiunile fișierului\n"
 
-#: src/compose.c:3936
+#: src/compose.c:3958
 #, c-format
 msgid ""
 "Can't convert the character encoding of the message body from %s to %s.\n"
@@ -1802,11 +1814,11 @@ msgstr ""
 "\n"
 "Îl trimiteți oricum ca %s ?"
 
-#: src/compose.c:3942
+#: src/compose.c:3964
 msgid "Code conversion error"
 msgstr "Eroare conversie cod"
 
-#: src/compose.c:4028
+#: src/compose.c:4050
 #, c-format
 msgid ""
 "Line %d exceeds the line length limit (998 bytes).\n"
@@ -1819,15 +1831,15 @@ msgstr ""
 "\n"
 "Îl trimiteți oricum ?"
 
-#: src/compose.c:4032
+#: src/compose.c:4054
 msgid "Line length limit"
 msgstr "Limită lungime linie"
 
-#: src/compose.c:4199
+#: src/compose.c:4221
 msgid "Encrypting with Bcc"
 msgstr "Criptare cu Bcc"
 
-#: src/compose.c:4200
+#: src/compose.c:4222
 msgid ""
 "This message has Bcc recipients. If this message is encrypted, all Bcc "
 "recipients will be visible by examing the encryption key list, leading to "
@@ -1841,104 +1853,104 @@ msgstr ""
 "\n"
 "Îl trimiteți oricum ?"
 
-#: src/compose.c:4405
+#: src/compose.c:4427
 msgid "can't remove the old message\n"
 msgstr "nu se poate șterge mesajul vechi\n"
 
-#: src/compose.c:4423
+#: src/compose.c:4445
 msgid "queueing message...\n"
 msgstr "se pune mesajul în coada de așteptare...\n"
 
-#: src/compose.c:4511
+#: src/compose.c:4533
 msgid "can't find queue folder\n"
 msgstr "nu se poate găsi dosarul de coadă\n"
 
-#: src/compose.c:4518
+#: src/compose.c:4540
 msgid "can't queue the message\n"
 msgstr "nu se poate pune mesajului în coada de așteptare\n"
 
-#: src/compose.c:4563
+#: src/compose.c:4590
 #, c-format
 msgid "File %s doesn't exist."
 msgstr "Fișierul %s nu există."
 
-#: src/compose.c:4572
+#: src/compose.c:4599
 #, c-format
 msgid "Can't open file %s."
 msgstr "Nu se poate deschide fișierul %s."
 
-#: src/compose.c:5324
+#: src/compose.c:5411
 msgid "Creating compose window...\n"
 msgstr "Se creează fereastra de compunere...\n"
 
-#: src/compose.c:5457
+#: src/compose.c:5544
 msgid "PGP Sign"
 msgstr "Semnătură PGP"
 
-#: src/compose.c:5460
+#: src/compose.c:5547
 msgid "PGP Encrypt"
 msgstr "Criptare PGP"
 
-#: src/compose.c:5498 src/mimeview.c:209
+#: src/compose.c:5585 src/mimeview.c:209
 msgid "Data type"
 msgstr "Tip de date"
 
 #. S_COL_DATE
-#: src/compose.c:5507 src/mimeview.c:217 src/prefs_filter_edit.c:511
+#: src/compose.c:5594 src/mimeview.c:217 src/prefs_filter_edit.c:511
 #: src/prefs_summary_column.c:72 src/rpop3.c:440 src/select-keys.c:311
 #: src/summaryview.c:5525
 msgid "Size"
 msgstr "Dimensiune"
 
-#: src/compose.c:6121
+#: src/compose.c:6208
 #, fuzzy
 msgid "Signature:"
 msgstr "Semnătură"
 
-#: src/compose.c:6136
+#: src/compose.c:6223
 #, fuzzy
 msgid "Change signature"
 msgstr "Verificare semnătură"
 
-#: src/compose.c:6716
+#: src/compose.c:6803
 msgid "Invalid MIME type."
 msgstr "Tipul MIME nu este valid."
 
-#: src/compose.c:6734
+#: src/compose.c:6821
 msgid "File doesn't exist or is empty."
 msgstr "Fișierul nu există sau este gol."
 
-#: src/compose.c:6803
+#: src/compose.c:6890
 msgid "Properties"
 msgstr "Proprietăți"
 
-#: src/compose.c:6821
+#: src/compose.c:6908
 msgid "MIME type"
 msgstr "Tip MIME"
 
 #. Encoding
-#: src/compose.c:6823 src/prefs_common_dialog.c:1203
+#: src/compose.c:6910 src/prefs_common_dialog.c:1203
 #: src/prefs_common_dialog.c:1870
 msgid "Encoding"
 msgstr "Codare"
 
-#: src/compose.c:6846 src/prefs_folder_item.c:202
+#: src/compose.c:6933 src/prefs_folder_item.c:202
 msgid "Path"
 msgstr "Cale"
 
-#: src/compose.c:6847
+#: src/compose.c:6934
 msgid "File name"
 msgstr "Nume fișier"
 
-#: src/compose.c:6936
+#: src/compose.c:7023
 msgid "File not exist."
 msgstr "Fișierul nu există."
 
-#: src/compose.c:6946 src/mimeview.c:1259 src/mimeview.c:1274
+#: src/compose.c:7033 src/mimeview.c:1259 src/mimeview.c:1274
 msgid "Opening executable file"
 msgstr "Deschidere fișier executabil"
 
-#: src/compose.c:6947 src/mimeview.c:1260 src/mimeview.c:1275
+#: src/compose.c:7034 src/mimeview.c:1260 src/mimeview.c:1275
 msgid ""
 "This is an executable file. Opening executable file is restricted for "
 "security.\n"
@@ -1950,12 +1962,12 @@ msgstr ""
 "Dacă vreți să îl lansați în execuție, salvați-l undeva și asigurați-vă că nu "
 "este un virus sau un alt tip de program malițios."
 
-#: src/compose.c:6989
+#: src/compose.c:7076
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "Linia de comandă pentru editor extern nu este validă: „%s”\n"
 
-#: src/compose.c:7051
+#: src/compose.c:7138
 #, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1964,49 +1976,49 @@ msgstr ""
 "Editorul extern este încă în funcțiune.\n"
 "Forțați terminarea procesului (pid: %d) ?\n"
 
-#: src/compose.c:7391 src/mainwindow.c:3080
+#: src/compose.c:7478 src/mainwindow.c:3080
 msgid "_Customize toolbar..."
 msgstr "_Personalizează bara de unelte..."
 
-#: src/compose.c:7567 src/compose.c:7573 src/compose.c:7595
+#: src/compose.c:7654 src/compose.c:7660 src/compose.c:7682
 msgid "Can't queue the message."
 msgstr "Nu se poate pune mesajul în coada de așteptare."
 
-#: src/compose.c:7708
+#: src/compose.c:7795
 msgid "Select files"
 msgstr "Selectați fișierele"
 
-#: src/compose.c:7731 src/inputdialog.c:372 src/prefs_common_dialog.c:4750
+#: src/compose.c:7818 src/inputdialog.c:372 src/prefs_common_dialog.c:4750
 msgid "Select file"
 msgstr "Selectați fișierul"
 
-#: src/compose.c:7785
+#: src/compose.c:7872
 msgid "Save message"
 msgstr "Salvare mesaj"
 
 # !!! dependent de traducerea lui draft !!!
-#: src/compose.c:7786
+#: src/compose.c:7873
 msgid "This message has been modified. Save it to draft folder?"
 msgstr "Acest mesaj a fost modificat. Îl salvați în dosarul Ciorne ?"
 
-#: src/compose.c:7788 src/compose.c:7792
+#: src/compose.c:7875 src/compose.c:7879
 msgid "Close _without saving"
 msgstr "Închide _fără a salva"
 
-#: src/compose.c:7839
+#: src/compose.c:7926
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "Vreți să aplicați șablonul „%s” ?"
 
-#: src/compose.c:7841
+#: src/compose.c:7928
 msgid "Apply template"
 msgstr "Aplică un șablon"
 
-#: src/compose.c:7842
+#: src/compose.c:7929
 msgid "_Replace"
 msgstr "Înl_ocuiește"
 
-#: src/compose.c:7842
+#: src/compose.c:7929
 msgid "_Insert"
 msgstr "_Inserează"
 
@@ -2033,28 +2045,27 @@ msgstr "Trebuiesc furnizate un nume și o valoare."
 msgid "Edit Person Data"
 msgstr "Editare date persoană"
 
-#: src/editaddress.c:578 src/importcsv.c:123
+#: src/editaddress.c:578 src/exportcsv.c:213 src/importcsv.c:123
 msgid "Display Name"
 msgstr "Nume afișat"
 
-#: src/editaddress.c:584 src/editaddress.c:588 src/importcsv.c:122
+#: src/editaddress.c:584 src/editaddress.c:588 src/exportcsv.c:213
+#: src/importcsv.c:122
 msgid "Last Name"
 msgstr "Nume"
 
-#: src/editaddress.c:585 src/editaddress.c:587 src/importcsv.c:121
+#: src/editaddress.c:585 src/editaddress.c:587 src/exportcsv.c:213
+#: src/importcsv.c:121
 msgid "First Name"
 msgstr "Prenume"
 
-#: src/editaddress.c:590 src/importcsv.c:124
-msgid "Nick Name"
-msgstr "Pseudonim"
-
 #: src/editaddress.c:627 src/editaddress.c:677 src/editaddress.c:887
-#: src/editgroup.c:491 src/importcsv.c:125
+#: src/editgroup.c:491 src/exportcsv.c:213 src/importcsv.c:125
 msgid "E-Mail Address"
 msgstr "Adresă de e-mail"
 
-#: src/editaddress.c:628 src/editaddress.c:686 src/importcsv.c:127
+#: src/editaddress.c:628 src/editaddress.c:686 src/exportcsv.c:213
+#: src/importcsv.c:127
 msgid "Alias"
 msgstr "Alias"
 
@@ -2194,8 +2205,8 @@ msgid "Edit JPilot Entry"
 msgstr "Editare înregistrare JPilot"
 
 #: src/editjpilot.c:289 src/editldap.c:349 src/editvcard.c:202
-#: src/importcsv.c:696 src/importldif.c:498 src/prefs_account_dialog.c:2105
-#: src/prefs_common_dialog.c:2424
+#: src/exportcsv.c:408 src/importcsv.c:696 src/importldif.c:498
+#: src/prefs_account_dialog.c:2105 src/prefs_common_dialog.c:2424
 msgid " ... "
 msgstr " ... "
 
@@ -2369,6 +2380,70 @@ msgstr "Selectați fișierul de destinație"
 msgid "Select destination folder"
 msgstr "Selectați dosarul de destinație"
 
+#: src/exportcsv.c:101
+#, fuzzy
+msgid "Please specify file to export."
+msgstr "Specificați numele agendei și a fișierului ce trebuie importat."
+
+#: src/exportcsv.c:104
+#, fuzzy
+msgid "File exported."
+msgstr "Fișier importat."
+
+#: src/exportcsv.c:284 src/importcsv.c:518 src/importldif.c:317
+msgid "Please select a file."
+msgstr "Selectați un fișier."
+
+#: src/exportcsv.c:309
+#, fuzzy
+msgid "CSV file exported successfully."
+msgstr "Fișier CSV importat cu succes."
+
+#: src/exportcsv.c:345
+#, fuzzy
+msgid "Enter CSV File Name"
+msgstr "Nume fișier"
+
+#: src/exportcsv.c:399 src/importcsv.c:687 src/importldif.c:489
+msgid "File Name"
+msgstr "Nume fișier"
+
+#: src/exportcsv.c:417 src/importcsv.c:705
+msgid "Comma-separated"
+msgstr "Separat prin virgule"
+
+#: src/exportcsv.c:421 src/importcsv.c:709
+msgid "Tab-separated"
+msgstr "Separat prin taburi"
+
+#: src/exportcsv.c:461 src/importcsv.c:848 src/importldif.c:663
+msgid "File Name :"
+msgstr "Nume fișier:"
+
+#: src/exportcsv.c:472 src/importcsv.c:859 src/importldif.c:673
+msgid "Records :"
+msgstr "Înregistrări:"
+
+#: src/exportcsv.c:498
+#, fuzzy
+msgid "Export Address Book into CSV file"
+msgstr "Selectați dosarul pentru agendă"
+
+# hm ? sau înainte ?
+#. Button panel
+#: src/exportcsv.c:530 src/importcsv.c:919 src/importldif.c:733
+#: src/prefs_toolbar.c:74
+msgid "Next"
+msgstr "Următor"
+
+#: src/exportcsv.c:560 src/importcsv.c:952 src/importldif.c:766
+msgid "File Info"
+msgstr "Informații despre fișier"
+
+#: src/exportcsv.c:561 src/importcsv.c:954 src/importldif.c:768
+msgid "Finish"
+msgstr "Finalizat"
+
 #: src/filesel.c:221
 #, fuzzy
 msgid "File type:"
@@ -2431,7 +2506,7 @@ msgid "`%c' can't be included in folder name."
 msgstr "„%c” nu poate fi inclus în numele dosarului."
 
 #: src/foldersel.c:622 src/folderview.c:2490 src/folderview.c:2549
-#: src/query_search.c:1160
+#: src/query_search.c:1306
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "Dosarul „%s” există deja."
@@ -2719,7 +2794,7 @@ msgstr "Grupuri de știri:"
 msgid "Creating header view...\n"
 msgstr "Se creează vizualizarea antetului...\n"
 
-#: src/headerview.c:228 src/query_search.c:795 src/rpop3.c:705
+#: src/headerview.c:228 src/query_search.c:905 src/rpop3.c:705
 #: src/summaryview.c:2524
 msgid "(No From)"
 msgstr "(Fără expeditor)"
@@ -2817,10 +2892,6 @@ msgstr "Selectați și reordonați câmpurile CSV de importat."
 msgid "File imported."
 msgstr "Fișier importat."
 
-#: src/importcsv.c:518 src/importldif.c:317
-msgid "Please select a file."
-msgstr "Selectați un fișier."
-
 # hm ? sau furnizat ?
 #: src/importcsv.c:524 src/importldif.c:323
 msgid "Address book name must be supplied."
@@ -2837,18 +2908,6 @@ msgstr "Fișier CSV importat cu succes."
 #: src/importcsv.c:621
 msgid "Select CSV File"
 msgstr "Selectați fișierul CSV"
-
-#: src/importcsv.c:687 src/importldif.c:489
-msgid "File Name"
-msgstr "Nume fișier"
-
-#: src/importcsv.c:705
-msgid "Comma-separated"
-msgstr "Separat prin virgule"
-
-#: src/importcsv.c:709
-msgid "Tab-separated"
-msgstr "Separat prin taburi"
 
 #: src/importcsv.c:740 src/importldif.c:530
 msgid "S"
@@ -2882,41 +2941,19 @@ msgstr "Mai jos"
 msgid "Address Book :"
 msgstr "Agendă:"
 
-#: src/importcsv.c:848 src/importldif.c:663
-msgid "File Name :"
-msgstr "Nume fișier:"
-
-#: src/importcsv.c:859 src/importldif.c:673
-msgid "Records :"
-msgstr "Înregistrări:"
-
 # titlu de fereastră la import
 #: src/importcsv.c:887
 msgid "Import CSV file into Address Book"
 msgstr "Import de fișier CSV în agendă"
-
-# hm ? sau înainte ?
-#. Button panel
-#: src/importcsv.c:919 src/importldif.c:733 src/prefs_toolbar.c:74
-msgid "Next"
-msgstr "Următor"
 
 # hm ? sau anterior ? sau  înapoi ?
 #: src/importcsv.c:920 src/importldif.c:734 src/prefs_toolbar.c:77
 msgid "Prev"
 msgstr "Precedent"
 
-#: src/importcsv.c:952 src/importldif.c:766
-msgid "File Info"
-msgstr "Informații despre fișier"
-
 #: src/importcsv.c:953
 msgid "Fields"
 msgstr "Câmpuri"
-
-#: src/importcsv.c:954 src/importldif.c:768
-msgid "Finish"
-msgstr "Finalizat"
 
 #: src/importldif.c:125
 msgid "Select and rename LDIF field names to import."
@@ -4287,7 +4324,7 @@ msgid "Find text:"
 msgstr "Caută textul:"
 
 #: src/message_search.c:153 src/prefs_search_folder.c:253
-#: src/query_search.c:346
+#: src/query_search.c:441
 msgid "Case sensitive"
 msgstr "Cu majuscule semnificative"
 
@@ -6583,19 +6620,19 @@ msgstr "Răspuns către:"
 msgid "%s - Edit search condition"
 msgstr "%s - Editează condiția de căutare"
 
-#: src/prefs_search_folder.c:209 src/query_search.c:276
+#: src/prefs_search_folder.c:209 src/query_search.c:371
 msgid "Match any of the following"
 msgstr "Oricare dintre condițiile următoare"
 
-#: src/prefs_search_folder.c:211 src/query_search.c:278
+#: src/prefs_search_folder.c:211 src/query_search.c:373
 msgid "Match all of the following"
 msgstr "Toate condițiile următoare"
 
-#: src/prefs_search_folder.c:231 src/query_search.c:323
+#: src/prefs_search_folder.c:231 src/query_search.c:418
 msgid "Folder:"
 msgstr "Dosar:"
 
-#: src/prefs_search_folder.c:248 src/query_search.c:341
+#: src/prefs_search_folder.c:248 src/query_search.c:436
 msgid "Search subfolders"
 msgstr "Caută și în subdosare"
 
@@ -6604,19 +6641,19 @@ msgid "Mark"
 msgstr "Marcaj"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:69 src/query_search.c:402 src/rpop3.c:434
+#: src/prefs_summary_column.c:69 src/query_search.c:499 src/rpop3.c:434
 #: src/summaryview.c:5515
 msgid "Subject"
 msgstr "Subiect"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:70 src/query_search.c:406 src/rpop3.c:438
+#: src/prefs_summary_column.c:70 src/query_search.c:503 src/rpop3.c:438
 #: src/summaryview.c:5521
 msgid "From"
 msgstr "Expeditor"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:71 src/query_search.c:407 src/rpop3.c:439
+#: src/prefs_summary_column.c:71 src/query_search.c:504 src/rpop3.c:439
 #: src/summaryview.c:5523
 msgid "Date"
 msgstr "Dată"
@@ -6786,11 +6823,11 @@ msgid "Previous unread message"
 msgstr "Precedentul mesaj necitit"
 
 # comun și pentru eticheta flotantă de pe buton și pentru bara de titlu a ferestrei de căutare
-#: src/prefs_toolbar.c:81 src/query_search.c:253
+#: src/prefs_toolbar.c:81 src/query_search.c:348
 msgid "Search messages"
 msgstr "Caută mesaje"
 
-#: src/prefs_toolbar.c:83 src/printing.c:658
+#: src/prefs_toolbar.c:83 src/printing.c:675
 msgid "Print"
 msgstr "Tipărește"
 
@@ -6887,15 +6924,15 @@ msgstr ""
 "Selectați elementele de afișat pe bara de unelte.\n"
 "Puteți modifica ordinea utilizând butoanele Mai sus și Mai jos."
 
-#: src/printing.c:655
+#: src/printing.c:672
 msgid "The message will be printed with the following command:"
 msgstr "Mesajul va fi tipărit cu următoarea comandă:"
 
-#: src/printing.c:656
+#: src/printing.c:673
 msgid "(Default print command)"
 msgstr "(Comandă de tipărire implicită)"
 
-#: src/printing.c:666
+#: src/printing.c:683
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -6912,50 +6949,152 @@ msgstr "Stare"
 msgid "Progress"
 msgstr "Progres"
 
-#: src/query_search.c:429
+#: src/query_search.c:258
+#, fuzzy
+msgid "_Reply"
+msgstr "/_Răspunde"
+
+#: src/query_search.c:259
+#, fuzzy
+msgid "Repl_y to"
+msgstr "/Răsp_uns"
+
+#: src/query_search.c:260
+#, fuzzy
+msgid "Reply to _all"
+msgstr "/Răspunde _tuturor"
+
+#: src/query_search.c:261
+#, fuzzy
+msgid "Reply to _sender"
+msgstr "/Răspunde _expeditorului"
+
+#: src/query_search.c:262
+#, fuzzy
+msgid "Reply to _list"
+msgstr "/Răspunde _tuturor"
+
+#: src/query_search.c:264
+#, fuzzy
+msgid "_Forward"
+msgstr "/Îna_intează"
+
+#: src/query_search.c:265
+#, fuzzy
+msgid "For_ward as attachment"
+msgstr "/Înaintează ca _atașament"
+
+#: src/query_search.c:266
+#, fuzzy
+msgid "Redirec_t"
+msgstr "/Redirecționea_ză"
+
+#: src/query_search.c:268
+#, fuzzy
+msgid "M_ove messages to..."
+msgstr "Se mută mesajele %s la %s ..."
+
+#: src/query_search.c:269
+#, fuzzy
+msgid "_Copy messages to..."
+msgstr "Se copiază mesajele %s la %s ..."
+
+#: src/query_search.c:271
+#, fuzzy
+msgid "Add sender to address boo_k..."
+msgstr "/Adaugă _expeditorul în agendă..."
+
+#: src/query_search.c:272
+#, fuzzy
+msgid "Create f_ilter rule"
+msgstr "/Creează o regulă de f_iltrare"
+
+#: src/query_search.c:273
+#, fuzzy
+msgid "_Automatically"
+msgstr "Automat"
+
+#: src/query_search.c:274
+#, fuzzy
+msgid "by _From"
+msgstr "Expeditor"
+
+#: src/query_search.c:275
+msgid "by _To"
+msgstr ""
+
+#: src/query_search.c:276
+#, fuzzy
+msgid "by _Subject"
+msgstr "Subiect"
+
+#: src/query_search.c:278
+#, fuzzy
+msgid "Open in _new window"
+msgstr "/_Vizualizare/Deschide în fereastră _nouă"
+
+#: src/query_search.c:279
+#, fuzzy
+msgid "View mess_age source"
+msgstr "/_Vizualizare/S_ursă mesaj"
+
+#: src/query_search.c:281
+#, fuzzy
+msgid "_Print..."
+msgstr "/Ti_părește..."
+
+#: src/query_search.c:526
 msgid "_Save as search folder"
 msgstr "_Salvează ca dosar de căutare"
 
-#: src/query_search.c:551
+#: src/query_search.c:661
 #, c-format
 msgid "Message not found."
 msgstr "Mesajul nu a fost găsit."
 
-#: src/query_search.c:553
+#: src/query_search.c:663
 #, c-format
 msgid "1 message found."
 msgstr "A fost găsit 1 mesaj."
 
-#: src/query_search.c:555
+#: src/query_search.c:665
 #, c-format
 msgid "%d messages found."
 msgstr "Au fost găsite %d mesaje."
 
-#: src/query_search.c:590
+#: src/query_search.c:700
 #, c-format
 msgid "Searching %s (%d / %d)..."
 msgstr "Se caută %s (%d / %d)..."
 
-#: src/query_search.c:712
+#: src/query_search.c:822
 #, c-format
 msgid "Searching %s ..."
 msgstr "Se caută %s ..."
 
-#: src/query_search.c:803 src/rpop3.c:713 src/summaryview.c:2441
+#: src/query_search.c:913 src/rpop3.c:713 src/summaryview.c:2441
 msgid "(No Date)"
 msgstr "(Fără Dată)"
 
-#: src/query_search.c:998
+#: src/query_search.c:1144
 msgid "Save as search folder"
 msgstr "Salvează ca dosar de căutare"
 
-#: src/query_search.c:1019
+#: src/query_search.c:1165
 msgid "Location:"
 msgstr "Locație:"
 
-#: src/query_search.c:1034
+#: src/query_search.c:1180
 msgid "Folder name:"
 msgstr "Nume dosar:"
+
+#: src/query_search.c:1457 src/summaryview.c:3828
+msgid "Select folder to copy"
+msgstr "Selectați dosarul de copiat"
+
+#: src/query_search.c:1460 src/summaryview.c:3727
+msgid "Select folder to move"
+msgstr "Selectați dosarul de mutat"
 
 # dropdown la căutarea rapidă
 #: src/quick_search.c:108
@@ -7982,10 +8121,6 @@ msgstr "Mesajul %d este marcat pentru mutare în %s\n"
 msgid "Destination is same as current folder."
 msgstr "Destinația este aceeași cu dosarul curent."
 
-#: src/summaryview.c:3727
-msgid "Select folder to move"
-msgstr "Selectați dosarul de mutat"
-
 #: src/summaryview.c:3761
 #, c-format
 msgid "Message %d is set to copy to %s\n"
@@ -7994,10 +8129,6 @@ msgstr "Mesajul %d este setat pentru copiere în %s\n"
 #: src/summaryview.c:3792
 msgid "Destination for copy is same as current folder."
 msgstr "Destinația pentru copiere este aceeași cu dosarul curent."
-
-#: src/summaryview.c:3828
-msgid "Select folder to copy"
-msgstr "Selectați dosarul de copiat"
 
 #: src/summaryview.c:4003
 msgid "Error occurred while processing messages."

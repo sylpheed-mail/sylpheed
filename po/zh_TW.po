@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed 3.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-12 13:38+0900\n"
+"POT-Creation-Date: 2017-11-29 16:54+0900\n"
 "PO-Revision-Date: 2011-08-13 16:46+0800\n"
 "Last-Translator: Wei-Lun Chao <chaoweilun@gmail.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -606,7 +606,7 @@ msgstr "  主旨: %s\n"
 msgid "  Issuer: %s\n"
 msgstr "  發信人: %s\n"
 
-#: libsylph/utils.c:2980
+#: libsylph/utils.c:3018
 #, c-format
 msgid "writing to %s failed.\n"
 msgstr "寫入到 %s 的動作失敗。\n"
@@ -694,8 +694,8 @@ msgstr ""
 "檢查新郵件時將會依照下面的順序。您可以勾選 G 欄位中的方塊，\n"
 "來決定是否在「全部檢查」時要檢查該帳號的郵件。"
 
-#: src/account_dialog.c:376 src/addressadd.c:181 src/addressbook.c:776
-#: src/compose.c:5517 src/editaddress.c:777 src/editaddress.c:826
+#: src/account_dialog.c:376 src/addressadd.c:181 src/addressbook.c:788
+#: src/compose.c:5604 src/editaddress.c:777 src/editaddress.c:826
 #: src/editbook.c:198 src/editgroup.c:490 src/editjpilot.c:270
 #: src/editldap.c:307 src/editvcard.c:183 src/mimeview.c:226
 #: src/prefs_filter.c:274 src/prefs_folder_item.c:171 src/select-keys.c:313
@@ -830,13 +830,14 @@ msgstr "使用者設定之命令參數"
 msgid "Add Address to Book"
 msgstr "將地址加入通訊錄"
 
-#: src/addressadd.c:191 src/compose.c:3419 src/prefs_toolbar.c:89
+#: src/addressadd.c:191 src/compose.c:3441 src/prefs_toolbar.c:89
 #: src/select-keys.c:314
 msgid "Address"
 msgstr "地址"
 
-#: src/addressadd.c:201 src/addressbook.c:832 src/editaddress.c:629
-#: src/editaddress.c:695 src/editgroup.c:492 src/importcsv.c:126
+#: src/addressadd.c:201 src/addressbook.c:865 src/editaddress.c:629
+#: src/editaddress.c:695 src/editgroup.c:492 src/exportcsv.c:213
+#: src/importcsv.c:126
 msgid "Remarks"
 msgstr "備註"
 
@@ -844,32 +845,32 @@ msgstr "備註"
 msgid "Select Address Book Folder"
 msgstr "選擇通訊錄資料夾"
 
-#: src/addressadd.c:316 src/addressbook.c:1074 src/addressbook.c:3555
+#: src/addressadd.c:316 src/addressbook.c:1107 src/addressbook.c:3596
 msgid "Auto-registered address"
 msgstr "自動登錄的位址"
 
-#: src/addressbook.c:405 src/compose.c:583 src/mainwindow.c:558
+#: src/addressbook.c:413 src/compose.c:583 src/mainwindow.c:558
 #: src/messageview.c:166
 msgid "/_File"
 msgstr "/檔案(_F)"
 
-#: src/addressbook.c:406
+#: src/addressbook.c:414
 msgid "/_File/New _Book"
 msgstr "/檔案(_F)/新增通訊錄(_B)"
 
-#: src/addressbook.c:407
+#: src/addressbook.c:415
 msgid "/_File/New _vCard"
 msgstr "/檔案(_F)/新增 _vCard"
 
-#: src/addressbook.c:409
+#: src/addressbook.c:417
 msgid "/_File/New _JPilot"
 msgstr "/檔案(_F)/新增 _J-Pilot"
 
-#: src/addressbook.c:412
+#: src/addressbook.c:420
 msgid "/_File/New _LDAP Server"
 msgstr "/檔案(_F)/新增 _LDAP 伺服器"
 
-#: src/addressbook.c:414 src/addressbook.c:417 src/compose.c:588
+#: src/addressbook.c:422 src/addressbook.c:425 src/compose.c:588
 #: src/compose.c:593 src/compose.c:596 src/compose.c:599 src/mainwindow.c:576
 #: src/mainwindow.c:579 src/mainwindow.c:581 src/mainwindow.c:583
 #: src/mainwindow.c:588 src/mainwindow.c:590 src/messageview.c:168
@@ -877,113 +878,126 @@ msgstr "/檔案(_F)/新增 _LDAP 伺服器"
 msgid "/_File/---"
 msgstr "/檔案(_F)/---"
 
-#: src/addressbook.c:415
+#: src/addressbook.c:423
 msgid "/_File/_Edit"
 msgstr "/檔案(_F)/編輯(_E)"
 
-#: src/addressbook.c:416
+#: src/addressbook.c:424
 msgid "/_File/_Delete"
 msgstr "/檔案(_F)/刪除(_D)"
 
-#: src/addressbook.c:418
+#: src/addressbook.c:426
 msgid "/_File/_Save"
 msgstr "/檔案(_F)/儲存(_S)"
 
-#: src/addressbook.c:419 src/compose.c:600 src/messageview.c:174
+#: src/addressbook.c:427 src/compose.c:600 src/messageview.c:174
 msgid "/_File/_Close"
 msgstr "/檔案(_F)/關閉(_C)"
 
-#: src/addressbook.c:421 src/addressbook.c:468 src/addressbook.c:485
+#: src/addressbook.c:429 src/addressbook.c:475 src/addressbook.c:492
 #: src/compose.c:602 src/mainwindow.c:594 src/messageview.c:176
 msgid "/_Edit"
 msgstr "/編輯(_E)"
 
-#: src/addressbook.c:422 src/compose.c:607 src/mainwindow.c:595
+#: src/addressbook.c:430 src/compose.c:607 src/mainwindow.c:595
 #: src/messageview.c:177
 msgid "/_Edit/_Copy"
 msgstr "/編輯(_E)/複製(_C)"
 
-#: src/addressbook.c:423 src/compose.c:608
+#: src/addressbook.c:431 src/compose.c:608
 msgid "/_Edit/_Paste"
 msgstr "/編輯(_E)/貼上(_P)"
 
-#: src/addressbook.c:425
+#: src/addressbook.c:433
 msgid "/_Address"
 msgstr "/地址(_A)"
 
-#: src/addressbook.c:426
+#: src/addressbook.c:434
 msgid "/_Address/New _Address"
 msgstr "/地址(_A)/新增地址(_A)"
 
-#: src/addressbook.c:427
+#: src/addressbook.c:435
 msgid "/_Address/New _Group"
 msgstr "/地址(_A)/新增群組(_G)"
 
-#: src/addressbook.c:428
+#: src/addressbook.c:436
 msgid "/_Address/New _Folder"
 msgstr "/地址(_A)/新增資料夾(_F)"
 
-#: src/addressbook.c:429 src/addressbook.c:436
+#: src/addressbook.c:437 src/addressbook.c:444
 msgid "/_Address/---"
 msgstr "/地址(_A)/---"
 
-#: src/addressbook.c:430
+#: src/addressbook.c:438
 msgid "/_Address/Add _to recipient"
 msgstr "/地址(_A)/加入收件者(_T)"
 
-#: src/addressbook.c:432
+#: src/addressbook.c:440
 msgid "/_Address/Add to _Cc"
 msgstr "/地址(_A)/加入副本(_C)"
 
-#: src/addressbook.c:434
+#: src/addressbook.c:442
 msgid "/_Address/Add to _Bcc"
 msgstr "/地址(_A)/加入密件副本(_B)"
 
-#: src/addressbook.c:437
+#: src/addressbook.c:445
 msgid "/_Address/_Edit"
 msgstr "/地址(_A)/編輯(_E)"
 
-#: src/addressbook.c:438
+#: src/addressbook.c:446
 msgid "/_Address/_Delete"
 msgstr "/地址(_A)/刪除(_D)"
 
-#: src/addressbook.c:440 src/compose.c:718 src/mainwindow.c:842
+#: src/addressbook.c:448 src/compose.c:718 src/mainwindow.c:842
 #: src/messageview.c:299
 msgid "/_Tools"
 msgstr "/工具(_T)"
 
-#: src/addressbook.c:441
+#: src/addressbook.c:449
 msgid "/_Tools/Import _LDIF file"
 msgstr "/工具(_T)/匯入 LDIF 檔(_L)"
 
-#: src/addressbook.c:442
+#: src/addressbook.c:450
 msgid "/_Tools/Import _CSV file"
 msgstr "/工具(_T)/匯入 _CSV 檔案"
 
-#: src/addressbook.c:444 src/compose.c:742 src/mainwindow.c:904
+#: src/addressbook.c:451 src/compose.c:724 src/compose.c:727 src/compose.c:731
+#: src/compose.c:737 src/mainwindow.c:846 src/mainwindow.c:860
+#: src/mainwindow.c:865 src/mainwindow.c:868 src/mainwindow.c:874
+#: src/mainwindow.c:876 src/mainwindow.c:880 src/messageview.c:303
+#: src/messageview.c:315
+msgid "/_Tools/---"
+msgstr "/工具(_T)"
+
+#: src/addressbook.c:452
+#, fuzzy
+msgid "/_Tools/Export C_SV file"
+msgstr "/工具(_T)/匯入 _CSV 檔案"
+
+#: src/addressbook.c:453 src/compose.c:742 src/mainwindow.c:904
 #: src/messageview.c:319
 msgid "/_Help"
 msgstr "/求助(_H)"
 
-#: src/addressbook.c:445 src/compose.c:743 src/mainwindow.c:924
+#: src/addressbook.c:454 src/compose.c:743 src/mainwindow.c:924
 #: src/messageview.c:320
 msgid "/_Help/_About"
 msgstr "/求助(_H)/關於(_A)"
 
-#: src/addressbook.c:464 src/addressbook.c:474
+#: src/addressbook.c:471 src/addressbook.c:481
 msgid "/New _Address"
 msgstr "/新增地址(_A)"
 
-#: src/addressbook.c:465 src/addressbook.c:475
+#: src/addressbook.c:472 src/addressbook.c:482
 msgid "/New _Group"
 msgstr "/新增群組(_G)"
 
-#: src/addressbook.c:466 src/addressbook.c:476
+#: src/addressbook.c:473 src/addressbook.c:483
 msgid "/New _Folder"
 msgstr "/新增資料夾(_F)"
 
-#: src/addressbook.c:467 src/addressbook.c:477 src/addressbook.c:484
-#: src/addressbook.c:487 src/compose.c:574 src/compose.c:577
+#: src/addressbook.c:474 src/addressbook.c:484 src/addressbook.c:491
+#: src/addressbook.c:494 src/compose.c:574 src/compose.c:577
 #: src/folderview.c:258 src/folderview.c:261 src/folderview.c:266
 #: src/folderview.c:269 src/folderview.c:282 src/folderview.c:285
 #: src/folderview.c:287 src/folderview.c:292 src/folderview.c:295
@@ -995,96 +1009,101 @@ msgstr "/新增資料夾(_F)"
 msgid "/---"
 msgstr "/---"
 
-#: src/addressbook.c:469 src/addressbook.c:486 src/summaryview.c:464
+#: src/addressbook.c:476 src/addressbook.c:493 src/summaryview.c:464
 msgid "/_Delete"
 msgstr "/刪除(_D)"
 
-#: src/addressbook.c:478
+#: src/addressbook.c:485
 msgid "/Add _to recipient"
 msgstr "/加入收件者(_T)"
 
-#: src/addressbook.c:480
+#: src/addressbook.c:487
 msgid "/Add t_o Cc"
 msgstr "/加入副本(_O)"
 
-#: src/addressbook.c:482
+#: src/addressbook.c:489
 msgid "/Add to _Bcc"
 msgstr "/加入密件副本(_B)"
 
-#: src/addressbook.c:488
+#: src/addressbook.c:495
 msgid "/_Copy"
 msgstr "/複製(_C)"
 
-#: src/addressbook.c:489
+#: src/addressbook.c:496
 msgid "/_Paste"
 msgstr "/貼上(_P)"
 
-#: src/addressbook.c:614 src/prefs_common_dialog.c:2838 src/prefs_toolbar.c:90
+#: src/addressbook.c:621 src/prefs_common_dialog.c:2838 src/prefs_toolbar.c:90
 msgid "Address book"
 msgstr "通訊錄"
 
 #. special folder setting (maybe these options are redundant)
-#: src/addressbook.c:687 src/addressbook.c:4258 src/folderview.c:398
-#: src/prefs_account_dialog.c:2077 src/query_search.c:401
+#: src/addressbook.c:694 src/addressbook.c:4322 src/folderview.c:398
+#: src/prefs_account_dialog.c:2077 src/query_search.c:498
 msgid "Folder"
 msgstr "資料夾"
 
-#: src/addressbook.c:811
+#: src/addressbook.c:823
 msgid "E-Mail address"
 msgstr "E-Mail 地址"
 
-#: src/addressbook.c:875 src/quick_search.c:128
+#: src/addressbook.c:844 src/editaddress.c:590 src/exportcsv.c:213
+#: src/importcsv.c:124
+msgid "Nick Name"
+msgstr "暱稱"
+
+#: src/addressbook.c:908 src/quick_search.c:128
 msgid "Search:"
 msgstr "搜尋："
 
-#: src/addressbook.c:913 src/compose.c:3364 src/headerview.c:57
+#: src/addressbook.c:946 src/compose.c:3386 src/headerview.c:57
 #: src/prefs_folder_item.c:340 src/prefs_template.c:200
 msgid "To:"
 msgstr "收件者："
 
-#: src/addressbook.c:917 src/compose.c:3381 src/headerview.c:58
+#: src/addressbook.c:950 src/compose.c:3403 src/headerview.c:58
 #: src/prefs_folder_item.c:357 src/prefs_template.c:202
 msgid "Cc:"
 msgstr "副本："
 
-#: src/addressbook.c:921 src/compose.c:3398 src/prefs_folder_item.c:368
+#: src/addressbook.c:954 src/compose.c:3420 src/prefs_folder_item.c:368
 #: src/prefs_template.c:204
 msgid "Bcc:"
 msgstr "密件副本："
 
 #. Buttons
-#: src/addressbook.c:942 src/addressbook.c:2339 src/editaddress.c:719
+#: src/addressbook.c:975 src/addressbook.c:2375 src/editaddress.c:719
 #: src/editaddress.c:853 src/prefs_actions.c:266
 #: src/prefs_display_header.c:280 src/prefs_display_header.c:336
 #: src/prefs_template.c:267 src/prefs_toolbar.c:65
 msgid "Delete"
 msgstr "刪除"
 
-#: src/addressbook.c:945 src/editaddress.c:725 src/editaddress.c:859
+#: src/addressbook.c:978 src/editaddress.c:725 src/editaddress.c:859
 #: src/prefs_actions.c:254 src/prefs_customheader.c:232
 #: src/prefs_display_header.c:274 src/prefs_display_header.c:330
 #: src/prefs_filter_edit.c:1607
 msgid "Add"
 msgstr "新增"
 
-#: src/addressbook.c:948 src/prefs_toolbar.c:80
+#: src/addressbook.c:981 src/prefs_toolbar.c:80
 msgid "Search"
 msgstr "搜尋"
 
-#: src/addressbook.c:951
+#: src/addressbook.c:984
 msgid "_Close"
 msgstr "關閉(_C)"
 
 #. Confirm deletion
-#: src/addressbook.c:1147
+#: src/addressbook.c:1180
 msgid "Delete address(es)"
 msgstr "刪除通訊紀錄"
 
-#: src/addressbook.c:1148
+#: src/addressbook.c:1181
 msgid "Really delete the address(es)?"
 msgstr "您確定要刪除這些紀錄嗎？"
 
-#: src/addressbook.c:2330
+#: src/addressbook.c:2366
 #, c-format
 msgid ""
 "Do you want to delete the folder AND all addresses in `%s' ?\n"
@@ -1093,38 +1112,38 @@ msgstr ""
 "您確定要刪除「%s」資料夾以及裡面所有的地址嗎？\n"
 "如果您選擇只刪除資料夾，裡面的通訊紀錄將移到上一層資料夾中。"
 
-#: src/addressbook.c:2333 src/folderview.c:2724
+#: src/addressbook.c:2369 src/folderview.c:2724
 msgid "Delete folder"
 msgstr "刪除資料夾"
 
-#: src/addressbook.c:2333
+#: src/addressbook.c:2369
 msgid "_Folder only"
 msgstr "只刪除資料夾(_F)"
 
-#: src/addressbook.c:2333
+#: src/addressbook.c:2369
 msgid "Folder and _addresses"
 msgstr "全部刪除(_A)"
 
-#: src/addressbook.c:2338
+#: src/addressbook.c:2374
 #, c-format
 msgid "Really delete `%s' ?"
 msgstr "您確定要刪除「%s」? "
 
-#: src/addressbook.c:3301 src/addressbook.c:3439
+#: src/addressbook.c:3342 src/addressbook.c:3480
 msgid "New user, could not save index file."
 msgstr "無法儲存索引檔案。"
 
-#: src/addressbook.c:3305 src/addressbook.c:3443
+#: src/addressbook.c:3346 src/addressbook.c:3484
 msgid "New user, could not save address book files."
 msgstr "無法儲存通訊錄檔案。"
 
-#: src/addressbook.c:3315 src/addressbook.c:3453
+#: src/addressbook.c:3356 src/addressbook.c:3494
 msgid "Old address book converted successfully."
 msgstr ""
 "轉換舊通訊錄格式完成。\n"
 "您可以開始使用新的通訊錄。"
 
-#: src/addressbook.c:3320
+#: src/addressbook.c:3361
 msgid ""
 "Old address book converted,\n"
 "could not save new address index file"
@@ -1132,7 +1151,7 @@ msgstr ""
 "舊通訊錄格式已轉換，\n"
 "但無法儲存新的索引檔。"
 
-#: src/addressbook.c:3333
+#: src/addressbook.c:3374
 msgid ""
 "Could not convert address book,\n"
 "but created empty new address book files."
@@ -1140,7 +1159,7 @@ msgstr ""
 "無法轉換通訊錄格式，\n"
 "但已產生空的新通訊錄。"
 
-#: src/addressbook.c:3339
+#: src/addressbook.c:3380
 msgid ""
 "Could not convert address book,\n"
 "could not create new address book files."
@@ -1148,7 +1167,7 @@ msgstr ""
 "無法轉換通訊錄格式，\n"
 "亦無法產生新的通訊錄。"
 
-#: src/addressbook.c:3344
+#: src/addressbook.c:3385
 msgid ""
 "Could not convert address book\n"
 "and could not create new address book files."
@@ -1156,15 +1175,15 @@ msgstr ""
 "無法轉換通訊錄格式，\n"
 "亦無法產生新的通訊錄。"
 
-#: src/addressbook.c:3351
+#: src/addressbook.c:3392
 msgid "Address book conversion error"
 msgstr "通訊錄格式轉換錯誤"
 
-#: src/addressbook.c:3355
+#: src/addressbook.c:3396
 msgid "Address book conversion"
 msgstr "通訊錄格式轉換"
 
-#: src/addressbook.c:3394
+#: src/addressbook.c:3435
 #, c-format
 msgid ""
 "Could not read address index:\n"
@@ -1175,70 +1194,70 @@ msgstr ""
 "\n"
 "%s%c%s"
 
-#: src/addressbook.c:3397
+#: src/addressbook.c:3438
 msgid "Address Book Error"
 msgstr "通訊錄格式錯誤"
 
-#: src/addressbook.c:3458
+#: src/addressbook.c:3499
 msgid "Old address book converted, could not save new address index file"
 msgstr "舊通訊錄格式已轉換，但無法儲存新的索引檔。"
 
-#: src/addressbook.c:3472
+#: src/addressbook.c:3513
 msgid ""
 "Could not convert address book, but created empty new address book files."
 msgstr "無法轉換通訊錄格式，但已產生空的新通訊錄。"
 
-#: src/addressbook.c:3478
+#: src/addressbook.c:3519
 msgid ""
 "Could not convert address book, could not create new address book files."
 msgstr "無法轉換通訊錄格式，亦無法產生新的通訊錄。"
 
-#: src/addressbook.c:3484
+#: src/addressbook.c:3525
 msgid ""
 "Could not convert address book and could not create new address book files."
 msgstr "無法轉換通訊錄格式，亦無法產生新的通訊錄。"
 
-#: src/addressbook.c:3496
+#: src/addressbook.c:3537
 msgid "Could not read address index"
 msgstr "無法讀取通訊錄索引"
 
-#: src/addressbook.c:3502
+#: src/addressbook.c:3543
 msgid "Address Book Conversion Error"
 msgstr "通訊錄格式轉換錯誤"
 
-#: src/addressbook.c:3508
+#: src/addressbook.c:3549
 msgid "Address Book Conversion"
 msgstr "通訊錄格式轉換"
 
-#: src/addressbook.c:4188 src/prefs_common_dialog.c:2631
+#: src/addressbook.c:4252 src/prefs_common_dialog.c:2631
 msgid "Interface"
 msgstr "介面"
 
-#: src/addressbook.c:4202 src/importcsv.c:676 src/importldif.c:478
+#: src/addressbook.c:4266 src/importcsv.c:676 src/importldif.c:478
 msgid "Address Book"
 msgstr "通訊錄"
 
-#: src/addressbook.c:4216
+#: src/addressbook.c:4280
 msgid "Person"
 msgstr "人名"
 
-#: src/addressbook.c:4230
+#: src/addressbook.c:4294
 msgid "EMail Address"
 msgstr "電子郵件信箱"
 
-#: src/addressbook.c:4244
+#: src/addressbook.c:4308
 msgid "Group"
 msgstr "群組"
 
-#: src/addressbook.c:4272
+#: src/addressbook.c:4336
 msgid "vCard"
 msgstr "vCard"
 
-#: src/addressbook.c:4286 src/addressbook.c:4300
+#: src/addressbook.c:4350 src/addressbook.c:4364
 msgid "JPilot"
 msgstr "JPilot"
 
-#: src/addressbook.c:4314
+#: src/addressbook.c:4378
 msgid "LDAP Server"
 msgstr "LDAP 伺服器"
 
@@ -1250,7 +1269,7 @@ msgstr "共用通訊紀錄"
 msgid "Personal address"
 msgstr "私人通訊紀錄"
 
-#: src/alertpanel.c:142 src/compose.c:7054 src/main.c:940
+#: src/alertpanel.c:142 src/compose.c:7141 src/main.c:940
 msgid "Notice"
 msgstr "注意"
 
@@ -1564,13 +1583,6 @@ msgstr "/工具(_T)/套用郵件模板(_T)"
 msgid "/_Tools/Actio_ns"
 msgstr "/工具(_T)/執行外部指令(_N)"
 
-#: src/compose.c:724 src/compose.c:727 src/compose.c:731 src/compose.c:737
-#: src/mainwindow.c:846 src/mainwindow.c:860 src/mainwindow.c:865
-#: src/mainwindow.c:868 src/mainwindow.c:874 src/mainwindow.c:876
-#: src/mainwindow.c:880 src/messageview.c:303 src/messageview.c:315
-msgid "/_Tools/---"
-msgstr "/工具(_T)"
-
 #: src/compose.c:725
 msgid "/_Tools/Edit with e_xternal editor"
 msgstr "/工具(_T)/使用其他的編輯器(_X)"
@@ -1612,102 +1624,102 @@ msgstr "引言格式錯誤。"
 msgid "Message reply/forward format error."
 msgstr "回覆/轉寄郵件格式錯誤。"
 
-#: src/compose.c:2288
+#: src/compose.c:2310
 #, c-format
 msgid "File %s doesn't exist\n"
 msgstr "檔案 %s 不存在\n"
 
-#: src/compose.c:2292
+#: src/compose.c:2314
 #, c-format
 msgid "Can't get file size of %s\n"
 msgstr "無法取得檔案 %s 的大小\n"
 
-#: src/compose.c:2297 src/compose.c:4568
+#: src/compose.c:2319 src/compose.c:4595
 #, c-format
 msgid "File %s is empty."
 msgstr "檔案 %s 是空的。"
 
-#: src/compose.c:2302
+#: src/compose.c:2324
 #, c-format
 msgid "Can't read %s."
 msgstr "無法讀取 %s。"
 
-#: src/compose.c:2335
+#: src/compose.c:2357
 #, c-format
 msgid "Message: %s"
 msgstr "郵件：%s"
 
-#: src/compose.c:2397 src/mimeview.c:579
+#: src/compose.c:2419 src/mimeview.c:579
 msgid "Can't get the part of multipart message."
 msgstr "無法取得郵件的附加部份。"
 
-#: src/compose.c:2887 src/headerview.c:259 src/query_search.c:794
+#: src/compose.c:2909 src/headerview.c:259 src/query_search.c:904
 #: src/rpop3.c:704 src/summaryview.c:2521
 msgid "(No Subject)"
 msgstr "（沒有主旨）"
 
-#: src/compose.c:2890
+#: src/compose.c:2912
 #, c-format
 msgid "%s - Compose%s"
 msgstr "%s - 編寫郵件%s"
 
-#: src/compose.c:2993 src/compose.c:6129 src/prefs_account_dialog.c:1352
+#: src/compose.c:3015 src/compose.c:6216 src/prefs_account_dialog.c:1352
 #, fuzzy, c-format
 msgid "Signature %d"
 msgstr "簽名"
 
-#: src/compose.c:3059
+#: src/compose.c:3081
 msgid "Recipient is not specified."
 msgstr "沒有指定收件者。"
 
-#: src/compose.c:3067
+#: src/compose.c:3089
 msgid "Empty subject"
 msgstr "主旨空白"
 
-#: src/compose.c:3068
+#: src/compose.c:3090
 msgid "Subject is empty. Send it anyway?"
 msgstr "沒有主旨。確定要送出？"
 
-#: src/compose.c:3132
+#: src/compose.c:3154
 msgid "Attachment is missing"
 msgstr "缺少附件"
 
-#: src/compose.c:3133
+#: src/compose.c:3155
 msgid "There is no attachment. Send it without attachments?"
 msgstr "沒有任何附件。不需附件就發送它？"
 
-#: src/compose.c:3250 src/compose.c:3276
+#: src/compose.c:3272 src/compose.c:3298
 msgid "Check recipients"
 msgstr "檢查收件者"
 
-#: src/compose.c:3296
+#: src/compose.c:3318
 msgid "Really send this mail to the following addresses?"
 msgstr "真的要發送這封郵件到下列位址？"
 
-#: src/compose.c:3309 src/compose.c:5377 src/headerview.c:56
+#: src/compose.c:3331 src/compose.c:5464 src/headerview.c:56
 msgid "From:"
 msgstr "來源："
 
-#: src/compose.c:3331 src/headerview.c:60 src/prefs_template.c:208
+#: src/compose.c:3353 src/headerview.c:60 src/prefs_template.c:208
 msgid "Subject:"
 msgstr "主旨："
 
-#: src/compose.c:3424
+#: src/compose.c:3446
 msgid "_Send"
 msgstr "發送(_S)"
 
-#: src/compose.c:3454
+#: src/compose.c:3476
 #, fuzzy
 msgid ""
 "Checking for new messages is currently running.\n"
 "Please try again later."
 msgstr "檢查每個資料夾中的新郵件…"
 
-#: src/compose.c:3590
+#: src/compose.c:3612
 msgid "can't get recipient list."
 msgstr "無法取得收件者或收件新聞群組名單。"
 
-#: src/compose.c:3618
+#: src/compose.c:3640
 msgid ""
 "Account for sending mail is not specified.\n"
 "Please select a mail account before sending."
@@ -1715,39 +1727,39 @@ msgstr ""
 "您選用的帳號並非一個電子郵件帳號，可能是用來在新聞群組上發表文章用的。\n"
 "要發送郵件請選擇電子郵件帳號。"
 
-#: src/compose.c:3638 src/send_message.c:353
+#: src/compose.c:3660 src/send_message.c:353
 #, c-format
 msgid "Error occurred while posting the message to %s ."
 msgstr "向 %s 發出文章時出現錯誤。"
 
-#: src/compose.c:3688
+#: src/compose.c:3710
 msgid ""
 "Sending of message was completed, but the message could not be saved to "
 "outbox."
 msgstr "已完成郵件發送，但是郵件無法存入寄件匣。"
 
-#: src/compose.c:3743
+#: src/compose.c:3765
 #, c-format
 msgid "Could not find any key associated with currently selected key id `%s'."
 msgstr "無法找到任何與目前選取之金鑰「%s」相關的金鑰。"
 
-#: src/compose.c:3786 src/compose.c:4180
+#: src/compose.c:3808 src/compose.c:4202
 msgid "Can't sign the message."
 msgstr "無法為郵件簽名。"
 
-#: src/compose.c:3816 src/compose.c:4231
+#: src/compose.c:3838 src/compose.c:4253
 msgid "Can't encrypt the message."
 msgstr "無法加密郵件。"
 
-#: src/compose.c:3855 src/compose.c:4225
+#: src/compose.c:3877 src/compose.c:4247
 msgid "Can't encrypt or sign the message."
 msgstr "無法加密或為郵件簽名。"
 
-#: src/compose.c:3903 src/compose.c:4262 src/compose.c:4325 src/compose.c:4445
+#: src/compose.c:3925 src/compose.c:4284 src/compose.c:4347 src/compose.c:4467
 msgid "can't change file mode\n"
 msgstr "無法改變檔案型態\n"
 
-#: src/compose.c:3936
+#: src/compose.c:3958
 #, c-format
 msgid ""
 "Can't convert the character encoding of the message body from %s to %s.\n"
@@ -1757,11 +1769,11 @@ msgstr ""
 "無法將郵件內文的編碼設定由 %s 轉換為 %s。\n"
 "仍舊要以 %s 傳送嗎？"
 
-#: src/compose.c:3942
+#: src/compose.c:3964
 msgid "Code conversion error"
 msgstr "轉換編碼時發生錯誤"
 
-#: src/compose.c:4028
+#: src/compose.c:4050
 #, c-format
 msgid ""
 "Line %d exceeds the line length limit (998 bytes).\n"
@@ -1774,15 +1786,15 @@ msgstr ""
 "\n"
 "無論如何都要傳送嗎？"
 
-#: src/compose.c:4032
+#: src/compose.c:4054
 msgid "Line length limit"
 msgstr "列長度限制"
 
-#: src/compose.c:4199
+#: src/compose.c:4221
 msgid "Encrypting with Bcc"
 msgstr "加密密件副本"
 
-#: src/compose.c:4200
+#: src/compose.c:4222
 msgid ""
 "This message has Bcc recipients. If this message is encrypted, all Bcc "
 "recipients will be visible by examing the encryption key list, leading to "
@@ -1795,104 +1807,104 @@ msgstr ""
 "\n"
 "無論如何都要發送它？"
 
-#: src/compose.c:4405
+#: src/compose.c:4427
 msgid "can't remove the old message\n"
 msgstr "無法移除原有的舊郵件\n"
 
-#: src/compose.c:4423
+#: src/compose.c:4445
 msgid "queueing message...\n"
 msgstr "送進佇列匣中…\n"
 
-#: src/compose.c:4511
+#: src/compose.c:4533
 msgid "can't find queue folder\n"
 msgstr "找不到佇列匣\n"
 
-#: src/compose.c:4518
+#: src/compose.c:4540
 msgid "can't queue the message\n"
 msgstr "無法放進佇列匣\n"
 
-#: src/compose.c:4563
+#: src/compose.c:4590
 #, c-format
 msgid "File %s doesn't exist."
 msgstr "檔案 %s 不存在。"
 
-#: src/compose.c:4572
+#: src/compose.c:4599
 #, c-format
 msgid "Can't open file %s."
 msgstr "無法開啟檔案 %s。"
 
-#: src/compose.c:5324
+#: src/compose.c:5411
 msgid "Creating compose window...\n"
 msgstr "正在建立編寫視窗…\n"
 
-#: src/compose.c:5457
+#: src/compose.c:5544
 msgid "PGP Sign"
 msgstr "PGP 簽名"
 
-#: src/compose.c:5460
+#: src/compose.c:5547
 msgid "PGP Encrypt"
 msgstr "PGP 加密"
 
-#: src/compose.c:5498 src/mimeview.c:209
+#: src/compose.c:5585 src/mimeview.c:209
 msgid "Data type"
 msgstr "資料類型"
 
 #. S_COL_DATE
-#: src/compose.c:5507 src/mimeview.c:217 src/prefs_filter_edit.c:511
+#: src/compose.c:5594 src/mimeview.c:217 src/prefs_filter_edit.c:511
 #: src/prefs_summary_column.c:72 src/rpop3.c:440 src/select-keys.c:311
 #: src/summaryview.c:5525
 msgid "Size"
 msgstr "大小"
 
-#: src/compose.c:6121
+#: src/compose.c:6208
 #, fuzzy
 msgid "Signature:"
 msgstr "簽名"
 
-#: src/compose.c:6136
+#: src/compose.c:6223
 #, fuzzy
 msgid "Change signature"
 msgstr "檢查數位簽名中"
 
-#: src/compose.c:6716
+#: src/compose.c:6803
 msgid "Invalid MIME type."
 msgstr "不合法的 MIME 型態。"
 
-#: src/compose.c:6734
+#: src/compose.c:6821
 msgid "File doesn't exist or is empty."
 msgstr "檔案不存在或者是空的。"
 
-#: src/compose.c:6803
+#: src/compose.c:6890
 msgid "Properties"
 msgstr "內容"
 
-#: src/compose.c:6821
+#: src/compose.c:6908
 msgid "MIME type"
 msgstr "MIME 型態"
 
 #. Encoding
-#: src/compose.c:6823 src/prefs_common_dialog.c:1203
+#: src/compose.c:6910 src/prefs_common_dialog.c:1203
 #: src/prefs_common_dialog.c:1870
 msgid "Encoding"
 msgstr "編碼"
 
-#: src/compose.c:6846 src/prefs_folder_item.c:202
+#: src/compose.c:6933 src/prefs_folder_item.c:202
 msgid "Path"
 msgstr "路徑"
 
-#: src/compose.c:6847
+#: src/compose.c:6934
 msgid "File name"
 msgstr "檔名"
 
-#: src/compose.c:6936
+#: src/compose.c:7023
 msgid "File not exist."
 msgstr "檔案不存在。"
 
-#: src/compose.c:6946 src/mimeview.c:1259 src/mimeview.c:1274
+#: src/compose.c:7033 src/mimeview.c:1259 src/mimeview.c:1274
 msgid "Opening executable file"
 msgstr "正在開啟可執行的檔案"
 
-#: src/compose.c:6947 src/mimeview.c:1260 src/mimeview.c:1275
+#: src/compose.c:7034 src/mimeview.c:1260 src/mimeview.c:1275
 msgid ""
 "This is an executable file. Opening executable file is restricted for "
 "security.\n"
@@ -1903,12 +1915,12 @@ msgstr ""
 "如果您要執行它，請將它存於其他地方並且確定它並非是病毒或者某種心懷不軌的程"
 "式。"
 
-#: src/compose.c:6989
+#: src/compose.c:7076
 #, c-format
 msgid "External editor command line is invalid: `%s'\n"
 msgstr "外部編輯器的命令是錯誤的：「%s」\n"
 
-#: src/compose.c:7051
+#: src/compose.c:7138
 #, c-format
 msgid ""
 "The external editor is still working.\n"
@@ -1917,48 +1929,48 @@ msgstr ""
 "外部編輯器仍然在工作中。\n"
 "要強迫結束該行程嗎(行程代碼：%d)？\n"
 
-#: src/compose.c:7391 src/mainwindow.c:3080
+#: src/compose.c:7478 src/mainwindow.c:3080
 msgid "_Customize toolbar..."
 msgstr "自訂工具列(_C)…"
 
-#: src/compose.c:7567 src/compose.c:7573 src/compose.c:7595
+#: src/compose.c:7654 src/compose.c:7660 src/compose.c:7682
 msgid "Can't queue the message."
 msgstr "無法放進佇列匣。"
 
-#: src/compose.c:7708
+#: src/compose.c:7795
 msgid "Select files"
 msgstr "選擇檔案"
 
-#: src/compose.c:7731 src/inputdialog.c:372 src/prefs_common_dialog.c:4750
+#: src/compose.c:7818 src/inputdialog.c:372 src/prefs_common_dialog.c:4750
 msgid "Select file"
 msgstr "選擇檔案"
 
-#: src/compose.c:7785
+#: src/compose.c:7872
 msgid "Save message"
 msgstr "儲存郵件"
 
-#: src/compose.c:7786
+#: src/compose.c:7873
 msgid "This message has been modified. Save it to draft folder?"
 msgstr "郵件已被修改過。將它儲存到草稿資料夾嗎？"
 
-#: src/compose.c:7788 src/compose.c:7792
+#: src/compose.c:7875 src/compose.c:7879
 msgid "Close _without saving"
 msgstr "關閉但不儲存(_W)"
 
-#: src/compose.c:7839
+#: src/compose.c:7926
 #, c-format
 msgid "Do you want to apply the template `%s' ?"
 msgstr "您確定要套用「%s」這個郵件模板嗎？"
 
-#: src/compose.c:7841
+#: src/compose.c:7928
 msgid "Apply template"
 msgstr "套用郵件模板"
 
-#: src/compose.c:7842
+#: src/compose.c:7929
 msgid "_Replace"
 msgstr "置換(_R)"
 
-#: src/compose.c:7842
+#: src/compose.c:7929
 msgid "_Insert"
 msgstr "插入(_I)"
 
@@ -1982,28 +1994,27 @@ msgstr "未輸入名稱與值。"
 msgid "Edit Person Data"
 msgstr "編輯人物資料"
 
-#: src/editaddress.c:578 src/importcsv.c:123
+#: src/editaddress.c:578 src/exportcsv.c:213 src/importcsv.c:123
 msgid "Display Name"
 msgstr "顯示名稱"
 
-#: src/editaddress.c:584 src/editaddress.c:588 src/importcsv.c:122
+#: src/editaddress.c:584 src/editaddress.c:588 src/exportcsv.c:213
+#: src/importcsv.c:122
 msgid "Last Name"
 msgstr "姓"
 
-#: src/editaddress.c:585 src/editaddress.c:587 src/importcsv.c:121
+#: src/editaddress.c:585 src/editaddress.c:587 src/exportcsv.c:213
+#: src/importcsv.c:121
 msgid "First Name"
 msgstr "名"
 
-#: src/editaddress.c:590 src/importcsv.c:124
-msgid "Nick Name"
-msgstr "暱稱"
-
 #: src/editaddress.c:627 src/editaddress.c:677 src/editaddress.c:887
-#: src/editgroup.c:491 src/importcsv.c:125
+#: src/editgroup.c:491 src/exportcsv.c:213 src/importcsv.c:125
 msgid "E-Mail Address"
 msgstr "E-Mail 地址"
 
-#: src/editaddress.c:628 src/editaddress.c:686 src/importcsv.c:127
+#: src/editaddress.c:628 src/editaddress.c:686 src/exportcsv.c:213
+#: src/importcsv.c:127
 msgid "Alias"
 msgstr "別名"
 
@@ -2137,8 +2148,8 @@ msgid "Edit JPilot Entry"
 msgstr "編輯 JPilot 資料"
 
 #: src/editjpilot.c:289 src/editldap.c:349 src/editvcard.c:202
-#: src/importcsv.c:696 src/importldif.c:498 src/prefs_account_dialog.c:2105
-#: src/prefs_common_dialog.c:2424
+#: src/exportcsv.c:408 src/importcsv.c:696 src/importldif.c:498
+#: src/prefs_account_dialog.c:2105 src/prefs_common_dialog.c:2424
 msgid " ... "
 msgstr "…"
 
@@ -2309,6 +2320,69 @@ msgstr "選取目的檔案"
 msgid "Select destination folder"
 msgstr "選取目的資料夾"
 
+#: src/exportcsv.c:101
+#, fuzzy
+msgid "Please specify file to export."
+msgstr "請指定要匯入的通訊錄名稱與檔案"
+
+#: src/exportcsv.c:104
+#, fuzzy
+msgid "File exported."
+msgstr "檔案已匯入"
+
+#: src/exportcsv.c:284 src/importcsv.c:518 src/importldif.c:317
+msgid "Please select a file."
+msgstr "請選擇檔案："
+
+#: src/exportcsv.c:309
+#, fuzzy
+msgid "CSV file exported successfully."
+msgstr "CSV 檔案已成功匯入。"
+
+#: src/exportcsv.c:345
+#, fuzzy
+msgid "Enter CSV File Name"
+msgstr "檔名"
+
+#: src/exportcsv.c:399 src/importcsv.c:687 src/importldif.c:489
+msgid "File Name"
+msgstr "檔名"
+
+#: src/exportcsv.c:417 src/importcsv.c:705
+msgid "Comma-separated"
+msgstr "以逗號分隔"
+
+#: src/exportcsv.c:421 src/importcsv.c:709
+msgid "Tab-separated"
+msgstr "以跳格分隔"
+
+#: src/exportcsv.c:461 src/importcsv.c:848 src/importldif.c:663
+msgid "File Name :"
+msgstr "檔名："
+
+#: src/exportcsv.c:472 src/importcsv.c:859 src/importldif.c:673
+msgid "Records :"
+msgstr "紀錄："
+
+#: src/exportcsv.c:498
+#, fuzzy
+msgid "Export Address Book into CSV file"
+msgstr "選擇通訊錄資料夾"
+
+#. Button panel
+#: src/exportcsv.c:530 src/importcsv.c:919 src/importldif.c:733
+#: src/prefs_toolbar.c:74
+msgid "Next"
+msgstr "下一封"
+
+#: src/exportcsv.c:560 src/importcsv.c:952 src/importldif.c:766
+msgid "File Info"
+msgstr "檔案資訊"
+
+#: src/exportcsv.c:561 src/importcsv.c:954 src/importldif.c:768
+msgid "Finish"
+msgstr "完成"
+
 #: src/filesel.c:221
 #, fuzzy
 msgid "File type:"
@@ -2371,7 +2445,7 @@ msgid "`%c' can't be included in folder name."
 msgstr "資料夾名稱中不應含有「%c」這個字元。"
 
 #: src/foldersel.c:622 src/folderview.c:2490 src/folderview.c:2549
-#: src/query_search.c:1160
+#: src/query_search.c:1306
 #, c-format
 msgid "The folder `%s' already exists."
 msgstr "資料夾「%s」已存在。"
@@ -2650,7 +2724,7 @@ msgstr "新聞群組："
 msgid "Creating header view...\n"
 msgstr "產生標頭視窗…\n"
 
-#: src/headerview.c:228 src/query_search.c:795 src/rpop3.c:705
+#: src/headerview.c:228 src/query_search.c:905 src/rpop3.c:705
 #: src/summaryview.c:2524
 msgid "(No From)"
 msgstr "（沒有來源）"
@@ -2745,10 +2819,6 @@ msgstr "選取和重新排序 CSV 欄位名稱以便匯入。"
 msgid "File imported."
 msgstr "檔案已匯入"
 
-#: src/importcsv.c:518 src/importldif.c:317
-msgid "Please select a file."
-msgstr "請選擇檔案："
-
 #: src/importcsv.c:524 src/importldif.c:323
 msgid "Address book name must be supplied."
 msgstr "未指定通訊錄名稱"
@@ -2764,18 +2834,6 @@ msgstr "CSV 檔案已成功匯入。"
 #: src/importcsv.c:621
 msgid "Select CSV File"
 msgstr "選取 CSV 檔案"
-
-#: src/importcsv.c:687 src/importldif.c:489
-msgid "File Name"
-msgstr "檔名"
-
-#: src/importcsv.c:705
-msgid "Comma-separated"
-msgstr "以逗號分隔"
-
-#: src/importcsv.c:709
-msgid "Tab-separated"
-msgstr "以跳格分隔"
 
 #: src/importcsv.c:740 src/importldif.c:530
 msgid "S"
@@ -2809,38 +2867,17 @@ msgstr "向下"
 msgid "Address Book :"
 msgstr "通訊錄："
 
-#: src/importcsv.c:848 src/importldif.c:663
-msgid "File Name :"
-msgstr "檔名："
-
-#: src/importcsv.c:859 src/importldif.c:673
-msgid "Records :"
-msgstr "紀錄："
-
 #: src/importcsv.c:887
 msgid "Import CSV file into Address Book"
 msgstr "將 CSV 檔案匯入通訊錄"
-
-#. Button panel
-#: src/importcsv.c:919 src/importldif.c:733 src/prefs_toolbar.c:74
-msgid "Next"
-msgstr "下一封"
 
 #: src/importcsv.c:920 src/importldif.c:734 src/prefs_toolbar.c:77
 msgid "Prev"
 msgstr "前一封"
 
-#: src/importcsv.c:952 src/importldif.c:766
-msgid "File Info"
-msgstr "檔案資訊"
-
 #: src/importcsv.c:953
 msgid "Fields"
 msgstr "欄位"
-
-#: src/importcsv.c:954 src/importldif.c:768
-msgid "Finish"
-msgstr "完成"
 
 #: src/importldif.c:125
 msgid "Select and rename LDIF field names to import."
@@ -4183,7 +4220,7 @@ msgid "Find text:"
 msgstr "尋找文字："
 
 #: src/message_search.c:153 src/prefs_search_folder.c:253
-#: src/query_search.c:346
+#: src/query_search.c:441
 msgid "Case sensitive"
 msgstr "區分大小寫"
 
@@ -6420,19 +6457,19 @@ msgstr "回信地址："
 msgid "%s - Edit search condition"
 msgstr "%s - 編輯搜尋條件"
 
-#: src/prefs_search_folder.c:209 src/query_search.c:276
+#: src/prefs_search_folder.c:209 src/query_search.c:371
 msgid "Match any of the following"
 msgstr "下列任一條件符合"
 
-#: src/prefs_search_folder.c:211 src/query_search.c:278
+#: src/prefs_search_folder.c:211 src/query_search.c:373
 msgid "Match all of the following"
 msgstr "下列所有條件均符合"
 
-#: src/prefs_search_folder.c:231 src/query_search.c:323
+#: src/prefs_search_folder.c:231 src/query_search.c:418
 msgid "Folder:"
 msgstr "資料夾："
 
-#: src/prefs_search_folder.c:248 src/query_search.c:341
+#: src/prefs_search_folder.c:248 src/query_search.c:436
 msgid "Search subfolders"
 msgstr "搜尋子資料夾"
 
@@ -6441,19 +6478,19 @@ msgid "Mark"
 msgstr "標記"
 
 #. S_COL_MIME
-#: src/prefs_summary_column.c:69 src/query_search.c:402 src/rpop3.c:434
+#: src/prefs_summary_column.c:69 src/query_search.c:499 src/rpop3.c:434
 #: src/summaryview.c:5515
 msgid "Subject"
 msgstr "主旨"
 
 #. S_COL_SUBJECT
-#: src/prefs_summary_column.c:70 src/query_search.c:406 src/rpop3.c:438
+#: src/prefs_summary_column.c:70 src/query_search.c:503 src/rpop3.c:438
 #: src/summaryview.c:5521
 msgid "From"
 msgstr "來源"
 
 #. S_COL_FROM
-#: src/prefs_summary_column.c:71 src/query_search.c:407 src/rpop3.c:439
+#: src/prefs_summary_column.c:71 src/query_search.c:504 src/rpop3.c:439
 #: src/summaryview.c:5523
 msgid "Date"
 msgstr "日期"
@@ -6616,11 +6653,11 @@ msgstr "下一封未讀郵件"
 msgid "Previous unread message"
 msgstr "上一封未讀郵件"
 
-#: src/prefs_toolbar.c:81 src/query_search.c:253
+#: src/prefs_toolbar.c:81 src/query_search.c:348
 msgid "Search messages"
 msgstr "尋找郵件(_S)"
 
-#: src/prefs_toolbar.c:83 src/printing.c:658
+#: src/prefs_toolbar.c:83 src/printing.c:675
 msgid "Print"
 msgstr "列印"
 
@@ -6716,15 +6753,15 @@ msgstr ""
 "選擇的項目會出現在工具列上。\n"
 "您可以利用向上╱向下按鈕來更改順序。"
 
-#: src/printing.c:655
+#: src/printing.c:672
 msgid "The message will be printed with the following command:"
 msgstr "郵件將以下列命令列印："
 
-#: src/printing.c:656
+#: src/printing.c:673
 msgid "(Default print command)"
 msgstr "(預設的列印命令)"
 
-#: src/printing.c:666
+#: src/printing.c:683
 #, c-format
 msgid ""
 "Print command line is invalid:\n"
@@ -6741,50 +6778,152 @@ msgstr "狀態"
 msgid "Progress"
 msgstr "進度"
 
-#: src/query_search.c:429
+#: src/query_search.c:258
+#, fuzzy
+msgid "_Reply"
+msgstr "/直接回覆(_R)"
+
+#: src/query_search.c:259
+#, fuzzy
+msgid "Repl_y to"
+msgstr "/回覆給(_Y)"
+
+#: src/query_search.c:260
+#, fuzzy
+msgid "Reply to _all"
+msgstr "/全部回覆(_A)"
+
+#: src/query_search.c:261
+#, fuzzy
+msgid "Reply to _sender"
+msgstr "/回覆給原作者(_S)"
+
+#: src/query_search.c:262
+#, fuzzy
+msgid "Reply to _list"
+msgstr "/全部回覆(_A)"
+
+#: src/query_search.c:264
+#, fuzzy
+msgid "_Forward"
+msgstr "/轉寄(_F)"
+
+#: src/query_search.c:265
+#, fuzzy
+msgid "For_ward as attachment"
+msgstr "/將郵件當成附件轉寄(_W)"
+
+#: src/query_search.c:266
+#, fuzzy
+msgid "Redirec_t"
+msgstr "/郵件導向(_T)"
+
+#: src/query_search.c:268
+#, fuzzy
+msgid "M_ove messages to..."
+msgstr "正在移動郵件 %s 到 %s …"
+
+#: src/query_search.c:269
+#, fuzzy
+msgid "_Copy messages to..."
+msgstr "正在複製郵件 %s 到 %s …"
+
+#: src/query_search.c:271
+#, fuzzy
+msgid "Add sender to address boo_k..."
+msgstr "/將寄信人加入通訊錄(_K)…"
+
+#: src/query_search.c:272
+#, fuzzy
+msgid "Create f_ilter rule"
+msgstr "/產生郵件過濾規則(_I)"
+
+#: src/query_search.c:273
+#, fuzzy
+msgid "_Automatically"
+msgstr "自動"
+
+#: src/query_search.c:274
+#, fuzzy
+msgid "by _From"
+msgstr "來源"
+
+#: src/query_search.c:275
+msgid "by _To"
+msgstr ""
+
+#: src/query_search.c:276
+#, fuzzy
+msgid "by _Subject"
+msgstr "主旨"
+
+#: src/query_search.c:278
+#, fuzzy
+msgid "Open in _new window"
+msgstr "/檢視(_V)/在新視窗開啟(_W)"
+
+#: src/query_search.c:279
+#, fuzzy
+msgid "View mess_age source"
+msgstr "/檢視(_V)/觀看郵件原始碼(_A)"
+
+#: src/query_search.c:281
+#, fuzzy
+msgid "_Print..."
+msgstr "/列印(_P)…"
+
+#: src/query_search.c:526
 msgid "_Save as search folder"
 msgstr "另存為搜尋資料夾(_S)"
 
-#: src/query_search.c:551
+#: src/query_search.c:661
 #, c-format
 msgid "Message not found."
 msgstr "找不到郵件。"
 
-#: src/query_search.c:553
+#: src/query_search.c:663
 #, c-format
 msgid "1 message found."
 msgstr "找到 1 封郵件。"
 
-#: src/query_search.c:555
+#: src/query_search.c:665
 #, c-format
 msgid "%d messages found."
 msgstr "找到 %d 封郵件。"
 
-#: src/query_search.c:590
+#: src/query_search.c:700
 #, c-format
 msgid "Searching %s (%d / %d)..."
 msgstr "正在搜尋 %s (%d / %d)…"
 
-#: src/query_search.c:712
+#: src/query_search.c:822
 #, c-format
 msgid "Searching %s ..."
 msgstr "正在搜尋 %s…"
 
-#: src/query_search.c:803 src/rpop3.c:713 src/summaryview.c:2441
+#: src/query_search.c:913 src/rpop3.c:713 src/summaryview.c:2441
 msgid "(No Date)"
 msgstr "(沒有日期)"
 
-#: src/query_search.c:998
+#: src/query_search.c:1144
 msgid "Save as search folder"
 msgstr "另存為搜尋資料夾"
 
-#: src/query_search.c:1019
+#: src/query_search.c:1165
 msgid "Location:"
 msgstr "位置："
 
-#: src/query_search.c:1034
+#: src/query_search.c:1180
 msgid "Folder name:"
 msgstr "資料夾名稱："
+
+#: src/query_search.c:1457 src/summaryview.c:3828
+msgid "Select folder to copy"
+msgstr "選取要複製的資料夾"
+
+#: src/query_search.c:1460 src/summaryview.c:3727
+msgid "Select folder to move"
+msgstr "選取要移動的資料夾"
 
 #: src/quick_search.c:108
 msgid "All"
@@ -7791,10 +7930,6 @@ msgstr "郵件 %d 已設定移動到 %s\n"
 msgid "Destination is same as current folder."
 msgstr "目標資料夾與來源資料夾相同。"
 
-#: src/summaryview.c:3727
-msgid "Select folder to move"
-msgstr "選取要移動的資料夾"
-
 #: src/summaryview.c:3761
 #, c-format
 msgid "Message %d is set to copy to %s\n"
@@ -7803,10 +7938,6 @@ msgstr "郵件 %d 已設定複製到 %s\n"
 #: src/summaryview.c:3792
 msgid "Destination for copy is same as current folder."
 msgstr "郵件無法複製到同一個資料夾內。"
-
-#: src/summaryview.c:3828
-msgid "Select folder to copy"
-msgstr "選取要複製的資料夾"
 
 #: src/summaryview.c:4003
 msgid "Error occurred while processing messages."
