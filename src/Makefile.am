@@ -50,6 +50,7 @@ sylpheed_SOURCES = \
 	ldif.c ldif.h \
 	importldif.c importldif.h \
 	importcsv.c importcsv.h \
+	exportcsv.c exportcsv.h \
 	jpilot.c jpilot.h \
 	syldap.c syldap.h \
 	editbook.c editbook.h \

@@ -62,6 +62,7 @@
 #include "ldif.h"
 #include "importldif.h"
 #include "importcsv.h"
+#include "exportcsv.h"
 
 #ifdef USE_JPILOT
 #include "jpilot.h"
@@ -397,6 +398,8 @@ static void addressbook_list_select_set		(GList		*row_list);
 static void addressbook_import_ldif_cb		(void);
 static void addressbook_import_csv_cb		(void);
 
+static void addressbook_export_csv_cb		(void);
+
 static void addressbook_modified		(void);
 
 
@@ -445,7 +448,8 @@ static GtkItemFactoryEntry addressbook_entries[] =
 	{N_("/_Tools"),			NULL,		NULL, 0, "<Branch>"},
 	{N_("/_Tools/Import _LDIF file"), NULL,		addressbook_import_ldif_cb,	0, NULL},
 	{N_("/_Tools/Import _CSV file"), NULL,		addressbook_import_csv_cb,	0, NULL},
-
+	{N_("/_Tools/---"),		NULL,		NULL, 0, "<Separator>"},
+	{N_("/_Tools/Export C_SV file"), NULL,		addressbook_export_csv_cb,	0, NULL}, 
 	{N_("/_Help"),			NULL,		NULL, 0, "<Branch>"},
 	{N_("/_Help/_About"),		NULL,		about_show, 0, NULL}
 };
@@ -454,8 +458,6 @@ static GtkItemFactoryEntry addressbook_entries[] =
 /*
 	{N_("/_Edit"),			NULL,		NULL, 0, "<Branch>"},
 	{N_("/_Edit/C_ut"),		"<control>X",	NULL,				0, NULL},
-	{N_("/_Edit/_Copy"),		"<control>C",	NULL,                           0, NULL},
-	{N_("/_Edit/_Paste"),		"<control>V",	NULL,                           0, NULL},
 	{N_("/_Tools"),			NULL,		NULL, 0, "<Branch>"},
 	{N_("/_Tools/Import _Mozilla"),	NULL,           NULL,				0, NULL},
 	{N_("/_Tools/Import _vCard"),	NULL,           NULL,				0, NULL},
@@ -4784,6 +4786,38 @@ static void addressbook_import_csv_cb(void)
 
 	/* Notify address completion */
 	addressbook_modified();
+}
+
+/*
+* Export CSV file.
+*/
+static void addressbook_export_csv_cb(void)
+{
+	GtkTreeView *treeview = GTK_TREE_VIEW(addrbook.treeview);
+	GtkTreeModel *model;
+	GtkTreeIter iter;
+	GtkTreePath *path;
+	AddressObject *obj;
+	ItemFolder *itemFolder = NULL;
+	ItemGroup *itemGroup = NULL;
+	GList *items;
+	GList *cur;
+	gchar delim = ',';
+
+	if (!addrbook.tree_opened) {
+		return;
+	}
+
+	model = gtk_tree_view_get_model(treeview);
+	gtkut_tree_row_reference_get_iter(model, addrbook.tree_opened, &iter);
+	gtk_tree_model_get(model, &iter, COL_OBJ, &obj, -1);
+	g_return_if_fail(obj != NULL);
+
+	if (obj->type == ADDR_INTERFACE) {
+		return;
+	}
+
+	addressbook_exp_csv(obj);
 }
 
 /* **********************************************************************

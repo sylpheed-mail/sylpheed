@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2013 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2017 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -1728,6 +1728,44 @@ gchar **strsplit_csv(const gchar *str, gchar delim, gint max_tokens)
 	g_slist_free(string_list);
 
 	return str_array;
+}
+
+gchar *strconcat_csv(gchar delim, const gchar *field1, ...)
+{
+	va_list args;
+	gchar *s;
+	GString *csv;
+	gint count = 0;
+	const gchar *p;
+
+	g_return_val_if_fail(field1 != NULL, NULL);
+
+	csv = g_string_new("");
+
+	va_start(args, field1);
+	s = (gchar *)field1;
+	while (s) {
+		gboolean add_quote = FALSE;
+
+		if (count > 0)
+			g_string_append_c(csv, delim);
+		if (delim != '\t' && strchr(s, delim) != NULL)
+			add_quote = TRUE;
+		if (add_quote)
+			g_string_append_c(csv, '"');
+		for (p = s; *p != '\0'; p++) {
+			if (*p == '"')
+				g_string_append_c(csv, '"');
+			g_string_append_c(csv, *p);
+		}
+		if (add_quote)
+			g_string_append_c(csv, '"');
+		count++;
+		s = va_arg(args, gchar*);
+	}
+	va_end(args);
+
+	return g_string_free(csv, FALSE);
 }
 
 gchar *get_abbrev_newsgroup_name(const gchar *group, gint len)

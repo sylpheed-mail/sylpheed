@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2013 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2017 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -385,6 +385,10 @@ gchar **strsplit_with_quote		(const gchar	*str,
 gchar **strsplit_csv			(const gchar	*str,
 					 gchar		 delim,
 					 gint		 max_tokens);
+
+gchar *strconcat_csv			(gchar		 delim,
+					 const gchar	*field1,
+					 ...) G_GNUC_MALLOC G_GNUC_NULL_TERMINATED;
 
 gchar *get_abbrev_newsgroup_name	(const gchar	*group,
 					 gint		 len);
