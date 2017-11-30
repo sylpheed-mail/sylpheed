@@ -106,6 +106,38 @@ static void exp_csv_message( void ) {
 	exp_csv_status_show( sMsg );
 }
 
+static gint exp_csv_write_email_record( ItemPerson *person, ItemEMail *email, FILE *fp ) {
+	gchar *sName, *sAddress, *sAlias, *sNickName;
+	gchar *sFirstName, *sLastName;
+	gchar *sRemarks;
+	gchar *csv;
+
+	g_return_val_if_fail(person != NULL, MGU_BAD_ARGS);
+
+	sName = ADDRITEM_NAME(person) ? ADDRITEM_NAME(person) : "";
+	sFirstName = person->firstName ? person->firstName : "";
+	sLastName = person->lastName ? person->lastName : "";
+	sNickName = person->nickName ? person->nickName : "";
+
+	if (email) {
+		sAddress = email->address ? email->address : "";
+		sRemarks = email->remarks ? email->remarks : "";
+		sAlias = ADDRITEM_NAME(email) ? ADDRITEM_NAME(email) : "";
+	} else {
+		sAddress = "";
+		sRemarks = "";
+		sAlias = "";
+	}
+
+	csv = strconcat_csv(expcsv_dlg.delimiter, sFirstName, sLastName, sName, sNickName, sAddress, sRemarks, sAlias, NULL);
+	debug_print("%s\n", csv);
+	fputs(csv, fp);
+	fputc('\n', fp);
+	g_free(csv);
+
+	return MGU_SUCCESS;
+}
+
 static gint exp_csv_export_folder_recursive( ItemFolder *itemFolder, FILE *fp ) {
 	GList *items;
 	GList *cur;
@@ -120,49 +152,24 @@ static gint exp_csv_export_folder_recursive( ItemFolder *itemFolder, FILE *fp ) 
 		ItemPerson *person;
 		ItemEMail *email;
 		GList *node;
-		gchar *sName, *sAddress, *sAlias, *sNickName;
-		gchar *sFirstName, *sLastName;
-		gchar *sRemarks;
-		gchar *csv;
 
 		person = (ItemPerson *)cur->data;
-		if (!person)
+		if (!person) {
 			continue;
-
-		sName = ADDRITEM_NAME(person) ? ADDRITEM_NAME(person) : "";
-		sFirstName = person->firstName ? person->firstName : "";
-		sLastName = person->lastName ? person->lastName : "";
-		sNickName = person->nickName ? person->nickName : "";
+		}
 
 		node = person->listEMail;
 		if (!node) {
-			sAddress = "";
-			sRemarks = "";
-			sAlias = "";
-
-			csv = strconcat_csv(expcsv_dlg.delimiter, sFirstName, sLastName, sName, sNickName, sAddress, sRemarks, sAlias, NULL);
-			debug_print("%s\n", csv);
-			fputs(csv, fp);
-			fputc('\n', fp);
-			g_free(csv);
-
-			count++;
+			if (exp_csv_write_email_record(person, NULL, fp) == MGU_SUCCESS) {
+				count++;
+			}
 		} else {
 			while (node) {
 				email = node->data;
 				node = g_list_next(node);
-
-				sAddress = email->address ? email->address : "";
-				sRemarks = email->remarks ? email->remarks : "";
-				sAlias = ADDRITEM_NAME(email) ? ADDRITEM_NAME(email) : "";
-
-				csv = strconcat_csv(expcsv_dlg.delimiter, sFirstName, sLastName, sName, sNickName, sAddress, sRemarks, sAlias, NULL);
-				debug_print("%s\n", csv);
-				fputs(csv, fp);
-				fputc('\n', fp);
-				g_free(csv);
-
-				count++;
+				if (exp_csv_write_email_record(person, email, fp) == MGU_SUCCESS) {
+					count++;
+				}
 			}
 		}
 	}
@@ -186,6 +193,7 @@ static gint exp_csv_export_data( gchar *csvFile ) {
 	ItemGroup *itemGroup = NULL;
 	GList *items;
 	GList *cur;
+	gchar *csv;
 	gint count = 0;
 
 	g_return_val_if_fail(csvFile != NULL, MGU_BAD_ARGS);
@@ -210,7 +218,11 @@ static gint exp_csv_export_data( gchar *csvFile ) {
 		itemGroup = ADAPTER_GROUP(_exp_object_)->itemGroup;
 	}
 
-	debug_print("%s,%s,%s,%s,%s,%s,%s\n", _("First Name"), _("Last Name"), _("Display Name"), _("Nick Name"), _("E-Mail Address"), _("Remarks"), _("Alias"));
+	csv = strconcat_csv(expcsv_dlg.delimiter, _("First Name"), _("Last Name"), _("Display Name"), _("Nick Name"), _("E-Mail Address"), _("Remarks"), _("Alias"), NULL);
+	debug_print("%s\n", csv);
+	fputs(csv, fp);
+	fputc('\n', fp);
+	g_free(csv);
 
 	if (itemFolder) {
 		exp_csv_export_folder_recursive(itemFolder, fp);
@@ -219,33 +231,18 @@ static gint exp_csv_export_data( gchar *csvFile ) {
 		for (cur = items; cur != NULL; cur = cur->next) {
 			ItemEMail *email = (ItemEMail *)cur->data;
 			ItemPerson *person;
-			gchar *sName, *sAddress, *sAlias, *sNickName;
-			gchar *sFirstName, *sLastName;
-			gchar *sRemarks;
-			gchar *csv;
 
-			if (!email)
+			if (!email) {
 				continue;
+			}
 			person = (ItemPerson *)ADDRITEM_PARENT(email);
-			if (!person)
+			if (!person) {
 				continue;
+			}
 
-			sName = ADDRITEM_NAME(person) ? ADDRITEM_NAME(person) : "";
-			sFirstName = person->firstName ? person->firstName : "";
-			sLastName = person->lastName ? person->lastName : "";
-			sNickName = person->nickName ? person->nickName : "";
-
-			sAddress = email->address ? email->address : "";
-			sRemarks = email->remarks ? email->remarks : "";
-			sAlias = ADDRITEM_NAME(email) ? ADDRITEM_NAME(email) : "";
-
-			csv = strconcat_csv(expcsv_dlg.delimiter, sFirstName, sLastName, sName, sNickName, sAddress, sRemarks, sAlias, NULL);
-			debug_print("%s\n", csv);
-			fputs(csv, fp);
-			fputc('\n', fp);
-			g_free(csv);
-
-			count++;
+			if (exp_csv_write_email_record(person, email, fp) == MGU_SUCCESS) {
+				count++;
+			}
 		}
 		exportCount = count;
 	}

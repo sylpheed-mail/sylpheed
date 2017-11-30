@@ -1730,6 +1730,12 @@ gchar **strsplit_csv(const gchar *str, gchar delim, gint max_tokens)
 	return str_array;
 }
 
+/* Concatenate multiple strings into a CSV (TSV) record.
+ * If delimiter characters or double-quotes appear in the string,
+   it is enclosed by double quotes.
+ * Double quote characters are escaped by another double quote.
+ * Strings must not include line breaks in this implementation.
+ */
 gchar *strconcat_csv(gchar delim, const gchar *field1, ...)
 {
 	va_list args;
@@ -1749,7 +1755,7 @@ gchar *strconcat_csv(gchar delim, const gchar *field1, ...)
 
 		if (count > 0)
 			g_string_append_c(csv, delim);
-		if (delim != '\t' && strchr(s, delim) != NULL)
+		if (strchr(s, delim) != NULL || strchr(s, '"') != NULL)
 			add_quote = TRUE;
 		if (add_quote)
 			g_string_append_c(csv, '"');
