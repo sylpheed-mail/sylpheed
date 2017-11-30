@@ -62,7 +62,7 @@
 #define PAGE_ATTRIBUTES            1
 #define PAGE_FINISH                2
 
-#define IMPORTCSV_WIDTH           420
+#define IMPORTCSV_WIDTH           480
 #define IMPORTCSV_HEIGHT          320
 
 #define FIELDS_N_COLS              3
@@ -883,7 +883,6 @@ static void imp_csv_dialog_create() {
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_widget_set_size_request(window, IMPORTCSV_WIDTH, IMPORTCSV_HEIGHT );
-	gtk_container_set_border_width( GTK_CONTAINER(window), 0 );
 	gtk_window_set_title( GTK_WINDOW(window), _("Import CSV file into Address Book") );
 	gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
 	gtk_window_set_modal(GTK_WINDOW(window), TRUE);	
@@ -916,14 +915,16 @@ static void imp_csv_dialog_create() {
 	gtk_box_pack_start(GTK_BOX(hsbox), statusbar, TRUE, TRUE, 0);
 
 	/* Button panel */
-	gtkut_stock_button_set_create(&hbbox, &btnNext, _("Next"),
-				      &btnPrev, _("Prev"),
-				      &btnCancel, GTK_STOCK_CANCEL);
-	gtk_button_box_set_child_secondary(GTK_BUTTON_BOX(hbbox), btnCancel,
-					   TRUE);
-	gtkut_box_set_reverse_order(GTK_BOX(hbbox), FALSE);
-	gtk_box_pack_end(GTK_BOX(vbox), hbbox, FALSE, FALSE, 0);
-	gtk_container_set_border_width(GTK_CONTAINER(hbbox), 4);
+	if (prefs_common.comply_gnome_hig) {
+		gtkut_stock_button_set_create(&hbbox, &btnNext, _("Next"),
+					      &btnPrev, _("Prev"),
+					      &btnCancel, GTK_STOCK_CANCEL);
+	} else {
+		gtkut_stock_button_set_create(&hbbox, &btnPrev, _("Prev"),
+					      &btnNext, _("Next"),
+					      &btnCancel, GTK_STOCK_CANCEL);
+	}
+	gtk_box_pack_end(GTK_BOX(vnbox), hbbox, FALSE, FALSE, 0);
 	gtk_widget_grab_default(btnNext);
 
 	/* Button handlers */

@@ -58,7 +58,7 @@
 #define PAGE_FILE_INFO             0
 #define PAGE_FINISH                1
 
-#define EXPORTCSV_WIDTH           420
+#define EXPORTCSV_WIDTH           480
 #define EXPORTCSV_HEIGHT          320
 
 static struct _ExpCSVDlg {
@@ -491,7 +491,6 @@ static void exp_csv_dialog_create() {
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_widget_set_size_request(window, EXPORTCSV_WIDTH, EXPORTCSV_HEIGHT );
-	gtk_container_set_border_width( GTK_CONTAINER(window), 0 );
 	gtk_window_set_title( GTK_WINDOW(window), _("Export Address Book into CSV file") );
 	gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
 	gtk_window_set_modal(GTK_WINDOW(window), TRUE);	
@@ -525,13 +524,9 @@ static void exp_csv_dialog_create() {
 
 	/* Button panel */
 	gtkut_stock_button_set_create(&hbbox, &btnNext, _("Next"),
-				      NULL, NULL,
-				      &btnCancel, GTK_STOCK_CANCEL);
-	gtk_button_box_set_child_secondary(GTK_BUTTON_BOX(hbbox), btnCancel,
-					   TRUE);
-	gtkut_box_set_reverse_order(GTK_BOX(hbbox), FALSE);
-	gtk_box_pack_end(GTK_BOX(vbox), hbbox, FALSE, FALSE, 0);
-	gtk_container_set_border_width(GTK_CONTAINER(hbbox), 4);
+				      &btnCancel, GTK_STOCK_CANCEL,
+				      NULL, NULL);
+	gtk_box_pack_end(GTK_BOX(vnbox), hbbox, FALSE, FALSE, 0);
 	gtk_widget_grab_default(btnNext);
 
 	/* Button handlers */
