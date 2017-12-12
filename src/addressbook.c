@@ -449,7 +449,7 @@ static GtkItemFactoryEntry addressbook_entries[] =
 	{N_("/_Tools/Import _LDIF file"), NULL,		addressbook_import_ldif_cb,	0, NULL},
 	{N_("/_Tools/Import _CSV file"), NULL,		addressbook_import_csv_cb,	0, NULL},
 	{N_("/_Tools/---"),		NULL,		NULL, 0, "<Separator>"},
-	{N_("/_Tools/Export C_SV file"), NULL,		addressbook_export_csv_cb,	0, NULL}, 
+	{N_("/_Tools/Export to C_SV file"), NULL,	addressbook_export_csv_cb,	0, NULL}, 
 	{N_("/_Help"),			NULL,		NULL, 0, "<Branch>"},
 	{N_("/_Help/_About"),		NULL,		about_show, 0, NULL}
 };
@@ -1494,6 +1494,8 @@ static void addressbook_menuitem_set_sensitive(void)
 
 	menu_set_sensitive(addrbook.menu_factory, "/Edit/Copy",   canCopy);
 	menu_set_sensitive(addrbook.menu_factory, "/Edit/Paste",  canPaste);
+
+	menu_set_sensitive(addrbook.menu_factory, "/Tools/Export to CSV file", canEditTree);
 
 	/* Popup menu */
 	menu_set_sensitive(addrbook.tree_factory, "/New Address", canAdd);
