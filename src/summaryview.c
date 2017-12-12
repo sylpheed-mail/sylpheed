@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2014 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2017 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -2417,6 +2417,7 @@ static void summary_set_row(SummaryView *summaryview, GtkTreeIter *iter,
 	gchar *sw_from_s = NULL;
 	gchar *subject_s = NULL;
 	gchar *to_s = NULL;
+	const gchar *disp_from = NULL;
 	GdkPixbuf *mark_pix = NULL;
 	GdkPixbuf *unread_pix = NULL;
 	GdkPixbuf *mime_pix = NULL;
@@ -2444,8 +2445,19 @@ static void summary_set_row(SummaryView *summaryview, GtkTreeIter *iter,
 
 		strncpy2(from, msginfo->from, sizeof(from));
 		extract_address(from);
-		if (account_address_exist(from))
+		if (account_address_exist(from)) {
 			sw_from_s = g_strconcat("-->", msginfo->to, NULL);
+			disp_from = sw_from_s;
+		}
+	}
+
+	if (!disp_from) {
+		/* prevent address-like display-name */
+		if (!msginfo->fromname ||
+		    strchr(msginfo->fromname, '@') != NULL)
+			disp_from = msginfo->from;
+		else
+			disp_from = msginfo->fromname;
 	}
 
 	if (msginfo->subject && *msginfo->subject) {
@@ -2519,9 +2531,7 @@ static void summary_set_row(SummaryView *summaryview, GtkTreeIter *iter,
 			   S_COL_SUBJECT, subject_s ? subject_s :
 			   		  msginfo->subject && *msginfo->subject ? msginfo->subject :
 					  _("(No Subject)"),
-			   S_COL_FROM, sw_from_s ? sw_from_s :
-			   	       msginfo->fromname ? msginfo->fromname :
-				       _("(No From)"),
+			   S_COL_FROM, disp_from ? disp_from : _("(No From)"),
 			   S_COL_DATE, date_s,
 			   S_COL_SIZE, to_human_readable(msginfo->size),
 			   S_COL_NUMBER, msginfo->msgnum,
