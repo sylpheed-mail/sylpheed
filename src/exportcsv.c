@@ -286,6 +286,8 @@ static gboolean exp_csv_file_move() {
 	if( ! errFlag ) {
 		if( exp_csv_export_data( sFile ) == MGU_SUCCESS ) {
 			retVal = TRUE;
+		} else {
+			sMsg = _( "Cannot write to file." );
 		}
 	}
 	exp_csv_status_show( sMsg );
