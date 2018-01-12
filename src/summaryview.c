@@ -5842,6 +5842,10 @@ void summary_mark_displayed_read(SummaryView *summaryview, GtkTreeIter *iter)
 				(msginfo, MSG_NEW | MSG_UNREAD);
 		summary_set_row(summaryview, iter, msginfo);
 		summary_status_show(summaryview);
+
+		/* sort order can be changed here */
+		if (summaryview->folder_item->sort_key == SORT_BY_UNREAD)
+			summary_selection_list_free(summaryview);
 	}
 
 	summary_unlock(summaryview);
