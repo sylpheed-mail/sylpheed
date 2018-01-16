@@ -1133,7 +1133,7 @@ gchar *folder_get_path(Folder *folder)
 		path = g_filename_from_utf8(LOCAL_FOLDER(folder)->rootpath,
 					    -1, NULL, NULL, NULL);
 		if (!path) {
-			g_warning("folder_get_path: faild to convert character set\n");
+			g_warning("folder_get_path: failed to convert character set\n");
 			path = g_strdup(LOCAL_FOLDER(folder)->rootpath);
 		}
 		if (!g_path_is_absolute(path)) {
@@ -1184,7 +1184,7 @@ gchar *folder_item_get_path(FolderItem *item)
 		item_path = g_filename_from_utf8(item->path, -1,
 						 NULL, NULL, NULL);
 		if (!item_path) {
-			g_warning("folder_item_get_path: faild to convert character set\n");
+			g_warning("folder_item_get_path: failed to convert character set\n");
 			item_path = g_strdup(item->path);
 		}
 #ifdef G_OS_WIN32

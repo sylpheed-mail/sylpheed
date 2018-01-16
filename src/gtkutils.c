@@ -895,7 +895,7 @@ gboolean gtkut_text_buffer_find(GtkTextBuffer *buffer, const GtkTextIter *iter,
 
 	wcs = g_utf8_to_ucs4(str, -1, &items_read, &items_written, &error);
 	if (error != NULL) {
-		g_warning("An error occured while converting a string from UTF-8 to UCS-4: %s\n", error->message);
+		g_warning("An error occurred while converting a string from UTF-8 to UCS-4: %s\n", error->message);
 		g_error_free(error);
 	}
 	if (!wcs || items_written <= 0) return FALSE;
@@ -930,7 +930,7 @@ gboolean gtkut_text_buffer_find_backward(GtkTextBuffer *buffer,
 
 	wcs = g_utf8_to_ucs4(str, -1, &items_read, &items_written, &error);
 	if (error != NULL) {
-		g_warning("An error occured while converting a string from UTF-8 to UCS-4: %s\n", error->message);
+		g_warning("An error occurred while converting a string from UTF-8 to UCS-4: %s\n", error->message);
 		g_error_free(error);
 	}
 	if (!wcs || items_written <= 0) return FALSE;
