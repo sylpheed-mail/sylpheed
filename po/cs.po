@@ -1,17 +1,17 @@
 # Czech translation of Sylpheed.
-# Copyright (C) 2000, 2007, 2008, 2009, 2010, 2011 the author(s) of Sylpheed.
+# Copyright (C) 2000, 2007, 2008, 2009, 2010, 2011, 2017 the author(s) of Sylpheed.
 # This file is distributed under the same license as the sylpheed package.
 # Jan Mura <jan_mura@altavista.com>, 2000.
 #
 # Additional translators:
 # Radek Vybíral <Radek.Vybiral@vsb.cz>, 2002, 2003.
-# Petr Kovar <pknbe@volny.cz>, 2007, 2008, 2009, 2010, 2011.
+# Petr Kovar <pknbe@volny.cz>, 2007, 2008, 2009, 2010, 2011, 2017.
 msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-14 17:39+0900\n"
-"PO-Revision-Date: 2011-01-23 01:42+0200\n"
+"POT-Creation-Date: 2018-01-15 14:35+0900\n"
+"PO-Revision-Date: 2017-08-27 21:11+0200\n"
 "Last-Translator: Petr Kovar <pknbe@volny.cz>\n"
 "Language-Team: Petr Kovar <pknbe@volny.cz>\n"
 "Language: cs\n"
@@ -19,6 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Poedit 2.0.3\n"
 
 #: libsylph/account.c:55
 msgid "Reading all config for each account...\n"
@@ -133,9 +134,8 @@ msgid "can't create mailbox\n"
 msgstr "nelze vytvořit poštovní schránku\n"
 
 #: libsylph/imap.c:2478
-#, fuzzy
 msgid "can't subscribe mailbox\n"
-msgstr "nelze vytvořit poštovní schránku\n"
+msgstr "nelze přidat poštovní schránku\n"
 
 #: libsylph/imap.c:2603
 #, c-format
@@ -1668,9 +1668,9 @@ msgid "%s - Compose%s"
 msgstr "%s - Psaní zprávy%s"
 
 #: src/compose.c:3015 src/compose.c:6216 src/prefs_account_dialog.c:1352
-#, fuzzy, c-format
+#, c-format
 msgid "Signature %d"
-msgstr "Podpis"
+msgstr "Podpis %d"
 
 #: src/compose.c:3081
 msgid "Recipient is not specified."
@@ -1713,11 +1713,12 @@ msgid "_Send"
 msgstr "_Odeslat"
 
 #: src/compose.c:3476
-#, fuzzy
 msgid ""
 "Checking for new messages is currently running.\n"
 "Please try again later."
-msgstr "Zjišťují se nové zprávy ve všech složkách..."
+msgstr ""
+"Právě se zjišťují nové zprávy.\n"
+"Zkuste to prosím později."
 
 #: src/compose.c:3612
 msgid "can't get recipient list."
@@ -1741,6 +1742,8 @@ msgid ""
 "Sending of message was completed, but the message could not be saved to "
 "outbox."
 msgstr ""
+"Odeslání zprávy bylo dokončeno, ale nezdařilo se její uložení do složky "
+"Odeslaná pošta."
 
 #: src/compose.c:3765
 #, c-format
@@ -1864,14 +1867,12 @@ msgid "Size"
 msgstr "Velikost"
 
 #: src/compose.c:6208
-#, fuzzy
 msgid "Signature:"
-msgstr "Podpis"
+msgstr "Podpis:"
 
 #: src/compose.c:6223
-#, fuzzy
 msgid "Change signature"
-msgstr "Kontroluje se podpis"
+msgstr "Změnit podpis"
 
 #: src/compose.c:6803
 msgid "Invalid MIME type."
@@ -2313,9 +2314,8 @@ msgid " Select... "
 msgstr " Vybrat... "
 
 #: src/export.c:441
-#, fuzzy
 msgid "Export only selected messages"
-msgstr "Pamatovat si poslední vybranou zprávu"
+msgstr "Exportovat pouze vybrané zprávy"
 
 #: src/export.c:474
 msgid "Specify source folder and destination folder."
@@ -2398,14 +2398,12 @@ msgid "Finish"
 msgstr "Dokončit"
 
 #: src/filesel.c:221
-#, fuzzy
 msgid "File type:"
-msgstr "Název souboru:"
+msgstr "Typ souboru:"
 
 #: src/filesel.c:270
-#, fuzzy
 msgid "The link target not found."
-msgstr "Zpráva nenalezena."
+msgstr "Nenalezen cíl odkazu."
 
 #: src/filesel.c:305 src/filesel.c:331
 msgid "Save as"
@@ -2942,7 +2940,7 @@ msgstr "Sylpheed: nových zpráv %d"
 #: src/inc.c:225
 #, c-format
 msgid "[Local]: %d"
-msgstr ""
+msgstr "[Místní]: %d"
 
 #: src/inc.c:667
 msgid "Authenticating with POP3"
@@ -2983,9 +2981,8 @@ msgid "Done"
 msgstr "Hotovo"
 
 #: src/inc.c:932
-#, fuzzy
 msgid "Server not found"
-msgstr "Informace o serveru"
+msgstr "Server nenalezen"
 
 #: src/inc.c:936
 msgid "Connection failed"
@@ -3092,23 +3089,22 @@ msgstr ""
 "Zkontrolujte prosím nastavení kontroly nevyžádané pošty."
 
 #: src/inc.c:1624 src/send_message.c:1001
-#, fuzzy
 msgid "Server not found."
-msgstr "Zpráva nenalezena."
+msgstr "Server nenalezen."
 
 #: src/inc.c:1628
-#, fuzzy, c-format
+#, c-format
 msgid "Server %s not found."
-msgstr "Zpráva nenalezena."
+msgstr "Server %s nenalezen."
 
 #: src/inc.c:1631
 msgid "Connection failed."
 msgstr "Spojení selhalo."
 
 #: src/inc.c:1635
-#, fuzzy, c-format
+#, c-format
 msgid "Connection to %s:%d failed."
-msgstr "Spojení selhalo."
+msgstr "Připojení k %s:%d selhalo"
 
 #: src/inc.c:1639
 msgid "Error occurred while processing mail."
@@ -3194,14 +3190,13 @@ msgid "Protocol log"
 msgstr "Záznamový protokol"
 
 #: src/main.c:679
-#, fuzzy, c-format
+#, c-format
 msgid "Usage: %s [OPTIONS ...] [URL]\n"
-msgstr "Použití: %s [VOLBY]...\n"
+msgstr "Použití: %s [VOLBY…] [URL]\n"
 
 #: src/main.c:682
-#, fuzzy
 msgid "  --compose [mailto URL] open composition window"
-msgstr "  --compose [adresa]            otevře okno psaní nové zprávy"
+msgstr "  --compose [mailto URL] otevře okno psaní nové zprávy"
 
 #: src/main.c:683
 msgid ""
@@ -3238,14 +3233,12 @@ msgstr ""
 "                                vypíše stav každé ze složek"
 
 #: src/main.c:692
-#, fuzzy
 msgid "  --open folderid/msgnum open existing message in a new window"
-msgstr "  --open IDsložky/číslozprávy   otevře zprávu v novém okně"
+msgstr "  --open IDsložky/číslozprávy otevře zprávu v novém okně"
 
 #: src/main.c:693
-#, fuzzy
 msgid "  --open <file URL>      open an rfc822 message file in a new window"
-msgstr "  --open IDsložky/číslozprávy   otevře zprávu v novém okně"
+msgstr "  --open <URL souboru>      otevře soubor zprávy rfc822 v novém okně"
 
 #: src/main.c:694
 msgid ""
@@ -3260,7 +3253,7 @@ msgstr "  --ipcport čísloportu             určí port pro vzdálené příkaz
 
 #: src/main.c:698
 msgid "  --dpi dpinum           force DPI"
-msgstr ""
+msgstr "  --dpi hodnotadpi           vynutit DPI"
 
 #: src/main.c:699
 msgid "  --exit                 exit Sylpheed"
@@ -3271,9 +3264,8 @@ msgid "  --debug                debug mode"
 msgstr "  --debug                       režim ladění"
 
 #: src/main.c:701
-#, fuzzy
 msgid "  --safe-mode            safe mode"
-msgstr "  --debug                       režim ladění"
+msgstr "  --safe-mode            bezpečný režim"
 
 #: src/main.c:702
 msgid "  --help                 display this help and exit"
@@ -3893,14 +3885,12 @@ msgid "/_Tools/E_xecute marked process"
 msgstr "/_Nástroje/Spustit označený pro_ces"
 
 #: src/mainwindow.c:877
-#, fuzzy
 msgid "/_Tools/Op_en configuration folder"
-msgstr "/_Nástroje/Fi_ltrovat nevyžádanou poštu ve složce"
+msgstr "/_Nástroje/Ot_evřít složku s nastavením"
 
 #: src/mainwindow.c:879
-#, fuzzy
 msgid "/_Tools/Open a_ttachments folder"
-msgstr "/_Nástroje/Filtrovat všechny z_právy ve složce"
+msgstr "/_Nástroje/Otevří_t složku s přílohami"
 
 #: src/mainwindow.c:881
 msgid "/_Tools/_Log window"
@@ -4162,7 +4152,6 @@ msgid "Usage: sylpheed [OPTION]..."
 msgstr "Použití: sylpheed [VOLBY]..."
 
 #: src/mainwindow.c:4162
-#, fuzzy
 msgid ""
 "--compose [address]\n"
 "--attach file1 [file2]...\n"
@@ -4188,14 +4177,15 @@ msgstr ""
 "--status [složka]...\n"
 "--status-full [složka]...\n"
 "--open IDsložky/číslozprávy\n"
+"--open <URL souboru>\n"
 "--configdir adresář\n"
 "--exit\n"
 "--debug\n"
+"--safe-mode\n"
 "--help\n"
 "--version"
 
 #: src/mainwindow.c:4181
-#, fuzzy
 msgid ""
 "open composition window\n"
 "open composition window with specified files attached\n"
@@ -4221,9 +4211,11 @@ msgstr ""
 "zobrazí celkový počet zpráv\n"
 "zobrazí stav každé složky\n"
 "otevře zprávu v novém okně\n"
+"otevře soubor zprávy rfc822 v novém okně\n"
 "určí adresář se soubory uživatelského nastavení\n"
 "ukončí Sylpheed\n"
 "režim ladění\n"
+"bezpečný režim\n"
 "vypíše tuto nápovědu a skončí\n"
 "vypíše informaci o verzi a skončí"
 
@@ -4290,12 +4282,11 @@ msgstr "Přílohy"
 
 #: src/messageview.c:399
 msgid "Switch to attachment list view"
-msgstr ""
+msgstr "Přepnout do zobrazení se seznamem příloh"
 
 #: src/messageview.c:417
-#, fuzzy
 msgid "Save _all attachments..."
-msgstr "S přílohou"
+msgstr "Uložit _všechny přílohy..."
 
 #: src/messageview.c:481
 msgid "Message View - Sylpheed"
@@ -4303,12 +4294,11 @@ msgstr "Zobrazení zprávy - Sylpheed"
 
 #: src/messageview.c:931 src/summaryview.c:3938
 msgid "Original (EML/RFC 822)"
-msgstr ""
+msgstr "Původní (EML/RFC 822)"
 
 #: src/messageview.c:935 src/summaryview.c:3942
-#, fuzzy
 msgid "Text (UTF-8)"
-msgstr "Unicode (UTF-8)"
+msgstr "Text (UTF-8)"
 
 #: src/messageview.c:959 src/summaryview.c:3969
 #, c-format
@@ -4728,7 +4718,7 @@ msgstr "Jméno:"
 
 #: src/prefs_account_dialog.c:1372
 msgid "'Signature 1' will be used by default."
-msgstr ""
+msgstr "\"Podpis 1\" bude použit jako výchozí"
 
 #: src/prefs_account_dialog.c:1407
 msgid "Command output"
@@ -4767,9 +4757,8 @@ msgid "Encrypt when replying to encrypted message"
 msgstr "Šifrovat při odpovídání na šifrovanou zprávu"
 
 #: src/prefs_account_dialog.c:1539
-#, fuzzy
 msgid "Add my own key to the recipients list on encryption"
-msgstr "nelze načíst seznam příjemců."
+msgstr "Přidat můj vlastní klíč do seznamu příjemců při zašifrování"
 
 #: src/prefs_account_dialog.c:1541
 msgid "Use ASCII-armored format for encryption"
@@ -4781,7 +4770,7 @@ msgstr "Používat čistý textový podpis"
 
 #: src/prefs_account_dialog.c:1548
 msgid "Sign / Encryption key"
-msgstr ""
+msgstr "Podpisový / šifrovací klíč"
 
 #: src/prefs_account_dialog.c:1556
 msgid "Use default GnuPG key"
@@ -5104,19 +5093,16 @@ msgstr "Po přijmutí aktualizovat všechny místní složky"
 
 #. New message notify
 #: src/prefs_common_dialog.c:937
-#, fuzzy
 msgid "New message notification"
-msgstr "Používat autentizaci"
+msgstr "Oznámení o nové zprávě"
 
 #: src/prefs_common_dialog.c:950
-#, fuzzy
 msgid "Show notification window when new messages arrive"
-msgstr "Vykonávat příkaz ihned při přijmutí nových zpráv"
+msgstr "Zobrazit okno s oznámením při přijetí nové zprávy"
 
 #: src/prefs_common_dialog.c:961
-#, fuzzy
 msgid "Display window for"
-msgstr "Zobrazovat dialog odesílání"
+msgstr "Zobrazit okno po dobu"
 
 #: src/prefs_common_dialog.c:973 src/prefs_common_dialog.c:3239
 msgid "second(s)"
@@ -5124,22 +5110,19 @@ msgstr "sekund"
 
 #: src/prefs_common_dialog.c:988
 msgid "0: don't auto-close"
-msgstr ""
+msgstr "0: automaticky nezavírat"
 
 #: src/prefs_common_dialog.c:998
-#, fuzzy
 msgid "Play sound when new messages arrive"
-msgstr "Vykonávat příkaz ihned při přijmutí nových zpráv"
+msgstr "Přehrát zvuk při přijetí nové zprávy"
 
 #: src/prefs_common_dialog.c:1004
-#, fuzzy
 msgid "Sound file"
-msgstr "Nelze načíst soubor."
+msgstr "Zvukový soubor"
 
 #: src/prefs_common_dialog.c:1023 src/prefs_common_dialog.c:1027
-#, fuzzy
 msgid "Execute command when new messages arrive"
-msgstr "Vykonávat příkaz ihned při přijmutí nových zpráv"
+msgstr "Spustit příkaz při přijetí nové zprávy"
 
 #: src/prefs_common_dialog.c:1034 src/prefs_common_dialog.c:3076
 #: src/prefs_common_dialog.c:3098 src/prefs_common_dialog.c:3120
@@ -5441,7 +5424,7 @@ msgstr "Zobrazovat HTML jako prostý text"
 
 #: src/prefs_common_dialog.c:2013
 msgid "Prefer HTML in multipart/alternative for display"
-msgstr ""
+msgstr "Upřednostňovat HTML u zpráv o více částech s alternativami"
 
 #: src/prefs_common_dialog.c:2015
 msgid "Treat HTML only messages as attachment"
@@ -5477,24 +5460,23 @@ msgstr "Krok"
 
 #: src/prefs_common_dialog.c:2133
 msgid "Position of attachment tool button:"
-msgstr ""
+msgstr "Umístění tlačítka nástroje pro práci s přílohami:"
 
 #: src/prefs_common_dialog.c:2138
 msgid "Left"
-msgstr ""
+msgstr "Vlevo"
 
 #: src/prefs_common_dialog.c:2146
 msgid "Right"
-msgstr ""
+msgstr "Vpravo"
 
 #: src/prefs_common_dialog.c:2154
 msgid "Toggle attachment list view with tab"
-msgstr ""
+msgstr "Přepínat na zobrazení se seznamem příloh pomocí tabulátoru"
 
 #: src/prefs_common_dialog.c:2158
-#, fuzzy
 msgid "Show attached files first on message view"
-msgstr "Zobrazovat krátké záhlaví při zobrazení zprávy"
+msgstr "Při zobrazení zprávy zobrazovat nejprve přiložené soubory"
 
 #: src/prefs_common_dialog.c:2160
 msgid "Images"
@@ -5566,7 +5548,7 @@ msgstr "Vymazávat nevyžádanou poštu ze serveru při příjmu"
 
 #: src/prefs_common_dialog.c:2458
 msgid "Do not classify message as junk if sender is in the address book"
-msgstr ""
+msgstr "Neoznačovat zprávy jako nevyžádané, pokud je odesílatel v adresáři"
 
 #: src/prefs_common_dialog.c:2460
 msgid "Mark filtered junk mails as read"
@@ -5746,19 +5728,19 @@ msgstr "Varovat, pokud jsou některé zprávy pozdržené"
 
 #: src/prefs_common_dialog.c:2910
 msgid "Online mode"
-msgstr ""
+msgstr "Režim online"
 
 #: src/prefs_common_dialog.c:2922
 msgid "Start as online"
-msgstr ""
+msgstr "Spustit v režimu on-line"
 
 #: src/prefs_common_dialog.c:2930
 msgid "Start as offline"
-msgstr ""
+msgstr "Spustit v režimu off-line"
 
 #: src/prefs_common_dialog.c:2938
 msgid "Remember previous mode"
-msgstr ""
+msgstr "Pamatovat si předchozí režim"
 
 #: src/prefs_common_dialog.c:3002
 #, c-format
@@ -6433,9 +6415,8 @@ msgid "Destination folder is not specified."
 msgstr "Není zadáno místo určení."
 
 #: src/prefs_filter_edit.c:1863
-#, fuzzy
 msgid "The specified destination folder does not exist."
-msgstr "Zdrojový soubor neexistuje."
+msgstr "Zadaná cílová složka neexistuje."
 
 #: src/prefs_filter_edit.c:1960
 msgid "Invalid condition exists."
@@ -6996,9 +6977,8 @@ msgid "Last 7 days"
 msgstr "Za posledních sedm dnů"
 
 #: src/quick_search.c:117
-#, fuzzy
 msgid "Last 30 days"
-msgstr "Za posledních pět dnů"
+msgstr "Za posledních 30 dnů"
 
 #: src/quick_search.c:119
 msgid "In addressbook"
@@ -7045,9 +7025,8 @@ msgid "_Get"
 msgstr "_Přijmout"
 
 #: src/rpop3.c:251 src/rpop3.c:1105
-#, fuzzy
 msgid "_Resume"
-msgstr "/_Odstranit"
+msgstr "Pok_račovat"
 
 #: src/rpop3.c:254
 msgid "_Help"
@@ -7124,9 +7103,9 @@ msgid "Opened message %d"
 msgstr "Otevřena zpráva %d"
 
 #: src/rpop3.c:1090
-#, fuzzy, c-format
+#, c-format
 msgid "Retrieved %d (of %d) message headers"
-msgstr "Přijatých záhlaví zpráv %d"
+msgstr "Přijato %d (z %d) záhlaví zpráv"
 
 #: src/rpop3.c:1094
 #, c-format
@@ -7151,19 +7130,18 @@ msgstr ""
 "Tato operace nemůže být vrácena zpět."
 
 #: src/select-keys.c:97
-#, fuzzy, c-format
+#, c-format
 msgid "Please select key for \"%s\""
-msgstr "Vyberte prosím klíč pro \"%s\""
+msgstr "Vyberte prosím klíč k \"%s\""
 
 #: src/select-keys.c:100
-#, fuzzy, c-format
+#, c-format
 msgid "Collecting info for \"%s\" ... %c"
-msgstr "Získávají se informace o \"%s\"... %c"
+msgstr "Sběr informací k \"%s\" ... %c"
 
 #: src/select-keys.c:284
-#, fuzzy
 msgid "Select encryption keys"
-msgstr "Vybrat cílový soubor"
+msgstr "Vybrat šifrovací klíče"
 
 #: src/select-keys.c:312
 msgid "Key ID"
@@ -7296,9 +7274,9 @@ msgstr ""
 "%s"
 
 #: src/send_message.c:1003
-#, fuzzy, c-format
+#, c-format
 msgid "SMTP server not found: %s:%d"
-msgstr "Nebyl zadán server SMTP."
+msgstr "Server SMTP nenalezen: %s:%d"
 
 #: src/send_message.c:1005
 msgid "Can't connect to SMTP server."
@@ -7780,9 +7758,8 @@ msgid "Creating summary view...\n"
 msgstr "Vytváří se souhrn zpráv...\n"
 
 #: src/summaryview.c:556
-#, fuzzy
 msgid "Toggle message view"
-msgstr "Vytváří se zobrazení zprávy...\n"
+msgstr "Přepnout režim zobrazování zpráv"
 
 #: src/summaryview.c:683
 #, c-format
@@ -7904,9 +7881,9 @@ msgid "%s%d copied"
 msgstr "zkopírovaných %s%d"
 
 #: src/summaryview.c:2297
-#, fuzzy, c-format
+#, c-format
 msgid "%d/%d new, %d/%d unread, %d/%d total"
-msgstr "nových %d, nepřečtených %d, celkem %d"
+msgstr "nových %d/%d, nepřečtených %d/%d, celkem %d/%d"
 
 #: src/summaryview.c:2306
 #, c-format
@@ -8034,9 +8011,8 @@ msgid "This message is encrypted, but its decryption failed.\n"
 msgstr "Tato zpráva je šifrovaná, ale nepodařilo se ji dešifrovat.\n"
 
 #: src/textview.c:859
-#, fuzzy
 msgid "_Copy file name"
-msgstr "Název souboru"
+msgstr "_Kopírovat název souboru"
 
 #: src/textview.c:1201
 msgid "This message can't be displayed.\n"
@@ -8161,17 +8137,16 @@ msgstr "Nezdařilo se získání informace o verzi zásuvných modulů."
 
 #: plugin/attachment_tool/attachment_tool.c:50
 #: plugin/attachment_tool/attachment_tool.c:272
-#, fuzzy
 msgid "Remove attachments"
-msgstr "S přílohou"
+msgstr "Odstranit přílohy"
 
 #: plugin/attachment_tool/attachment_tool.c:264
 msgid "This tool is available on local folders only."
-msgstr ""
+msgstr "Tento nástroj je dostupný jen u místních složek."
 
 #: plugin/attachment_tool/attachment_tool.c:273
 msgid "Do you really remove attached files from the selected messages?"
-msgstr ""
+msgstr "Opravdu chcete odstranit přiložené soubory u vybraných zpráv?"
 
 #~ msgid "Select Keys"
 #~ msgstr "Vybrat klíče"

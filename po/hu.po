@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the Sylpheed package.
 # Székely Kriszitán <szekelyk@different.hu>, 2001.
 # Zahemszky Gábor <Gabor@Zahemszky.HU>, 2002, 2003, 2004.
-# Németh Tamás <ntomasz@uhuklub.hu>, 2005, 2006, 2007, 2008, 2009, 2010, 2012, 2013.
+# Németh Tamás <ntomasz@vipmail.hu>, 2005, 2006, 2007, 2008, 2009, 2010, 2012, 2013, 2017.
 msgid ""
 msgstr ""
-"Project-Id-Version: Sylpheed-3.4\n"
+"Project-Id-Version: Sylpheed-3.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-14 17:39+0900\n"
-"PO-Revision-Date: 2013-09-19 20:54+0200\n"
-"Last-Translator: Németh Tamás <ntomasz@uhuklub.hu>\n"
+"POT-Creation-Date: 2018-01-15 14:35+0900\n"
+"PO-Revision-Date: 2017-08-25 12:06+0200\n"
+"Last-Translator: Németh Tamás <ntomasz@vipmail.hu>\n"
 "Language-Team: Hungarian <NONE>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
@@ -130,9 +130,8 @@ msgid "can't create mailbox\n"
 msgstr "nem lehet létrehozni postaládát\n"
 
 #: libsylph/imap.c:2478
-#, fuzzy
 msgid "can't subscribe mailbox\n"
-msgstr "nem lehet létrehozni postaládát\n"
+msgstr "nem lehet előjegyeztetni a postaládát\n"
 
 #: libsylph/imap.c:2603
 #, c-format
@@ -1671,9 +1670,9 @@ msgid "%s - Compose%s"
 msgstr "%s - Levél írása%s"
 
 #: src/compose.c:3015 src/compose.c:6216 src/prefs_account_dialog.c:1352
-#, fuzzy, c-format
+#, c-format
 msgid "Signature %d"
-msgstr "Aláírás"
+msgstr "%d aláírás"
 
 #: src/compose.c:3081
 msgid "Recipient is not specified."
@@ -1872,14 +1871,12 @@ msgid "Size"
 msgstr "Méret"
 
 #: src/compose.c:6208
-#, fuzzy
 msgid "Signature:"
-msgstr "Aláírás"
+msgstr "Aláírás:"
 
 #: src/compose.c:6223
-#, fuzzy
 msgid "Change signature"
-msgstr "Digitális aláírás ellenőrzése"
+msgstr "Másik aláírás"
 
 #: src/compose.c:6803
 msgid "Invalid MIME type."
@@ -3258,7 +3255,7 @@ msgstr "  --ipcport portszám      IPC távoli parancsok portjának megadása"
 
 #: src/main.c:698
 msgid "  --dpi dpinum           force DPI"
-msgstr ""
+msgstr "  --dpi dpiszám           megadott DPI használata"
 
 #: src/main.c:699
 msgid "  --exit                 exit Sylpheed"
@@ -3881,21 +3878,19 @@ msgstr "/_Eszközök/_Duplikált levelek törlése"
 
 #: src/mainwindow.c:872
 msgid "/_Tools/C_oncatenate separated messages"
-msgstr "/_Eszközök/_Szétválasztott levelek összekapcsolása"
+msgstr "/_Eszközök/Szé_tválasztott levelek összekapcsolása"
 
 #: src/mainwindow.c:875
 msgid "/_Tools/E_xecute marked process"
 msgstr "/_Eszközök/Megjelölt _processz futtatása"
 
 #: src/mainwindow.c:877
-#, fuzzy
 msgid "/_Tools/Op_en configuration folder"
-msgstr "/_Eszközök/Levéls_zemét szűrése a mappában"
+msgstr "/_Eszközök/Kon_figurációs mappa megnyitása"
 
 #: src/mainwindow.c:879
-#, fuzzy
 msgid "/_Tools/Open a_ttachments folder"
-msgstr "/_Eszközök/Össz_es levél szűrése a mappában"
+msgstr "/_Eszközök/Csatolmányo_k mappa megnyitása"
 
 #: src/mainwindow.c:881
 msgid "/_Tools/_Log window"
@@ -4097,7 +4092,7 @@ msgstr "/_Továbbítás"
 
 #: src/mainwindow.c:2616 src/summaryview.c:446
 msgid "/For_ward as attachment"
-msgstr "/Csatoláské_nt továbbít"
+msgstr "/Csatolmányké_nt továbbít"
 
 #: src/mainwindow.c:2617 src/summaryview.c:447
 msgid "/Redirec_t"
@@ -4724,7 +4719,7 @@ msgstr "Név:"
 
 #: src/prefs_account_dialog.c:1372
 msgid "'Signature 1' will be used by default."
-msgstr ""
+msgstr "'1-es aláírás' lesz használva alapértelmezetten."
 
 #: src/prefs_account_dialog.c:1407
 msgid "Command output"
@@ -4763,9 +4758,8 @@ msgid "Encrypt when replying to encrypted message"
 msgstr "Titkosítás, ha titkosított levélre válaszol"
 
 #: src/prefs_account_dialog.c:1539
-#, fuzzy
 msgid "Add my own key to the recipients list on encryption"
-msgstr "címzett lista nem hozzáférhető."
+msgstr "Titkosításnál adja hozzá a címzettekhez a saját kulcsomat"
 
 #: src/prefs_account_dialog.c:1541
 msgid "Use ASCII-armored format for encryption"
@@ -4777,7 +4771,7 @@ msgstr "Szöveges aláírás használata"
 
 #: src/prefs_account_dialog.c:1548
 msgid "Sign / Encryption key"
-msgstr ""
+msgstr "Aláíró / Titkosító kulcs"
 
 #: src/prefs_account_dialog.c:1556
 msgid "Use default GnuPG key"
@@ -4793,7 +4787,7 @@ msgstr "Kulcs kézi megadása"
 
 #: src/prefs_account_dialog.c:1590
 msgid "User or key ID:"
-msgstr "Felhasználó vagy kulcs azonosító:"
+msgstr "Felhasználó- vagy kulcs azonosító:"
 
 #: src/prefs_account_dialog.c:1736 src/prefs_account_dialog.c:1756
 #: src/prefs_account_dialog.c:1775 src/prefs_account_dialog.c:1796
@@ -5109,9 +5103,8 @@ msgid "Show notification window when new messages arrive"
 msgstr "Figyelmeztető ablak megjelenítése, amikor új levél érkezik"
 
 #: src/prefs_common_dialog.c:961
-#, fuzzy
 msgid "Display window for"
-msgstr "Küldési ablak megjelenítése"
+msgstr "Ablak megjelenítése ehhez:"
 
 #: src/prefs_common_dialog.c:973 src/prefs_common_dialog.c:3239
 msgid "second(s)"
@@ -5119,7 +5112,7 @@ msgstr "másodperc"
 
 #: src/prefs_common_dialog.c:988
 msgid "0: don't auto-close"
-msgstr ""
+msgstr "0: nincs automata bezárás"
 
 #: src/prefs_common_dialog.c:998
 msgid "Play sound when new messages arrive"
@@ -5741,19 +5734,19 @@ msgstr "Várakozó levelek esetén figyelmeztet"
 
 #: src/prefs_common_dialog.c:2910
 msgid "Online mode"
-msgstr ""
+msgstr "Kapcsolódva mód"
 
 #: src/prefs_common_dialog.c:2922
 msgid "Start as online"
-msgstr ""
+msgstr "Indítás kapcsolódva módban"
 
 #: src/prefs_common_dialog.c:2930
 msgid "Start as offline"
-msgstr ""
+msgstr "Indítás kapcsolat nélküli módban"
 
 #: src/prefs_common_dialog.c:2938
 msgid "Remember previous mode"
-msgstr ""
+msgstr "Emlékezzen az előző módra"
 
 #: src/prefs_common_dialog.c:3002
 #, c-format
@@ -6852,7 +6845,7 @@ msgstr "/_Továbbítás"
 #: src/query_search.c:265
 #, fuzzy
 msgid "For_ward as attachment"
-msgstr "/Csatoláské_nt továbbít"
+msgstr "/Csatolmányké_nt továbbít"
 
 #: src/query_search.c:266
 #, fuzzy
@@ -7053,7 +7046,7 @@ msgstr "_Névjegy"
 #: src/rpop3.c:357
 #, c-format
 msgid "%s - POP3 Remote mailbox"
-msgstr "%s - POP3 Távoli postaláda"
+msgstr "%s - POP3 távoli postaláda"
 
 #: src/rpop3.c:433 src/summaryview.c:5537
 msgid "No."
@@ -7144,19 +7137,18 @@ msgstr ""
 "Ezt a műveletet nem lehet visszavonni."
 
 #: src/select-keys.c:97
-#, fuzzy, c-format
+#, c-format
 msgid "Please select key for \"%s\""
-msgstr "Válasszon kulcsot '%s' számára"
+msgstr "Válasszon kulcsot \"%s\" számára"
 
 #: src/select-keys.c:100
-#, fuzzy, c-format
+#, c-format
 msgid "Collecting info for \"%s\" ... %c"
-msgstr "Információ gyűjtés '%s' ... %c"
+msgstr "Információ gyűjtés \"%s\" ... %c"
 
 #: src/select-keys.c:284
-#, fuzzy
 msgid "Select encryption keys"
-msgstr "Célfájl választása"
+msgstr "Titkosító kulcs választás"
 
 #: src/select-keys.c:312
 msgid "Key ID"
@@ -8157,9 +8149,3 @@ msgstr "Ez az eszköz csak a helyi mappákhoz elérhető."
 #: plugin/attachment_tool/attachment_tool.c:273
 msgid "Do you really remove attached files from the selected messages?"
 msgstr "Tényleg eltávolítja a csatolt fájlokat a kiválasztott levelekből?"
-
-#~ msgid "Select Keys"
-#~ msgstr "Kulcs választás"
-
-#~ msgid "Sign key"
-#~ msgstr "Digitális aláírás kulcs"
