@@ -2,7 +2,7 @@
 ;!define HAVE_AUTOENC_PLUGIN
 
 !define PRODUCT_NAME "Sylpheed"
-!define PRODUCT_VERSION "3.6"
+!define PRODUCT_VERSION "3.7"
 
 !ifdef SYLPHEED_PRO
 !define PRODUCT_PUBLISHER "SRA OSS, Inc. Japan"
