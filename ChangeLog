@@ -1,3 +1,10 @@
+2020-05-28
+
+	* src/update_check.c: win32: fixed execution of update-manager.exe
+	  by using ShellExecute() API instead of _spawn() to invoke UAC
+	  elevation properly.
+	  Directly open download URL with browser if the above failed.
+
 2018-01-30
 
 	* version 3.7.0

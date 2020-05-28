@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2015 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2020 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,6 +44,10 @@
 #include "utils.h"
 #include "version.h"
 #include "plugin.h"
+
+#ifdef G_OS_WIN32
+#  include <windows.h>
+#endif
 
 static gchar *check_url = NULL;
 static gchar *download_url = NULL;
@@ -135,11 +139,38 @@ static void parse_version_string(const gchar *ver, gint *major, gint *minor,
 }
 
 #ifdef G_OS_WIN32
+static gboolean spawn_command(const gchar *exe, const gchar *args)
+{
+	wchar_t *wpath;
+	wchar_t *wargs;
+	HINSTANCE h;
+
+	wpath = g_utf8_to_utf16(exe, -1, NULL, NULL, NULL);
+	if (wpath == NULL) {
+		return FALSE;
+	}
+	wargs = g_utf8_to_utf16(args, -1, NULL, NULL, NULL);
+	if (wargs == NULL) {
+		g_free(wpath);
+		return FALSE;
+	}
+
+	h = ShellExecuteW(NULL, L"open", wpath, wargs, NULL, SW_SHOWNORMAL);
+	g_free(wargs);
+	g_free(wpath);
+
+	if ((gint)h <= 32) {
+		g_warning("Couldn't execute %s %s: (%d)", exe, args, (gint)h);
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
 static gboolean spawn_update_manager(void)
 {
-	gchar *src = NULL, *dest = NULL, *quoted_uri = NULL;
-	gchar *cmdline[] = {NULL, "/uri", NULL, NULL};
-	GError *error = NULL;
+	gchar *src = NULL, *dest = NULL;
+	gchar *args;
 	gboolean ret = FALSE;
 
 	src = g_strconcat(get_startup_dir(), G_DIR_SEPARATOR_S, "update-manager.exe", NULL);
@@ -152,25 +183,14 @@ static gboolean spawn_update_manager(void)
 		g_warning("Couldn't copy update-manager.exe");
 		goto finish;
 	}
-	quoted_uri = g_strdup_printf("'%s'", download_url);
-	cmdline[0] = dest;
-	cmdline[2] = quoted_uri;
-	if (g_spawn_async
-		(NULL, cmdline, NULL,
-		 G_SPAWN_STDOUT_TO_DEV_NULL | G_SPAWN_STDERR_TO_DEV_NULL,
-		 NULL, NULL, NULL, &error) == FALSE) {
-		g_warning("Couldn't execute update-manager.exe");
-		if (error) {
-			g_warning("g_spawn_async: %s", error->message);
-			g_error_free(error);
-		}
-	} else {
-		ret = TRUE;
-	}
+	debug_print("copied update-manager.exe to %s\n", dest);
+	args = g_strdup_printf("/uri \"%s\"", download_url);
+	ret = spawn_command(dest, args);
+	g_free(args);
+
 finish:
-	g_free(src);
 	g_free(dest);
-	g_free(quoted_uri);
+	g_free(src);
 	return ret;
 }
 
@@ -283,7 +303,8 @@ static void update_dialog(const gchar *new_ver, const gchar *disp_ver,
 		if (!download_url)
 			set_default_download_url();
 		if (!spawn_update_manager())
-			open_uri(jump_url, prefs_common.uri_cmd);
+			open_uri(download_url ? download_url : jump_url,
+				 prefs_common.uri_cmd);
 #else
 		open_uri(jump_url, prefs_common.uri_cmd);
 #endif
