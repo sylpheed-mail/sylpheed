@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2012 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2020 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -67,10 +67,10 @@
 #define ADDRESS_BOOK		"addressbook.xml"
 #define MANUAL_HTML_INDEX	"sylpheed.html"
 #define FAQ_HTML_INDEX		"sylpheed-faq.html"
-#define HOMEPAGE_URI		"http://sylpheed.sraoss.jp/"
-#define DOWNLOAD_URI		"http://sylpheed.sraoss.jp/download.php"
+#define HOMEPAGE_URI		"https://sylpheed.sraoss.jp/"
+#define DOWNLOAD_URI		"https://sylpheed.sraoss.jp/download.php"
 #define VERSION_URI		"http://sylpheed.sraoss.jp/version.txt"
-#define PLUGIN_HOMEPAGE_URI	"http://sylpheed.sraoss.jp/en/plugin.html"
+#define PLUGIN_HOMEPAGE_URI	"https://sylpheed.sraoss.jp/en/plugin.html"
 #define PLUGIN_VERSION_URI	"http://sylpheed.sraoss.jp/plugin_version.txt"
 #define FOLDER_LIST		"folderlist.xml"
 #define CACHE_FILE		".sylpheed_cache"
