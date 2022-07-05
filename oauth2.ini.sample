@@ -1,0 +1,17 @@
+[domain.onmicrosoft.com]
+auth_uri=https://login.microsoftonline.com/common/oauth2/v2.0/authorize
+token_uri=https://login.microsoftonline.com/common/oauth2/v2.0/token
+redirect_uri=http://localhost:8089/
+client_id=<enter client id here>
+client_secret=<enter client secret here>
+scope=offline_access https://outlook.office.com/POP.AccessAsUser.All https://outlook.office.com/IMAP.AccessAsUser.All https://outlook.office.com/SMTP.Send
+local_port=8089
+
+[gmail.com]
+auth_uri=https://accounts.google.com/o/oauth2/auth
+token_uri=https://oauth2.googleapis.com/token
+redirect_uri=http://localhost:8089/
+client_id=<enter client id here>
+client_secret=<enter client secret here>
+scope=https://mail.google.com/
+local_port=8089

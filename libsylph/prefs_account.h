@@ -187,6 +187,14 @@ struct _PrefsAccount
 	/* Compose */
 	gchar *sig_names[10];
 	gchar *sig_texts[10];
+
+	/* Receive */
+	gint pop_auth_type;
+
+	/* OAuth2 token */
+	gchar *token;
+	gchar *refresh_token;
+	gint token_expire;
 };
 
 PrefsAccount *prefs_account_new		(void);

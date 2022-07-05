@@ -29,6 +29,7 @@
 #include "smtp.h"
 #include "md5_hmac.h"
 #include "base64.h"
+#include "oauth2.h"
 #include "utils.h"
 
 static void smtp_session_destroy(Session *session);
@@ -40,6 +41,7 @@ static gint smtp_starttls(SMTPSession *session);
 static gint smtp_auth_cram_md5(SMTPSession *session);
 static gint smtp_auth_plain(SMTPSession *session);
 static gint smtp_auth_login(SMTPSession *session);
+static gint smtp_auth_oauth2(SMTPSession *session);
 
 static gint smtp_ehlo(SMTPSession *session);
 static gint smtp_ehlo_recv(SMTPSession *session, const gchar *msg);
@@ -100,6 +102,16 @@ Session *smtp_session_new(void)
 	return SESSION(session);
 }
 
+Session *smtp_session_new_with_account(PrefsAccount *account)
+{
+	Session *session;
+
+	session = smtp_session_new();
+	session->data = account;
+
+	return session;
+}
+
 static void smtp_session_destroy(Session *session)
 {
 	SMTPSession *smtp_session = SMTP_SESSION(session);
@@ -141,7 +153,11 @@ static gint smtp_auth(SMTPSession *session)
 
 	session->state = SMTP_AUTH;
 
-	if (session->forced_auth_type == SMTPAUTH_CRAM_MD5 ||
+	if (session->forced_auth_type == SMTPAUTH_OAUTH2 ||
+	    (session->forced_auth_type == 0 &&
+	     (session->avail_auth_type & SMTPAUTH_OAUTH2) != 0))
+		smtp_auth_oauth2(session);
+	else if (session->forced_auth_type == SMTPAUTH_CRAM_MD5 ||
 	    (session->forced_auth_type == 0 &&
 	     (session->avail_auth_type & SMTPAUTH_CRAM_MD5) != 0))
 		smtp_auth_cram_md5(session);
@@ -223,6 +239,28 @@ static gint smtp_auth_recv(SMTPSession *session, const gchar *msg)
 			log_print("ESMTP> *\n");
 		}
 		break;
+	case SMTPAUTH_OAUTH2:
+		session->state = SMTP_AUTH_OAUTH2;
+
+		if (!strncmp(msg, "334 ", 4)) {
+			gchar *response64;
+			PrefsAccount *ac = (PrefsAccount *)SESSION(session)->data;
+			if (ac && !ac->token)
+				oauth2_get_token(session->user, &ac->token, NULL, NULL);
+			if (!ac || !ac->token) {
+				log_warning("Could not get OAuth2 token.\n");
+				session_send_msg(SESSION(session), SESSION_MSG_NORMAL, "*");
+				log_print("ESMTP> *\n");
+				break;
+			}
+
+			response64 = oauth2_get_sasl_xoauth2(session->user, ac->token);
+			session_send_msg(SESSION(session), SESSION_MSG_NORMAL,
+					 response64);
+			log_print("ESMTP> %s\n", response64);
+			g_free(response64);
+		}
+		break;
 	case SMTPAUTH_DIGEST_MD5:
         default:
         	/* stop smtp_auth when no correct authtype */
@@ -285,6 +323,8 @@ static gint smtp_ehlo_recv(SMTPSession *session, const gchar *msg)
 				session->avail_auth_type |= SMTPAUTH_CRAM_MD5;
 			if (strcasestr(p, "DIGEST-MD5"))
 				session->avail_auth_type |= SMTPAUTH_DIGEST_MD5;
+			if (strcasestr(p, "XOAUTH2"))
+				session->avail_auth_type |= SMTPAUTH_OAUTH2;
 		}
 		return SM_OK;
 	} else if ((msg[0] == '1' || msg[0] == '2' || msg[0] == '3') &&
@@ -364,6 +404,17 @@ static gint smtp_auth_login(SMTPSession *session)
 
 	session_send_msg(SESSION(session), SESSION_MSG_NORMAL, "AUTH LOGIN");
 	log_print("ESMTP> AUTH LOGIN\n");
+
+	return SM_OK;
+}
+
+static gint smtp_auth_oauth2(SMTPSession *session)
+{
+	session->state = SMTP_AUTH;
+	session->auth_type = SMTPAUTH_OAUTH2;
+
+	session_send_msg(SESSION(session), SESSION_MSG_NORMAL, "AUTH XOAUTH2");
+	log_print("ESMTP> AUTH XOAUTH2\n");
 
 	return SM_OK;
 }
@@ -475,6 +526,7 @@ static gint smtp_session_recv_msg(Session *session, const gchar *msg)
 	case SMTP_AUTH_LOGIN_USER:
 	case SMTP_AUTH_LOGIN_PASS:
 	case SMTP_AUTH_CRAM_MD5:
+	case SMTP_AUTH_OAUTH2:
 		log_print("ESMTP< %s\n", msg);
 		break;
 	default:
@@ -576,6 +628,7 @@ static gint smtp_session_recv_msg(Session *session, const gchar *msg)
 	case SMTP_AUTH_PLAIN:
 	case SMTP_AUTH_LOGIN_PASS:
 	case SMTP_AUTH_CRAM_MD5:
+	case SMTP_AUTH_OAUTH2:
 		smtp_from(smtp_session);
 		break;
 	case SMTP_FROM:

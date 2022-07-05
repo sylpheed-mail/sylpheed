@@ -5,16 +5,16 @@ PACKAGE=sylpheed
 
 dnl version number
 MAJOR_VERSION=3
-MINOR_VERSION=7
+MINOR_VERSION=8
 MICRO_VERSION=0
 INTERFACE_AGE=0
 BINARY_AGE=0
-EXTRA_VERSION=
-BUILD_REVISION=1185
+EXTRA_VERSION=beta1
+BUILD_REVISION=1186
 VERSION=$MAJOR_VERSION.$MINOR_VERSION.$MICRO_VERSION$EXTRA_VERSION
 
 dnl define if this is a development release
-dnl DEVEL_VERSION=1
+DEVEL_VERSION=1
 
 dnl set $target
 AC_CANONICAL_SYSTEM
@@ -43,9 +43,9 @@ LT_RELEASE=$MAJOR_VERSION.$MINOR_VERSION
 dnl LT_CURRENT=`expr 1 + $MICRO_VERSION - $INTERFACE_AGE`
 dnl LT_REVISION=$INTERFACE_AGE
 dnl LT_AGE=`expr $BINARY_AGE - $INTERFACE_AGE`
-LT_CURRENT=4
+LT_CURRENT=5
 LT_REVISION=0
-LT_AGE=3
+LT_AGE=4
 AC_SUBST(LT_RELEASE)
 AC_SUBST(LT_CURRENT)
 AC_SUBST(LT_REVISION)
@@ -362,6 +362,16 @@ else
 	AC_MSG_RESULT(no)
 fi
 
+dnl Check for libcurl support
+AC_ARG_ENABLE(libcurl,
+	[  --disable-libcurl       Do not use libcurl],
+	[ac_cv_enable_libcurl=$enableval], [ac_cv_enable_libcurl=yes])
+AC_MSG_CHECKING([whether to use libcurl])
+if test "$ac_cv_enable_libcurl" = yes; then
+	AC_MSG_RESULT(yes)
+	AC_CHECK_LIB(curl, curl_global_init,,[ac_cv_enable_libcurl=no])
+fi
+
 dnl check additional libraries
 AC_CHECK_LIB(xpg4, setlocale)
 AC_CHECK_LIB(resolv, res_init)
@@ -536,6 +546,7 @@ echo "IPv6          : $ac_cv_enable_ipv6"
 echo "GtkSpell      : $ac_cv_enable_gtkspell"
 echo "Oniguruma     : $ac_cv_enable_oniguruma"
 echo "GThread       : $use_threads"
+echo "libcurl       : $ac_cv_enable_libcurl"
 echo ""
 echo "The binary will be installed in $prefix/bin"
 echo ""

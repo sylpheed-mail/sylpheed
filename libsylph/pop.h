@@ -55,6 +55,8 @@ typedef enum {
 	POP3_LOGOUT,
 	POP3_DONE,
 	POP3_ERROR,
+	POP3_GETAUTH_AUTH,
+	POP3_GETAUTH_AUTH_DATA,
 
 	N_POP3_STATE
 } Pop3State;
@@ -95,6 +97,14 @@ typedef enum {
 	DROP_DELETE = 2,
 	DROP_ERROR = -1
 } Pop3DropValue;
+
+typedef enum
+{
+	POP3_AUTH_LOGIN         = 1 << 0,
+	POP3_AUTH_CRAM_MD5      = 1 << 1,
+	POP3_AUTH_PLAIN         = 1 << 2,
+	POP3_AUTH_OAUTH2        = 1 << 3,
+} Pop3AuthType;
 
 struct _Pop3MsgInfo
 {
@@ -145,7 +155,7 @@ struct _Pop3Session
 				 const gchar	*file);
 };
 
-#define POPBUFSIZE	512
+#define POPBUFSIZE	8192
 /* #define IDLEN	128 */
 #define IDLEN		POPBUFSIZE
 

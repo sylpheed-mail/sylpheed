@@ -635,7 +635,7 @@ static gint send_message_smtp(PrefsAccount *ac_prefs, GSList *to_list, FILE *fp)
 	g_return_val_if_fail(to_list != NULL, -1);
 	g_return_val_if_fail(fp != NULL, -1);
 
-	session = smtp_session_new();
+	session = smtp_session_new_with_account(ac_prefs);
 	smtp_session = SMTP_SESSION(session);
 
 	smtp_session->hostname =

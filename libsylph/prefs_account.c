@@ -55,6 +55,7 @@ static PrefParam param[] = {
 
 	/* Receive */
 	{"use_apop_auth", "FALSE", &tmp_ac_prefs.use_apop_auth, P_BOOL},
+	{"pop_auth_method", "0", &tmp_ac_prefs.pop_auth_type, P_ENUM},
 	{"remove_mail", "TRUE", &tmp_ac_prefs.rmmail, P_BOOL},
 	{"message_leave_time", "7", &tmp_ac_prefs.msg_leave_time, P_INT},
 	{"get_all_mail", "FALSE", &tmp_ac_prefs.getall, P_BOOL},

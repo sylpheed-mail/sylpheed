@@ -37,6 +37,7 @@
 #include "md5.h"
 #include "prefs.h"
 #include "prefs_account.h"
+#include "oauth2.h"
 #include "utils.h"
 #include "recv.h"
 
@@ -45,6 +46,10 @@ gint pop3_greeting_recv		(Pop3Session *session,
 gint pop3_getauth_user_send	(Pop3Session *session);
 gint pop3_getauth_pass_send	(Pop3Session *session);
 gint pop3_getauth_apop_send	(Pop3Session *session);
+gint pop3_getauth_auth_send	(Pop3Session *session);
+gint pop3_getauth_auth_recv	(Pop3Session *session,
+				 const gchar *msg);
+gint pop3_getauth_auth_data_send(Pop3Session *session);
 #if USE_SSL
 gint pop3_stls_send		(Pop3Session *session);
 gint pop3_stls_recv		(Pop3Session *session);
@@ -182,6 +187,56 @@ gint pop3_getauth_apop_send(Pop3Session *session)
 	g_free(md5sum);
 	s_gnet_md5_delete(md5);
 	g_free(apop_str);
+
+	return PS_SUCCESS;
+}
+
+gint pop3_getauth_auth_send(Pop3Session *session)
+{
+	g_return_val_if_fail(session->ac_prefs->pop_auth_type == POP3_AUTH_OAUTH2, -1);
+
+	session->state = POP3_GETAUTH_AUTH;
+
+	pop3_gen_send(session, "AUTH XOAUTH2");
+	return PS_SUCCESS;
+}
+
+gint pop3_getauth_auth_recv(Pop3Session *session, const gchar *msg)
+{
+	log_print("POP3< %s\n", msg);
+
+	if (!msg || msg[0] != '+') {
+		log_warning(_("POP3 protocol error\n"));
+		session->error_val = PS_PROTOCOL;
+		return PS_PROTOCOL;
+	}
+
+	return PS_SUCCESS;
+}
+
+gint pop3_getauth_auth_data_send(Pop3Session *session)
+{
+	gchar *p;
+	gchar *response;
+	gchar *response64;
+	PrefsAccount *ac = session->ac_prefs;
+
+	g_return_val_if_fail(ac->pop_auth_type == POP3_AUTH_OAUTH2, -1);
+	g_return_val_if_fail(session->user != NULL, -1);
+
+	session->state = POP3_GETAUTH_AUTH_DATA;
+
+	if (!ac->token)
+		oauth2_get_token(session->user, &ac->token, NULL, NULL);
+	if (!ac->token) {
+		log_warning("Could not get OAuth2 token.\n");
+		session->error_val = PS_AUTHFAIL;
+		return PS_AUTHFAIL;
+	}
+
+	response64 = oauth2_get_sasl_xoauth2(session->user, ac->token);
+	pop3_gen_send(session, "%s", response64);
+	g_free(response64);
 
 	return PS_SUCCESS;
 }
@@ -703,6 +758,7 @@ Pop3ErrorValue pop3_ok(Pop3Session *session, const gchar *msg)
 			case POP3_GETAUTH_USER:
 			case POP3_GETAUTH_PASS:
 			case POP3_GETAUTH_APOP:
+			case POP3_GETAUTH_AUTH_DATA:
 				log_warning(_("error occurred on authentication\n"));
 				ok = PS_AUTHFAIL;
 				break;
@@ -737,7 +793,8 @@ static gint pop3_session_recv_msg(Session *session, const gchar *msg)
 	const gchar *body;
 
 	body = msg;
-	if (pop3_session->state != POP3_GETRANGE_UIDL_RECV &&
+	if (pop3_session->state != POP3_GETAUTH_AUTH &&
+	    pop3_session->state != POP3_GETRANGE_UIDL_RECV &&
 	    pop3_session->state != POP3_GETSIZE_LIST_RECV) {
 		val = pop3_ok(pop3_session, msg);
 		if (val != PS_SUCCESS) {
@@ -772,7 +829,9 @@ static gint pop3_session_recv_msg(Session *session, const gchar *msg)
 			val = pop3_stls_send(pop3_session);
 		else
 #endif
-		if (pop3_session->ac_prefs->use_apop_auth)
+		if (pop3_session->ac_prefs->pop_auth_type == POP3_AUTH_OAUTH2)
+			val = pop3_getauth_auth_send(pop3_session);
+		else if (pop3_session->ac_prefs->use_apop_auth)
 			val = pop3_getauth_apop_send(pop3_session);
 		else
 			val = pop3_getauth_user_send(pop3_session);
@@ -781,7 +840,9 @@ static gint pop3_session_recv_msg(Session *session, const gchar *msg)
 	case POP3_STLS:
 		if ((val = pop3_stls_recv(pop3_session)) != PS_SUCCESS)
 			return -1;
-		if (pop3_session->ac_prefs->use_apop_auth)
+		if (pop3_session->ac_prefs->pop_auth_type == POP3_AUTH_OAUTH2)
+			val = pop3_getauth_auth_send(pop3_session);
+		else if (pop3_session->ac_prefs->use_apop_auth)
 			val = pop3_getauth_apop_send(pop3_session);
 		else
 			val = pop3_getauth_user_send(pop3_session);
@@ -790,8 +851,14 @@ static gint pop3_session_recv_msg(Session *session, const gchar *msg)
 	case POP3_GETAUTH_USER:
 		val = pop3_getauth_pass_send(pop3_session);
 		break;
+	case POP3_GETAUTH_AUTH:
+		if ((val = pop3_getauth_auth_recv(pop3_session, body)) != PS_SUCCESS)
+			return -1;
+		val = pop3_getauth_auth_data_send(pop3_session);
+		break;
 	case POP3_GETAUTH_PASS:
 	case POP3_GETAUTH_APOP:
+	case POP3_GETAUTH_AUTH_DATA:
 		if (pop3_session->auth_only)
 			val = pop3_logout_send(pop3_session);
 		else

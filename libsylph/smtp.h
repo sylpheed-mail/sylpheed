@@ -55,7 +55,8 @@ typedef enum
 	SMTPAUTH_LOGIN      = 1 << 0,
 	SMTPAUTH_CRAM_MD5   = 1 << 1,
 	SMTPAUTH_DIGEST_MD5 = 1 << 2,
-	SMTPAUTH_PLAIN      = 1 << 3
+	SMTPAUTH_PLAIN      = 1 << 3,
+	SMTPAUTH_OAUTH2     = 1 << 4
 } SMTPAuthType;
 
 typedef enum
@@ -79,6 +80,7 @@ typedef enum
 	SMTP_QUIT,
 	SMTP_ERROR,
 	SMTP_DISCONNECTED,
+	SMTP_AUTH_OAUTH2,
 
 	N_SMTP_PHASE
 } SMTPState;
@@ -111,6 +113,9 @@ struct _SMTPSession
 	gchar *error_msg;
 };
 
-Session *smtp_session_new	(void);
+#include "prefs_account.h"
+
+Session *smtp_session_new		(void);
+Session *smtp_session_new_with_account	(PrefsAccount *account);
 
 #endif /* __SMTP_H__ */

@@ -1,6 +1,6 @@
 SUBDIRS = icons
 
-bin_PROGRAMS = sylpheed
+bin_PROGRAMS = sylpheed syl-auth-helper
 
 sylpheed_SOURCES = \
 	version.h \
@@ -97,6 +97,8 @@ sylpheed_SOURCES = \
 	sylpheed-marshal.c sylpheed-marshal.h \
 	notificationwindow.c notificationwindow.h
 
+syl_auth_helper_SOURCES = syl-auth-helper.c
+
 BUILT_SOURCES = \
 	quote_fmt_lex.c \
 	quote_fmt_parse.c \
@@ -166,6 +168,11 @@ sylpheed_LDADD = \
 	libsylpheed-plugin-0.la \
 	../libsylph/libsylph-0.la \
 	$(SYLPHEED_RES)
+
+syl_auth_helper_LDADD = \
+	$(GLIB_LIBS) \
+	$(LIBICONV) \
+	../libsylph/libsylph-0.la
 
 AM_CPPFLAGS = \
 	-DLOCALEDIR=\""$(localedir)"\" \

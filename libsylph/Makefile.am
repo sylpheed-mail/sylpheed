@@ -25,6 +25,7 @@ libsylph_0_la_SOURCES = \
 	mh.c \
 	news.c \
 	nntp.c \
+	oauth2.c \
 	pop.c \
 	prefs.c \
 	prefs_account.c \
@@ -68,6 +69,7 @@ libsylph_0include_HEADERS = \
 	mh.h \
 	news.h \
 	nntp.h \
+	oauth2.h \
 	pop.h \
 	prefs.h \
 	prefs_account.h \

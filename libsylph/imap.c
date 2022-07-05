@@ -49,6 +49,7 @@
 #include "codeconv.h"
 #include "md5_hmac.h"
 #include "base64.h"
+#include "oauth2.h"
 #include "utils.h"
 #include "prefs_common.h"
 #include "virtual.h"
@@ -613,7 +614,10 @@ static gint imap_auth(IMAPSession *session, const gchar *user,
 
 	switch (type) {
 	case 0:
-		if (imap_has_capability(session, "AUTH=CRAM-MD5"))
+		if (imap_has_capability(session, "AUTH=XOAUTH2"))
+			ok = imap_cmd_authenticate(session, user, pass,
+						   IMAP_AUTH_OAUTH2);
+		else if (imap_has_capability(session, "AUTH=CRAM-MD5"))
 			ok = imap_cmd_authenticate(session, user, pass,
 						   IMAP_AUTH_CRAM_MD5);
 		else if (imap_has_capability(session, "AUTH=PLAIN"))
@@ -632,6 +636,7 @@ static gint imap_auth(IMAPSession *session, const gchar *user,
 		break;
 	case IMAP_AUTH_CRAM_MD5:
 	case IMAP_AUTH_PLAIN:
+	case IMAP_AUTH_OAUTH2:
 		ok = imap_cmd_authenticate(session, user, pass, type);
 		break;
 	default:
@@ -3829,6 +3834,33 @@ catch:
 
 #undef THROW
 
+static gint imap_cmd_auth_oauth2(IMAPSession *session, const gchar *user,
+                                 const gchar *pass)
+{
+	PrefsAccount *account;
+	gchar *p;
+	gchar *response64;
+	gint ok;
+
+	account = (PrefsAccount *)(SESSION(session)->data);
+	if (!account->token)
+		oauth2_get_token(user, &account->token, NULL, NULL);
+	if (!account->token) {
+		log_warning("Could not get OAuth2 token.\n");
+		return IMAP_AUTHFAIL;
+	}
+
+	response64 = oauth2_get_sasl_xoauth2(user, account->token);
+	log_print("IMAP4> %s\n", response64);
+	sock_puts(SESSION(session)->sock, response64);
+	ok = imap_cmd_ok(session, NULL);
+	if (ok != IMAP_SUCCESS)
+		log_warning(_("IMAP4 authentication failed.\n"));
+	g_free(response64);
+
+	return ok;
+}
+
 static gint imap_cmd_auth_plain(IMAPSession *session, const gchar *user,
 				const gchar *pass)
 {
@@ -3900,10 +3932,14 @@ static gint imap_cmd_authenticate(IMAPSession *session, const gchar *user,
 	gint ok;
 	gchar *buf = NULL;
 
-	g_return_val_if_fail((type == 0 || type == IMAP_AUTH_CRAM_MD5 ||
-			      type == IMAP_AUTH_PLAIN), IMAP_ERROR);
+	g_return_val_if_fail((type == 0 ||
+			      type == IMAP_AUTH_CRAM_MD5 ||
+			      type == IMAP_AUTH_PLAIN ||
+			      type == IMAP_AUTH_OAUTH2), IMAP_ERROR);
 
-	if (type == IMAP_AUTH_PLAIN)
+	if (type == IMAP_AUTH_OAUTH2)
+		auth_type = "XOAUTH2";
+	else if (type == IMAP_AUTH_PLAIN)
 		auth_type = "PLAIN";
 	else
 		auth_type = "CRAM-MD5";
@@ -3919,7 +3955,9 @@ static gint imap_cmd_authenticate(IMAPSession *session, const gchar *user,
 		return IMAP_ERROR;
 	}
 
-	if (type == IMAP_AUTH_PLAIN)
+	if (type == IMAP_AUTH_OAUTH2)
+		ok = imap_cmd_auth_oauth2(session, user, pass);
+	else if (type == IMAP_AUTH_PLAIN)
 		ok = imap_cmd_auth_plain(session, user, pass);
 	else
 		ok = imap_cmd_auth_cram_md5(session, user, pass, buf);

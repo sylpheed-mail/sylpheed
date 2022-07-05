@@ -84,6 +84,7 @@ static struct Basic {
 
 static struct Receive {
 	GtkWidget *pop3_frame;
+	GtkWidget *pop_auth_type_optmenu;
 	GtkWidget *use_apop_chkbtn;
 	GtkWidget *rmmail_chkbtn;
 	GtkWidget *leave_time_entry;
@@ -227,6 +228,9 @@ static void prefs_account_protocol_set_data_from_optmenu(PrefParam *pparam);
 static void prefs_account_protocol_set_optmenu		(PrefParam *pparam);
 static void prefs_account_protocol_activated		(GtkMenuItem *menuitem);
 
+static void prefs_account_pop_auth_type_set_data_from_optmenu
+							(PrefParam *pparam);
+static void prefs_account_pop_auth_type_set_optmenu	(PrefParam *pparam);
 static void prefs_account_imap_auth_type_set_data_from_optmenu
 							(PrefParam *pparam);
 static void prefs_account_imap_auth_type_set_optmenu	(PrefParam *pparam);
@@ -270,6 +274,9 @@ static PrefsUIData ui_data[] = {
 	 prefs_set_data_from_entry, prefs_set_entry},
 
 	/* Receive */
+	{"pop_auth_method", &receive.pop_auth_type_optmenu,
+	 prefs_account_pop_auth_type_set_data_from_optmenu,
+	 prefs_account_pop_auth_type_set_optmenu},
 	{"use_apop_auth", &receive.use_apop_chkbtn,
 	 prefs_set_data_from_toggle, prefs_set_toggle},
 	{"remove_mail", &receive.rmmail_chkbtn,
@@ -893,6 +900,9 @@ static void prefs_account_receive_create(void)
 	GtkWidget *vbox1;
 	GtkWidget *frame1;
 	GtkWidget *vbox2;
+	GtkWidget *pop_optmenu;
+	GtkWidget *optmenu_menu;
+	GtkWidget *menuitem;
 	GtkWidget *use_apop_chkbtn;
 	GtkWidget *rmmail_chkbtn;
 	GtkWidget *hbox_spc;
@@ -910,9 +920,7 @@ static void prefs_account_receive_create(void)
 	GtkWidget *inbox_btn;
 
 	GtkWidget *imap_frame;
-	GtkWidget *optmenu;
-	GtkWidget *optmenu_menu;
-	GtkWidget *menuitem;
+	GtkWidget *imap_optmenu;
 	GtkWidget *imap_check_inbox_chkbtn;
 	GtkWidget *imap_filter_inbox_chkbtn;
 
@@ -936,8 +944,29 @@ static void prefs_account_receive_create(void)
 	gtk_container_add (GTK_CONTAINER (frame1), vbox2);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox2), 8);
 
+	hbox1 = gtk_hbox_new (FALSE, 8);
+	gtk_widget_show (hbox1);
+	gtk_box_pack_start (GTK_BOX (vbox2), hbox1, FALSE, FALSE, 0);
+
+	label = gtk_label_new (_("Authentication method"));
+	gtk_widget_show (label);
+	gtk_box_pack_start (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
+
+	pop_optmenu = gtk_option_menu_new ();
+	gtk_widget_show (pop_optmenu);
+	gtk_box_pack_start (GTK_BOX (hbox1), pop_optmenu, FALSE, FALSE, 0);
+
+	optmenu_menu = gtk_menu_new ();
+
+	MENUITEM_ADD (optmenu_menu, menuitem, _("Basic"), 0);
+	MENUITEM_ADD (optmenu_menu, menuitem, "OAuth2", POP3_AUTH_OAUTH2);
+
+	gtk_option_menu_set_menu (GTK_OPTION_MENU (pop_optmenu), optmenu_menu);
+
+	PACK_VSPACER(vbox2, vbox3, VSPACING_NARROW_2);
+
 	PACK_CHECK_BUTTON (vbox2, use_apop_chkbtn,
-			   _("Use secure authentication (APOP)"));
+			   _("Use APOP authentication"));
 
 	PACK_CHECK_BUTTON (vbox2, rmmail_chkbtn,
 			   _("Remove messages on server when received"));
@@ -1052,9 +1081,9 @@ static void prefs_account_receive_create(void)
 	gtk_widget_show (label);
 	gtk_box_pack_start (GTK_BOX (hbox1), label, FALSE, FALSE, 0);
 
-	optmenu = gtk_option_menu_new ();
-	gtk_widget_show (optmenu);
-	gtk_box_pack_start (GTK_BOX (hbox1), optmenu, FALSE, FALSE, 0);
+	imap_optmenu = gtk_option_menu_new ();
+	gtk_widget_show (imap_optmenu);
+	gtk_box_pack_start (GTK_BOX (hbox1), imap_optmenu, FALSE, FALSE, 0);
 
 	optmenu_menu = gtk_menu_new ();
 
@@ -1062,8 +1091,9 @@ static void prefs_account_receive_create(void)
 	MENUITEM_ADD (optmenu_menu, menuitem, "LOGIN", IMAP_AUTH_LOGIN);
 	MENUITEM_ADD (optmenu_menu, menuitem, "PLAIN", IMAP_AUTH_PLAIN);
 	MENUITEM_ADD (optmenu_menu, menuitem, "CRAM-MD5", IMAP_AUTH_CRAM_MD5);
+	MENUITEM_ADD (optmenu_menu, menuitem, "OAuth2", IMAP_AUTH_OAUTH2);
 
-	gtk_option_menu_set_menu (GTK_OPTION_MENU (optmenu), optmenu_menu);
+	gtk_option_menu_set_menu (GTK_OPTION_MENU (imap_optmenu), optmenu_menu);
 
 	PACK_CHECK_BUTTON (vbox2, imap_check_inbox_chkbtn,
 			   _("Only check INBOX on receiving"));
@@ -1106,6 +1136,7 @@ static void prefs_account_receive_create(void)
 		 _("`Get all' checks for new messages on this account"));
 
 	receive.pop3_frame            = frame1;
+	receive.pop_auth_type_optmenu = pop_optmenu;
 	receive.use_apop_chkbtn       = use_apop_chkbtn;
 	receive.rmmail_chkbtn         = rmmail_chkbtn;
 	receive.leave_time_entry      = leave_time_entry;
@@ -1118,7 +1149,7 @@ static void prefs_account_receive_create(void)
 	receive.inbox_btn             = inbox_btn;
 
 	receive.imap_frame               = imap_frame;
-	receive.imap_auth_type_optmenu   = optmenu;
+	receive.imap_auth_type_optmenu   = imap_optmenu;
 	receive.imap_check_inbox_chkbtn  = imap_check_inbox_chkbtn;
 	receive.imap_filter_inbox_chkbtn = imap_filter_inbox_chkbtn;
 
@@ -1221,8 +1252,7 @@ static void prefs_account_send_create(void)
 	MENUITEM_ADD (optmenu_menu, menuitem, "PLAIN", SMTPAUTH_PLAIN);
 	MENUITEM_ADD (optmenu_menu, menuitem, "LOGIN", SMTPAUTH_LOGIN);
 	MENUITEM_ADD (optmenu_menu, menuitem, "CRAM-MD5", SMTPAUTH_CRAM_MD5);
-	MENUITEM_ADD (optmenu_menu, menuitem, "DIGEST-MD5", SMTPAUTH_DIGEST_MD5);
-	gtk_widget_set_sensitive (menuitem, FALSE);
+	MENUITEM_ADD (optmenu_menu, menuitem, "OAuth2", SMTPAUTH_OAUTH2);
 
 	gtk_option_menu_set_menu (GTK_OPTION_MENU (optmenu), optmenu_menu);
 
@@ -2447,6 +2477,50 @@ static void prefs_account_protocol_set_optmenu(PrefParam *pparam)
 	gtk_menu_item_activate(GTK_MENU_ITEM(menuitem));
 }
 
+static void prefs_account_pop_auth_type_set_data_from_optmenu(PrefParam *pparam)
+{
+	PrefsUIData *ui_data;
+	GtkWidget *menu;
+	GtkWidget *menuitem;
+
+	ui_data = (PrefsUIData *)pparam->ui_data;
+	g_return_if_fail(ui_data != NULL);
+	g_return_if_fail(*ui_data->widget != NULL);
+
+	menu = gtk_option_menu_get_menu(GTK_OPTION_MENU(*ui_data->widget));
+	menuitem = gtk_menu_get_active(GTK_MENU(menu));
+	*((RecvProtocol *)pparam->data) = GPOINTER_TO_INT
+		(g_object_get_data(G_OBJECT(menuitem), MENU_VAL_ID));
+}
+
+static void prefs_account_pop_auth_type_set_optmenu(PrefParam *pparam)
+{
+	PrefsUIData *ui_data;
+	IMAPAuthType type = *((IMAPAuthType *)pparam->data);
+	GtkOptionMenu *optmenu;
+	GtkWidget *menu;
+	GtkWidget *menuitem;
+
+	ui_data = (PrefsUIData *)pparam->ui_data;
+	g_return_if_fail(ui_data != NULL);
+	g_return_if_fail(*ui_data->widget != NULL);
+
+	optmenu = GTK_OPTION_MENU(*ui_data->widget);
+
+	switch (type) {
+	case POP3_AUTH_OAUTH2:
+		gtk_option_menu_set_history(optmenu, 1);
+		break;
+	case 0:
+	default:
+		gtk_option_menu_set_history(optmenu, 0);
+	}
+
+	menu = gtk_option_menu_get_menu(optmenu);
+	menuitem = gtk_menu_get_active(GTK_MENU(menu));
+	gtk_menu_item_activate(GTK_MENU_ITEM(menuitem));
+}
+
 static void prefs_account_imap_auth_type_set_data_from_optmenu(PrefParam *pparam)
 {
 	PrefsUIData *ui_data;
@@ -2486,6 +2560,9 @@ static void prefs_account_imap_auth_type_set_optmenu(PrefParam *pparam)
 		break;
 	case IMAP_AUTH_CRAM_MD5:
 		gtk_option_menu_set_history(optmenu, 3);
+		break;
+	case IMAP_AUTH_OAUTH2:
+		gtk_option_menu_set_history(optmenu, 4);
 		break;
 	case 0:
 	default:
@@ -2537,7 +2614,7 @@ static void prefs_account_smtp_auth_type_set_optmenu(PrefParam *pparam)
 	case SMTPAUTH_CRAM_MD5:
 		gtk_option_menu_set_history(optmenu, 3);
 		break;
-	case SMTPAUTH_DIGEST_MD5:
+	case SMTPAUTH_OAUTH2:
 		gtk_option_menu_set_history(optmenu, 4);
 		break;
 	case 0:

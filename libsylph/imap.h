@@ -44,7 +44,8 @@ typedef enum
 {
 	IMAP_AUTH_LOGIN		= 1 << 0,
 	IMAP_AUTH_CRAM_MD5	= 1 << 1,
-	IMAP_AUTH_PLAIN		= 1 << 2
+	IMAP_AUTH_PLAIN		= 1 << 2,
+	IMAP_AUTH_OAUTH2	= 1 << 3
 } IMAPAuthType;
 
 struct _IMAPFolder

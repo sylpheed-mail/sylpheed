@@ -24,7 +24,8 @@ EXTRA_DIST = config.rpath  \
 	makewin32.sh \
 	mime.types \
 	sylpheed-mailto-protocol_admin.reg \
-	sylpheed-mailto-protocol_user.reg
+	sylpheed-mailto-protocol_user.reg \
+	oauth2.ini.sample
 
 BZIP2_ENV =
 
