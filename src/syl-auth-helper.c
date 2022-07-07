@@ -226,27 +226,39 @@ static gchar *http_post(const gchar *url, const gchar *req_body, gchar **r_heade
 
 static APIInfo *get_api_info(GKeyFile *key_file, const gchar *address)
 {
-	const gchar *server;
-	APIInfo *api;
+	gchar **groups;
+	gint i;
+	const gchar *group = NULL;
+	APIInfo *api = NULL;
 
 	if (!address) return NULL;
 
-	server = strchr(address, '@');
-	if (!server) return NULL;
-	server++;
-	debug_print("address: %s server: %s\n", address, server);
+	groups = g_key_file_get_groups(key_file, NULL);
+	if (!groups) return NULL;
 
-	if (!g_key_file_has_group(key_file, server)) return NULL;
-	api = g_new0(APIInfo, 1);
-	api->auth_uri = g_key_file_get_string(key_file, server, "auth_uri", NULL);
-	api->token_uri = g_key_file_get_string(key_file, server, "token_uri", NULL);
-	api->redirect_uri = g_key_file_get_string(key_file, server, "redirect_uri", NULL);
-	api->client_id = g_key_file_get_string(key_file, server, "client_id", NULL);
-	api->client_secret = g_key_file_get_string(key_file, server, "client_secret", NULL);
-	api->scope = g_key_file_get_string(key_file, server, "scope", NULL);
-	api->local_port = g_key_file_get_integer(key_file, server, "local_port", NULL);
-	if (api->local_port == 0)
-		api->local_port = 8089;
+	for (i = 0; groups[i] != NULL; i++) {
+		debug_print("group: %s\n", groups[i]);
+		if (g_pattern_match_simple(groups[i], address)) {
+			debug_print("group: %s matches: %s\n", groups[i], address);
+			group = groups[i];
+			break;
+		}
+	}
+
+	if (group) {
+		api = g_new0(APIInfo, 1);
+		api->auth_uri = g_key_file_get_string(key_file, group, "auth_uri", NULL);
+		api->token_uri = g_key_file_get_string(key_file, group, "token_uri", NULL);
+		api->redirect_uri = g_key_file_get_string(key_file, group, "redirect_uri", NULL);
+		api->client_id = g_key_file_get_string(key_file, group, "client_id", NULL);
+		api->client_secret = g_key_file_get_string(key_file, group, "client_secret", NULL);
+		api->scope = g_key_file_get_string(key_file, group, "scope", NULL);
+		api->local_port = g_key_file_get_integer(key_file, group, "local_port", NULL);
+		if (api->local_port == 0)
+			api->local_port = 8089;
+	}
+
+	g_strfreev(groups);
 
 	return api;
 }
