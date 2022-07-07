@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2014 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2022 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -854,6 +854,10 @@ static gint inc_start(IncProgressDialog *inc_dialog)
 		}
 
 		pop3_session = POP3_SESSION(session->session); 
+		if (!pop3_session->pass &&
+		    pop3_session->ac_prefs->pop_auth_type == POP3_AUTH_OAUTH2) {
+			pop3_session->pass = g_strdup("oauth2_dummy_pass");
+		}
 		if (!pop3_session->pass) {
 			gchar *pass;
 

@@ -1,6 +1,6 @@
 /*
  * LibSylph -- E-Mail client library
- * Copyright (C) 1999-2013 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2022 Hiroyuki Yamamoto
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -715,6 +715,9 @@ static gint imap_session_connect(IMAPSession *session)
 	pass = account->passwd;
 	if (!pass)
 		pass = account->tmp_pass;
+	if (!pass && account->imap_auth_type == IMAP_AUTH_OAUTH2) {
+		pass = "oauth2_dummy_pass";
+	}
 	if (!pass) {
 		gchar *tmp_pass;
 
@@ -3854,8 +3857,11 @@ static gint imap_cmd_auth_oauth2(IMAPSession *session, const gchar *user,
 	log_print("IMAP4> %s\n", response64);
 	sock_puts(SESSION(session)->sock, response64);
 	ok = imap_cmd_ok(session, NULL);
-	if (ok != IMAP_SUCCESS)
+	if (ok != IMAP_SUCCESS) {
 		log_warning(_("IMAP4 authentication failed.\n"));
+		g_free(account->token);
+		account->token = NULL;
+	}
 	g_free(response64);
 
 	return ok;

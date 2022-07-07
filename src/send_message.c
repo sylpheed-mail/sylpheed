@@ -1,6 +1,6 @@
 /*
  * Sylpheed -- a GTK+ based, lightweight, and fast e-mail client
- * Copyright (C) 1999-2012 Hiroyuki Yamamoto
+ * Copyright (C) 1999-2022 Hiroyuki Yamamoto
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -654,6 +654,8 @@ static gint send_message_smtp(PrefsAccount *ac_prefs, GSList *to_list, FILE *fp)
 			else if (ac_prefs->tmp_smtp_pass)
 				smtp_session->pass =
 					g_strdup(ac_prefs->tmp_smtp_pass);
+			else if (ac_prefs->smtp_auth_type == SMTPAUTH_OAUTH2)
+				smtp_session->pass = g_strdup("oauth2_dummy_pass");
 			else {
 				smtp_session->pass =
 					input_query_password
@@ -671,6 +673,8 @@ static gint send_message_smtp(PrefsAccount *ac_prefs, GSList *to_list, FILE *fp)
 			else if (ac_prefs->tmp_pass)
 				smtp_session->pass =
 					g_strdup(ac_prefs->tmp_pass);
+			else if (ac_prefs->smtp_auth_type == SMTPAUTH_OAUTH2)
+				smtp_session->pass = g_strdup("oauth2_dummy_pass");
 			else {
 				smtp_session->pass =
 					input_query_password
