@@ -49,14 +49,12 @@ gint oauth2_get_token   (const gchar     *user,
 	argv[1] = (gchar *)user;
 	if (g_spawn_sync(NULL, argv, NULL, G_SPAWN_SEARCH_PATH,
 			 NULL, NULL, &out, NULL, &status, &error)) {
-	//if (g_spawn_command_line_sync("syl-auth-helper", &out, NULL, &status,
-				      //&error)) {
 		debug_print("syl-auth-helper out: %s\n", out);
 		gchar **lines = g_strsplit(out, "\n", 4);
 		if (lines && lines[0] && token) {
-			*token = g_strdup(lines[0]);
+			*token = g_strdup(g_strchomp(lines[0]));
 			if (lines[1] && r_token)
-				*r_token = g_strdup(lines[1]);
+				*r_token = g_strdup(g_strchomp(lines[1]));
 		}
 		g_strfreev(lines);
 		return 0;
