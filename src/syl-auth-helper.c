@@ -35,6 +35,7 @@
 
 #include "utils.h"
 #include "socket.h"
+#include "base64.h"
 
 typedef struct _APIInfo
 {
@@ -58,7 +59,7 @@ typedef struct _TokenData
 static gchar *http_get(const gchar *url, gchar **r_header);
 static gchar *http_post(const gchar *url, const gchar *req_body, gchar **r_header);
 
-static gchar *http_redirect_accept(gushort port)
+static gchar *http_redirect_accept(gushort port, const gchar *state)
 {
 	gint sock, peersock;
 	gchar buf[8192];
@@ -67,6 +68,7 @@ static gchar *http_redirect_accept(gushort port)
 	gchar *getl = NULL;
 	gchar *p, *e;
 	gchar *code = NULL;
+	gchar *r_state;
 
 	sock = fd_open_inet(port);
 	if (sock < 0) {
@@ -98,10 +100,36 @@ static gchar *http_redirect_accept(gushort port)
 	debug_print("Redirected request:\n%s\n", req->str);
 	g_string_free(req, TRUE);
 
+	p = strstr(getl, "?state=");
+	if (!p) {
+		p = strstr(getl, "&state=");
+		if (!p) {
+			g_warning("state not found");
+			goto end;
+		}
+	}
+	p += 7;
+	e = strchr(p, '&');
+	if (!e) {
+		e = strchr(p, ' ');
+		if (!e) {
+			goto end;
+		}
+	}
+
+	r_state = g_strndup(p, e - p);
+	if (strcmp(r_state, state) != 0) {
+		g_warning("state doesn't match: %s != %s", r_state, state);
+		g_free(r_state);
+		goto end;
+	}
+	g_free(r_state);
+
 	p = strstr(getl, "?code=");
 	if (!p) {
 		p = strstr(getl, "&code=");
 		if (!p) {
+			g_warning("code not found");
 			goto end;
 		}
 	}
@@ -298,6 +326,32 @@ static gint parse_token_response(const gchar *body, TokenData *data)
 	return 0;
 }
 
+static gchar *generate_state()
+{
+	guint32 data[8];
+	gint i;
+	gchar *str;
+
+	for (i = 0; i < sizeof(data) / sizeof(data[0]); i++) {
+		data[i] = g_random_int();
+	}
+
+	str = g_malloc(sizeof(data) * 2 + 1);
+	base64_encode(str, (guchar *)data, sizeof(data));
+	/* convert to Base64 URL encoding */
+	for (i = 0; str[i] != '\0'; i++) {
+		if (str[i] == '+')
+			str[i] = '-';
+		else if (str[i] == '/')
+			str[i] = '_';
+		else if (str[i] == '=') {
+			str[i] = '\0';
+			break;
+		}
+	}
+	return str;
+}
+
 int main(int argc, char *argv[])
 {
 	int ret = EXIT_SUCCESS;
@@ -307,7 +361,7 @@ int main(int argc, char *argv[])
 	CURL *curl;
 	gchar *tmp;
 	gchar *code;
-	const gchar *state = "test";
+	gchar *state;
 	GString *req_body;
 	GKeyFile *key_file;
 	gchar *file;
@@ -365,6 +419,7 @@ int main(int argc, char *argv[])
 	tmp = curl_easy_escape(curl, api->scope, 0);
 	g_string_append_printf(auth_uri, "&scope=%s", tmp);
 	curl_free(tmp);
+	state = generate_state();
 	g_string_append_printf(auth_uri, "&state=%s", state);
 	g_string_append(auth_uri, "&access_type=offline");
 
@@ -372,7 +427,7 @@ int main(int argc, char *argv[])
 	open_uri(auth_uri->str, NULL);
 	g_string_free(auth_uri, TRUE);
 
-	code = http_redirect_accept(api->local_port);
+	code = http_redirect_accept(api->local_port, state);
 	if (!code) {
 		curl_easy_cleanup(curl);
 		curl_global_cleanup();
@@ -418,6 +473,7 @@ int main(int argc, char *argv[])
 	}
 	g_string_free(req_body, TRUE);
 	g_free(code);
+	g_free(state);
 
 	curl_easy_cleanup(curl);
 	curl_global_cleanup();
