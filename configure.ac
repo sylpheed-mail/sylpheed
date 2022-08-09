@@ -369,7 +369,8 @@ AC_ARG_ENABLE(libcurl,
 AC_MSG_CHECKING([whether to use libcurl])
 if test "$ac_cv_enable_libcurl" = yes; then
 	AC_MSG_RESULT(yes)
-	AC_CHECK_LIB(curl, curl_global_init,,[ac_cv_enable_libcurl=no])
+	AC_CHECK_LIB(curl, curl_global_init, CURL_LIBS="$CURL_LIBS -lcurl", [ac_cv_enable_libcurl=no])
+	AC_SUBST(CURL_LIBS)
 fi
 
 dnl check additional libraries

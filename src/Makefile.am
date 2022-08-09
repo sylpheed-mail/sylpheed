@@ -172,6 +172,7 @@ sylpheed_LDADD = \
 syl_auth_helper_LDADD = \
 	$(GLIB_LIBS) \
 	$(LIBICONV) \
+	$(CURL_LIBS) \
 	../libsylph/libsylph-0.la
 
 AM_CPPFLAGS = \
