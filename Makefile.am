@@ -28,6 +28,7 @@ EXTRA_DIST = config.rpath  \
 	oauth2.ini.sample
 
 BZIP2_ENV =
+XZ_ENV =
 
 release: distdir
 	-chmod -R a+r $(distdir)
@@ -36,6 +37,10 @@ release: distdir
 	sed '/^Source:/s/\.tar\.gz$$/\.tar\.bz2/' sylpheed.spec \
 	  > $(distdir)/sylpheed.spec
 	BZIP2=$(BZIP2_ENV) $(AMTAR) --bzip2 -chof $(distdir).tar.bz2 $(distdir)
+	rm -f $(distdir)/sylpheed.spec
+	sed '/^Source:/s/\.tar\.gz$$/\.tar\.xz/' sylpheed.spec \
+	  > $(distdir)/sylpheed.spec
+	XZ_OPT=$(XZ_ENV) $(AMTAR) --xz -chof $(distdir).tar.xz $(distdir)
 	-rm -rf $(distdir)
 
 #ACLOCAL_AMFLAGS = -I m4

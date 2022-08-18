@@ -1,6 +1,6 @@
 	Sylpheed - 軽量でユーザフレンドリーな電子メールクライアント
 
-   Copyright(C) 1999-2018 Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
+   Copyright(C) 1999-2022 Hiroyuki Yamamoto <hiro-y@kcn.ne.jp>
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -100,9 +100,10 @@ Emacs 系メーラに近い感覚で、キーボードのみによる操作が可能となっています。
 	o MIMEによる添付ファイルの閲覧・送信
 	o インライン画像表示機能
 	o ニュースリーダー機能
-	o SMTP AUTH 対応 (PLAIN / LOGIN / CRAM-MD5)
+	o SMTP AUTH 対応 (PLAIN / LOGIN / CRAM-MD5 / OAuth2)
 	o CRAM-MD5 認証 (SMTP AUTH / IMAP4rev1)
 	o APOP 認証 (POP3)
+	o OAuth2 認証 (POP3 / IMAP4 / SMTP)
 	o PGP 署名・暗号化(要 GPGME)
 	o スペルチェック(要 GtkSpell)
 	o SOCKS4/5 プロキシ対応
@@ -256,16 +257,16 @@ mark_as_read_on_new_window	新しいウィンドウでメッセージを開いたときのみ
 
 最新バージョンや Sylpheed に関する情報は以下でチェックできます。
 
-	http://sylpheed.sraoss.jp/
+	https://sylpheed.sraoss.jp/
 
-ファイルのダウンロードなどは以下の SourceForce.JP プロジェクトページからも
+ファイルのダウンロードなどは以下の OSDN プロジェクトページからも
 行えます。
 
-	http://sourceforge.jp/projects/sylpheed/
+	https://ja.osdn.net/projects/sylpheed/
 
 Sylpheed のバグトラッキングシステムは以下になります。
 
-	http://sylpheed.sraoss.jp/redmine/projects/sylpheed
+	https://sylpheed.sraoss.jp/redmine/projects/sylpheed
 
 英語とその他の言語の Sylpheed のドキュメントは以下より入手できます。
 
@@ -284,7 +285,7 @@ Subversion のリポジトリから最新のソースを取得することができます。
 
 適当なディレクトリに移動し、以下のコマンド
 
-	svn checkout svn://sylpheed.sraoss.jp/sylpheed/trunk
+	svn checkout svn://sylpheed-svn.sraoss.jp/sylpheed/trunk
 
 で カレントディレクトリ以下に 'trunk' というソースツリーが作成されます。
 
