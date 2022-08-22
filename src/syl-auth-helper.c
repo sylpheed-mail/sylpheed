@@ -37,6 +37,8 @@
 #include "socket.h"
 #include "base64.h"
 
+#define TIMEOUT_MSEC	60000
+
 typedef struct _APIInfo
 {
 	gchar *auth_uri;
@@ -56,10 +58,24 @@ typedef struct _TokenData
 	gchar *refresh_token;
 } TokenData;
 
+typedef struct _AcceptData
+{
+	gboolean done;
+	const gchar *state;
+	gchar *code;
+} AcceptData;
+
+static AcceptData accept_data = {
+	FALSE,
+	NULL,
+	NULL
+};
+
 static gchar *http_get(const gchar *url, gchar **r_header);
 static gchar *http_post(const gchar *url, const gchar *req_body, gchar **r_header);
 
-static gchar *http_redirect_accept(gushort port, const gchar *state)
+static gboolean socket_input_cb(GIOChannel *source, GIOCondition condition,
+				gpointer data)
 {
 	gint sock, peersock;
 	gchar buf[8192];
@@ -70,13 +86,8 @@ static gchar *http_redirect_accept(gushort port, const gchar *state)
 	gchar *code = NULL;
 	gchar *r_state;
 
-	sock = fd_open_inet(port);
-	if (sock < 0) {
-		g_warning("Cannot open port %u\n", port);
-		return NULL;
-	}
-
 	req = g_string_new(NULL);
+	sock = g_io_channel_unix_get_fd(source);
 	peersock = fd_accept(sock);
 	while (fd_gets(peersock, buf, sizeof(buf)) > 0) {
 		if (buf[0] == '\r') {
@@ -87,6 +98,11 @@ static gchar *http_redirect_accept(gushort port, const gchar *state)
 		}
 		g_string_append(req, buf);
 	}
+	if (req->len == 0) {
+		fd_close(peersock);
+		accept_data.done = TRUE;
+		return TRUE;
+	}
 	res = g_string_new("HTTP/1.1 200 OK\r\n");
 	g_string_append(res, "Connection: close\r\n");
 	g_string_append(res, "Content-Type: text/plain\r\n");
@@ -95,7 +111,6 @@ static gchar *http_redirect_accept(gushort port, const gchar *state)
 	fd_write_all(peersock, res->str, res->len);
 	g_string_free(res, TRUE);
 	fd_close(peersock);
-	fd_close(sock);
 
 	debug_print("Redirected request:\n%s\n", req->str);
 	g_string_free(req, TRUE);
@@ -118,8 +133,8 @@ static gchar *http_redirect_accept(gushort port, const gchar *state)
 	}
 
 	r_state = g_strndup(p, e - p);
-	if (strcmp(r_state, state) != 0) {
-		g_warning("state doesn't match: %s != %s", r_state, state);
+	if (strcmp(r_state, accept_data.state) != 0) {
+		g_warning("state doesn't match: %s != %s", r_state, accept_data.state);
 		g_free(r_state);
 		goto end;
 	}
@@ -147,6 +162,50 @@ static gchar *http_redirect_accept(gushort port, const gchar *state)
 end:
 	g_free(getl);
 
+	accept_data.code = code;
+	accept_data.done = TRUE;
+
+	return TRUE;
+}
+
+static gboolean socket_timeout_cb(gpointer data)
+{
+	debug_print("socket_timeout_cb: accept timed out\n");
+	accept_data.done = TRUE;
+	return FALSE;
+}
+
+static gchar *http_redirect_accept(gushort port, const gchar *state)
+{
+	GIOChannel *ch = NULL;
+	gint sock;
+	gint tag, timeout_tag;
+	gchar *code;
+
+	accept_data.done = FALSE;
+	accept_data.state = state;
+	accept_data.code = NULL;
+
+	sock = fd_open_inet(port);
+	if (sock < 0) {
+		g_warning("Cannot open port %u\n", port);
+		return NULL;
+	}
+
+	debug_print("http_redirect_accept: waiting port %u\n", port);
+	ch = g_io_channel_unix_new(sock);
+	tag = g_io_add_watch(ch, G_IO_IN|G_IO_PRI|G_IO_ERR, socket_input_cb, NULL);
+	timeout_tag = g_timeout_add(TIMEOUT_MSEC, socket_timeout_cb, NULL);
+
+	while (!accept_data.done) {
+		g_main_context_iteration(NULL, TRUE);
+	}
+
+	g_source_remove(tag);
+	g_io_channel_shutdown(ch, FALSE, NULL);
+	g_io_channel_unref(ch);
+
+	code = accept_data.code;
 	return code;
 }
 
