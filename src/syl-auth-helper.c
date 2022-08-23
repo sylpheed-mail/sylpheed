@@ -37,7 +37,7 @@
 #include "socket.h"
 #include "base64.h"
 
-#define TIMEOUT_MSEC	60000
+#define TIMEOUT_MSEC	90000
 
 typedef struct _APIInfo
 {
