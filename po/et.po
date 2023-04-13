@@ -1,243 +1,238 @@
 # Estonian translation of sylpheed.
 # Copyright (C) 2001 Free Software Foundation, Inc.
 # Peeter Vois <Peeter.Vois@mail.ee>, 2001.
+# vaba, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: sylpheed\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-25 14:03+0900\n"
-"PO-Revision-Date: 2002-10-02 09:08+0300\n"
-"Last-Translator: Peeter Vois <Peeter.Vois@mail.ee>\n"
+"POT-Creation-Date: 2018-01-16 17:06+0900\n"
+"PO-Revision-Date: 2023-04-13 11:36+0300\n"
+"Last-Translator: vaba <vaba@riseup.net>\n"
 "Language-Team: Estonian <et@li.org>\n"
 "Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.3\n"
 
 #: libsylph/account.c:55
 msgid "Reading all config for each account...\n"
 msgstr "Loen kõigi kontode seaded...\n"
 
 #: libsylph/filter.c:1643
-#, fuzzy
 msgid "Junk mail filter (manual)"
-msgstr "Kaust"
+msgstr "Rämpsposti filter (käsitsi)"
 
 #: libsylph/filter.c:1646
-#, fuzzy
 msgid "Junk mail filter"
-msgstr "Kaust"
+msgstr "Rämpsposti filter"
 
-#: libsylph/imap.c:567
-#, fuzzy, c-format
+#: libsylph/imap.c:566
+#, c-format
 msgid "IMAP4 connection to %s has been disconnected. Reconnecting...\n"
-msgstr "IMAP4 ühendus %s:%d-ga katkes. Taasühendan...\n"
+msgstr ""
+"IMAP4 ühendus kasutajaga %s on katkestatud. Ühenduse taastamine...\n"
+"\n"
 
-#: libsylph/imap.c:627 libsylph/imap.c:633
-#, fuzzy
+#: libsylph/imap.c:623 libsylph/imap.c:629
 msgid "IMAP4 server disables LOGIN.\n"
-msgstr "IMAP serveri kataloog"
+msgstr "IMAP4 server keelab LOGIN.\n"
 
-#: libsylph/imap.c:693
-#, fuzzy
+#: libsylph/imap.c:688
 msgid "Could not establish IMAP connection.\n"
-msgstr "Ei suuda ühendada IMAP4 serveriga: %s:%d\n"
+msgstr "IMAP-ühendust ei õnnestunud luua.\n"
 
-#: libsylph/imap.c:712
+#: libsylph/imap.c:707
 #, c-format
 msgid "creating IMAP4 connection to %s:%d ...\n"
 msgstr "loon IMAP4 ühendust %s:%d-ga ...\n"
 
-#: libsylph/imap.c:768
+#: libsylph/imap.c:760
 msgid "Can't start TLS session.\n"
 msgstr "Ei suuda avada TLS sessiooni.\n"
 
-#: libsylph/imap.c:915
+#: libsylph/imap.c:907
 msgid "(retrieving FLAGS...)"
-msgstr ""
+msgstr "(Lippude toomine...)"
 
-#: libsylph/imap.c:1306
-#, fuzzy, c-format
+#: libsylph/imap.c:1298
+#, c-format
 msgid "Getting message %u"
-msgstr "Kustutan kirja %d"
+msgstr "Sõnumi %u hankimine"
 
-#: libsylph/imap.c:1428
-#, fuzzy, c-format
+#: libsylph/imap.c:1420
+#, c-format
 msgid "Appending messages to %s (%d / %d)"
-msgstr "Saadan kirja (%d / %d baiti)"
+msgstr "Kirjade lisamine asukohta %s (%d / %d)"
 
-#: libsylph/imap.c:1554
-#, fuzzy, c-format
+#: libsylph/imap.c:1546
+#, c-format
 msgid "Moving messages %s to %s ..."
-msgstr "Liigutan kirja %s%c%d kausta %s ...\n"
+msgstr "Kirjade %s teisaldamine asukohta %s ..."
 
-#: libsylph/imap.c:1559
-#, fuzzy, c-format
+#: libsylph/imap.c:1551
+#, c-format
 msgid "Copying messages %s to %s ..."
-msgstr "Kopeerin kirja %s%c%d kausta %s ...\n"
+msgstr "Kirjade %s kopeerimine asukohta %s ..."
 
-#: libsylph/imap.c:1701
-#, fuzzy, c-format
+#: libsylph/imap.c:1693
+#, c-format
 msgid "Removing messages %s"
-msgstr "Võtan kirju %s-st ja panen %s-i...\n"
+msgstr "Sõnumite eemaldamine %s"
 
-#: libsylph/imap.c:1707
-#, fuzzy, c-format
+#: libsylph/imap.c:1699
+#, c-format
 msgid "can't set deleted flags: %s\n"
-msgstr "ei suutnud seada kustutatu lippu: %d\n"
+msgstr "ei saa määrata kustutatud lippe: %s\n"
 
-#: libsylph/imap.c:1715 libsylph/imap.c:1821
+#: libsylph/imap.c:1707 libsylph/imap.c:1813
 msgid "can't expunge\n"
 msgstr "ei suuda väljastada\n"
 
-#: libsylph/imap.c:1805
-#, fuzzy, c-format
+#: libsylph/imap.c:1797
+#, c-format
 msgid "Removing all messages in %s"
-msgstr "Võtan kirju %s-st ja panen %s-i...\n"
+msgstr "Kõigi sõnumite eemaldamine asukohast %s"
 
-#: libsylph/imap.c:1810 libsylph/imap.c:1815
-#, fuzzy
+#: libsylph/imap.c:1802 libsylph/imap.c:1807
 msgid "can't set deleted flags: 1:*\n"
-msgstr "ei suutnud seada kustutatu lippu: 1:%d\n"
+msgstr "ei saa kustutatud lippe määrata: 1:*\n"
 
-#: libsylph/imap.c:1866
-#, fuzzy
+#: libsylph/imap.c:1858
 msgid "can't close folder\n"
-msgstr "ei suuuda valida kausta: %s\n"
+msgstr "kausta ei saa sulgeda\n"
 
-#: libsylph/imap.c:1945
-#, fuzzy, c-format
+#: libsylph/imap.c:1937
+#, c-format
 msgid "root folder %s not exist\n"
-msgstr "*Märgi faili ei leidunud.\n"
+msgstr "juurkausta %s pole olemas\n"
 
-#: libsylph/imap.c:2145 libsylph/imap.c:2153
-#, fuzzy
+#: libsylph/imap.c:2137 libsylph/imap.c:2145
 msgid "error occurred while getting LIST.\n"
-msgstr "Nimistu saamisel tekkis viga.\n"
+msgstr "ilmnes LIST hankimisel  viga.\n"
 
-#: libsylph/imap.c:2385
+#: libsylph/imap.c:2377
 #, c-format
 msgid "Can't create '%s'\n"
 msgstr "Ei suuda luua '%s'\n"
 
-#: libsylph/imap.c:2390
+#: libsylph/imap.c:2382
 #, c-format
 msgid "Can't create '%s' under INBOX\n"
 msgstr "Ei suuda luua '%s' Sisendkasti all\n"
 
-#: libsylph/imap.c:2452
+#: libsylph/imap.c:2444
 msgid "can't create mailbox: LIST failed\n"
 msgstr "ei suuda luua kirjakasti: Nimistu ebaõnnestus\n"
 
-#: libsylph/imap.c:2478
+#: libsylph/imap.c:2470
 msgid "can't create mailbox\n"
 msgstr "ei suuda luua kirjakasti\n"
 
-#: libsylph/imap.c:2486
-#, fuzzy
+#: libsylph/imap.c:2478
 msgid "can't subscribe mailbox\n"
-msgstr "ei suuda luua kirjakasti\n"
+msgstr ""
+"ei saa postkasti tellida\n"
+"\n"
 
-#: libsylph/imap.c:2611
+#: libsylph/imap.c:2603
 #, c-format
 msgid "can't rename mailbox: %s to %s\n"
 msgstr "ei suuda kirjakasti %s-lt ümber nimetada %s-le\n"
 
-#: libsylph/imap.c:2700
+#: libsylph/imap.c:2692
 msgid "can't delete mailbox\n"
 msgstr "ei suuda kustutada kirjakasti\n"
 
-#: libsylph/imap.c:2730
-#, fuzzy, c-format
+#: libsylph/imap.c:2722
+#, c-format
 msgid "Getting message headers (%d / %d)"
-msgstr "Saadan kirja (%d / %d baiti)"
+msgstr "Sõnumi päiste hankimine (%d / %d)"
 
-#: libsylph/imap.c:2782
+#: libsylph/imap.c:2774
 msgid "error occurred while getting envelope.\n"
 msgstr "ümbriku võtmisel tekis viga.\n"
 
-#: libsylph/imap.c:2803
+#: libsylph/imap.c:2795
 #, c-format
 msgid "can't parse envelope: %s\n"
 msgstr "ei suutnud avada ümbrikut: %s\n"
 
-#: libsylph/imap.c:2860
+#: libsylph/imap.c:2852
 msgid "can't get envelope\n"
 msgstr "ei suuda võtta ümbrikut\n"
 
-#: libsylph/imap.c:2980 libsylph/imap.c:2986
+#: libsylph/imap.c:2972 libsylph/imap.c:2978
 #, c-format
 msgid "Can't connect to IMAP4 server: %s:%d\n"
 msgstr "Ei suuda ühendada IMAP4 serveriga: %s:%d\n"
 
-#: libsylph/imap.c:3003
+#: libsylph/imap.c:2995
 #, c-format
 msgid "Can't establish IMAP4 session with: %s:%d\n"
 msgstr "Ei suuda ühendada IMAP4 serveriga: %s:%d\n"
 
-#: libsylph/imap.c:3078
+#: libsylph/imap.c:3070
 msgid "can't get namespace\n"
 msgstr "ei suutnud leida nime asukohta\n"
 
-#: libsylph/imap.c:3702
+#: libsylph/imap.c:3694
 #, c-format
 msgid "can't select folder: %s\n"
 msgstr "ei suuuda valida kausta: %s\n"
 
-#: libsylph/imap.c:3740
-#, fuzzy
+#: libsylph/imap.c:3732
 msgid "error on imap command: STATUS\n"
-msgstr "imapi käsu täitmisel tekkis viga: EXPUNGE\n"
+msgstr "viga imap käsul: STATUS\n"
 
-#: libsylph/imap.c:3861 libsylph/imap.c:3894 libsylph/imap.c:3929
-#, fuzzy
+#: libsylph/imap.c:3856 libsylph/imap.c:3891
 msgid "IMAP4 authentication failed.\n"
-msgstr "Autoriseerimise meetod"
+msgstr "IMAP4 autentimine ebaõnnestus.\n"
 
-#: libsylph/imap.c:3988
+#: libsylph/imap.c:3944
 msgid "IMAP4 login failed.\n"
 msgstr "IMAP4 sissekirjutus ebaõnnestus.\n"
 
-#: libsylph/imap.c:4408 libsylph/imap.c:4415
+#: libsylph/imap.c:4364 libsylph/imap.c:4371
 #, c-format
 msgid "can't append %s to %s\n"
 msgstr "ei suuda %s-d lisada %s-i\n"
 
-#: libsylph/imap.c:4422
+#: libsylph/imap.c:4378
 msgid "(sending file...)"
 msgstr "(saadan faili...)"
 
-#: libsylph/imap.c:4451
-#, fuzzy, c-format
+#: libsylph/imap.c:4407
+#, c-format
 msgid "can't append message to %s\n"
-msgstr "ei suuda lisada kirja %s\n"
+msgstr "sõnumit ei saa lisada aadressile %s\n"
 
-#: libsylph/imap.c:4483
-#, fuzzy, c-format
+#: libsylph/imap.c:4439
+#, c-format
 msgid "can't copy %s to %s\n"
-msgstr "ei suuda %d-d kopeerida %s-i\n"
+msgstr "%s ei saa kopeerida asukohta %s\n"
 
-#: libsylph/imap.c:4506
-#, fuzzy, c-format
+#: libsylph/imap.c:4462
+#, c-format
 msgid "error while imap command: STORE %s %s\n"
-msgstr "imapi käsu täitmisel tekkis viga: STORE %d:%d %s\n"
+msgstr "viga imap käsul: STORE %s %s\n"
 
-#: libsylph/imap.c:4522
+#: libsylph/imap.c:4478
 msgid "error while imap command: EXPUNGE\n"
 msgstr "imapi käsu täitmisel tekkis viga: EXPUNGE\n"
 
-#: libsylph/imap.c:4537
-#, fuzzy
+#: libsylph/imap.c:4493
 msgid "error while imap command: CLOSE\n"
-msgstr "imapi käsu täitmisel tekkis viga: EXPUNGE\n"
+msgstr "viga imap käsul: CLOSE\n"
 
-#: libsylph/imap.c:4858
+#: libsylph/imap.c:4814
 #, c-format
 msgid "iconv cannot convert UTF-7 to %s\n"
 msgstr "iconv ei suuda konversteerida UTF-7-t %s-ks\n"
 
-#: libsylph/imap.c:4890
+#: libsylph/imap.c:4846
 #, c-format
 msgid "iconv cannot convert %s to UTF-7\n"
 msgstr "iconv ei suuda konverteerida %s-i UTF-7-ks\n"
@@ -253,7 +248,7 @@ msgstr "Võtan kirju %s-st ja panen %s-i...\n"
 
 #: libsylph/mbox.c:100
 msgid "can't read mbox file.\n"
-msgstr "Ei saa lugeda kirjakasti faili.\n"
+msgstr "ei saa lugeda kirjakasti faili.\n"
 
 #: libsylph/mbox.c:107
 #, c-format
@@ -275,7 +270,7 @@ msgid ""
 "unescaped From found:\n"
 "%s"
 msgstr ""
-"Vabanematuid (kellelt) leitud:\n"
+"vabanematuid (kellelt) leitud:\n"
 "%s"
 
 #: libsylph/mbox.c:357
@@ -329,9 +324,11 @@ msgid "the src folder is identical to the dest.\n"
 msgstr "lähtekaust on identne sihtkaustale.\n"
 
 #: libsylph/mh.c:828
-#, fuzzy, c-format
+#, c-format
 msgid "Copying message %s/%d to %s ...\n"
-msgstr "Kopeerin kirja %s%c%d kausta %s ...\n"
+msgstr ""
+"Kirja %s/%d kopeerimine asukohta %s ...\n"
+"\n"
 
 #: libsylph/mh.c:1195 libsylph/mh.c:1208 src/main.c:197
 #, c-format
@@ -353,6 +350,13 @@ msgid ""
 "\n"
 "\tG_FILENAME_ENCODING=@locale\n"
 msgstr ""
+"Kataloogi nimi\n"
+"'%s' ei ole kehtiv UTF-8 string.\n"
+"Võib-olla kasutatakse failinime jaoks lokaadi kodeeringut.\n"
+"Kui see on nii, peate määrama järgmise keskkonnamuutuja\n"
+"(üksikasju vaata README):\n"
+"\n"
+"\tG_FILENAME_ENCODING=@locale\n"
 
 #: libsylph/news.c:226
 #, c-format
@@ -389,9 +393,11 @@ msgid "can't retrieve article %d\n"
 msgstr "ei saanud artiklit %d kohale\n"
 
 #: libsylph/news.c:789
-#, fuzzy, c-format
+#, c-format
 msgid "can't select group: %s\n"
-msgstr "ei saa valida gruppi %s\n"
+msgstr ""
+"gruppi ei saa valida: %s\n"
+"\n"
 
 #: libsylph/news.c:826
 #, c-format
@@ -447,73 +453,73 @@ msgid "Error occurred while posting\n"
 msgstr "Kirja saatmisel tekkis viga\n"
 
 #: libsylph/nntp.c:403
-#, fuzzy
 msgid "Error occurred while sending command\n"
-msgstr "Tekkis viga kirja protsessimisel."
+msgstr "Käsu saatmisel ilmnes viga\n"
 
-#: libsylph/pop.c:161
+#: libsylph/pop.c:156
 msgid "Required APOP timestamp not found in greeting\n"
 msgstr "Nõutud APOP'i ajatemplit ei leidunud tervituses\n"
 
-#: libsylph/pop.c:168
+#: libsylph/pop.c:163
 msgid "Timestamp syntax error in greeting\n"
 msgstr "*Tervituses on ajamärgi süntaksi viga\n"
 
-#: libsylph/pop.c:176
-#, fuzzy
+#: libsylph/pop.c:171
 msgid "Invalid timestamp in greeting\n"
-msgstr "Nõutud APOP'i ajatemplit ei leidunud tervituses\n"
+msgstr ""
+"Tervituse ajatempel on kehtetu\n"
+"\n"
 
-#: libsylph/pop.c:209 libsylph/pop.c:254 libsylph/pop.c:281
+#: libsylph/pop.c:199 libsylph/pop.c:226
 msgid "POP3 protocol error\n"
 msgstr "POP3 protokolli viga\n"
 
-#: libsylph/pop.c:325
-#, fuzzy, c-format
+#: libsylph/pop.c:270
+#, c-format
 msgid "invalid UIDL response: %s\n"
-msgstr "*vigane xover rida: %s\n"
+msgstr ""
+"vale UIDL vastus: %s\n"
+"\n"
 
-#: libsylph/pop.c:702
+#: libsylph/pop.c:647
 #, c-format
 msgid "POP3: Deleting expired message %d\n"
 msgstr "POP3: Kustutan aegunud kirja %d\n"
 
-#: libsylph/pop.c:711
+#: libsylph/pop.c:656
 #, c-format
 msgid "POP3: Skipping message %d (%d bytes)\n"
 msgstr "POP3: Jätan kirja (%d / %d baiti) vahele\n"
 
-#: libsylph/pop.c:745
+#: libsylph/pop.c:690
 msgid "mailbox is locked\n"
 msgstr "kirjakast on lukus\n"
 
-#: libsylph/pop.c:748
+#: libsylph/pop.c:693
 msgid "session timeout\n"
-msgstr ""
+msgstr "seansi ajalõpp\n"
 
-#: libsylph/pop.c:754 libsylph/smtp.c:613
+#: libsylph/pop.c:699 libsylph/smtp.c:561
 msgid "can't start TLS session\n"
 msgstr "ei suutnud käivitada TLS sessiooni\n"
 
-#: libsylph/pop.c:762 libsylph/smtp.c:548
+#: libsylph/pop.c:706 libsylph/smtp.c:496
 msgid "error occurred on authentication\n"
 msgstr "autoriseerimisel tekkis viga\n"
 
-#: libsylph/pop.c:767
-#, fuzzy
+#: libsylph/pop.c:711
 msgid "command not supported\n"
-msgstr "Käsklus"
+msgstr "käsku ei toetata\n"
 
-#: libsylph/pop.c:771
-#, fuzzy
+#: libsylph/pop.c:715
 msgid "error occurred on POP3 session\n"
-msgstr "autoriseerimisel tekkis viga\n"
+msgstr "ilmnes viga POP3 seansil\n"
 
 #: libsylph/prefs.c:209 libsylph/prefs.c:237 libsylph/prefs.c:282
-#: libsylph/prefs_account.c:254 libsylph/prefs_account.c:268
+#: libsylph/prefs_account.c:253 libsylph/prefs_account.c:267
 #: src/prefs_display_header.c:415 src/prefs_display_header.c:440
 msgid "failed to write configuration to file\n"
-msgstr "Häälestuse salvestamine ebaõnnestus\n"
+msgstr "häälestuse salvestamine ebaõnnestus\n"
 
 #: libsylph/prefs.c:252
 #, c-format
@@ -530,7 +536,7 @@ msgstr "procmime_get_text_content(): Koodi muundamine ebaõnnestus.\n"
 
 #: libsylph/procmsg.c:877
 msgid "can't open mark file\n"
-msgstr "Ei suuda avada märgifaili\n"
+msgstr "ei suuda avada märgifaili\n"
 
 #: libsylph/procmsg.c:1469
 #, c-format
@@ -550,18 +556,17 @@ msgstr "tekkis viga andmete võtmisel.\n"
 msgid "Can't write to file.\n"
 msgstr "Ei saa kirjutada faili.\n"
 
-#: libsylph/smtp.c:173
+#: libsylph/smtp.c:157
 msgid "SMTP AUTH not available\n"
 msgstr "SMTP AUTH pole saadav\n"
 
-#: libsylph/smtp.c:517 libsylph/smtp.c:568
+#: libsylph/smtp.c:466 libsylph/smtp.c:516
 msgid "bad SMTP response\n"
-msgstr ""
+msgstr "halb SMTP vastus\n"
 
-#: libsylph/smtp.c:539 libsylph/smtp.c:557 libsylph/smtp.c:655
-#, fuzzy
+#: libsylph/smtp.c:487 libsylph/smtp.c:505 libsylph/smtp.c:602
 msgid "error occurred on SMTP session\n"
-msgstr "autoriseerimisel tekkis viga\n"
+msgstr "viga ilmnes SMTP-seansil\n"
 
 #: libsylph/ssl.c:132
 msgid "SSLv23 not available\n"
@@ -585,7 +590,7 @@ msgstr "SSL-i meetodit ei saa kasutada\n"
 
 #: libsylph/ssl.c:251
 msgid "Unknown SSL method *PROGRAM BUG*\n"
-msgstr "ssl.c:94: Tundmatu SSL meetod *PROGRAMMI VIGA*\n"
+msgstr "Tundmatu SSL-meetod *PROGRAMMIVIGA*\n"
 
 #: libsylph/ssl.c:257
 msgid "Error creating ssl context\n"
@@ -618,14 +623,14 @@ msgstr "%s-i kirjutamine ebaõnnestus.\n"
 
 #: src/about.c:91
 msgid "About"
-msgstr "Sellest"
+msgstr "Teave"
 
 #: src/about.c:227
 msgid ""
 "GPGME is copyright 2001 by Werner Koch <dd9jn@gnu.org>\n"
 "\n"
 msgstr ""
-"GPGME kopiaõigused 2001 on Werner Koch'il <dd9jn@gnu.org>\n"
+"GPGME koopiaõigused 2001 on Werner Koch'il <dd9jn@gnu.org>\n"
 "\n"
 
 #: src/about.c:231
@@ -677,14 +682,12 @@ msgid "Opening account edit window...\n"
 msgstr "Avan kontode redigeerimisakna...\n"
 
 #: src/account_dialog.c:191
-#, fuzzy
 msgid "Creating folder tree. Please wait..."
-msgstr "Loon kausta vaate...\n"
+msgstr "Kaustapuu loomine. Palun oota..."
 
 #: src/account_dialog.c:193
-#, fuzzy
 msgid "Creation of the folder tree failed."
-msgstr "Uuendan kasuta puu..."
+msgstr "Kaustapuu loomine ebaõnnestus."
 
 #: src/account_dialog.c:296
 msgid "Creating account edit window...\n"
@@ -710,7 +713,7 @@ msgstr ""
 msgid "Name"
 msgstr "Nimi"
 
-#: src/account_dialog.c:381 src/prefs_account_dialog.c:772
+#: src/account_dialog.c:381 src/prefs_account_dialog.c:765
 msgid "Protocol"
 msgstr "Protokoll"
 
@@ -723,28 +726,26 @@ msgid "Edit"
 msgstr "Redigeeri"
 
 #: src/account_dialog.c:450
-#, fuzzy
 msgid " _Set as default account "
-msgstr " Määra vaikimisi kontoks "
+msgstr " Määra vaikimi_si kontoks "
 
 #: src/account_dialog.c:530
-#, fuzzy, c-format
+#, c-format
 msgid "Do you really want to delete the account '%s'?"
-msgstr "Kas te tõesti soovite kustutada kontot?"
+msgstr "Kas soovite tõesti konto '%s' kustutada?"
 
 #: src/account_dialog.c:532 src/prefs_filter.c:714
-#, fuzzy
 msgid "(Untitled)"
-msgstr "Tiitlita"
+msgstr "(Tiitlita)"
 
 #: src/account_dialog.c:533
 msgid "Delete account"
 msgstr "Kustuta konto"
 
 #: src/action.c:331
-#, fuzzy, c-format
+#, c-format
 msgid "Could not get message file %d"
-msgstr "Ei suutnud võtta kirjade faili."
+msgstr "Kirjafaili %d ei õnnestunud hankida"
 
 #: src/action.c:362
 msgid "Could not get message part."
@@ -752,7 +753,7 @@ msgstr "Ei suutnud avada teate osa."
 
 #: src/action.c:379
 msgid "Can't get part of multipart message"
-msgstr "Ei saa mitmeosalise kirja osa kätte."
+msgstr "Ei saa mitmeosalise kirja osa kätte"
 
 #: src/action.c:472
 #, c-format
@@ -807,32 +808,34 @@ msgid "Abort"
 msgstr "Katkesta"
 
 #: src/action.c:1352
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Enter the argument for the following action:\n"
 "(`%%h' will be replaced with the argument)\n"
 "  %s"
 msgstr ""
-"Sisesta trükkimise käsurida:\n"
-"(%s asendatakse failinimega)"
+"Sisestage järgmise toimingu argument:\n"
+"('%%h' asendatakse argumendiga)\n"
+"   %s"
 
 #: src/action.c:1357
 msgid "Action's hidden user argument"
-msgstr ""
+msgstr "Tegevuse peidetud kasutaja argument"
 
 #: src/action.c:1361
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Enter the argument for the following action:\n"
 "(`%%u' will be replaced with the argument)\n"
 "  %s"
 msgstr ""
-"Sisesta trükkimise käsurida:\n"
-"(%s asendatakse failinimega)"
+"Sisestage järgmise toimingu argument:\n"
+"(`%%u' asendatakse argumendiga)\n"
+"   %s"
 
 #: src/action.c:1366
 msgid "Action's user argument"
-msgstr ""
+msgstr "Kasutaja argument"
 
 #: src/addressadd.c:159
 msgid "Add Address to Book"
@@ -854,9 +857,8 @@ msgid "Select Address Book Folder"
 msgstr "Vali aadressiraamatu kaust"
 
 #: src/addressadd.c:316 src/addressbook.c:1107 src/addressbook.c:3598
-#, fuzzy
 msgid "Auto-registered address"
-msgstr "Registreeritud reeglid"
+msgstr "Automaatselt registreeritud aadress"
 
 #: src/addressbook.c:413 src/compose.c:583 src/mainwindow.c:558
 #: src/messageview.c:166
@@ -944,14 +946,12 @@ msgid "/_Address/Add _to recipient"
 msgstr "/_Aadress/Kustuta"
 
 #: src/addressbook.c:440
-#, fuzzy
 msgid "/_Address/Add to _Cc"
-msgstr "/_Aadress/R_edigeeri"
+msgstr "/_Aadress/Lisa _Koopiasse"
 
 #: src/addressbook.c:442
-#, fuzzy
 msgid "/_Address/Add to _Bcc"
-msgstr "/_Aadress/R_edigeeri"
+msgstr "/_Aadress/Lisa _Pimekoopiasse"
 
 #: src/addressbook.c:445
 msgid "/_Address/_Edit"
@@ -996,7 +996,7 @@ msgstr "/_Abi"
 #: src/addressbook.c:454 src/compose.c:743 src/mainwindow.c:924
 #: src/messageview.c:320
 msgid "/_Help/_About"
-msgstr "/_Abi/Sellest"
+msgstr "/_Abi/Teave"
 
 #: src/addressbook.c:471 src/addressbook.c:481
 msgid "/New _Address"
@@ -1029,25 +1029,23 @@ msgstr "/Kustuta"
 
 #: src/addressbook.c:485
 msgid "/Add _to recipient"
-msgstr ""
+msgstr "/Lisa _saajale"
 
 #: src/addressbook.c:487
 msgid "/Add t_o Cc"
-msgstr ""
+msgstr "/Lisa koopiasse"
 
 #: src/addressbook.c:489
 msgid "/Add to _Bcc"
-msgstr ""
+msgstr "/Lisa pimekoopiasse"
 
 #: src/addressbook.c:495
-#, fuzzy
 msgid "/_Copy"
-msgstr "/Kopeeri..."
+msgstr "/_Kopeeri"
 
 #: src/addressbook.c:496
-#, fuzzy
 msgid "/_Paste"
-msgstr "/R_edaktor/_Aseta"
+msgstr "/_Aseta"
 
 #: src/addressbook.c:621 src/prefs_common_dialog.c:2838 src/prefs_toolbar.c:90
 msgid "Address book"
@@ -1055,7 +1053,7 @@ msgstr "Aadressiraamat"
 
 #. special folder setting (maybe these options are redundant)
 #: src/addressbook.c:694 src/addressbook.c:4324 src/folderview.c:398
-#: src/prefs_account_dialog.c:2107 src/query_search.c:498
+#: src/prefs_account_dialog.c:2077 src/query_search.c:498
 msgid "Folder"
 msgstr "Kaust"
 
@@ -1069,9 +1067,8 @@ msgid "Nick Name"
 msgstr "Hüüdnimi"
 
 #: src/addressbook.c:908 src/quick_search.c:128
-#, fuzzy
 msgid "Search:"
-msgstr "Otsi"
+msgstr "Otsi:"
 
 #: src/addressbook.c:946 src/compose.c:3386 src/headerview.c:57
 #: src/prefs_folder_item.c:340 src/prefs_template.c:200
@@ -1104,14 +1101,12 @@ msgid "Add"
 msgstr "Lisa"
 
 #: src/addressbook.c:981 src/prefs_toolbar.c:80
-#, fuzzy
 msgid "Search"
 msgstr "Otsi"
 
 #: src/addressbook.c:984
-#, fuzzy
 msgid "_Close"
-msgstr "Sulge"
+msgstr "_Sulge"
 
 #. Confirm deletion
 #: src/addressbook.c:1180
@@ -1136,14 +1131,12 @@ msgid "Delete folder"
 msgstr "Kustuta kaust"
 
 #: src/addressbook.c:2371
-#, fuzzy
 msgid "_Folder only"
-msgstr "Ainult kataloog"
+msgstr "Ainult _kataloog"
 
 #: src/addressbook.c:2371
-#, fuzzy
 msgid "Folder and _addresses"
-msgstr "Kaust ja aadressid"
+msgstr "Kaust ja _aadressid"
 
 #: src/addressbook.c:2376
 #, c-format
@@ -1205,15 +1198,17 @@ msgid "Address book conversion"
 msgstr "Aadressiraamat viiakse uude formaati"
 
 #: src/addressbook.c:3437
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Could not read address index:\n"
 "\n"
 "%s%c%s"
-msgstr "Ei suutnud lugeda aadresside indeksit"
+msgstr ""
+"Aadressiindeksit ei õnnestunud lugeda:\n"
+"\n"
+"%s%c%s"
 
 #: src/addressbook.c:3440
-#, fuzzy
 msgid "Address Book Error"
 msgstr "Aadressiraamatu viga"
 
@@ -1248,9 +1243,8 @@ msgid "Could not read address index"
 msgstr "Ei suutnud lugeda aadresside indeksit"
 
 #: src/addressbook.c:3545
-#, fuzzy
 msgid "Address Book Conversion Error"
-msgstr "Aadressiraamatu uuendamise viga"
+msgstr "Aadressiraamatu teisendamise viga"
 
 #: src/addressbook.c:3551
 #, fuzzy
@@ -1279,7 +1273,7 @@ msgstr "Grupp"
 
 #: src/addressbook.c:4338
 msgid "vCard"
-msgstr "V-Kaart"
+msgstr "v-Kaart"
 
 #: src/addressbook.c:4352 src/addressbook.c:4366
 msgid "JPilot"
@@ -1305,7 +1299,7 @@ msgstr "Märkus"
 msgid "Warning"
 msgstr "Hoiatus"
 
-#: src/alertpanel.c:168 src/inc.c:954
+#: src/alertpanel.c:168 src/inc.c:950
 #: plugin/attachment_tool/attachment_tool.c:264
 msgid "Error"
 msgstr "Viga"
@@ -1367,29 +1361,24 @@ msgstr "/Eemalda"
 
 #: src/compose.c:578 src/folderview.c:273 src/folderview.c:299
 #: src/folderview.c:321
-#, fuzzy
 msgid "/_Properties..."
-msgstr "/Omadus..."
+msgstr "/_Omadus..."
 
 #: src/compose.c:584
-#, fuzzy
 msgid "/_File/_Send"
-msgstr "/_Fail/_Salvesta"
+msgstr "/_Fail/_Saada"
 
 #: src/compose.c:586
-#, fuzzy
 msgid "/_File/Send _later"
-msgstr "/_Kiri/Saada _hiljem"
+msgstr "/_Fail/Saada _hiljem"
 
 #: src/compose.c:589
-#, fuzzy
 msgid "/_File/Save to _draft folder"
-msgstr "/_Kiri/Salvesta _mustandi kausta"
+msgstr "/_Fail/Salvesta mustan_dikausta"
 
 #: src/compose.c:591
-#, fuzzy
 msgid "/_File/Save and _keep editing"
-msgstr "/_Kiri/Salvesta ja jätka kirjutamist"
+msgstr "/_File/Salvesta ja jät_ka redigeerimist"
 
 #: src/compose.c:594
 msgid "/_File/_Attach file"
@@ -1404,9 +1393,8 @@ msgid "/_File/Insert si_gnature"
 msgstr "/_Fail/Lisa allkiri"
 
 #: src/compose.c:598
-#, fuzzy
 msgid "/_File/A_ppend signature"
-msgstr "/_Fail/Lisa allkiri"
+msgstr "/_Fail/Li_sa allkiri"
 
 #: src/compose.c:603
 msgid "/_Edit/_Undo"
@@ -1439,7 +1427,7 @@ msgstr "/R_edaktor/_Äärista aktiivne lõik"
 
 #: src/compose.c:615
 msgid "/_Edit/Wrap all long _lines"
-msgstr "/R_edaktor/Ää_rista kõik pikad read"
+msgstr "/R_edaktor/Ära_rista kõik pikad read"
 
 #: src/compose.c:617
 #, fuzzy
@@ -1464,7 +1452,6 @@ msgid "/_View/_Bcc"
 msgstr "/_Vaade/*_BCC"
 
 #: src/compose.c:622
-#, fuzzy
 msgid "/_View/_Reply-To"
 msgstr "/_Vaade/_Vasta"
 
@@ -1489,9 +1476,8 @@ msgid "/_View/_Attachment"
 msgstr "/_Vaade/_Manus"
 
 #: src/compose.c:630
-#, fuzzy
 msgid "/_View/Cu_stomize toolbar..."
-msgstr "/_Vaade/_Ava/Teine kaust..."
+msgstr "/_Vaade/Kohanda töörii_stariba..."
 
 #: src/compose.c:638 src/mainwindow.c:691 src/messageview.c:190
 #, fuzzy
@@ -1500,7 +1486,7 @@ msgstr "/Vaade/_Sorteeri/Kahanevas järjekorras"
 
 #: src/compose.c:639
 msgid "/_View/Character _encoding/_Automatic"
-msgstr ""
+msgstr "/_Vaade/Märkide _kodeering/_Automaatne"
 
 #: src/compose.c:641 src/compose.c:647 src/compose.c:653 src/compose.c:657
 #: src/compose.c:665 src/compose.c:669 src/compose.c:675 src/compose.c:681
@@ -1649,33 +1635,28 @@ msgid "/_Tools/Actio_ns"
 msgstr "/_Tööriist/Tegevused"
 
 #: src/compose.c:725
-#, fuzzy
 msgid "/_Tools/Edit with e_xternal editor"
-msgstr "/R_edaktor/Redi_geeri välise redaktoriga"
+msgstr "/Tööriistad/Redi_geeri välise redaktoriga"
 
 #: src/compose.c:728
 msgid "/_Tools/Request _disposition notification"
-msgstr ""
+msgstr "/_Tööriistad/Taotlus _lahutamise teatis"
 
 #: src/compose.c:732
-#, fuzzy
 msgid "/_Tools/PGP Si_gn"
-msgstr "/_Tööriist/Tegevused"
+msgstr "/_Tööriistad/PGP all_kirjasta"
 
 #: src/compose.c:733
-#, fuzzy
 msgid "/_Tools/PGP _Encrypt"
-msgstr "/_Kiri/Krüpteeri"
+msgstr "/_Tööriistad/PGP _krüpti"
 
 #: src/compose.c:738
-#, fuzzy
 msgid "/_Tools/_Check spell"
-msgstr "/_Tööriist/Käivita"
+msgstr "/_Tööriistad/_Kontrolli õigekirja"
 
 #: src/compose.c:739
-#, fuzzy
 msgid "/_Tools/_Set spell language"
-msgstr "/_Tööriist/_Mall"
+msgstr "/_Tööriistad/_Määrake õigekirja keel"
 
 #: src/compose.c:1022
 #, c-format
@@ -1688,7 +1669,7 @@ msgstr "Ei saa tekstiosa kätte\n"
 
 #: src/compose.c:1754
 msgid "Quote mark format error."
-msgstr "*Tsitaadimärgi formaadi viga."
+msgstr "Tsitaadimärgi formaadi viga."
 
 #: src/compose.c:1765
 msgid "Message reply/forward format error."
@@ -1712,7 +1693,7 @@ msgstr "Fail %s on tühi."
 #: src/compose.c:2324
 #, c-format
 msgid "Can't read %s."
-msgstr "ei suuda lugeda %s-i"
+msgstr "Ei suuda lugeda %s-i."
 
 #: src/compose.c:2357
 #, c-format
@@ -1729,45 +1710,42 @@ msgid "(No Subject)"
 msgstr "(Pole pealkirja)"
 
 #: src/compose.c:2912
-#, fuzzy, c-format
+#, c-format
 msgid "%s - Compose%s"
-msgstr "%s - Kirjuta kiri%s"
+msgstr "%s – koosta %s"
 
-#: src/compose.c:3015 src/compose.c:6216 src/prefs_account_dialog.c:1382
-#, fuzzy, c-format
+#: src/compose.c:3015 src/compose.c:6216 src/prefs_account_dialog.c:1352
+#, c-format
 msgid "Signature %d"
-msgstr "Allkiri"
+msgstr "Allkiri %d"
 
 #: src/compose.c:3081
 msgid "Recipient is not specified."
 msgstr "Saaja pole määratud."
 
 #: src/compose.c:3089
-#, fuzzy
 msgid "Empty subject"
-msgstr "Pealkiri"
+msgstr "Tühi teema"
 
 #: src/compose.c:3090
 msgid "Subject is empty. Send it anyway?"
 msgstr "Päälkiri on tühi. Kas saadame igal juhul?"
 
 #: src/compose.c:3154
-#, fuzzy
 msgid "Attachment is missing"
-msgstr "Manused"
+msgstr "Manus puudub"
 
 #: src/compose.c:3155
 msgid "There is no attachment. Send it without attachments?"
-msgstr ""
+msgstr "Manust ei ole. Kas saata see ilma manusteta?"
 
 #: src/compose.c:3272 src/compose.c:3298
 msgid "Check recipients"
-msgstr ""
+msgstr "Kontrollige saajaid"
 
 #: src/compose.c:3318
-#, fuzzy
 msgid "Really send this mail to the following addresses?"
-msgstr "Säti järgmised aadressid automaatselt"
+msgstr "Kas tõesti saata see kiri järgmistele aadressidele?"
 
 #: src/compose.c:3331 src/compose.c:5464 src/headerview.c:56
 msgid "From:"
@@ -1778,16 +1756,16 @@ msgid "Subject:"
 msgstr "Pealkiri:"
 
 #: src/compose.c:3446
-#, fuzzy
 msgid "_Send"
-msgstr "Saada"
+msgstr "_Saada"
 
 #: src/compose.c:3476
-#, fuzzy
 msgid ""
 "Checking for new messages is currently running.\n"
 "Please try again later."
-msgstr "Kõigis kaustades otsitakse uusi kirju..."
+msgstr ""
+"Uute sõnumite otsimine on praegu käimas.\n"
+"Palun proovi hiljem uuesti."
 
 #: src/compose.c:3612
 msgid "can't get recipient list."
@@ -1811,6 +1789,7 @@ msgid ""
 "Sending of message was completed, but the message could not be saved to "
 "outbox."
 msgstr ""
+"Sõnumi saatmine lõpetati, kuid sõnumit ei saanud väljundkausta salvestada."
 
 #: src/compose.c:3765
 #, c-format
@@ -1819,38 +1798,35 @@ msgstr ""
 "Ei suutnud leida ühtki võtit, mis oleks seotud valitud võtmega (id'%s')."
 
 #: src/compose.c:3808 src/compose.c:4202
-#, fuzzy
 msgid "Can't sign the message."
-msgstr "Kirja ei õnnestunud järjekorda asetada."
+msgstr "Ei saa sõnumit allkirjastada."
 
 #: src/compose.c:3838 src/compose.c:4253
-#, fuzzy
 msgid "Can't encrypt the message."
-msgstr "Kirja ei õnnestunud järjekorda asetada."
+msgstr "Sõnumit ei saa krüpteerida."
 
 #: src/compose.c:3877 src/compose.c:4247
-#, fuzzy
 msgid "Can't encrypt or sign the message."
-msgstr "Kirja ei õnnestunud järjekorda asetada."
+msgstr "Sõnumit ei saa krüpteerida ega allkirjastada."
 
 #: src/compose.c:3925 src/compose.c:4284 src/compose.c:4347 src/compose.c:4467
 msgid "can't change file mode\n"
-msgstr "Ei suuda muuta faili omadusi\n"
+msgstr "ei suuda muuta faili omadusi\n"
 
 #: src/compose.c:3958
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Can't convert the character encoding of the message body from %s to %s.\n"
 "\n"
 "Send it as %s anyway?"
 msgstr ""
-"Ei suuda transleerida kirja tekstikoodi.\n"
-"Kas igatahes saata ?"
+"Kirja keha märgikodeeringut ei saa teisendada %s-st %s-ks.\n"
+"\n"
+"Kas saata see ikkagi kui %s?"
 
 #: src/compose.c:3964
-#, fuzzy
 msgid "Code conversion error"
-msgstr "Aadressiraamatu uuendamise viga"
+msgstr "Koodi teisendamise viga"
 
 #: src/compose.c:4050
 #, c-format
@@ -1860,14 +1836,18 @@ msgid ""
 "\n"
 "Send it anyway?"
 msgstr ""
+"Rida %d ületab rea pikkuse piirangu (998 baiti).\n"
+"Sõnumi sisu võib teel kohaletoimetamisse puruneda.\n"
+"\n"
+"Kas ikkagi saata?"
 
 #: src/compose.c:4054
 msgid "Line length limit"
-msgstr ""
+msgstr "Rea pikkuse piirang"
 
 #: src/compose.c:4221
 msgid "Encrypting with Bcc"
-msgstr ""
+msgstr "Krüptimine Bcc-ga"
 
 #: src/compose.c:4222
 msgid ""
@@ -1877,14 +1857,19 @@ msgid ""
 "\n"
 "Send it anyway?"
 msgstr ""
+"Sellel kirjal on Pimekoopia saajad. Kui see sõnum on krüptitud, on "
+"krüpteerimisvõtmete loendi uurimisel nähtavad kõik Pimekoopia saajad, mis "
+"viib konfidentsiaalsuse kadumiseni.\n"
+"\n"
+"Kas ikkagi saata?"
 
 #: src/compose.c:4427
 msgid "can't remove the old message\n"
-msgstr "Ei suuda eemaldada vana kirja\n"
+msgstr "ei suuda eemaldada vana kirja\n"
 
 #: src/compose.c:4445
 msgid "queueing message...\n"
-msgstr "Asetan kirja järjekorda...\n"
+msgstr "asetan kirja järjekorda...\n"
 
 #: src/compose.c:4533
 msgid "can't find queue folder\n"
@@ -1892,36 +1877,33 @@ msgstr "järjekorra kausta ei leidunud\n"
 
 #: src/compose.c:4540
 msgid "can't queue the message\n"
-msgstr "Ei suutnud kirja järjekorda asetada\n"
+msgstr "ei suutnud kirja järjekorda asetada\n"
 
 #: src/compose.c:4590
-#, fuzzy, c-format
+#, c-format
 msgid "File %s doesn't exist."
-msgstr "Faili %s ei leidu\n"
+msgstr "Faili %s ei leidu."
 
 #: src/compose.c:4599
-#, fuzzy, c-format
+#, c-format
 msgid "Can't open file %s."
-msgstr "Ei suuda avada faili %s\n"
+msgstr "Ei suuda avada faili %s."
 
 #: src/compose.c:5411
 msgid "Creating compose window...\n"
 msgstr "Loon kirjutamise akent...\n"
 
 #: src/compose.c:5544
-#, fuzzy
 msgid "PGP Sign"
-msgstr "/_Tööriist/Tegevused"
+msgstr "PGP signeerimine"
 
 #: src/compose.c:5547
-#, fuzzy
 msgid "PGP Encrypt"
-msgstr "/_Kiri/Krüpteeri"
+msgstr "PGP krüpteeri"
 
 #: src/compose.c:5585 src/mimeview.c:209
-#, fuzzy
 msgid "Data type"
-msgstr "Kuupäev"
+msgstr "Andmetüüp"
 
 #. S_COL_DATE
 #: src/compose.c:5594 src/mimeview.c:217 src/prefs_filter_edit.c:511
@@ -1931,14 +1913,12 @@ msgid "Size"
 msgstr "Suurus"
 
 #: src/compose.c:6208
-#, fuzzy
 msgid "Signature:"
-msgstr "Allkiri"
+msgstr "Allkiri:"
 
 #: src/compose.c:6223
-#, fuzzy
 msgid "Change signature"
-msgstr "Allkirja kontroll"
+msgstr "Muuda allkirja"
 
 #: src/compose.c:6803
 msgid "Invalid MIME type."
@@ -1949,7 +1929,6 @@ msgid "File doesn't exist or is empty."
 msgstr "Faili ei eksisteeri või on see tühi."
 
 #: src/compose.c:6890
-#, fuzzy
 msgid "Properties"
 msgstr "Omadus"
 
@@ -1972,13 +1951,12 @@ msgid "File name"
 msgstr "Failinimi"
 
 #: src/compose.c:7023
-#, fuzzy
 msgid "File not exist."
-msgstr "faili %s ei leidu\n"
+msgstr "Faili ei eksisteeri."
 
 #: src/compose.c:7033 src/mimeview.c:1259 src/mimeview.c:1274
 msgid "Opening executable file"
-msgstr ""
+msgstr "Käivitatava faili avamine"
 
 #: src/compose.c:7034 src/mimeview.c:1260 src/mimeview.c:1275
 msgid ""
@@ -1987,6 +1965,10 @@ msgid ""
 "If you want to launch it, save it to somewhere and make sure it is not an "
 "virus or something like a malicious program."
 msgstr ""
+"See on käivitatav fail. Täitmisfaili avamine on turvalisuse huvides "
+"piiratud.\n"
+"Kui soovite selle käivitada, salvestage see kuhugi ja veenduge, et see pole "
+"viirus ega midagi pahatahtliku programmi sarnast."
 
 #: src/compose.c:7076
 #, c-format
@@ -1994,45 +1976,41 @@ msgid "External editor command line is invalid: `%s'\n"
 msgstr "Välise redaktori käsurida on vale: `%s'\n"
 
 #: src/compose.c:7138
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The external editor is still working.\n"
 "Force terminating the process (pid: %d)?\n"
 msgstr ""
-"Väline redaktor töötab ikka veel.\n"
-"Kas hävitame protsessi?\n"
-"protsessi grupi id: %d"
+"Väline redaktor töötab endiselt.\n"
+"Kas sundida protsessi lõpetama (pid: %d)?\n"
 
 #: src/compose.c:7478 src/mainwindow.c:3080
 msgid "_Customize toolbar..."
-msgstr ""
+msgstr "_Kohanda tööriistariba..."
 
 #: src/compose.c:7654 src/compose.c:7660 src/compose.c:7682
 msgid "Can't queue the message."
 msgstr "Kirja ei õnnestunud järjekorda asetada."
 
 #: src/compose.c:7795
-#, fuzzy
 msgid "Select files"
-msgstr "Määra fail"
+msgstr "Vali failid"
 
 #: src/compose.c:7818 src/inputdialog.c:372 src/prefs_common_dialog.c:4750
 msgid "Select file"
 msgstr "Määra fail"
 
 #: src/compose.c:7872
-#, fuzzy
 msgid "Save message"
-msgstr "Saada kiri"
+msgstr "Salvesta sõnum"
 
 #: src/compose.c:7873
-#, fuzzy
 msgid "This message has been modified. Save it to draft folder?"
-msgstr "Seda kirja on muudetud. kas kaotame selle?"
+msgstr "Seda teadet on muudetud. Kas salvestada see mustandite kausta?"
 
 #: src/compose.c:7875 src/compose.c:7879
 msgid "Close _without saving"
-msgstr ""
+msgstr "Sulgege _ilma salvestamata"
 
 #: src/compose.c:7926
 #, c-format
@@ -2044,14 +2022,12 @@ msgid "Apply template"
 msgstr "Lisa mall"
 
 #: src/compose.c:7929
-#, fuzzy
 msgid "_Replace"
-msgstr "Asenda"
+msgstr "_Asenda"
 
 #: src/compose.c:7929
-#, fuzzy
 msgid "_Insert"
-msgstr "Lisa"
+msgstr "L_isa"
 
 #: src/editaddress.c:161
 msgid "Add New Person"
@@ -2139,7 +2115,6 @@ msgid "Could not read file."
 msgstr "Ei suutnud lugeda faili."
 
 #: src/editbook.c:176 src/editbook.c:290
-#, fuzzy
 msgid "Edit Address Book"
 msgstr "Redigeeri aadressiraamatut"
 
@@ -2148,7 +2123,7 @@ msgid " Check File "
 msgstr " Kontrolli faili "
 
 #: src/editbook.c:210 src/editjpilot.c:282 src/editvcard.c:195
-#: src/prefs_account_dialog.c:1429
+#: src/prefs_account_dialog.c:1399
 msgid "File"
 msgstr "Fail"
 
@@ -2230,7 +2205,7 @@ msgstr "Redigeeri JPilot sissekannet"
 
 #: src/editjpilot.c:289 src/editldap.c:349 src/editvcard.c:202
 #: src/exportcsv.c:407 src/importcsv.c:696 src/importldif.c:499
-#: src/prefs_account_dialog.c:2135 src/prefs_common_dialog.c:2424
+#: src/prefs_account_dialog.c:2105 src/prefs_common_dialog.c:2424
 msgid " ... "
 msgstr " ... "
 
@@ -2294,8 +2269,7 @@ msgstr "Ajalimiit (sek)"
 msgid "Maximum Entries"
 msgstr "Sissekannete piirarv"
 
-#: src/editldap.c:471 src/prefs_account_dialog.c:629
-#: src/prefs_account_dialog.c:961
+#: src/editldap.c:471 src/prefs_account_dialog.c:622
 msgid "Basic"
 msgstr "Baas"
 
@@ -2321,7 +2295,7 @@ msgstr "Ei suutnud lugeda otsingu baase serverist - palu määra käsitsi"
 
 #: src/editvcard.c:104
 msgid "File does not appear to be vCard format."
-msgstr "Fail ei paista olevat vCard formaadis"
+msgstr "Fail ei paista olevat vCard formaadis."
 
 #: src/editvcard.c:116
 msgid "Select vCard File"
@@ -2336,99 +2310,86 @@ msgid "Add New vCard Entry"
 msgstr "Lisa uus vCard sissekanne"
 
 #: src/export.c:226
-#, fuzzy, c-format
+#, c-format
 msgid "Exporting %s ..."
-msgstr "Tuhnin kaustas %s ..."
+msgstr "%s eksportimine..."
 
 #: src/export.c:228
-#, fuzzy
 msgid "Exporting"
-msgstr "Väljasta"
+msgstr "Eksportimine"
 
 #: src/export.c:261
-#, fuzzy
 msgid "Error occurred on export."
-msgstr "Kirja saatmisel tekkis viga\n"
+msgstr "Ekspordil ilmnes viga."
 
 #: src/export.c:355
 msgid "Export"
 msgstr "Väljasta"
 
 #: src/export.c:374 src/export.c:471
-#, fuzzy
 msgid "Specify source folder and destination file."
-msgstr "*Märgi võtav mbox fail ja sihtkaust."
+msgstr "Määrake lähtekaust ja sihtfail."
 
 #: src/export.c:384 src/import.c:623
-#, fuzzy
 msgid "File format:"
-msgstr "Kuupäeva formaat"
+msgstr "Failiformaat:"
 
 #: src/export.c:389
-#, fuzzy
 msgid "Source folder:"
-msgstr "Lähte kataloog"
+msgstr "Lähte kataloog:"
 
 #: src/export.c:394
-#, fuzzy
 msgid "Destination:"
-msgstr "Sihtkaust"
+msgstr "Sihtkoht:"
 
 #: src/export.c:404 src/import.c:643
 msgid "UNIX mbox"
-msgstr ""
+msgstr "UNIX mbox"
 
 #: src/export.c:407
 msgid "eml (number + .eml)"
-msgstr ""
+msgstr "eml (number + .eml)"
 
 #: src/export.c:410
 msgid "MH (number only)"
-msgstr ""
+msgstr "MH (number ainult)"
 
 #: src/export.c:424 src/export.c:430 src/import.c:663 src/import.c:669
-#: src/prefs_account_dialog.c:1056
+#: src/prefs_account_dialog.c:1027
 msgid " Select... "
 msgstr " Vali... "
 
 #: src/export.c:441
-#, fuzzy
 msgid "Export only selected messages"
-msgstr "Rohkem sildiga kirju ei ole"
+msgstr "Ekspordi ainult valitud sõnumid"
 
 #: src/export.c:474
-#, fuzzy
 msgid "Specify source folder and destination folder."
-msgstr "*Märgi võtav mbox fail ja sihtkaust."
+msgstr "Määrake lähtekaust ja sihtkaust."
 
 #: src/export.c:500
-#, fuzzy
 msgid "Select destination file"
-msgstr "Vali väljastatav fail"
+msgstr "Valige sihtfail"
 
 #: src/export.c:504
-#, fuzzy
 msgid "Select destination folder"
-msgstr "Vali väljastatav fail"
+msgstr "Valige sihtkaust"
 
 #: src/exportcsv.c:101
-#, fuzzy
 msgid "Please specify file to export."
-msgstr "Palun määra aadressiraamatu nimi ja fail mida importida."
+msgstr "Palun määrake eksporditav fail."
 
 #: src/exportcsv.c:104
-#, fuzzy
 msgid "File exported."
-msgstr "Fail imporditud."
+msgstr "Fail eksporditud."
 
 #: src/exportcsv.c:281 src/importcsv.c:518 src/importldif.c:318
 msgid "Please select a file."
 msgstr "Palun valige fail."
 
 #: src/exportcsv.c:290
-#, fuzzy
 msgid "Cannot write to file."
-msgstr "Ei saa kirjutada faili.\n"
+msgstr "Ei saa kirjutada faili."
 
 #: src/exportcsv.c:308
 #, fuzzy
@@ -2446,11 +2407,11 @@ msgstr "Faili Nimi"
 
 #: src/exportcsv.c:416 src/importcsv.c:705
 msgid "Comma-separated"
-msgstr ""
+msgstr "Komaga eraldatud"
 
 #: src/exportcsv.c:420 src/importcsv.c:709
 msgid "Tab-separated"
-msgstr ""
+msgstr "Tabeldusmärgiga eraldatud"
 
 #: src/exportcsv.c:460 src/importcsv.c:848 src/importldif.c:664
 msgid "File Name :"
@@ -2480,14 +2441,12 @@ msgid "Finish"
 msgstr "Soome"
 
 #: src/filesel.c:221
-#, fuzzy
 msgid "File type:"
-msgstr "Faili nimi:"
+msgstr "Faili tüüp:"
 
 #: src/filesel.c:270
-#, fuzzy
 msgid "The link target not found."
-msgstr "*Märgi faili ei leidunud.\n"
+msgstr "Lingi sihtmärki ei leitud."
 
 #: src/filesel.c:305 src/filesel.c:331
 msgid "Save as"
@@ -2500,7 +2459,7 @@ msgstr "Kirjutame olemasoleva faili üle?"
 
 #: src/filesel.c:313 src/filesel.c:346 src/filesel.c:512
 msgid "The file already exists. Do you want to replace it?"
-msgstr ""
+msgstr "Fail on juba olemas. Kas te soovite seda asendada?"
 
 #: src/filesel.c:363 src/foldersel.c:256
 msgid "Select folder"
@@ -2529,7 +2488,7 @@ msgstr "Mustandid"
 #: src/foldersel.c:423 src/folderview.c:1297 src/prefs_common_dialog.c:2368
 #: src/prefs_folder_item.c:240 src/prefs_toolbar.c:68
 msgid "Junk"
-msgstr ""
+msgstr "Rämps"
 
 #: src/foldersel.c:604 src/folderview.c:2457 src/folderview.c:2461
 msgid "NewFolder"
@@ -2570,38 +2529,32 @@ msgid "/_Delete folder"
 msgstr "/Kustuta kaust"
 
 #: src/folderview.c:259 src/folderview.c:283
-#, fuzzy
 msgid "/Empty _junk"
-msgstr "Tühjenda prügikast"
+msgstr "/Tüh_jenda prügi"
 
 #: src/folderview.c:260 src/folderview.c:284
-#, fuzzy
 msgid "/Empty _trash"
-msgstr "Tühjenda prügikast"
+msgstr "/Tühjenda _prügikast"
 
 #: src/folderview.c:262 src/folderview.c:288 src/folderview.c:312
 msgid "/_Check for new messages"
 msgstr "/_Vaata uusi kirju"
 
 #: src/folderview.c:264 src/folderview.c:290
-#, fuzzy
 msgid "/R_ebuild folder tree"
-msgstr "/_Uuenda kausta puu"
+msgstr "/_Ehita uuesti kaustapuu"
 
 #: src/folderview.c:265 src/folderview.c:291 src/folderview.c:314
-#, fuzzy
 msgid "/_Update summary"
-msgstr "/_Vaade/_Uuenda koond"
+msgstr "/_Uuenda kokkuvõtet"
 
 #: src/folderview.c:267 src/folderview.c:293 src/folderview.c:316
-#, fuzzy
 msgid "/Mar_k all read"
-msgstr "/Märk/Märgi loetuks"
+msgstr "/Märgi _kõik loetuks"
 
 #: src/folderview.c:268 src/folderview.c:294
-#, fuzzy
 msgid "/Send _queued messages"
-msgstr "Saada kirjad järjekorrast"
+msgstr "/Saada _järjekorras olevaid sõnumeid"
 
 #: src/folderview.c:270 src/folderview.c:296 src/folderview.c:318
 msgid "/_Search messages..."
@@ -2609,12 +2562,11 @@ msgstr "/_Otsi kirju..."
 
 #: src/folderview.c:271 src/folderview.c:297 src/folderview.c:319
 msgid "/Ed_it search condition..."
-msgstr ""
+msgstr "/Muuda ots_ingutingimust..."
 
 #: src/folderview.c:286 src/folderview.c:310
-#, fuzzy
 msgid "/Down_load"
-msgstr "Kirju mida pole loetud ei ole."
+msgstr "/Lae a_lla"
 
 #: src/folderview.c:304
 msgid "/Su_bscribe to newsgroup..."
@@ -2641,7 +2593,7 @@ msgstr "Pole loetud"
 
 #: src/folderview.c:460 src/prefs_common_dialog.c:1782
 msgid "Total"
-msgstr ""
+msgstr "Kokku"
 
 #: src/folderview.c:614
 msgid "Setting folder info...\n"
@@ -2651,24 +2603,23 @@ msgstr "Sean kausta info...\n"
 msgid "Setting folder info..."
 msgstr "Sean kausta info..."
 
-#: src/folderview.c:928 src/mainwindow.c:4265 src/setup.c:308
+#: src/folderview.c:928 src/mainwindow.c:4265 src/setup.c:305
 #, c-format
 msgid "Scanning folder %s%c%s ..."
 msgstr "Tuhnin kaustas %s%c%s ..."
 
-#: src/folderview.c:932 src/mainwindow.c:4270 src/setup.c:313
+#: src/folderview.c:932 src/mainwindow.c:4270 src/setup.c:310
 #, c-format
 msgid "Scanning folder %s ..."
 msgstr "Tuhnin kaustas %s ..."
 
 #: src/folderview.c:976
-#, fuzzy
 msgid "Rebuild folder tree"
-msgstr "Uuenda kausta puu"
+msgstr "Kaustapuu ümberehitamine"
 
 #: src/folderview.c:977
 msgid "The folder tree will be rebuilt. Continue?"
-msgstr ""
+msgstr "Kaustapuu ehitatakse uuesti üles. Kas jätkata?"
 
 #: src/folderview.c:986
 #, fuzzy
@@ -2690,9 +2641,9 @@ msgid "Folder %s is selected\n"
 msgstr "Valitud on kaust %s\n"
 
 #: src/folderview.c:2269
-#, fuzzy, c-format
+#, c-format
 msgid "Downloading messages in %s ..."
-msgstr "Saadan kirja"
+msgstr "Kirjade allalaadimine asukohas %s ..."
 
 #: src/folderview.c:2297
 #, fuzzy, c-format
@@ -2700,14 +2651,13 @@ msgid "Download all messages under '%s' ?"
 msgstr "Saadan kirja"
 
 #: src/folderview.c:2300
-#, fuzzy
 msgid "Download all messages"
-msgstr "Saadan kirja"
+msgstr "Laadige alla kõik sõnumid"
 
 #: src/folderview.c:2349
-#, fuzzy, c-format
+#, c-format
 msgid "Error occurred while downloading messages in `%s'."
-msgstr "Tekkis viga kirja saatmisel %s-le."
+msgstr "`%s' sõnumite allalaadimisel ilmnes viga."
 
 #: src/folderview.c:2454
 msgid ""
@@ -2734,9 +2684,9 @@ msgid "Can't rename the folder '%s'."
 msgstr "Ei suuda kausta %s eemaldada."
 
 #: src/folderview.c:2645
-#, fuzzy, c-format
+#, c-format
 msgid "Can't move the folder `%s'."
-msgstr "Ei suuda kausta %s eemaldada."
+msgstr "Kausta `%s' ei saa teisaldada."
 
 #: src/folderview.c:2714
 #, fuzzy, c-format
@@ -2748,9 +2698,8 @@ msgstr ""
 "(Kirju ei kustutata kettalt)"
 
 #: src/folderview.c:2716
-#, fuzzy
 msgid "Delete search folder"
-msgstr "Kustuta kaust"
+msgstr "Kustuta otsingu kaust"
 
 #: src/folderview.c:2721
 #, fuzzy, c-format
@@ -2764,28 +2713,25 @@ msgstr ""
 "Kas sa tõesti soovid kustutada?"
 
 #: src/folderview.c:2753 src/folderview.c:2760
-#, fuzzy, c-format
+#, c-format
 msgid "Can't remove the folder '%s'."
-msgstr "Ei suuda kausta %s eemaldada."
+msgstr "Kausta '%s' ei saa eemaldada."
 
 #: src/folderview.c:2802
 msgid "Empty trash"
 msgstr "Tühjenda prügikast"
 
 #: src/folderview.c:2803
-#, fuzzy
 msgid "Delete all messages in the trash folder?"
-msgstr "Kas eemaldada kõik kirjad prügikastist?"
+msgstr "Kas kustutada kõik prügikastis olevad kirjad?"
 
 #: src/folderview.c:2810
-#, fuzzy
 msgid "Empty junk"
-msgstr "Pealkiri"
+msgstr "Tühjenda rämps"
 
 #: src/folderview.c:2811
-#, fuzzy
 msgid "Delete all messages in the junk folder?"
-msgstr "Kas eemaldada kõik kirjad prügikastist?"
+msgstr "Kas kustutada kõik rämpsposti kaustas olevad kirjad?"
 
 #: src/folderview.c:2858
 #, c-format
@@ -2849,9 +2795,8 @@ msgid "Can't load the image."
 msgstr "Ei suuda lugeda pilti."
 
 #: src/import.c:211
-#, fuzzy
 msgid "The source file does not exist."
-msgstr "Faili %s ei leidu\n"
+msgstr "Lähtefaili pole olemas."
 
 #: src/import.c:222
 #, fuzzy
@@ -2859,19 +2804,17 @@ msgid "Can't find the destination folder."
 msgstr "*Märgi võtav mbox fail ja sihtkaust."
 
 #: src/import.c:227 src/import.c:552
-#, fuzzy, c-format
+#, c-format
 msgid "Importing %s ..."
-msgstr "Tuhnin kaustas %s ..."
+msgstr "%s importimine..."
 
 #: src/import.c:229 src/import.c:510
-#, fuzzy
 msgid "Importing"
-msgstr "Impordi"
+msgstr "Importimine"
 
 #: src/import.c:251 src/import.c:557
-#, fuzzy
 msgid "Scanning folder..."
-msgstr "Tuhnin kaustas %s ..."
+msgstr "Kausta skannimine..."
 
 #: src/import.c:262
 #, fuzzy
@@ -2880,7 +2823,7 @@ msgstr "Kirja saatmisel tekkis viga\n"
 
 #: src/import.c:511
 msgid "Importing Outlook Express folders"
-msgstr ""
+msgstr "Outlook Expressi kaustade importimine"
 
 #: src/import.c:546
 #, fuzzy, c-format
@@ -2897,9 +2840,8 @@ msgid "Specify source file and destination folder."
 msgstr "*Märgi võtav mbox fail ja sihtkaust."
 
 #: src/import.c:628
-#, fuzzy
 msgid "Source:"
-msgstr "Lähte kataloog"
+msgstr "Lähte:"
 
 #: src/import.c:633
 #, fuzzy
@@ -2907,13 +2849,12 @@ msgid "Destination folder:"
 msgstr "Sihtkataloog:"
 
 #: src/import.c:646
-#, fuzzy
 msgid "eml (folder)"
-msgstr "Uus kaust"
+msgstr "eml (kaust)"
 
 #: src/import.c:649
 msgid "Outlook Express (dbx)"
-msgstr ""
+msgstr "Outlook Express (dbx)"
 
 #: src/import.c:698
 #, fuzzy
@@ -2977,7 +2918,7 @@ msgstr "Aadressiraamat :"
 
 #: src/importcsv.c:759
 msgid "Reorder address book fields with the Up and Down button."
-msgstr ""
+msgstr "Muutke aadressiraamatu väljade järjestust üles ja alla nuppudega."
 
 #: src/importcsv.c:794 src/prefs_actions.c:311 src/prefs_customheader.c:279
 #: src/prefs_display_header.c:287 src/prefs_display_items.c:242
@@ -3006,9 +2947,8 @@ msgid "Prev"
 msgstr "Eelm"
 
 #: src/importcsv.c:954
-#, fuzzy
 msgid "Fields"
-msgstr "LDIF Väli"
+msgstr "Väljad"
 
 #: src/importldif.c:126
 msgid "Select and rename LDIF field names to import."
@@ -3051,246 +2991,243 @@ msgid "Attributes"
 msgstr "Atribuudid"
 
 #: src/inc.c:214 src/inc.c:238
-#, fuzzy, c-format
+#, c-format
 msgid "Sylpheed: %d new messages"
-msgstr "Lõpetatud (%d uut kirja)"
+msgstr "Sylpheed: %d uut sõnumit"
 
 #: src/inc.c:225
 #, c-format
 msgid "[Local]: %d"
-msgstr ""
+msgstr "[Kohalik]: %d"
 
 #: src/inc.c:667
-#, fuzzy
 msgid "Authenticating with POP3"
-msgstr "Autoriseerimine"
+msgstr "Autentimine POP3 abil"
 
 #: src/inc.c:697
 msgid "Retrieving new messages"
 msgstr "Võtan uusi kirju"
 
 #: src/inc.c:699
-#, fuzzy
 msgid "Cancel _all"
-msgstr "Loobu"
+msgstr "Tühis_ta kõik"
 
 #: src/inc.c:745
 msgid "Standby"
 msgstr "*Juures"
 
-#: src/inc.c:906 src/inc.c:960
+#: src/inc.c:902 src/inc.c:956
 msgid "Cancelled"
 msgstr "Katkestatud"
 
-#: src/inc.c:917
+#: src/inc.c:913
 msgid "Retrieving"
 msgstr "Tirin"
 
-#: src/inc.c:926 src/inc.c:1272
+#: src/inc.c:922 src/inc.c:1268
 #, fuzzy, c-format
 msgid "%d message(s) (%s) received"
 msgstr "Valmis (%d kirja (%s)-st võetud)"
 
-#: src/inc.c:930
-#, fuzzy, c-format
+#: src/inc.c:926
+#, c-format
 msgid "no new messages"
-msgstr "Uusi kirju ei ole."
+msgstr "uusi kirju ei ole"
 
-#: src/inc.c:931
+#: src/inc.c:927
 msgid "Done"
 msgstr "Tehtud"
 
-#: src/inc.c:936
-#, fuzzy
+#: src/inc.c:932
 msgid "Server not found"
-msgstr "Serveri informatsioon"
+msgstr "Serverit ei leitud"
 
-#: src/inc.c:940
+#: src/inc.c:936
 msgid "Connection failed"
 msgstr "Ühendus ebaõnnestus"
 
-#: src/inc.c:943
+#: src/inc.c:939
 msgid "Auth failed"
 msgstr "Autoriseerimine ebaõnnestus"
 
-#: src/inc.c:947
+#: src/inc.c:943
 msgid "Locked"
 msgstr "Lukustatud"
 
-#: src/inc.c:957
-#, fuzzy
+#: src/inc.c:953
 msgid "Timeout"
-msgstr "Ajalimiit (sek)"
+msgstr "Aeg maha"
 
-#: src/inc.c:1007
+#: src/inc.c:1003
 #, c-format
 msgid "Finished (%d new message(s))"
 msgstr "Lõpetatud (%d uut kirja)"
 
-#: src/inc.c:1010
+#: src/inc.c:1006
 #, c-format
 msgid "Finished (no new messages)"
 msgstr "Lõpetatud (uusi kirju pole)"
 
-#: src/inc.c:1019
+#: src/inc.c:1015
 msgid "Some errors occurred while getting mail."
-msgstr "Tekksiid mõned vead kirjade võtmisel."
+msgstr "Tekkisid mõned vead kirjade võtmisel."
 
-#: src/inc.c:1055
+#: src/inc.c:1051
 #, c-format
 msgid "getting new messages of account %s...\n"
 msgstr "võtan uued kirjad kontolt %s...\n"
 
-#: src/inc.c:1059
-#, fuzzy, c-format
+#: src/inc.c:1055
+#, c-format
 msgid "%s: Authenticating with POP3"
-msgstr "Autoriseerimine"
+msgstr "%s: autentimine POP3 abil"
 
-#: src/inc.c:1062
+#: src/inc.c:1058
 #, c-format
 msgid "%s: Retrieving new messages"
 msgstr "%s: Uute kirjade võtmine"
 
-#: src/inc.c:1067
-#, fuzzy, c-format
+#: src/inc.c:1063
+#, c-format
 msgid "Connecting to POP3 server: %s..."
-msgstr "Ühendan POP3 serveriga: %s ..."
+msgstr "Ühenduse loomine POP3 serveriga: %s..."
 
-#: src/inc.c:1085
+#: src/inc.c:1081
 #, c-format
 msgid "Can't connect to POP3 server: %s:%d\n"
 msgstr "Ei suuda ühenduda POP3 serveriga %s:%d\n"
 
-#: src/inc.c:1175 src/rpop3.c:881 src/send_message.c:850
+#: src/inc.c:1171 src/rpop3.c:881 src/send_message.c:846
 #, c-format
 msgid "Authenticating..."
 msgstr "Autoriseerin..."
 
-#: src/inc.c:1176
+#: src/inc.c:1172
 #, fuzzy, c-format
 msgid "Retrieving messages from %s..."
 msgstr "Võtan kirju %s-st ja panen %s-i...\n"
 
-#: src/inc.c:1181
+#: src/inc.c:1177
 msgid "Getting the number of new messages (STAT)..."
 msgstr "Võtan uute kirjade arvu (STAT)..."
 
-#: src/inc.c:1185
+#: src/inc.c:1181
 msgid "Getting the number of new messages (LAST)..."
 msgstr "Võtan uute kirjade arvu (STAT)..."
 
-#: src/inc.c:1189
+#: src/inc.c:1185
 msgid "Getting the number of new messages (UIDL)..."
 msgstr "Võtan uute kirjade arvu (UIDL)..."
 
-#: src/inc.c:1193
+#: src/inc.c:1189
 msgid "Getting the size of messages (LIST)..."
 msgstr "Võtan kirjade suuruse (LIST)..."
 
-#: src/inc.c:1203
+#: src/inc.c:1199
 #, c-format
 msgid "Deleting message %d"
 msgstr "Kustutan kirja %d"
 
-#: src/inc.c:1210 src/send_message.c:868
+#: src/inc.c:1206 src/send_message.c:864
 msgid "Quitting"
 msgstr "Väljun"
 
-#: src/inc.c:1247
+#: src/inc.c:1243
 #, c-format
 msgid "Retrieving message (%d / %d) (%s / %s)"
 msgstr "Võtan kirja (%d /%d) (%s / %s)"
 
-#: src/inc.c:1526 src/inc.c:1553 src/summaryview.c:4861 src/summaryview.c:5051
+#: src/inc.c:1522 src/inc.c:1549 src/summaryview.c:4861 src/summaryview.c:5051
 #: src/summaryview.c:5102
 msgid ""
 "Execution of the junk filter command failed.\n"
 "Please check the junk mail control setting."
 msgstr ""
+"Prügifiltri käsu täitmine nurjus.\n"
+"Kontrollige rämpsposti juhtimisseadet."
 
-#: src/inc.c:1628 src/send_message.c:1005
-#, fuzzy
+#: src/inc.c:1624 src/send_message.c:1001
 msgid "Server not found."
-msgstr "*Märgi faili ei leidunud.\n"
+msgstr "Serverit ei leitud."
 
-#: src/inc.c:1632
-#, fuzzy, c-format
+#: src/inc.c:1628
+#, c-format
 msgid "Server %s not found."
-msgstr "*Märgi faili ei leidunud.\n"
+msgstr "Serverit %s ei leitud."
+
+#: src/inc.c:1631
+msgid "Connection failed."
+msgstr "Ühendus ebaõnnestus."
 
 #: src/inc.c:1635
-#, fuzzy
-msgid "Connection failed."
-msgstr "Ühendus ebaõnnestus"
+#, c-format
+msgid "Connection to %s:%d failed."
+msgstr "Ühenduse loomine seadmega %s:%d ebaõnnestus."
 
 #: src/inc.c:1639
-#, fuzzy, c-format
-msgid "Connection to %s:%d failed."
-msgstr "Ühendus ebaõnnestus"
-
-#: src/inc.c:1643
 msgid "Error occurred while processing mail."
 msgstr "Tekkis viga kirja protsessimisel."
 
-#: src/inc.c:1648
+#: src/inc.c:1644
 #, fuzzy, c-format
 msgid ""
 "Error occurred while processing mail:\n"
 "%s"
 msgstr "Tekkis viga kirja protsessimisel."
 
-#: src/inc.c:1654
+#: src/inc.c:1650
 msgid "No disk space left."
 msgstr "Ketas täis."
 
-#: src/inc.c:1659
-#, fuzzy
+#: src/inc.c:1655
 msgid "Can't write file."
-msgstr "Ei saa kirjutada faili.\n"
+msgstr "Ei saa kirjutada faili."
 
-#: src/inc.c:1664
-#, fuzzy
+#: src/inc.c:1660
 msgid "Socket error."
-msgstr "Soketi viga\n"
+msgstr "Soketi viga."
 
 #. consider EOF right after QUIT successful
-#: src/inc.c:1670 src/rpop3.c:578 src/rpop3.c:579 src/send_message.c:790
-#: src/send_message.c:1018
+#: src/inc.c:1666 src/rpop3.c:578 src/rpop3.c:579 src/send_message.c:786
+#: src/send_message.c:1014
 msgid "Connection closed by the remote host."
-msgstr ""
+msgstr "Kaughost sulges ühenduse."
 
-#: src/inc.c:1676
+#: src/inc.c:1672
 msgid "Mailbox is locked."
 msgstr "Kirjakast on lukus."
 
-#: src/inc.c:1680
-#, fuzzy, c-format
+#: src/inc.c:1676
+#, c-format
 msgid ""
 "Mailbox is locked:\n"
 "%s"
-msgstr "Kirjakast on lukus."
+msgstr ""
+"Kirjakast on lukus:\n"
+"%s"
 
-#: src/inc.c:1686 src/rpop3.c:553 src/rpop3.c:558 src/send_message.c:994
-#, fuzzy
+#: src/inc.c:1682 src/rpop3.c:553 src/rpop3.c:558 src/send_message.c:990
 msgid "Authentication failed."
-msgstr "Autoriseerimise meetod"
+msgstr "Tuvastamine ebaõnnestus."
 
-#: src/inc.c:1691 src/rpop3.c:555 src/send_message.c:997
-#, fuzzy, c-format
+#: src/inc.c:1687 src/rpop3.c:555 src/send_message.c:993
+#, c-format
 msgid ""
 "Authentication failed:\n"
 "%s"
-msgstr "Autoriseerimise meetod"
-
-#: src/inc.c:1696 src/rpop3.c:583 src/rpop3.c:584 src/send_message.c:1022
-msgid "Session timed out."
 msgstr ""
+"Tuvastamine ebaõnnestus:\n"
+"%s"
 
-#: src/inc.c:1737
+#: src/inc.c:1692 src/rpop3.c:583 src/rpop3.c:584 src/send_message.c:1018
+msgid "Session timed out."
+msgstr "Sessioon aegus."
+
+#: src/inc.c:1733
 msgid "Incorporation cancelled\n"
 msgstr "Sissekanne peatatud\n"
 
-#: src/inc.c:1853
+#: src/inc.c:1849
 #, c-format
 msgid "Getting new messages from %s into %s...\n"
 msgstr "Võtame uued teated %s-ist %s-i.\n"
@@ -3309,14 +3246,13 @@ msgid "Protocol log"
 msgstr "Protokolli sündmustik"
 
 #: src/main.c:679
-#, fuzzy, c-format
+#, c-format
 msgid "Usage: %s [OPTIONS ...] [URL]\n"
-msgstr "Kauta: %s [SEADED]...\n"
+msgstr "Kasuta: %s [SEADED...] [URL]\n"
 
 #: src/main.c:682
-#, fuzzy
 msgid "  --compose [mailto URL] open composition window"
-msgstr "  --compose [aadress]    ava kirjakirjutamise aken"
+msgstr "  --compose [mailto URL] ava kompositsiooniaken"
 
 #: src/main.c:683
 msgid ""
@@ -3354,24 +3290,26 @@ msgstr "  --staatus              näita kogu kirjade arvu"
 
 #: src/main.c:692
 msgid "  --open folderid/msgnum open existing message in a new window"
-msgstr ""
+msgstr " --open folderid/msgnum avage olemasolev sõnum uues aknas"
 
 #: src/main.c:693
 msgid "  --open <file URL>      open an rfc822 message file in a new window"
-msgstr ""
+msgstr "  --open <file URL>     avage rfc822 sõnumifail uues aknas"
 
 #: src/main.c:694
 msgid ""
 "  --configdir dirname    specify directory which stores configuration files"
 msgstr ""
+"  --configdir dirname    määrake kataloog, mis salvestab "
+"konfiguratsioonifailid"
 
 #: src/main.c:696
 msgid "  --ipcport portnum      specify port for IPC remote commands"
-msgstr ""
+msgstr "  --ipcport portnum      määrake IPC kaugkäskude port"
 
 #: src/main.c:698
 msgid "  --dpi dpinum           force DPI"
-msgstr ""
+msgstr "  --dpi dpinum           jõuliselt DPI"
 
 #: src/main.c:699
 #, fuzzy
@@ -3396,16 +3334,13 @@ msgid "  --version              output version information and exit"
 msgstr "  --version              näita versiooni informatsiooni ja välju"
 
 #: src/main.c:707
-#, fuzzy, c-format
+#, c-format
 msgid "Press any key..."
-msgstr ""
-"või vajuta 'y' klahvi.\n"
-"\n"
+msgstr "Vajuta suvalist klahvi..."
 
 #: src/main.c:857
-#, fuzzy
 msgid "Filename encoding"
-msgstr "Väljuva kirja kooditabel"
+msgstr "Failinime kodeering"
 
 #: src/main.c:858
 msgid ""
@@ -3420,6 +3355,16 @@ msgid ""
 "\n"
 "Continue?"
 msgstr ""
+"Lokaadi kodeering ei ole UTF-8, kuid keskkonnamuutuja G_FILENAME_ENCODING "
+"pole määratud.\n"
+"Kui failinime või kataloogi nime jaoks kasutatakse lokaadi kodeeringut, ei "
+"tööta see õigesti.\n"
+"Sel juhul peate määrama järgmise keskkonnamuutuja (üksikasju vaadake "
+"jaotisest README):\n"
+"\n"
+"\tG_FILENAME_ENCODING=@locale\n"
+"\n"
+"Kas jätkata?"
 
 #: src/main.c:941
 msgid "Composing message exists. Really quit?"
@@ -3427,7 +3372,7 @@ msgstr "Kirjakirjutamine on pooleli. Tõesti lõpetame?"
 
 #: src/main.c:952
 msgid "Queued messages"
-msgstr "kirjad järjekorras"
+msgstr "Kirjad järjekorras"
 
 #: src/main.c:953
 msgid "Some unsent messages are queued. Exit now?"
@@ -3443,7 +3388,7 @@ msgstr ""
 
 #: src/main.c:1335
 msgid "Loading plug-ins..."
-msgstr ""
+msgstr "Pistikprogrammide laadimine..."
 
 #. remote command mode
 #: src/main.c:1563
@@ -3451,15 +3396,16 @@ msgid "another Sylpheed is already running.\n"
 msgstr "üks teine Sylpheed juba töötab.\n"
 
 #: src/main.c:1857
-#, fuzzy
 msgid "Migration of configuration"
-msgstr "Tegevuste konfiguratsiooni kirjutamine...\n"
+msgstr "Konfiguratsiooni migreerimine"
 
 #: src/main.c:1858
 msgid ""
 "The previous version of configuration found.\n"
 "Do you want to migrate it?"
 msgstr ""
+"Leiti konfiguratsiooni eelmine versioon.\n"
+"Kas soovite selle üle viia?"
 
 #: src/mainwindow.c:559
 msgid "/_File/_Folder"
@@ -3471,46 +3417,39 @@ msgstr "/_Fail/_Kaust/_Loo uus kaust..."
 
 #: src/mainwindow.c:562
 msgid "/_File/_Folder/_Rename folder..."
-msgstr "/_Fail/_Kaust/_Nimeta kaust ümber"
+msgstr "/_Fail/_Kaust/_Nimeta kaust ümber..."
 
 #: src/mainwindow.c:563
-#, fuzzy
 msgid "/_File/_Folder/_Move folder..."
-msgstr "/_Fail/_Kaust/_Nimeta kaust ümber"
+msgstr "/_Fail/_Kaust/_Teisalda kaust..."
 
 #: src/mainwindow.c:564
 msgid "/_File/_Folder/_Delete folder"
 msgstr "/_Fail/_Kaust/_Kustuta kaust"
 
 #: src/mainwindow.c:565
-#, fuzzy
 msgid "/_File/_Mailbox"
-msgstr "/_Fail/_Lisa kirjakast..."
+msgstr "/_Fail/_Postkast"
 
 #: src/mainwindow.c:566
-#, fuzzy
 msgid "/_File/_Mailbox/Add _mailbox..."
-msgstr "/_Fail/_Lisa kirjakast..."
+msgstr "/_Fail/_Postkast/Lisa _postkast..."
 
 #: src/mainwindow.c:567
-#, fuzzy
 msgid "/_File/_Mailbox/_Remove mailbox"
-msgstr "/Ee_malda kirjakst"
+msgstr "/_Fail/_Postkast/_Eemalda postkast"
 
 #: src/mainwindow.c:568 src/mainwindow.c:573
-#, fuzzy
 msgid "/_File/_Mailbox/---"
-msgstr "/_Fail/_Kaust"
+msgstr "/_Fail/_Postkast/---"
 
 #: src/mainwindow.c:569
-#, fuzzy
 msgid "/_File/_Mailbox/_Check for new messages"
-msgstr "/_Vaata uusi kirju"
+msgstr "/_Fail/_Postkast/_Vaata uusi kirju"
 
 #: src/mainwindow.c:571
-#, fuzzy
 msgid "/_File/_Mailbox/Check for new messages in _all mailboxes"
-msgstr "/_Fail/_Vaata uusi kirju kõigis kaustades"
+msgstr "/_Fail/_Postkast/Uute kirjade kontrollimine _kõikides postkastides"
 
 #: src/mainwindow.c:574
 #, fuzzy
@@ -3518,37 +3457,32 @@ msgid "/_File/_Mailbox/R_ebuild folder tree"
 msgstr "/_Uuenda kausta puu"
 
 #: src/mainwindow.c:577
-#, fuzzy
 msgid "/_File/_Import mail data..."
-msgstr "/_Fail/_Impordi kirjakasti fail..."
+msgstr "/_Fail/_Impordi meiliandmed..."
 
 #: src/mainwindow.c:578
-#, fuzzy
 msgid "/_File/_Export mail data..."
-msgstr "/_Fail/_Ekspordi kirjakasti faili..."
+msgstr "/_Fail/_Ekspordi meiliandmed..."
 
 #: src/mainwindow.c:580
-#, fuzzy
 msgid "/_File/Empty all _trash"
-msgstr "/_Fail/_Tühjenda prügikast"
+msgstr "/_Fail/Tühjenda kõik _prügi"
 
 #: src/mainwindow.c:582 src/messageview.c:167
 msgid "/_File/_Save as..."
 msgstr "/_Fail/_Salvesta kui..."
 
 #: src/mainwindow.c:585 src/messageview.c:170
-#, fuzzy
 msgid "/_File/Page set_up..."
-msgstr "/_Fail/_Salvesta kui..."
+msgstr "/_Fail/Lehe se_adistamine..."
 
 #: src/mainwindow.c:587 src/messageview.c:172
 msgid "/_File/_Print..."
 msgstr "/_Fail/_Trüki..."
 
 #: src/mainwindow.c:589
-#, fuzzy
 msgid "/_File/_Work offline"
-msgstr "/_Fail/L_isa fail"
+msgstr "/_Fail/_Võrguühenduseta"
 
 #. {N_("/_File/_Close"),		"<alt>W", app_exit_cb, 0, NULL},
 #: src/mainwindow.c:592
@@ -3568,9 +3502,8 @@ msgid "/_Edit/_Search messages..."
 msgstr "/_Redaktor/_Otsi kirju..."
 
 #: src/mainwindow.c:602
-#, fuzzy
 msgid "/_Edit/_Quick search"
-msgstr "/R_edaktor/Ot_si kaustast"
+msgstr "/_Muuda/_Kiirotsing"
 
 #: src/mainwindow.c:605
 msgid "/_View/Show or hi_de"
@@ -3619,23 +3552,20 @@ msgid "/_View/Show or hi_de/Status _bar"
 msgstr "/_Vaade/Näita või varja/Staatusri_ba"
 
 #: src/mainwindow.c:626
-#, fuzzy
 msgid "/_View/_Customize toolbar..."
-msgstr "/_Vaade/_Ava/Teine kaust..."
+msgstr "/_Vaade/_Kohanda tööriistariba..."
 
 #: src/mainwindow.c:628
-#, fuzzy
 msgid "/_View/Layou_t"
-msgstr "/_Vaade/_Sorteeri"
+msgstr "/_Vaade/Paigu_tus"
 
 #: src/mainwindow.c:629
-#, fuzzy
 msgid "/_View/Layou_t/_Normal"
-msgstr "/_Vaade/_Sorteeri/_vormi järgi"
+msgstr "/_Vaade/Paigu_tus/Tavali_ne"
 
 #: src/mainwindow.c:630
 msgid "/_View/Layou_t/_Vertical"
-msgstr ""
+msgstr "/_Vaade/Paigu_tus/_Vertikaalne"
 
 #: src/mainwindow.c:631
 msgid "/_View/Separate f_older tree"
@@ -3730,7 +3660,7 @@ msgstr "/_Vaade/Sulge kõik teemad"
 
 #: src/mainwindow.c:658
 msgid "/_View/Set display _item..."
-msgstr "/_Vaade/Mää_ra näidatavad parameetrid"
+msgstr "/_Vaade/Mää_ra näidatavad parameetrid..."
 
 #: src/mainwindow.c:661
 msgid "/_View/_Go to"
@@ -3834,22 +3764,20 @@ msgid "/_View/Mess_age source"
 msgstr "/_Vaade/Näita kirja lähtekoodi"
 
 #: src/mainwindow.c:790 src/messageview.c:277 src/summaryview.c:487
-#, fuzzy
 msgid "/_View/All _headers"
-msgstr "/Vaade/Kõik päised"
+msgstr "/_Vaade/Kõik _päised"
 
 #: src/mainwindow.c:792
 msgid "/_View/_Update summary"
-msgstr "/_Vaade/_Uuenda koond"
+msgstr "/_Kuva/_Uuenda kokkuvõtet"
 
 #: src/mainwindow.c:794 src/messageview.c:280
 msgid "/_Message"
 msgstr "/_Kiri"
 
 #: src/mainwindow.c:795
-#, fuzzy
 msgid "/_Message/Recei_ve"
-msgstr "/_Kiri/Kirjuta _ümber"
+msgstr "/Sõnu_m/Võta _vastu"
 
 #: src/mainwindow.c:796
 #, fuzzy
@@ -4017,7 +3945,7 @@ msgstr "/_Tööriist/Loo filtri reeglistik/kasutades Kellele"
 
 #: src/mainwindow.c:858 src/messageview.c:312
 msgid "/_Tools/_Create filter rule/by _Subject"
-msgstr "/_Tööriist/Loo filtri reeglistik/ kasutades päälkirja"
+msgstr "/_Tööriist/Loo filtri reeglistik/ kasutades pealkirja"
 
 #: src/mainwindow.c:861
 #, fuzzy
@@ -4079,9 +4007,8 @@ msgid "/_Configuration/_Actions..."
 msgstr "/_Häälestus/Tegevused..."
 
 #: src/mainwindow.c:892
-#, fuzzy
 msgid "/_Configuration/Plug-in _manager..."
-msgstr "/_Häälestus/_Mall..."
+msgstr "/_Seadistus/Pistikprogrammi _haldur..."
 
 #: src/mainwindow.c:894
 msgid "/_Configuration/---"
@@ -4140,9 +4067,8 @@ msgid "/_Help/_FAQ/_Italian"
 msgstr "/_Abi/_KKK/_Itaalia"
 
 #: src/mainwindow.c:914
-#, fuzzy
 msgid "/_Help/_Command line options"
-msgstr "Käsurida ei ole sisestatud."
+msgstr "/_Abi/_Käsurea valikud"
 
 #: src/mainwindow.c:916 src/mainwindow.c:923
 msgid "/_Help/---"
@@ -4150,11 +4076,11 @@ msgstr "/_Abi/---"
 
 #: src/mainwindow.c:917
 msgid "/_Help/_Update check..."
-msgstr ""
+msgstr "/_Abi/_Uuenduskontroll..."
 
 #: src/mainwindow.c:919
 msgid "/_Help/Update check of _plug-ins..."
-msgstr ""
+msgstr "/_ Abi/Pistik_programmide värskendamise kontroll..."
 
 #: src/mainwindow.c:966
 msgid "Creating main window...\n"
@@ -4180,21 +4106,19 @@ msgstr "mittemiski"
 
 #: src/mainwindow.c:1796
 msgid "Offline"
-msgstr ""
+msgstr "Võrgust väljas"
 
 #: src/mainwindow.c:1797
 msgid "You are offline. Go online?"
-msgstr ""
+msgstr "Olete võrguühenduseta. Kas minna võrku?"
 
 #: src/mainwindow.c:1814
-#, fuzzy
 msgid "Empty all trash"
-msgstr "Tühjenda prügikast"
+msgstr "Tühjenda kogu prügi"
 
 #: src/mainwindow.c:1815
-#, fuzzy
 msgid "Delete all messages in trash folders?"
-msgstr "Kas eemaldada kõik kirjad prügikastist?"
+msgstr "Kas kustutada kõik prügikastis olevad kirjad?"
 
 #: src/mainwindow.c:1846
 msgid "Add mailbox"
@@ -4215,11 +4139,11 @@ msgstr ""
 msgid "The mailbox `%s' already exists."
 msgstr "Kirjakast %s on juba olemas."
 
-#: src/mainwindow.c:1858 src/setup.c:282
+#: src/mainwindow.c:1858 src/setup.c:279
 msgid "Mailbox"
 msgstr "Kirjakast"
 
-#: src/mainwindow.c:1864 src/setup.c:288
+#: src/mainwindow.c:1864 src/setup.c:285
 msgid ""
 "Creation of the mailbox failed.\n"
 "Maybe some files already exist, or you don't have the permission to write "
@@ -4241,14 +4165,12 @@ msgid "/_Reply"
 msgstr "/Vastan"
 
 #: src/mainwindow.c:2608
-#, fuzzy
 msgid "/Reply to _all"
-msgstr "Vasta ja saada koopia kõigile, kes said selle kirja"
+msgstr "/Vast_a kõigile"
 
 #: src/mainwindow.c:2609
-#, fuzzy
 msgid "/Reply to _sender"
-msgstr "/Vasta/_saatjale"
+msgstr "/Vasta _saatjale"
 
 #: src/mainwindow.c:2610
 #, fuzzy
@@ -4269,7 +4191,7 @@ msgstr "/Suuna ümber"
 
 #: src/mainwindow.c:3073
 msgid "Icon _and text"
-msgstr ""
+msgstr "Ikoon j_a tekst"
 
 #: src/mainwindow.c:3074
 #, fuzzy
@@ -4278,25 +4200,23 @@ msgstr "/_Vaade/Näita või varja/_Nupuribal/_Pilti"
 
 #: src/mainwindow.c:3076
 msgid "_Icon"
-msgstr ""
+msgstr "_Ikoon"
 
 #: src/mainwindow.c:3077
-#, fuzzy
 msgid "_Text"
-msgstr "Tekst"
+msgstr "_Tekst"
 
 #: src/mainwindow.c:3078
-#, fuzzy
 msgid "_None"
-msgstr "Mittemiski"
+msgstr "_Puudub"
 
 #: src/mainwindow.c:3116
 msgid "You are offline. Click the icon to go online."
-msgstr ""
+msgstr "Olete võrguühenduseta. Võrguühenduse loomiseks klõpsake ikoonil."
 
 #: src/mainwindow.c:3128
 msgid "You are online. Click the icon to go offline."
-msgstr ""
+msgstr "Olete võrgus. Võrguühenduseta lülitumiseks klõpsake ikoonil."
 
 #: src/mainwindow.c:3446
 msgid "Exit"
@@ -4304,11 +4224,11 @@ msgstr "Välju"
 
 #: src/mainwindow.c:3446
 msgid "Exit this program?"
-msgstr "Lõpetame programmi töö."
+msgstr "Lõpetame programmi töö?"
 
 #: src/mainwindow.c:3849
 msgid "The selected messages could not be combined."
-msgstr ""
+msgstr "Valitud sõnumeid ei saanud kombineerida."
 
 #: src/mainwindow.c:3971
 #, fuzzy
@@ -4316,9 +4236,8 @@ msgid "Select folder to open"
 msgstr "Vali kaust"
 
 #: src/mainwindow.c:4141
-#, fuzzy
 msgid "Command line options"
-msgstr "Käsurida ei ole sisestatud."
+msgstr "Käsurea valikud"
 
 #: src/mainwindow.c:4154
 #, fuzzy
@@ -4362,10 +4281,25 @@ msgid ""
 "display this help and exit\n"
 "output version information and exit"
 msgstr ""
+"kompositsiooni akna avamine\n"
+"ava kompositsiooniaken koos lisatud määratud failidega\n"
+"uusi sõnumeid vastu võtta\n"
+"saada kõigi kontode uusi sõnumeid\n"
+"saata kõik järjekorras olevad sõnumid\n"
+"näita sõnumite koguarvu\n"
+"näita iga kausta olekut\n"
+"ava sõnum uues aknas\n"
+"ava rfc822 sõnumifail uues aknas\n"
+"määrake kataloog, mis salvestab konfiguratsioonifailid\n"
+"välju Sylpheedist\n"
+"silumisrežiim\n"
+"turvarežiim\n"
+"kuvage see spikker ja väljuge\n"
+"väljastada versiooniteave ja väljuda"
 
 #: src/mainwindow.c:4201
 msgid "Windows-only option:"
-msgstr ""
+msgstr "Ainult Windowsi valik:"
 
 #: src/mainwindow.c:4209
 msgid "--ipcport portnum"
@@ -4373,7 +4307,7 @@ msgstr ""
 
 #: src/mainwindow.c:4214
 msgid "specify port for IPC remote commands"
-msgstr ""
+msgstr "määrake IPC kaugkäskude port"
 
 #: src/message_search.c:120
 msgid "Find in current message"
@@ -4426,7 +4360,7 @@ msgstr "Manused"
 
 #: src/messageview.c:399
 msgid "Switch to attachment list view"
-msgstr ""
+msgstr "Lülitu manuste loendivaatele"
 
 #: src/messageview.c:417
 #, fuzzy
@@ -4435,16 +4369,15 @@ msgstr "Manus"
 
 #: src/messageview.c:481
 msgid "Message View - Sylpheed"
-msgstr ""
+msgstr "Sõnumivaade – Sylpheed"
 
 #: src/messageview.c:931 src/summaryview.c:3938
 msgid "Original (EML/RFC 822)"
-msgstr ""
+msgstr "Originaal (EML/RFC 822)"
 
 #: src/messageview.c:935 src/summaryview.c:3942
-#, fuzzy
 msgid "Text (UTF-8)"
-msgstr "Unikood (UTF-8)"
+msgstr "Tekst (UTF-8)"
 
 #: src/messageview.c:959 src/summaryview.c:3969
 #, c-format
@@ -4464,18 +4397,16 @@ msgid "/_Save as..."
 msgstr "/Salveta kui..."
 
 #: src/mimeview.c:139
-#, fuzzy
 msgid "/Save _all..."
-msgstr "/Salveta kui..."
+msgstr "/Salvest_a kõik..."
 
 #: src/mimeview.c:140 src/summaryview.c:489
 msgid "/_Print..."
 msgstr "Trüki..."
 
 #: src/mimeview.c:143
-#, fuzzy
 msgid "/_Reply/_Reply"
-msgstr "/_Vaade/_Vasta"
+msgstr "/_Vasta/_Vasta"
 
 #: src/mimeview.c:144
 #, fuzzy
@@ -4506,34 +4437,31 @@ msgstr "Selekteeri \"Kontrolli signatuuri\" kontrollimiseks"
 
 #: src/mimeview.c:637
 msgid "Select an action for the attached file:\n"
-msgstr ""
+msgstr "Valige manustatud faili jaoks toiming:\n"
 
 #: src/mimeview.c:659 src/textview.c:847
-#, fuzzy
 msgid "Open _with..."
-msgstr "/Ava kasutades..."
+msgstr "Ava _koos..."
 
 #: src/mimeview.c:663
-#, fuzzy
 msgid "_Display as text"
-msgstr "/Näita tekstina"
+msgstr "_Näita tekstina"
 
 #: src/mimeview.c:667 src/textview.c:850
-#, fuzzy
 msgid "_Save as..."
-msgstr "/Salveta kui..."
+msgstr "_Salvesta kui..."
 
 #: src/mimeview.c:713
-#, fuzzy
 msgid ""
 "This signature has not been checked yet.\n"
 "\n"
-msgstr "Seda allkirja pole veel kontrollitud.\n"
+msgstr ""
+"Seda allkirja pole veel kontrollitud.\n"
+"\n"
 
 #: src/mimeview.c:719
-#, fuzzy
 msgid "_Check signature"
-msgstr "/Kontrolli allkirja"
+msgstr "_Kontrollige allkirja"
 
 #: src/mimeview.c:1015 src/mimeview.c:1111 src/mimeview.c:1141
 #: src/mimeview.c:1161 src/mimeview.c:1213 src/mimeview.c:1340
@@ -4541,9 +4469,8 @@ msgid "Can't save the part of multipart message."
 msgstr "Ei saa salvestada seda osa mitmeosalisest kirjast."
 
 #: src/mimeview.c:1079
-#, fuzzy
 msgid "Can't save the attachments."
-msgstr "Ei suuda faili '%s' salvestada."
+msgstr "Manuseid ei saa salvestada."
 
 #: src/mimeview.c:1171
 msgid "Open with"
@@ -4589,276 +4516,265 @@ msgstr ""
 
 #: src/plugin_manager.c:131
 msgid "Plug-in manager"
-msgstr ""
+msgstr "Pistikprogrammi haldur"
 
 #: src/plugin_manager.c:142
 msgid "Check for _update"
-msgstr ""
+msgstr "Otsi _uuendusi"
 
 #: src/plugin_manager.c:193
-#, fuzzy
 msgid "Plug-in information"
-msgstr "Isiku informatsioon"
+msgstr "Pistikprogrammi teave"
 
 #: src/plugin_manager.c:220 src/plugin_manager.c:222 src/plugin_manager.c:223
-#, fuzzy
 msgid "(Unknown)"
-msgstr "tundmatu"
+msgstr "(tundmatu)"
 
 #: src/plugin_manager.c:222
 msgid "Author: "
-msgstr ""
+msgstr "Autor: "
 
 #: src/plugin_manager.c:223
-#, fuzzy
 msgid "File: "
-msgstr "Fail"
+msgstr "Fail: "
 
 #: src/plugin_manager.c:225
-#, fuzzy
 msgid "Description: "
-msgstr "Seletus"
+msgstr "Seletus: "
 
-#: src/prefs_account_dialog.c:494
+#: src/prefs_account_dialog.c:487
 msgid "Opening account preferences window...\n"
 msgstr "Avan konto parameetrite akent...\n"
 
-#: src/prefs_account_dialog.c:534
+#: src/prefs_account_dialog.c:527
 #, c-format
 msgid "Account%d"
 msgstr "Konto%d"
 
-#: src/prefs_account_dialog.c:558
+#: src/prefs_account_dialog.c:551
 msgid "Preferences for new account"
 msgstr "Uue konto omadused"
 
-#: src/prefs_account_dialog.c:585 src/prefs_toolbar.c:99
+#: src/prefs_account_dialog.c:578 src/prefs_toolbar.c:99
 msgid "Account preferences"
 msgstr "Konto omadused"
 
-#: src/prefs_account_dialog.c:611
+#: src/prefs_account_dialog.c:604
 msgid "Creating account preferences window...\n"
 msgstr "Loon konto omaduste akent...\n"
 
-#: src/prefs_account_dialog.c:631 src/prefs_common_dialog.c:832
+#: src/prefs_account_dialog.c:624 src/prefs_common_dialog.c:832
 msgid "Receive"
 msgstr "Saabuvad kirjad"
 
-#: src/prefs_account_dialog.c:633 src/prefs_common_dialog.c:834
+#: src/prefs_account_dialog.c:626 src/prefs_common_dialog.c:834
 #: src/prefs_toolbar.c:50 src/prefs_toolbar.c:102
 msgid "Send"
 msgstr "Saada"
 
-#: src/prefs_account_dialog.c:635 src/prefs_common_dialog.c:836
+#: src/prefs_account_dialog.c:628 src/prefs_common_dialog.c:836
 #: src/prefs_folder_item.c:140 src/prefs_toolbar.c:53
 msgid "Compose"
 msgstr "Kirjuta"
 
-#: src/prefs_account_dialog.c:638 src/prefs_common_dialog.c:843
+#: src/prefs_account_dialog.c:631 src/prefs_common_dialog.c:843
 msgid "Privacy"
 msgstr "Privaatsus"
 
-#: src/prefs_account_dialog.c:642
+#: src/prefs_account_dialog.c:635
 msgid "SSL"
 msgstr "SSL"
 
-#: src/prefs_account_dialog.c:645
+#: src/prefs_account_dialog.c:638
 msgid "Proxy"
-msgstr ""
+msgstr "Võrgu proksi"
 
-#: src/prefs_account_dialog.c:647 src/prefs_common_dialog.c:2740
+#: src/prefs_account_dialog.c:640 src/prefs_common_dialog.c:2740
 msgid "Advanced"
 msgstr "Spetsiaalne"
 
-#: src/prefs_account_dialog.c:703
+#: src/prefs_account_dialog.c:696
 msgid "Name of this account"
 msgstr "Selle konto nimi"
 
-#: src/prefs_account_dialog.c:712
+#: src/prefs_account_dialog.c:705
 msgid "Set as default"
-msgstr " Määra vaikimisi kontoks "
+msgstr "Määra vaikimisi kontoks"
 
-#: src/prefs_account_dialog.c:716
+#: src/prefs_account_dialog.c:709
 msgid "Personal information"
 msgstr "Isiku informatsioon"
 
-#: src/prefs_account_dialog.c:725
+#: src/prefs_account_dialog.c:718
 msgid "Full name"
 msgstr "Täisnimi"
 
-#: src/prefs_account_dialog.c:731
+#: src/prefs_account_dialog.c:724
 msgid "Mail address"
 msgstr "E-Posti aadress"
 
-#: src/prefs_account_dialog.c:737
+#: src/prefs_account_dialog.c:730
 msgid "Organization"
 msgstr "Ofganisatsioon"
 
-#: src/prefs_account_dialog.c:761
+#: src/prefs_account_dialog.c:754
 msgid "Server information"
 msgstr "Serveri informatsioon"
 
-#: src/prefs_account_dialog.c:782 src/prefs_account_dialog.c:940
-#: src/prefs_account_dialog.c:1758
+#: src/prefs_account_dialog.c:775 src/prefs_account_dialog.c:932
+#: src/prefs_account_dialog.c:1728
 msgid "POP3"
 msgstr "POP3"
 
-#: src/prefs_account_dialog.c:784 src/prefs_account_dialog.c:1069
-#: src/prefs_account_dialog.c:1778 src/prefs_account_dialog.c:2079
+#: src/prefs_account_dialog.c:777 src/prefs_account_dialog.c:1040
+#: src/prefs_account_dialog.c:1748 src/prefs_account_dialog.c:2049
 msgid "IMAP4"
 msgstr "IMAP4"
 
-#: src/prefs_account_dialog.c:786
+#: src/prefs_account_dialog.c:779
 msgid "News (NNTP)"
 msgstr "Uudised (NNTP)"
 
-#: src/prefs_account_dialog.c:788
+#: src/prefs_account_dialog.c:781
 msgid "None (local)"
 msgstr "Lokaalarvutist"
 
-#: src/prefs_account_dialog.c:801
+#: src/prefs_account_dialog.c:794
 msgid "This server requires authentication"
 msgstr "See servar nõuab autoriseerimist"
 
-#: src/prefs_account_dialog.c:840
+#: src/prefs_account_dialog.c:833
 msgid "News server"
 msgstr "Uudiste server"
 
-#: src/prefs_account_dialog.c:846
+#: src/prefs_account_dialog.c:839
 msgid "Server for receiving"
 msgstr "Sissetulevate kirjade server"
 
-#: src/prefs_account_dialog.c:852
+#: src/prefs_account_dialog.c:845
 msgid "SMTP server (send)"
 msgstr "Saatmise server (SMTP)"
 
-#: src/prefs_account_dialog.c:859 src/prefs_account_dialog.c:1270
+#: src/prefs_account_dialog.c:852 src/prefs_account_dialog.c:1240
 msgid "User ID"
 msgstr "Kasutajanimi"
 
-#: src/prefs_account_dialog.c:865 src/prefs_account_dialog.c:1279
+#: src/prefs_account_dialog.c:858 src/prefs_account_dialog.c:1249
 msgid "Password"
 msgstr "Parool"
 
-#: src/prefs_account_dialog.c:951 src/prefs_account_dialog.c:1080
-#: src/prefs_account_dialog.c:1241
-msgid "Authentication method"
-msgstr "Autoriseerimise meetod"
-
-#: src/prefs_account_dialog.c:969
+#: src/prefs_account_dialog.c:940
 #, fuzzy
-msgid "Use APOP authentication"
-msgstr "Autoriseerimine"
+msgid "Use secure authentication (APOP)"
+msgstr "See servar nõuab autoriseerimist"
 
-#: src/prefs_account_dialog.c:972
+#: src/prefs_account_dialog.c:943
 msgid "Remove messages on server when received"
 msgstr "Kustuta kirjad pärast kohalejõudmist serverist"
 
-#: src/prefs_account_dialog.c:983
+#: src/prefs_account_dialog.c:954
 msgid "Remove after"
 msgstr "Eemalda pärast"
 
-#: src/prefs_account_dialog.c:992
+#: src/prefs_account_dialog.c:963
 msgid "days"
 msgstr "päeva"
 
-#: src/prefs_account_dialog.c:1009
-#, fuzzy
+#: src/prefs_account_dialog.c:980
 msgid "0 days: remove immediately"
-msgstr "(0 päeva: eemalda kohe)"
+msgstr "0 päeva: eemalda kohe"
 
-#: src/prefs_account_dialog.c:1019
-#, fuzzy
+#: src/prefs_account_dialog.c:990
 msgid "Download all messages (including already received) on server"
-msgstr "Võta serverist kõik kirjad"
+msgstr "Laadige serverisse alla kõik sõnumid (sh juba vastuvõetud)."
 
-#: src/prefs_account_dialog.c:1025
+#: src/prefs_account_dialog.c:996
 msgid "Receive size limit"
 msgstr "Tõmbamise suuruse limiit"
 
-#: src/prefs_account_dialog.c:1032 src/prefs_filter_edit.c:596
+#: src/prefs_account_dialog.c:1003 src/prefs_filter_edit.c:596
 #: src/prefs_filter_edit.c:1057
 msgid "KB"
-msgstr ""
+msgstr "KB"
 
-#: src/prefs_account_dialog.c:1039
+#: src/prefs_account_dialog.c:1010
 msgid "Filter messages on receiving"
 msgstr "Filtreeri saabuvaid kirju"
 
-#: src/prefs_account_dialog.c:1047
+#: src/prefs_account_dialog.c:1018
 msgid "Default inbox"
 msgstr "Vaikimisi sisendkast"
 
-#: src/prefs_account_dialog.c:1067
+#: src/prefs_account_dialog.c:1038
 #, fuzzy
 msgid "Unfiltered messages will be stored in this folder."
 msgstr "(Filtreerimata kirjad salvestatakse sellesse kausta)"
 
-#: src/prefs_account_dialog.c:1090 src/prefs_account_dialog.c:1251
+#: src/prefs_account_dialog.c:1051 src/prefs_account_dialog.c:1210
+msgid "Authentication method"
+msgstr "Autoriseerimise meetod"
+
+#: src/prefs_account_dialog.c:1061 src/prefs_account_dialog.c:1220
 #: src/prefs_common_dialog.c:1223 src/prefs_common_dialog.c:2864
 #: src/prefs_common_dialog.c:3269
 msgid "Automatic"
 msgstr "Automaatne"
 
-#: src/prefs_account_dialog.c:1099
+#: src/prefs_account_dialog.c:1069
 msgid "Only check INBOX on receiving"
-msgstr ""
+msgstr "Kontrollige Sisendkasti ainult vastuvõtmisel"
 
-#: src/prefs_account_dialog.c:1101
+#: src/prefs_account_dialog.c:1071
 #, fuzzy
 msgid "Filter new messages in INBOX on receiving"
 msgstr "Filtreeri saabuvaid kirju"
 
-#: src/prefs_account_dialog.c:1103
+#: src/prefs_account_dialog.c:1073
 msgid "News"
 msgstr "Uudised"
 
-#: src/prefs_account_dialog.c:1115
-#, fuzzy
+#: src/prefs_account_dialog.c:1085
 msgid "Maximum number of articles to download"
-msgstr ""
-"Maksimaalne võetavate artiklite arv\n"
-"(määramata kui sisestate 0)"
+msgstr "Maksimaalne võetavate artiklite arv"
 
-#: src/prefs_account_dialog.c:1132
-#, fuzzy
+#: src/prefs_account_dialog.c:1102
 msgid "No limit if 0 is specified."
-msgstr "Saaja pole määratud."
+msgstr "Piirang puudub, kui on määratud 0."
 
-#: src/prefs_account_dialog.c:1136
+#: src/prefs_account_dialog.c:1106
 msgid "`Get all' checks for new messages on this account"
 msgstr "Kui vajutate nuppu 'Võta kõik', siis uusi kirju võetakse ka siia"
 
-#: src/prefs_account_dialog.c:1191 src/prefs_customheader.c:186
+#: src/prefs_account_dialog.c:1160 src/prefs_customheader.c:186
 msgid "Header"
 msgstr "Päis"
 
-#: src/prefs_account_dialog.c:1198
+#: src/prefs_account_dialog.c:1167
 msgid "Add Date header field"
 msgstr "Lisa kuupäev päisesse"
 
-#: src/prefs_account_dialog.c:1199
+#: src/prefs_account_dialog.c:1168
 msgid "Generate Message-ID"
 msgstr "Loo Kirja-ID"
 
-#: src/prefs_account_dialog.c:1206
+#: src/prefs_account_dialog.c:1175
 msgid "Add user-defined header"
 msgstr "Lisa kasutaja defineeritud päis"
 
-#: src/prefs_account_dialog.c:1208 src/prefs_common_dialog.c:1974
+#: src/prefs_account_dialog.c:1177 src/prefs_common_dialog.c:1974
 #: src/prefs_common_dialog.c:2001
 msgid " Edit... "
 msgstr " Redigeeri... "
 
-#: src/prefs_account_dialog.c:1218
+#: src/prefs_account_dialog.c:1187
 msgid "Authentication"
 msgstr "Autoriseerimine"
 
-#: src/prefs_account_dialog.c:1226
+#: src/prefs_account_dialog.c:1195
 msgid "SMTP Authentication (SMTP AUTH)"
 msgstr "SMTP Autoriseerimine (SMTP AUTH)"
 
-#: src/prefs_account_dialog.c:1301
+#: src/prefs_account_dialog.c:1271
 #, fuzzy
 msgid ""
 "If you leave these entries empty, the same user ID and password as receiving "
@@ -4867,255 +4783,248 @@ msgstr ""
 "Kui te jätate need sissekanded tühjaks, siis \n"
 "kasutatakse vastuvõtva kasutaja ID-d ja parooli."
 
-#: src/prefs_account_dialog.c:1314
+#: src/prefs_account_dialog.c:1284
 msgid "Authenticate with POP3 before sending"
 msgstr "Autoriseeri POP3 enne saatmist"
 
 #. signature
-#: src/prefs_account_dialog.c:1358 src/prefs_common_dialog.c:1341
+#: src/prefs_account_dialog.c:1328 src/prefs_common_dialog.c:1341
 #: src/prefs_toolbar.c:117
 msgid "Signature"
 msgstr "Allkiri"
 
-#: src/prefs_account_dialog.c:1366
+#: src/prefs_account_dialog.c:1336
 msgid "Direct input"
-msgstr ""
+msgstr "Otsene sisend"
 
-#: src/prefs_account_dialog.c:1389 src/prefs_account_dialog.c:1948
+#: src/prefs_account_dialog.c:1359 src/prefs_account_dialog.c:1918
 #: src/prefs_filter_edit.c:256 src/prefs_search_folder.c:187
 msgid "Name:"
 msgstr "Nimi:"
 
-#: src/prefs_account_dialog.c:1402
+#: src/prefs_account_dialog.c:1372
 msgid "'Signature 1' will be used by default."
-msgstr ""
+msgstr "Vaikimisi kasutatakse 'allkirja 1'."
 
-#: src/prefs_account_dialog.c:1437
+#: src/prefs_account_dialog.c:1407
 #, fuzzy
 msgid "Command output"
 msgstr "Käsklus"
 
-#: src/prefs_account_dialog.c:1449
+#: src/prefs_account_dialog.c:1419
 msgid "Put signature before quote (not recommended)"
-msgstr ""
+msgstr "Pange allkiri enne tsitaati (pole soovitatav)"
 
-#: src/prefs_account_dialog.c:1468 src/prefs_folder_item.c:332
+#: src/prefs_account_dialog.c:1438 src/prefs_folder_item.c:332
 msgid "Automatically set the following addresses"
 msgstr "Säti järgmised aadressid automaatselt"
 
-#: src/prefs_account_dialog.c:1477
+#: src/prefs_account_dialog.c:1447
 msgid "Cc"
 msgstr "Cc"
 
-#: src/prefs_account_dialog.c:1490
+#: src/prefs_account_dialog.c:1460
 msgid "Bcc"
 msgstr "Bcc"
 
-#: src/prefs_account_dialog.c:1503
+#: src/prefs_account_dialog.c:1473
 msgid "Reply-To"
 msgstr "Vastus saata"
 
-#: src/prefs_account_dialog.c:1563
-#, fuzzy
+#: src/prefs_account_dialog.c:1533
 msgid "PGP sign message by default"
-msgstr "Vaikimisi tuleb kiri allkirjastada"
+msgstr "Vaikimisi PGP allkirjasta"
 
-#: src/prefs_account_dialog.c:1565
-#, fuzzy
+#: src/prefs_account_dialog.c:1535
 msgid "PGP encrypt message by default"
-msgstr "Vaikimisi tuleb kiri krüpteerida"
+msgstr "Vaikimisi PGP krüpteeri"
 
-#: src/prefs_account_dialog.c:1567
+#: src/prefs_account_dialog.c:1537
 msgid "Encrypt when replying to encrypted message"
-msgstr ""
+msgstr "Krüpteeri krüptitud sõnumile vastamisel"
 
-#: src/prefs_account_dialog.c:1569
+#: src/prefs_account_dialog.c:1539
 #, fuzzy
 msgid "Add my own key to the recipients list on encryption"
 msgstr "ei leia saajate nimistut."
 
-#: src/prefs_account_dialog.c:1571
+#: src/prefs_account_dialog.c:1541
 msgid "Use ASCII-armored format for encryption"
 msgstr "Kasuta ASCII-ga varustatud krüpteerimise formaati"
 
-#: src/prefs_account_dialog.c:1573
+#: src/prefs_account_dialog.c:1543
 msgid "Use clear text signature"
-msgstr "Kasuta seleget teksti allkirja"
+msgstr "Kasutage selget tekstiallkirja"
 
-#: src/prefs_account_dialog.c:1578
+#: src/prefs_account_dialog.c:1548
 msgid "Sign / Encryption key"
-msgstr ""
+msgstr "Allkirja-/krüpteerimisvõti"
 
-#: src/prefs_account_dialog.c:1586
+#: src/prefs_account_dialog.c:1556
 msgid "Use default GnuPG key"
 msgstr "Kasuta algset GnuPG võtit"
 
-#: src/prefs_account_dialog.c:1595
+#: src/prefs_account_dialog.c:1565
 msgid "Select key by your email address"
 msgstr "Vali võti elektronposti aadressi juurest"
 
-#: src/prefs_account_dialog.c:1604
+#: src/prefs_account_dialog.c:1574
 msgid "Specify key manually"
 msgstr "Määra võti käsitsi"
 
-#: src/prefs_account_dialog.c:1620
+#: src/prefs_account_dialog.c:1590
 msgid "User or key ID:"
 msgstr "Kasutaja või võtme ID:"
 
-#: src/prefs_account_dialog.c:1766 src/prefs_account_dialog.c:1786
-#: src/prefs_account_dialog.c:1805 src/prefs_account_dialog.c:1826
+#: src/prefs_account_dialog.c:1736 src/prefs_account_dialog.c:1756
+#: src/prefs_account_dialog.c:1775 src/prefs_account_dialog.c:1796
 msgid "Don't use SSL"
 msgstr "Ära kasuta SSL"
 
-#: src/prefs_account_dialog.c:1769
+#: src/prefs_account_dialog.c:1739
 msgid "Use SSL for POP3 connection"
 msgstr "Kasuta SSL-i POP3-e ühenduse jaoks"
 
-#: src/prefs_account_dialog.c:1772 src/prefs_account_dialog.c:1792
-#: src/prefs_account_dialog.c:1832
+#: src/prefs_account_dialog.c:1742 src/prefs_account_dialog.c:1762
+#: src/prefs_account_dialog.c:1802
 msgid "Use STARTTLS command to start SSL session"
 msgstr "Kasuta STARTTLS käsklust et alustada SSL sessiooni"
 
-#: src/prefs_account_dialog.c:1789
+#: src/prefs_account_dialog.c:1759
 msgid "Use SSL for IMAP4 connection"
 msgstr "Kasuta SSL-i IMAP4-ja ühenduse jaoks"
 
-#: src/prefs_account_dialog.c:1798
+#: src/prefs_account_dialog.c:1768
 msgid "NNTP"
 msgstr "NNTP"
 
-#: src/prefs_account_dialog.c:1813
+#: src/prefs_account_dialog.c:1783
 msgid "Use SSL for NNTP connection"
 msgstr "Kasuta SSL-i NNTP ühenduse loomisel"
 
-#: src/prefs_account_dialog.c:1818
+#: src/prefs_account_dialog.c:1788
 msgid "Send (SMTP)"
 msgstr "Saada (SMTP)"
 
-#: src/prefs_account_dialog.c:1829
+#: src/prefs_account_dialog.c:1799
 msgid "Use SSL for SMTP connection"
 msgstr "Kasuta SSL-i SMTP ühenduse jaoks"
 
-#: src/prefs_account_dialog.c:1843
+#: src/prefs_account_dialog.c:1813
 msgid "Use non-blocking SSL"
-msgstr ""
+msgstr "Kasuta mitteblokeerivat SSL-i"
 
-#: src/prefs_account_dialog.c:1846
+#: src/prefs_account_dialog.c:1816
 msgid "Turn this off if you have problems in SSL connection."
-msgstr ""
+msgstr "Kui teil on SSL-ühendusega probleeme, lülitage see välja."
 
-#: src/prefs_account_dialog.c:1896
+#: src/prefs_account_dialog.c:1866
 msgid "Use SOCKS proxy"
-msgstr ""
+msgstr "Kasuta SOCKS puhverserverit"
 
-#: src/prefs_account_dialog.c:1920
-#, fuzzy
+#: src/prefs_account_dialog.c:1890
 msgid "Hostname:"
-msgstr "Arvuti nimi"
+msgstr "Hostinimi:"
 
-#: src/prefs_account_dialog.c:1929
-#, fuzzy
+#: src/prefs_account_dialog.c:1899
 msgid "Port:"
-msgstr "Port"
+msgstr "Port:"
 
-#: src/prefs_account_dialog.c:1942
-#, fuzzy
+#: src/prefs_account_dialog.c:1912
 msgid "Use authentication"
-msgstr "Autoriseerimine"
+msgstr "Kasutage autentimist"
 
-#: src/prefs_account_dialog.c:1957
-#, fuzzy
+#: src/prefs_account_dialog.c:1927
 msgid "Password:"
-msgstr "Parool"
+msgstr "Parool:"
 
-#: src/prefs_account_dialog.c:1968
+#: src/prefs_account_dialog.c:1938
 #, fuzzy
 msgid "Use SOCKS proxy on sending"
 msgstr "Kasuta saatmisel välist programmi"
 
-#: src/prefs_account_dialog.c:2046
+#: src/prefs_account_dialog.c:2016
 msgid "Specify SMTP port"
 msgstr "Määra SMTP port"
 
-#: src/prefs_account_dialog.c:2052
+#: src/prefs_account_dialog.c:2022
 msgid "Specify POP3 port"
 msgstr "Määra POP3 port"
 
-#: src/prefs_account_dialog.c:2058
+#: src/prefs_account_dialog.c:2028
 msgid "Specify IMAP4 port"
 msgstr "Määra IMAP4 port"
 
-#: src/prefs_account_dialog.c:2064
+#: src/prefs_account_dialog.c:2034
 msgid "Specify NNTP port"
 msgstr "Määra NNTP port"
 
-#: src/prefs_account_dialog.c:2069
+#: src/prefs_account_dialog.c:2039
 msgid "Specify domain name"
 msgstr "Määra domeeni nimi"
 
-#: src/prefs_account_dialog.c:2090
+#: src/prefs_account_dialog.c:2060
 msgid "IMAP server directory"
 msgstr "IMAP serveri kataloog"
 
-#: src/prefs_account_dialog.c:2100
+#: src/prefs_account_dialog.c:2070
 msgid "Only the subfolders of this directory will be displayed."
-msgstr ""
+msgstr "Kuvatakse ainult selle kataloogi alamkaustad."
 
-#: src/prefs_account_dialog.c:2103
-#, fuzzy
+#: src/prefs_account_dialog.c:2073
 msgid "Clear all message caches on exit"
-msgstr "Võta serverist kõik kirjad"
+msgstr "Väljumisel tühjendage kõik sõnumite vahemälud"
 
-#: src/prefs_account_dialog.c:2148
+#: src/prefs_account_dialog.c:2118
 msgid "Put sent messages in"
 msgstr "Pane saadetud kirjad"
 
-#: src/prefs_account_dialog.c:2150
+#: src/prefs_account_dialog.c:2120
 msgid "Put draft messages in"
 msgstr "Pane mustandi kirjad"
 
-#: src/prefs_account_dialog.c:2152
+#: src/prefs_account_dialog.c:2122
 #, fuzzy
 msgid "Put queued messages in"
 msgstr "Pane kustutatud kirjad"
 
-#: src/prefs_account_dialog.c:2154
+#: src/prefs_account_dialog.c:2124
 msgid "Put deleted messages in"
 msgstr "Pane kustutatud kirjad"
 
-#: src/prefs_account_dialog.c:2225
+#: src/prefs_account_dialog.c:2195
 msgid "Account name is not entered."
 msgstr "Konto nime ei ole sisestatud."
 
-#: src/prefs_account_dialog.c:2229
+#: src/prefs_account_dialog.c:2199
 msgid "Mail address is not entered."
 msgstr "Postiaadressi ei ole sisestatud."
 
-#: src/prefs_account_dialog.c:2234
+#: src/prefs_account_dialog.c:2204
 msgid "SMTP server is not entered."
 msgstr "SMTP serverit ei ole sisestatud."
 
-#: src/prefs_account_dialog.c:2239
+#: src/prefs_account_dialog.c:2209
 msgid "User ID is not entered."
 msgstr "Kasutajanime ei ole sisestatud."
 
-#: src/prefs_account_dialog.c:2244
+#: src/prefs_account_dialog.c:2214
 msgid "POP3 server is not entered."
 msgstr "POP3 serverit ei ole sisestatud."
 
-#: src/prefs_account_dialog.c:2249
+#: src/prefs_account_dialog.c:2219
 msgid "IMAP4 server is not entered."
-msgstr "IMAP4 serverit ei ole sisestatud"
+msgstr "IMAP4 serverit ei ole sisestatud."
 
-#: src/prefs_account_dialog.c:2254
+#: src/prefs_account_dialog.c:2224
 msgid "NNTP server is not entered."
 msgstr "NNTP serverit ei ole sisestatud."
 
-#: src/prefs_account_dialog.c:2293
+#: src/prefs_account_dialog.c:2263
 msgid "Specified folder is not a queue folder."
-msgstr ""
+msgstr "Määratud kaust ei ole järjekorrakaust."
 
-#: src/prefs_account_dialog.c:2429
+#: src/prefs_account_dialog.c:2399
 msgid ""
 "It's not recommended to use the old style ASCII-armored\n"
 "mode for encrypted messages. It doesn't comply with the\n"
@@ -5175,9 +5084,8 @@ msgstr ""
 "   %p märgitud kirjaosa."
 
 #: src/prefs_actions.c:260
-#, fuzzy
 msgid " Replace "
-msgstr "Asenda"
+msgstr " Asenda "
 
 #: src/prefs_actions.c:272
 msgid " Syntax help "
@@ -5243,13 +5151,12 @@ msgid "Display"
 msgstr "Ekraan"
 
 #: src/prefs_common_dialog.c:840
-#, fuzzy
 msgid "Junk mail"
-msgstr "Kaust"
+msgstr "Rämpspost"
 
 #: src/prefs_common_dialog.c:846
 msgid "Details"
-msgstr ""
+msgstr "Üksikasjad"
 
 #: src/prefs_common_dialog.c:909
 msgid "Auto-check new mail"
@@ -5273,9 +5180,8 @@ msgstr "Uuenda kõik lokaalsed kaustad peale kirjade võtmist"
 
 #. New message notify
 #: src/prefs_common_dialog.c:937
-#, fuzzy
 msgid "New message notification"
-msgstr "Autoriseerimine"
+msgstr "Uue sõnumi teatis"
 
 #: src/prefs_common_dialog.c:950
 #, fuzzy
@@ -5289,21 +5195,19 @@ msgstr "Näidatud elemendid"
 
 #: src/prefs_common_dialog.c:973 src/prefs_common_dialog.c:3239
 msgid "second(s)"
-msgstr ""
+msgstr "sekund(it)"
 
 #: src/prefs_common_dialog.c:988
 msgid "0: don't auto-close"
-msgstr ""
+msgstr "0: ärge sulgege automaatselt"
 
 #: src/prefs_common_dialog.c:998
-#, fuzzy
 msgid "Play sound when new messages arrive"
-msgstr "Eemalda kohe peale liigutamist või kustutamist"
+msgstr "Esitage heli uute sõnumite saabumisel"
 
 #: src/prefs_common_dialog.c:1004
-#, fuzzy
 msgid "Sound file"
-msgstr "Ei suutnud lugeda faili."
+msgstr "Helifail"
 
 #: src/prefs_common_dialog.c:1023 src/prefs_common_dialog.c:1027
 #, fuzzy
@@ -5331,7 +5235,7 @@ msgstr "Filtreeri kirju nende võtmisel"
 
 #: src/prefs_common_dialog.c:1070
 msgid "Spool path"
-msgstr ""
+msgstr "Rada"
 
 #: src/prefs_common_dialog.c:1140 src/prefs_common_dialog.c:1337
 #: src/prefs_common_dialog.c:1735 src/prefs_folder_item.c:139
@@ -5344,7 +5248,7 @@ msgstr "Pane saadetud kirjad kausta Saadetud"
 
 #: src/prefs_common_dialog.c:1149
 msgid "Apply filter rules to sent messages"
-msgstr ""
+msgstr "Rakenda saadetud sõnumitele filtrireegleid"
 
 #: src/prefs_common_dialog.c:1152
 #, fuzzy
@@ -5361,10 +5265,12 @@ msgid ""
 "Notify for missing attachments when the following strings (comma-separated) "
 "are found in the message body"
 msgstr ""
+"Teatage puuduvatest manustest, kui sõnumi kehast leitakse järgmised stringid "
+"(komadega eraldatud)"
 
 #: src/prefs_common_dialog.c:1173
 msgid "(Ex: attach)"
-msgstr ""
+msgstr "(Näit.: lisa)"
 
 #: src/prefs_common_dialog.c:1184
 #, fuzzy
@@ -5373,7 +5279,7 @@ msgstr "Äärista enne saatmist"
 
 #: src/prefs_common_dialog.c:1190
 msgid "Excluded addresses/domains (comma-separated):"
-msgstr ""
+msgstr "Välistatud aadressid/domeenid (komaeraldusega):"
 
 #: src/prefs_common_dialog.c:1209
 #, fuzzy
@@ -5385,6 +5291,8 @@ msgid ""
 "Specify Content-Transfer-Encoding used when message body contains non-ASCII "
 "characters."
 msgstr ""
+"Määrake sisu edastamise kodeering, mida kasutatakse juhul, kui sõnumi keha "
+"sisaldab mitte-ASCII märke."
 
 #: src/prefs_common_dialog.c:1239
 #, fuzzy
@@ -5402,6 +5310,9 @@ msgid ""
 "MIME header: most popular, but violates RFC 2047\n"
 "RFC 2231: conforms to standard, but not popular"
 msgstr ""
+"Määrake mitte-ASCII-märkidega MIME-failinime kodeerimismeetod.\n"
+"MIME päis: kõige populaarsem, kuid rikub RFC 2047\n"
+"RFC 2231: vastab standardile, kuid pole populaarne"
 
 #: src/prefs_common_dialog.c:1352
 msgid "Signature separator"
@@ -5421,7 +5332,7 @@ msgstr "Vali vastuste jaoks konto automaatselt"
 
 #: src/prefs_common_dialog.c:1373
 msgid "Quote message when replying"
-msgstr "Kirjale vastamisel tsiteeri seda."
+msgstr "Tsiteeri vastamisel sõnumit"
 
 #: src/prefs_common_dialog.c:1375
 #, fuzzy
@@ -5430,11 +5341,11 @@ msgstr "/Vasta/kirja_listi"
 
 #: src/prefs_common_dialog.c:1377
 msgid "Inherit recipients on reply to self messages"
-msgstr ""
+msgstr "Pärib adressaadid isesõnumitele vastamisel"
 
 #: src/prefs_common_dialog.c:1379
 msgid "Set only mail address of recipients when replying"
-msgstr ""
+msgstr "Määra vastamisel ainult adressaatide meiliaadressid"
 
 #. editor
 #: src/prefs_common_dialog.c:1383 src/prefs_common_dialog.c:3037
@@ -5472,13 +5383,12 @@ msgid "Auto-save to draft"
 msgstr "Salvesta mustandite kausta"
 
 #: src/prefs_common_dialog.c:1482
-#, fuzzy
 msgid "Format"
-msgstr "Normaalne"
+msgstr "Formaat"
 
 #: src/prefs_common_dialog.c:1487
 msgid "Spell checking"
-msgstr ""
+msgstr "Õigekirjakontroll"
 
 #. reply
 #: src/prefs_common_dialog.c:1540
@@ -5500,23 +5410,20 @@ msgstr " Sümbolite seletus "
 
 #: src/prefs_common_dialog.c:1658
 msgid "Enable Spell checking"
-msgstr ""
+msgstr "Luba õigekirjakontroll"
 
 #: src/prefs_common_dialog.c:1670
-#, fuzzy
 msgid "Default language:"
-msgstr "Vaikimisi kasutatab allkirja võti"
+msgstr "Vaikekeel:"
 
 #: src/prefs_common_dialog.c:1743
-#, fuzzy
 msgid "Text font"
-msgstr "Tekst"
+msgstr "Teksti font"
 
 #. ---- Folder View ----
 #: src/prefs_common_dialog.c:1755
-#, fuzzy
 msgid "Folder View"
-msgstr "Kaust"
+msgstr "Kaustavaade"
 
 #: src/prefs_common_dialog.c:1763
 msgid "Display unread number next to folder name"
@@ -5529,7 +5436,7 @@ msgstr "Näita arvu, mitu kirja pole loetud, kausta nime järel"
 
 #: src/prefs_common_dialog.c:1791
 msgid "Abbreviate newsgroups longer than"
-msgstr "lühenda uudistegruppe, mis on pikemad kui"
+msgstr "Lühendage uudistegruppe kauem kui"
 
 #: src/prefs_common_dialog.c:1806
 msgid "letters"
@@ -5578,7 +5485,7 @@ msgstr "/Vaade/_Sorteeri/Kahanevas järjekorras"
 
 #: src/prefs_common_dialog.c:1890
 msgid "This is used when displaying messages with missing character encoding."
-msgstr ""
+msgstr "Seda kasutatakse puuduva märgikodeeringuga sõnumite kuvamisel."
 
 #: src/prefs_common_dialog.c:1896
 #, fuzzy
@@ -5615,11 +5522,11 @@ msgstr "Näita päiseid lühidalt"
 
 #: src/prefs_common_dialog.c:2011
 msgid "Render HTML messages as text"
-msgstr ""
+msgstr "Renderdage HTML-sõnumid tekstina"
 
 #: src/prefs_common_dialog.c:2013
 msgid "Prefer HTML in multipart/alternative for display"
-msgstr ""
+msgstr "Eelistage kuvamiseks mitmeosalist/alternatiivset HTML-i"
 
 #: src/prefs_common_dialog.c:2015
 #, fuzzy
@@ -5657,19 +5564,19 @@ msgstr "Samm"
 
 #: src/prefs_common_dialog.c:2133
 msgid "Position of attachment tool button:"
-msgstr ""
+msgstr "Kinnitustööriista nupu asend:"
 
 #: src/prefs_common_dialog.c:2138
 msgid "Left"
-msgstr ""
+msgstr "Vasak"
 
 #: src/prefs_common_dialog.c:2146
 msgid "Right"
-msgstr ""
+msgstr "Parem"
 
 #: src/prefs_common_dialog.c:2154
 msgid "Toggle attachment list view with tab"
-msgstr ""
+msgstr "Lülitage manuste loendi vaade vahelehega"
 
 #: src/prefs_common_dialog.c:2158
 #, fuzzy
@@ -5678,11 +5585,11 @@ msgstr "Näita päiseid lühidalt"
 
 #: src/prefs_common_dialog.c:2160
 msgid "Images"
-msgstr ""
+msgstr "Pildid"
 
 #: src/prefs_common_dialog.c:2168
 msgid "Resize attached large images to fit in the window"
-msgstr ""
+msgstr "Muutke lisatud suurte piltide suurust, et need aknasse mahuksid"
 
 #: src/prefs_common_dialog.c:2170
 #, fuzzy
@@ -5691,7 +5598,7 @@ msgstr "Päise näitamine"
 
 #: src/prefs_common_dialog.c:2200
 msgid "You can specify label names for each color (Work, TODO etc.)."
-msgstr ""
+msgstr "Saate määrata igale värvile sildi nimed (töö, TODO jne)."
 
 #: src/prefs_common_dialog.c:2331
 #, fuzzy
@@ -5710,7 +5617,7 @@ msgstr "Vali võtmed"
 
 #: src/prefs_common_dialog.c:2380
 msgid "Not Junk"
-msgstr ""
+msgstr "Mitte rämps"
 
 #: src/prefs_common_dialog.c:2395
 #, fuzzy
@@ -5722,11 +5629,12 @@ msgid ""
 "To classify junk mails automatically, both junk and not junk mails must be "
 "learned manually to a certain extent."
 msgstr ""
+"Rämpskirjade automaatseks klassifitseerimiseks tuleb nii rämps- kui ka "
+"mitterämpskirjad teatud määral käsitsi selgeks õppida."
 
 #: src/prefs_common_dialog.c:2416
-#, fuzzy
 msgid "Junk folder"
-msgstr "Kaust"
+msgstr "Rämpskaust"
 
 #: src/prefs_common_dialog.c:2434
 #, fuzzy
@@ -5753,10 +5661,11 @@ msgstr "Kustuta kaust"
 #: src/prefs_common_dialog.c:2458
 msgid "Do not classify message as junk if sender is in the address book"
 msgstr ""
+"Ärge klassifitseerige sõnumit rämpspostiks, kui saatja on aadressiraamatus"
 
 #: src/prefs_common_dialog.c:2460
 msgid "Mark filtered junk mails as read"
-msgstr ""
+msgstr "Märgi filtreeritud rämpskirjad loetuks"
 
 #: src/prefs_common_dialog.c:2503
 msgid "Automatically check signatures"
@@ -5776,7 +5685,7 @@ msgstr "Aegub pärast"
 
 #: src/prefs_common_dialog.c:2537
 msgid "minute(s) "
-msgstr "minuteid"
+msgstr "minut(it) "
 
 #: src/prefs_common_dialog.c:2551
 #, fuzzy
@@ -5794,9 +5703,8 @@ msgid "Display warning on startup if GnuPG doesn't work"
 msgstr "Näita stardi ajal hoiatust kui GnuPG ei tööta"
 
 #: src/prefs_common_dialog.c:2639
-#, fuzzy
 msgid "Always open messages in summary when selected"
-msgstr "Teate faili ei ole valitud."
+msgstr "Kui see on valitud, ava sõnumid alati kokkuvõtlikult"
 
 #: src/prefs_common_dialog.c:2643
 #, fuzzy
@@ -5818,18 +5726,16 @@ msgid "Only mark message as read when opened in new window"
 msgstr "Kiri tuleb uues aknas avades märkida kui loetu"
 
 #: src/prefs_common_dialog.c:2668
-#, fuzzy
 msgid "Open inbox after receiving new mail"
-msgstr "Ava Sisendkaust peale uute kirjade vastuvõtmist"
+msgstr "Ava postkast pärast uute kirjade saamist"
 
 #: src/prefs_common_dialog.c:2670
-#, fuzzy
 msgid "Open inbox on startup"
-msgstr "Võta uued kirjad töö alguses"
+msgstr "Avage käivitamisel postkast"
 
 #: src/prefs_common_dialog.c:2674
 msgid "Change current account on folder open"
-msgstr ""
+msgstr "Muutke avatud kaustas praegust kontot"
 
 #: src/prefs_common_dialog.c:2682
 msgid "Execute immediately when moving or deleting messages"
@@ -5844,7 +5750,7 @@ msgstr ""
 
 #: src/prefs_common_dialog.c:2703
 msgid "Make the order of buttons comply with GNOME HIG"
-msgstr ""
+msgstr "Muutke nuppude järjekord GNOME HIG-ile vastavaks"
 
 #: src/prefs_common_dialog.c:2706
 #, fuzzy
@@ -5853,11 +5759,11 @@ msgstr "Ekraani nimi"
 
 #: src/prefs_common_dialog.c:2708
 msgid "Minimize to tray icon"
-msgstr ""
+msgstr "Minimeeri salveikoon"
 
 #: src/prefs_common_dialog.c:2710
 msgid "Toggle window on trayicon click"
-msgstr ""
+msgstr "Akna sisse- ja väljalülitamine salveikoonil klõpsamisel"
 
 #: src/prefs_common_dialog.c:2720
 msgid " Set key bindings... "
@@ -5873,9 +5779,8 @@ msgid "External commands"
 msgstr "Käivita"
 
 #: src/prefs_common_dialog.c:2735
-#, fuzzy
 msgid "Update"
-msgstr "Kuupäev"
+msgstr "Värskenda"
 
 #: src/prefs_common_dialog.c:2805
 #, fuzzy
@@ -5892,7 +5797,7 @@ msgstr "Alati"
 
 #: src/prefs_common_dialog.c:2826
 msgid "Only on manual receiving"
-msgstr ""
+msgstr "Ainult käsitsi vastuvõtmisel"
 
 #: src/prefs_common_dialog.c:2828
 msgid "Never"
@@ -5911,22 +5816,21 @@ msgid "Add address to destination when double-clicked"
 msgstr "Lisa aadress sihtlahtrisse kui topeltklõpsutan"
 
 #: src/prefs_common_dialog.c:2851
-#, fuzzy
 msgid "Set only mail address when entering recipient from address book"
-msgstr "Säti järgmised aadressid automaatselt"
+msgstr ""
+"Määrake ainult meiliaadress, kui sisestate adressaadi aadressiraamatust"
 
 #: src/prefs_common_dialog.c:2859
-#, fuzzy
 msgid "Auto-completion:"
-msgstr "Aadressiraamat viiakse uude formaati"
+msgstr "Automaatne täitmine:"
 
 #: src/prefs_common_dialog.c:2872
 msgid "Start with Tab"
-msgstr ""
+msgstr "Alustage vahekaardiga"
 
 #: src/prefs_common_dialog.c:2880
 msgid "Disable"
-msgstr ""
+msgstr "Keela"
 
 #: src/prefs_common_dialog.c:2887
 msgid "On exit"
@@ -5950,19 +5854,19 @@ msgstr "Hoiata mind, kui järjekorras on kirju"
 
 #: src/prefs_common_dialog.c:2910
 msgid "Online mode"
-msgstr ""
+msgstr "Võrgurežiim"
 
 #: src/prefs_common_dialog.c:2922
 msgid "Start as online"
-msgstr ""
+msgstr "Alusta  võrgus"
 
 #: src/prefs_common_dialog.c:2930
 msgid "Start as offline"
-msgstr ""
+msgstr "Alusta võrguühenduseta"
 
 #: src/prefs_common_dialog.c:2938
 msgid "Remember previous mode"
-msgstr ""
+msgstr "Pidage meeles eelmist režiimi"
 
 #: src/prefs_common_dialog.c:3002
 #, c-format
@@ -5994,19 +5898,19 @@ msgstr "Kasuta saatmisel välist programmi"
 
 #: src/prefs_common_dialog.c:3160
 msgid "Update check requires 'curl' command."
-msgstr ""
+msgstr "Värskenduste kontrollimiseks on vaja käsku curl."
 
 #: src/prefs_common_dialog.c:3171
 msgid "Enable auto update check"
-msgstr ""
+msgstr "Luba automaatne värskenduste kontroll"
 
 #: src/prefs_common_dialog.c:3173
 msgid "Use HTTP proxy"
-msgstr ""
+msgstr "Kasutage HTTP-puhverserverit"
 
 #: src/prefs_common_dialog.c:3175
 msgid "HTTP proxy host (hostname:port):"
-msgstr ""
+msgstr "HTTP-puhverserveri host (hostinimi:port):"
 
 #: src/prefs_common_dialog.c:3216
 #, fuzzy
@@ -6019,10 +5923,12 @@ msgid ""
 "by other applications.\n"
 "This option will degrade the performance of displaying summary."
 msgstr ""
+"Lubage see, kui kaustade sisu on võimalik muude rakenduste poolt muuta.\n"
+"See valik halvendab kokkuvõtte kuvamise jõudlust."
 
 #: src/prefs_common_dialog.c:3226
 msgid "Socket I/O timeout:"
-msgstr ""
+msgstr "Socket I/O ajalõpp:"
 
 #: src/prefs_common_dialog.c:3267
 msgid "Automatic (Recommended)"
@@ -6062,9 +5968,8 @@ msgid "Baltic (ISO-8859-4)"
 msgstr "Balti (ISO-8859-4)"
 
 #: src/prefs_common_dialog.c:3287
-#, fuzzy
 msgid "Baltic (Windows-1257)"
-msgstr "Kirillits (Windows-1251)"
+msgstr "Baltic (Windows-1257)"
 
 #: src/prefs_common_dialog.c:3289
 msgid "Greek (ISO-8859-7)"
@@ -6181,7 +6086,7 @@ msgstr "sajandi number (aasta/100)"
 
 #: src/prefs_common_dialog.c:3494
 msgid "the day of the month as a decimal number"
-msgstr "Kuupäev kümnendnumbrina"
+msgstr "kuu päev kümnendarvuna"
 
 #: src/prefs_common_dialog.c:3495
 msgid "the hour as a decimal number using a 24-hour clock"
@@ -6350,9 +6255,8 @@ msgid "Key bindings"
 msgstr "Klahvi seosed"
 
 #: src/prefs_common_dialog.c:4080
-#, fuzzy
 msgid "Select the preset of key bindings."
-msgstr " Määra klahvi seosed... "
+msgstr "Valige klahvide sidumise eelseadistus."
 
 #: src/prefs_common_dialog.c:4090 src/prefs_common_dialog.c:4414
 msgid "Default"
@@ -6446,12 +6350,12 @@ msgstr "Filtri sättimine"
 
 #: src/prefs_filter.c:269
 msgid "Enabled"
-msgstr ""
+msgstr "Lubatud"
 
 #: src/prefs_filter.c:713
-#, fuzzy, c-format
+#, c-format
 msgid "Do you really want to delete the rule '%s'?"
-msgstr "Kas te tõesti soovite seda reeglit kustutada?"
+msgstr "Kas soovite tõesti reegli '%s' kustutada?"
 
 #: src/prefs_filter.c:715
 msgid "Delete rule"
@@ -6464,19 +6368,19 @@ msgstr "Kustuta reegel"
 
 #: src/prefs_filter_edit.c:275
 msgid "If any of the following condition matches"
-msgstr ""
+msgstr "Kui mõni järgmistest tingimustest vastab"
 
 #: src/prefs_filter_edit.c:277
 msgid "If all of the following conditions match"
-msgstr ""
+msgstr "Kui kõik järgmised tingimused vastavad"
 
 #: src/prefs_filter_edit.c:299
 msgid "Perform the following actions:"
-msgstr ""
+msgstr "Tehke järgmised toimingud:"
 
 #: src/prefs_filter_edit.c:504
 msgid "To or Cc"
-msgstr ""
+msgstr "Saaja või koopia"
 
 #: src/prefs_filter_edit.c:505
 #, fuzzy
@@ -6484,22 +6388,20 @@ msgid "Any header"
 msgstr "Kogu päis"
 
 #: src/prefs_filter_edit.c:506
-#, fuzzy
 msgid "Edit header..."
-msgstr "Päis"
+msgstr "Muuda päist..."
 
 #: src/prefs_filter_edit.c:509
-#, fuzzy
 msgid "Message body"
-msgstr "Kiri"
+msgstr "Sõnumi sisu"
 
 #: src/prefs_filter_edit.c:510
 msgid "Result of command"
-msgstr ""
+msgstr "Käskluse tulemus"
 
 #: src/prefs_filter_edit.c:512
 msgid "Age"
-msgstr ""
+msgstr "Eluiga"
 
 #: src/prefs_filter_edit.c:516 src/quick_search.c:110
 #, fuzzy
@@ -6512,9 +6414,8 @@ msgid "Has color label"
 msgstr "/Värviline silt"
 
 #: src/prefs_filter_edit.c:518
-#, fuzzy
 msgid "Has attachment"
-msgstr "Manus"
+msgstr "On manus"
 
 #: src/prefs_filter_edit.c:538
 msgid "contains"
@@ -6527,19 +6428,19 @@ msgstr "ei sisalda"
 
 #: src/prefs_filter_edit.c:540
 msgid "is"
-msgstr ""
+msgstr "on"
 
 #: src/prefs_filter_edit.c:541
 msgid "is not"
-msgstr ""
+msgstr "ei ole"
 
 #: src/prefs_filter_edit.c:543
 msgid "match to regex"
-msgstr ""
+msgstr "vaste regexile"
 
 #: src/prefs_filter_edit.c:544
 msgid "doesn't match to regex"
-msgstr ""
+msgstr "ei ühti regexiga"
 
 #: src/prefs_filter_edit.c:546
 #, fuzzy
@@ -6553,23 +6454,23 @@ msgstr "/Lisa saatje aadressi raamatusse"
 
 #: src/prefs_filter_edit.c:560
 msgid "is larger than"
-msgstr ""
+msgstr "on suurem kui"
 
 #: src/prefs_filter_edit.c:561
 msgid "is smaller than"
-msgstr ""
+msgstr "on väiksem kui"
 
 #: src/prefs_filter_edit.c:570
 msgid "is shorter than"
-msgstr ""
+msgstr "on lühem kui"
 
 #: src/prefs_filter_edit.c:571
 msgid "is longer than"
-msgstr ""
+msgstr "on pikem kui"
 
 #: src/prefs_filter_edit.c:581
 msgid "matches to status"
-msgstr ""
+msgstr "vastab staatusele"
 
 #: src/prefs_filter_edit.c:582
 #, fuzzy
@@ -6577,23 +6478,20 @@ msgid "doesn't match to status"
 msgstr "ei sisalda"
 
 #: src/prefs_filter_edit.c:686
-#, fuzzy
 msgid "Move to"
-msgstr "Liiguta alla"
+msgstr "Liiguta"
 
 #: src/prefs_filter_edit.c:687
-#, fuzzy
 msgid "Copy to"
-msgstr "/Kopeeri..."
+msgstr "Kopeeri"
 
 #: src/prefs_filter_edit.c:688
 msgid "Don't receive"
 msgstr "Ära võta vastu"
 
 #: src/prefs_filter_edit.c:689
-#, fuzzy
 msgid "Delete from server"
-msgstr "Kustuta kaust"
+msgstr "Kustuta serverist"
 
 #: src/prefs_filter_edit.c:692
 #, fuzzy
@@ -6601,14 +6499,12 @@ msgid "Set mark"
 msgstr "Märkused"
 
 #: src/prefs_filter_edit.c:693
-#, fuzzy
 msgid "Set color"
-msgstr "Säti kirja värvid"
+msgstr "Säti värvid"
 
 #: src/prefs_filter_edit.c:694
-#, fuzzy
 msgid "Mark as read"
-msgstr "/Märk/Märgi loetuks"
+msgstr "Märgi loetuks"
 
 #: src/prefs_filter_edit.c:698 src/prefs_toolbar.c:62
 msgid "Forward"
@@ -6620,9 +6516,8 @@ msgid "Forward as attachment"
 msgstr "/Saada edasi manusena"
 
 #: src/prefs_filter_edit.c:700
-#, fuzzy
 msgid "Redirect"
-msgstr "/Suuna ümber"
+msgstr "Suuna ümber"
 
 #: src/prefs_filter_edit.c:704
 #, fuzzy
@@ -6631,22 +6526,19 @@ msgstr "Käivita"
 
 #: src/prefs_filter_edit.c:707
 msgid "Stop rule evaluation"
-msgstr ""
+msgstr "Lõpeta reeglite hindamine"
 
 #: src/prefs_filter_edit.c:713 src/prefs_filter_edit.c:1106
-#, fuzzy
 msgid "folder:"
-msgstr "Kaust"
+msgstr "kaust:"
 
 #: src/prefs_filter_edit.c:1067
-#, fuzzy
 msgid "day(s)"
-msgstr "päeva"
+msgstr "päev(a)"
 
 #: src/prefs_filter_edit.c:1146
-#, fuzzy
 msgid "address:"
-msgstr "Aadress"
+msgstr "aadress:"
 
 #: src/prefs_filter_edit.c:1563
 #, fuzzy
@@ -6654,20 +6546,17 @@ msgid "Edit header list"
 msgstr "Päis"
 
 #: src/prefs_filter_edit.c:1586
-#, fuzzy
 msgid "Headers"
-msgstr "Päis"
+msgstr "Päised"
 
 #: src/prefs_filter_edit.c:1598
-#, fuzzy
 msgid "Header:"
-msgstr "Päis"
+msgstr "Päis:"
 
 #: src/prefs_filter_edit.c:1792 src/prefs_filter_edit.c:1903
 #: src/prefs_filter_edit.c:1910
-#, fuzzy
 msgid "Command is not specified."
-msgstr "Käsurida ei ole sisestatud."
+msgstr "Käsk pole määratud."
 
 #: src/prefs_filter_edit.c:1857
 #, fuzzy
@@ -6681,7 +6570,7 @@ msgstr "Faili %s ei leidu\n"
 
 #: src/prefs_filter_edit.c:1960
 msgid "Invalid condition exists."
-msgstr ""
+msgstr "Kehtetu tingimus on olemas."
 
 #: src/prefs_filter_edit.c:1983
 #, fuzzy
@@ -6690,7 +6579,7 @@ msgstr "Saaja pole määratud."
 
 #: src/prefs_filter_edit.c:2009
 msgid "Invalid action exists."
-msgstr ""
+msgstr "Kehtetu toiming on olemas."
 
 #: src/prefs_filter_edit.c:2018
 #, fuzzy
@@ -6698,9 +6587,8 @@ msgid "Condition not exist."
 msgstr "Käsurida ei ole sisestatud."
 
 #: src/prefs_filter_edit.c:2020
-#, fuzzy
 msgid "Action not exist."
-msgstr "faili %s ei leidu\n"
+msgstr "Tegevust pole olemas."
 
 #: src/prefs_folder_item.c:118
 #, fuzzy
@@ -6708,9 +6596,8 @@ msgid "Folder properties"
 msgstr "Kausta omadus"
 
 #: src/prefs_folder_item.c:186
-#, fuzzy
 msgid "Identifier"
-msgstr "*Määraja"
+msgstr "Identifikaator"
 
 #: src/prefs_folder_item.c:218 src/subscribedialog.c:294
 msgid "Type"
@@ -6722,11 +6609,11 @@ msgstr "Normaalne"
 
 #: src/prefs_folder_item.c:248
 msgid "Don't display [...] or (...) at the beginning of subject in summary"
-msgstr ""
+msgstr "Ärge kuvage kokkuvõttes teema alguses [...] või (...)"
 
 #: src/prefs_folder_item.c:250
 msgid "Delete [...] or (...) at the beginning of subject on reply"
-msgstr ""
+msgstr "Kustutada [...] või (...) vastuse teema algusest"
 
 #: src/prefs_folder_item.c:290 src/prefs_folder_item.c:301
 #: src/prefs_toolbar.c:98 src/progressdialog.c:94
@@ -6735,35 +6622,32 @@ msgstr "Konto"
 
 #: src/prefs_folder_item.c:330
 msgid "Apply to subfolders"
-msgstr ""
+msgstr "Rakenda alamkaustadele"
 
 #: src/prefs_folder_item.c:355
 msgid "use also on reply"
-msgstr ""
+msgstr "kasutada ka vastamisel"
 
 #: src/prefs_folder_item.c:379 src/prefs_template.c:206
-#, fuzzy
 msgid "Reply-To:"
-msgstr "Vastus saata"
+msgstr "Vastus saata:"
 
 #: src/prefs_search_folder.c:164
 #, c-format
 msgid "%s - Edit search condition"
-msgstr ""
+msgstr "%s – muutke otsingutingimust"
 
 #: src/prefs_search_folder.c:209 src/query_search.c:371
 msgid "Match any of the following"
-msgstr ""
+msgstr "Sobitage mõni järgmistest"
 
 #: src/prefs_search_folder.c:211 src/query_search.c:373
-#, fuzzy
 msgid "Match all of the following"
-msgstr "Säti järgmised aadressid automaatselt"
+msgstr "Sobita kõik järgmised"
 
 #: src/prefs_search_folder.c:231 src/query_search.c:418
-#, fuzzy
 msgid "Folder:"
-msgstr "Kaust"
+msgstr "Kaust:"
 
 #: src/prefs_search_folder.c:248 src/query_search.c:436
 #, fuzzy
@@ -6799,9 +6683,8 @@ msgstr "Number"
 
 #. S_COL_NUMBER
 #: src/prefs_summary_column.c:74 src/summaryview.c:5539
-#, fuzzy
 msgid "To"
-msgstr "Kellele:"
+msgstr "Kellele"
 
 #: src/prefs_summary_column.c:183
 msgid "Creating summary column setting window...\n"
@@ -6830,7 +6713,7 @@ msgstr "Registreeri"
 
 #: src/prefs_template.c:261
 msgid " Substitute "
-msgstr "Lisa"
+msgstr " Asendaja "
 
 #: src/prefs_template.c:273
 msgid " Symbols "
@@ -6851,7 +6734,7 @@ msgstr "Malli nimi"
 
 #: src/prefs_template.c:442
 msgid "Current modification is not applied. Finish without saving it?"
-msgstr ""
+msgstr "Praegust muudatust ei rakendata. Kas lõpetada seda salvestamata?"
 
 #: src/prefs_template.c:460
 #, fuzzy
@@ -6860,7 +6743,7 @@ msgstr "Malli nimi"
 
 #: src/prefs_template.c:461
 msgid "Really discard modification to templates?"
-msgstr ""
+msgstr "Kas tõesti loobuda mallide muudatustest?"
 
 #: src/prefs_template.c:481
 msgid "Template"
@@ -6879,9 +6762,8 @@ msgid "Do you really want to delete this template?"
 msgstr "Kas te tõesti tahate seda vormi kustutada?"
 
 #: src/prefs_toolbar.c:39
-#, fuzzy
 msgid "---- Separator ----"
-msgstr "Operaator"
+msgstr "---- Eraldaja ----"
 
 #: src/prefs_toolbar.c:41
 msgid "Get"
@@ -6944,7 +6826,7 @@ msgstr " Määra vaikimisi kontoks "
 
 #: src/prefs_toolbar.c:71
 msgid "Not junk"
-msgstr ""
+msgstr "Mitte rämps"
 
 #: src/prefs_toolbar.c:72
 #, fuzzy
@@ -6969,14 +6851,12 @@ msgid "Print"
 msgstr "Trüki"
 
 #: src/prefs_toolbar.c:84
-#, fuzzy
 msgid "Print message"
-msgstr "Saada kiri"
+msgstr "Prindi sõnum"
 
 #: src/prefs_toolbar.c:86
-#, fuzzy
 msgid "Stop"
-msgstr "Samm"
+msgstr "Peata"
 
 #: src/prefs_toolbar.c:87
 #, fuzzy
@@ -7068,7 +6948,7 @@ msgstr ""
 
 #: src/printing.c:672
 msgid "The message will be printed with the following command:"
-msgstr ""
+msgstr "Teade prinditakse järgmise käsuga:"
 
 #: src/printing.c:673
 #, fuzzy
@@ -7094,9 +6974,8 @@ msgid "Progress"
 msgstr "Omadus"
 
 #: src/query_search.c:258
-#, fuzzy
 msgid "_Reply"
-msgstr "/Vastan"
+msgstr "_Vasta"
 
 #: src/query_search.c:259
 #, fuzzy
@@ -7119,9 +6998,8 @@ msgid "Reply to _list"
 msgstr "Vasta ja saada koopia kõigile, kes said selle kirja"
 
 #: src/query_search.c:264
-#, fuzzy
 msgid "_Forward"
-msgstr "/Saadan edasi"
+msgstr "_Edasi"
 
 #: src/query_search.c:265
 #, fuzzy
@@ -7134,9 +7012,8 @@ msgid "Redirec_t"
 msgstr "/Suuna ümber"
 
 #: src/query_search.c:268
-#, fuzzy
 msgid "M_ove messages to..."
-msgstr "Liigutan kirja %s%c%d kausta %s ...\n"
+msgstr "Teis_alda sõnumid aadressile..."
 
 #: src/query_search.c:269
 #, fuzzy
@@ -7154,28 +7031,24 @@ msgid "Create f_ilter rule"
 msgstr "/Loo filtri reeglistik"
 
 #: src/query_search.c:273
-#, fuzzy
 msgid "_Automatically"
-msgstr "Automaatne"
+msgstr "_Automaatselt"
 
 #: src/query_search.c:274
-#, fuzzy
 msgid "by _From"
-msgstr "Kellelt"
+msgstr "kellelt"
 
 #: src/query_search.c:275
 msgid "by _To"
-msgstr ""
+msgstr "_Kellele"
 
 #: src/query_search.c:276
-#, fuzzy
 msgid "by _Subject"
-msgstr "Pealkiri"
+msgstr "pealkiri"
 
 #: src/query_search.c:278
-#, fuzzy
 msgid "Open in _new window"
-msgstr "/Vaade/Ava uues aknas"
+msgstr "Ava _uues aknas"
 
 #: src/query_search.c:279
 #, fuzzy
@@ -7183,9 +7056,8 @@ msgid "View mess_age source"
 msgstr "/_Vaade/Näita kirja lähtekoodi"
 
 #: src/query_search.c:281
-#, fuzzy
 msgid "_Print..."
-msgstr "Trüki..."
+msgstr "_Trüki..."
 
 #: src/query_search.c:526
 #, fuzzy
@@ -7193,19 +7065,19 @@ msgid "_Save as search folder"
 msgstr "Kataloogist otsimine"
 
 #: src/query_search.c:661
-#, fuzzy, c-format
+#, c-format
 msgid "Message not found."
-msgstr "*Märgi faili ei leidunud.\n"
+msgstr "Sõnumit ei leitud."
 
 #: src/query_search.c:663
-#, fuzzy, c-format
+#, c-format
 msgid "1 message found."
-msgstr "leiti %d kirju.\n"
+msgstr "Leiti 1 sõnum."
 
 #: src/query_search.c:665
-#, fuzzy, c-format
+#, c-format
 msgid "%d messages found."
-msgstr "leiti %d kirju.\n"
+msgstr "Leiti %d sõnumit."
 
 #: src/query_search.c:700
 #, fuzzy, c-format
@@ -7213,9 +7085,9 @@ msgid "Searching %s (%d / %d)..."
 msgstr "Filtreerin..."
 
 #: src/query_search.c:822
-#, fuzzy, c-format
+#, c-format
 msgid "Searching %s ..."
-msgstr "Tuhnin kaustas %s ..."
+msgstr "Otsimine %s ..."
 
 #: src/query_search.c:913 src/rpop3.c:713 src/summaryview.c:2442
 msgid "(No Date)"
@@ -7227,14 +7099,12 @@ msgid "Save as search folder"
 msgstr "Kataloogist otsimine"
 
 #: src/query_search.c:1165
-#, fuzzy
 msgid "Location:"
-msgstr "Tsiteerimine"
+msgstr "Asukoht:"
 
 #: src/query_search.c:1180
-#, fuzzy
 msgid "Folder name:"
-msgstr "Failinimi"
+msgstr "Kausta nimi:"
 
 #: src/query_search.c:1457 src/summaryview.c:3838
 #, fuzzy
@@ -7248,7 +7118,7 @@ msgstr "Vali kaust"
 
 #: src/quick_search.c:108
 msgid "All"
-msgstr ""
+msgstr "Kõik"
 
 #: src/quick_search.c:111
 #, fuzzy
@@ -7262,7 +7132,7 @@ msgstr "Manus"
 
 #: src/quick_search.c:114
 msgid "Within 1 day"
-msgstr ""
+msgstr "1 päeva jooksul"
 
 #: src/quick_search.c:115
 #, fuzzy
@@ -7286,17 +7156,17 @@ msgstr "Aadressiraamat"
 
 #: src/quick_search.c:150 src/quick_search.c:407
 msgid "Search for Subject or From"
-msgstr ""
+msgstr "Otsige teemat või saatjat"
 
 #: src/quick_search.c:368
 #, c-format
 msgid "%1$d in %2$d matched"
-msgstr ""
+msgstr "%1$d/%2$d vasteid"
 
 #: src/quick_search.c:371
-#, fuzzy, c-format
+#, c-format
 msgid "No messages matched"
-msgstr "Kirja osa pole märgitud."
+msgstr "Ühtegi sõnumit ei leitud"
 
 #: src/rfc2015.c:145
 msgid "Cannot find user ID for this key."
@@ -7305,7 +7175,7 @@ msgstr "Ei suuda leida selle võtme jaoks kasutaja ID-d."
 #: src/rfc2015.c:157
 #, c-format
 msgid "\t\taka \"%s\"\n"
-msgstr ""
+msgstr "\t\taka \"%s\"\n"
 
 #: src/rfc2015.c:187
 #, c-format
@@ -7317,29 +7187,24 @@ msgid "Error verifying the signature"
 msgstr "Viga allkirja kontrollimisel"
 
 #: src/rpop3.c:247
-#, fuzzy
 msgid "_File"
-msgstr "/_Fail"
+msgstr "_Fail"
 
 #: src/rpop3.c:248 src/rpop3.c:458
-#, fuzzy
 msgid "_Get"
-msgstr "Võta"
+msgstr "_Võta"
 
 #: src/rpop3.c:251 src/rpop3.c:1105
-#, fuzzy
 msgid "_Resume"
-msgstr "/Eemalda"
+msgstr "_Jätka"
 
 #: src/rpop3.c:254
-#, fuzzy
 msgid "_Help"
-msgstr "/_Abi"
+msgstr "_Abi"
 
 #: src/rpop3.c:255
-#, fuzzy
 msgid "_About"
-msgstr "Sellest"
+msgstr "_Teave"
 
 #: src/rpop3.c:357
 #, fuzzy, c-format
@@ -7383,25 +7248,24 @@ msgid "Getting the number of messages..."
 msgstr "Võtan uute kirjade arvu (STAT)..."
 
 #: src/rpop3.c:916 src/rpop3.c:929
-#, fuzzy
 msgid "No message"
-msgstr "Uusi kirju ei ole."
+msgstr "Uusi kirju ei ole"
 
 #: src/rpop3.c:962
-#, fuzzy, c-format
+#, c-format
 msgid "Deleted %d messages"
-msgstr "Kustuta kirjad"
+msgstr "Kustutatud %d sõnumit"
 
 #: src/rpop3.c:1008 src/rpop3.c:1020 src/rpop3.c:1081 src/rpop3.c:1324
-#: src/send_message.c:867
+#: src/send_message.c:863
 #, c-format
 msgid "Quitting..."
 msgstr "Väljun..."
 
 #: src/rpop3.c:1066
-#, fuzzy, c-format
+#, c-format
 msgid "Retrieved %d messages"
-msgstr "Võtan uusi kirju"
+msgstr "Laaditi %d sõnumit"
 
 #: src/rpop3.c:1073
 #, fuzzy, c-format
@@ -7414,9 +7278,9 @@ msgid "Retrieved %d (of %d) message headers"
 msgstr "Võtan uusi kirju"
 
 #: src/rpop3.c:1094
-#, fuzzy, c-format
+#, c-format
 msgid "Retrieved %d message headers"
-msgstr "Võtan uusi kirju"
+msgstr "Laaditi %d kirja päist"
 
 #: src/rpop3.c:1216
 #, fuzzy, c-format
@@ -7424,15 +7288,16 @@ msgid "Retrieving message %d ..."
 msgstr "Võtan kirju %s-st ja panen %s-i...\n"
 
 #: src/rpop3.c:1242
-#, fuzzy
 msgid "Delete messages"
-msgstr "Kustuta kirjad"
+msgstr "Kustuta sõnumeid"
 
 #: src/rpop3.c:1243
 msgid ""
 "Really delete selected messages from server?\n"
 "This operation cannot be reverted."
 msgstr ""
+"Kas tõesti kustutada valitud kirjad serverist?\n"
+"Seda toimingut ei saa tagasi võtta."
 
 #: src/select-keys.c:97
 #, fuzzy, c-format
@@ -7467,7 +7332,7 @@ msgstr "Sisesta teine kasutaja või võtme ID:"
 
 #: src/select-keys.c:481
 msgid "Trust key"
-msgstr ""
+msgstr "Usaldatud võti"
 
 #: src/select-keys.c:482
 msgid ""
@@ -7476,6 +7341,10 @@ msgid ""
 "know for sure that it will go to the person you mean it to.\n"
 "Do you trust it enough to use it anyway?"
 msgstr ""
+"Valitud võtit ei usaldata täielikult.\n"
+"Kui otsustate sõnumi selle võtmega krüpteerida, ei  te seda\n"
+"tea kindlasti, et see läheb inimesele, kellele sa seda mõtled.\n"
+"Kas usaldate seda piisavalt, et seda ikkagi kasutada?"
 
 #: src/send_message.c:199
 msgid "Queued message header is broken.\n"
@@ -7496,271 +7365,274 @@ msgstr "Ei saanud välist käsklust käima: %s\n"
 msgid "Error occurred while executing command: %s"
 msgstr "Tekkis viga kirja protsessimisel."
 
-#: src/send_message.c:733
+#: src/send_message.c:729
 msgid "Connecting"
 msgstr "Ühendan"
 
-#: src/send_message.c:735
+#: src/send_message.c:731
 #, c-format
 msgid "Connecting to SMTP server: %s ..."
 msgstr "Ühendun SMTP serveriga: %s ..."
 
 #. ignore errors right after QUIT
-#: src/send_message.c:795
+#: src/send_message.c:791
 #, fuzzy
 msgid "Error occurred after QUIT command (ignored)"
 msgstr "Tekkis viga kirja protsessimisel."
 
-#: src/send_message.c:838
-#, fuzzy, c-format
+#: src/send_message.c:834
+#, c-format
 msgid "Sending HELO..."
-msgstr "Saadan KIRJA...."
+msgstr "HELO saatmine..."
 
-#: src/send_message.c:839 src/send_message.c:845 src/send_message.c:851
-#, fuzzy
+#: src/send_message.c:835 src/send_message.c:841 src/send_message.c:847
 msgid "Authenticating"
-msgstr "Autoriseerimine"
+msgstr "Autentimine"
 
-#: src/send_message.c:840 src/send_message.c:846
+#: src/send_message.c:836 src/send_message.c:842
 #, fuzzy, c-format
 msgid "Sending message via %s:%d..."
 msgstr "Saadan kirja"
 
-#: src/send_message.c:844
-#, fuzzy, c-format
+#: src/send_message.c:840
+#, c-format
 msgid "Sending EHLO..."
-msgstr "Saadan KIRJA...."
+msgstr "EHLO saatmine..."
 
-#: src/send_message.c:854
+#: src/send_message.c:850
 #, c-format
 msgid "Sending MAIL FROM..."
 msgstr "Saadan KIRJA...."
 
-#: src/send_message.c:855 src/send_message.c:859 src/send_message.c:864
+#: src/send_message.c:851 src/send_message.c:855 src/send_message.c:860
 msgid "Sending"
 msgstr "Saadan"
 
-#: src/send_message.c:858
+#: src/send_message.c:854
 #, c-format
 msgid "Sending RCPT TO..."
 msgstr "Saadan RCPT..."
 
-#: src/send_message.c:863
+#: src/send_message.c:859
 #, c-format
 msgid "Sending DATA..."
 msgstr "Saadan andmed..."
 
-#: src/send_message.c:901
+#: src/send_message.c:897
 #, c-format
 msgid "Sending message (%d / %d bytes)"
 msgstr "Saadan kirja (%d / %d baiti)"
 
-#: src/send_message.c:906
+#: src/send_message.c:902
 #, c-format
 msgid "%d / %d bytes"
-msgstr ""
+msgstr "%d / %d baiti"
 
-#: src/send_message.c:937
+#: src/send_message.c:933
 msgid "Sending message"
 msgstr "Saadan kirja"
 
-#: src/send_message.c:985 src/send_message.c:1013
+#: src/send_message.c:981 src/send_message.c:1009
 msgid "Error occurred while sending the message."
 msgstr "Kirja saatmisel tekkis viga."
 
-#: src/send_message.c:988
+#: src/send_message.c:984
 #, fuzzy, c-format
 msgid ""
 "Error occurred while sending the message:\n"
 "%s"
 msgstr "Kirja saatmisel tekkis viga."
 
-#: src/send_message.c:1007
+#: src/send_message.c:1003
 #, fuzzy, c-format
 msgid "SMTP server not found: %s:%d"
 msgstr "SMTP serverit ei ole sisestatud."
 
-#: src/send_message.c:1009
+#: src/send_message.c:1005
 #, fuzzy
 msgid "Can't connect to SMTP server."
 msgstr "Ei saa ühendust SMTP serveriga: %s:%d\n"
 
-#: src/send_message.c:1011
+#: src/send_message.c:1007
 #, fuzzy, c-format
 msgid "Can't connect to SMTP server: %s:%d"
 msgstr "Ei saa ühendust SMTP serveriga: %s:%d\n"
 
-#: src/setup.c:126 src/setup.c:150
+#: src/setup.c:123 src/setup.c:147
 msgid "Mailbox setting"
 msgstr "Kirjakasti seaded"
 
-#: src/setup.c:169
+#: src/setup.c:166
 msgid "This dialog will make initial setup of mailbox."
-msgstr ""
+msgstr "See dialoog teeb postkasti esialgse häälestuse."
 
-#: src/setup.c:183
+#: src/setup.c:180
 msgid "Create mailbox at the following default location:"
-msgstr ""
+msgstr "Loo postkast järgmisesse vaikeasukohta:"
 
-#: src/setup.c:203
+#: src/setup.c:200
 msgid ""
 "Create mailbox at the following location:\n"
 "(enter folder name or full folder path)"
 msgstr ""
+"Loo postkast järgmises kohas:\n"
+"(sisestage kausta nimi või täielik kausta tee)"
 
-#: src/setup.c:221
+#: src/setup.c:218
 msgid ""
 "If you want to add a mailbox at another location afterward, please select "
 "'File - Mailbox - Add mailbox...' in the menu."
 msgstr ""
+"Kui soovite hiljem lisada postkasti mõnes teises kohas, valige menüüst "
+"\"Fail - Postkast - Lisa postkast...\"."
 
-#: src/setup.c:244 src/setup.c:489
+#: src/setup.c:241 src/setup.c:474
 msgid "Cancel"
 msgstr "Loobu"
 
-#: src/setup.c:244
+#: src/setup.c:241
 msgid "Continue without creating mailbox?"
-msgstr ""
+msgstr "Kas jätkata postkasti loomata?"
 
-#: src/setup.c:254
+#: src/setup.c:251
 msgid "Please input folder name or full folder path."
-msgstr ""
+msgstr "Sisestage kausta nimi või kausta täielik tee."
 
-#: src/setup.c:263
+#: src/setup.c:260
 #, fuzzy, c-format
 msgid "The mailbox '%s' already exists."
 msgstr "Kirjakast %s on juba olemas."
 
-#: src/setup.c:269
+#: src/setup.c:266
 #, c-format
 msgid ""
 "The location '%s' includes settings folder. Please specify another location."
 msgstr ""
+"Asukoht '%s' sisaldab seadete kausta. Palun täpsustage mõni muu asukoht."
 
-#: src/setup.c:489
+#: src/setup.c:474
 #, fuzzy
 msgid "Cancel mail account setup?"
 msgstr "Konto seaded"
 
-#: src/setup.c:511 src/setup.c:519
+#: src/setup.c:494 src/setup.c:502
 #, fuzzy
 msgid "Input value is not valid."
 msgstr "Menüü nime ei ole sisestatud."
 
-#: src/setup.c:551 src/setup.c:566 src/setup.c:586 src/setup.c:622
-#: src/setup.c:644 src/setup.c:660 src/setup.c:894 src/setup.c:976
-#, fuzzy
+#: src/setup.c:532 src/setup.c:547 src/setup.c:583 src/setup.c:605
+#: src/setup.c:826 src/setup.c:908
 msgid "POP3 server:"
-msgstr "LDAP Server"
+msgstr "POP3 server:"
 
-#: src/setup.c:557 src/setup.c:576 src/setup.c:596 src/setup.c:635
-#: src/setup.c:652 src/setup.c:668
+#: src/setup.c:538 src/setup.c:557 src/setup.c:596 src/setup.c:613
 #, fuzzy
 msgid "IMAP4 server:"
 msgstr "LDAP Server"
 
-#: src/setup.c:733 src/setup.c:769
-#, fuzzy
+#: src/setup.c:672 src/setup.c:708
 msgid "New account setup"
-msgstr "Konto seaded"
+msgstr "Uus konto seadistamine"
 
-#: src/setup.c:788
+#: src/setup.c:727
 msgid "This dialog will make initial setup of new mail account."
-msgstr ""
+msgstr "See dialoog teeb uue meilikonto esmase seadistamise."
 
-#: src/setup.c:811
+#: src/setup.c:750
 #, fuzzy
 msgid "Select account type:"
 msgstr "Kustuta konto"
 
-#: src/setup.c:841
+#: src/setup.c:773
 #, fuzzy
 msgid "Input your name and mail address:"
 msgstr "Vali võti elektronposti aadressi juurest"
 
-#: src/setup.c:850 src/setup.c:964
-#, fuzzy
+#: src/setup.c:782 src/setup.c:896
 msgid "Display name:"
-msgstr "Ekraani nimi"
+msgstr "Kuvatav nimi:"
 
-#: src/setup.c:854 src/setup.c:968
-#, fuzzy
+#: src/setup.c:786 src/setup.c:900
 msgid "E-mail address:"
-msgstr "E-Posti aadress"
+msgstr "E-Posti aadress:"
 
-#: src/setup.c:870
+#: src/setup.c:802
 msgid "This name will be seen at the side of recipients (e.g. John Doe)"
-msgstr ""
+msgstr "See nimi kuvatakse adressaatide kõrval (nt John Doe)"
 
-#: src/setup.c:881
+#: src/setup.c:813
 msgid "Input user ID and mail server:"
-msgstr ""
+msgstr "Sisesta kasutaja ID ja meiliserver:"
 
-#: src/setup.c:890 src/setup.c:972
-#, fuzzy
+#: src/setup.c:822 src/setup.c:904
 msgid "User ID:"
-msgstr "Kasutajanimi"
+msgstr "Kasutaja ID:"
 
-#: src/setup.c:899 src/setup.c:980
+#: src/setup.c:831 src/setup.c:912
 #, fuzzy
 msgid "SMTP server:"
 msgstr "Saatmise server (SMTP)"
 
-#: src/setup.c:924 src/setup.c:936
-#, fuzzy
+#: src/setup.c:856 src/setup.c:868
 msgid "Use SSL"
-msgstr "SSL"
+msgstr "Kasuta SSL-i"
 
-#: src/setup.c:932
+#: src/setup.c:864
 #, fuzzy
 msgid "Use SMTP authentication"
 msgstr "Autoriseerimine"
 
-#: src/setup.c:949
+#: src/setup.c:881
 msgid "Your new mail account has been set up with the following settings."
-msgstr ""
+msgstr "Teie uus meilikonto on seadistatud järgmiste sätetega."
 
-#: src/setup.c:952
+#: src/setup.c:884
 msgid ""
 "If you want to modify the settings, select\n"
 "'Configuration - Preferences for current account' or\n"
 "'Configuration - Edit accounts' in the main menu."
 msgstr ""
+"Kui soovite sätteid muuta, valige\n"
+"'Konfiguratsioon – arvelduskonto eelistused' või\n"
+"\"Konfiguratsioon – kontode redigeerimine\" peamenüüs."
 
-#: src/setup.c:1227
+#: src/setup.c:1135
 #, fuzzy
 msgid "Importing mail data"
 msgstr "Faili importimine:"
 
-#: src/setup.c:1227
+#: src/setup.c:1135
 msgid ""
 "The mail store of Outlook Express was found. Do you want to import the mail "
 "data of Outlook Express?\n"
 "\n"
 "(The folder structure will not be reproduced)"
 msgstr ""
+"Leiti Outlook Expressi meilipood. Kas soovite importida Outlook Expressi "
+"meiliandmed?\n"
+"\n"
+"(Kausta struktuuri ei reprodutseerita)"
 
-#: src/setup.c:1244 src/setup.c:1246 src/setup.c:1357
+#: src/setup.c:1152 src/setup.c:1154 src/setup.c:1265
 #, fuzzy
 msgid "Imported"
 msgstr "Impordi"
 
-#: src/setup.c:1281
-#, fuzzy
+#: src/setup.c:1189
 msgid "Failed to import the mail data."
-msgstr "/_Fail/_Impordi kirjakasti fail..."
+msgstr "Meiliandmete importimine ebaõnnestus."
 
-#: src/setup.c:1330
+#: src/setup.c:1238
 #, fuzzy
 msgid "Importing address book"
 msgstr "Aadressiraamat"
 
-#: src/setup.c:1330
+#: src/setup.c:1238
 msgid ""
 "The Windows address book was found. Do you want to import the address book?"
-msgstr ""
+msgstr "Leiti Windowsi aadressiraamat. Kas soovite aadressiraamatu importida?"
 
-#: src/setup.c:1367
+#: src/setup.c:1275
 #, fuzzy
 msgid "Failed to import the address book."
 msgstr "/_Fail/_Impordi kirjakasti fail..."
@@ -7795,16 +7667,16 @@ msgstr "Hea allkiri"
 #: src/sigstatus.c:248
 #, c-format
 msgid "Valid signature but the key for \"%s\" is not trusted"
-msgstr ""
+msgstr "Kehtiv allkiri, kuid \"%s\" võti pole usaldusväärne"
 
 #: src/sigstatus.c:249 src/textview.c:1126
 msgid "Valid signature (untrusted key)"
-msgstr ""
+msgstr "Kehtiv allkiri (ebausaldusväärne võti)"
 
 #: src/sigstatus.c:254
 #, c-format
 msgid "Signature valid but expired for \"%s\""
-msgstr ""
+msgstr "Allkiri on kehtiv, kuid aegunud \"%s\" jaoks"
 
 #: src/sigstatus.c:255
 #, fuzzy
@@ -7814,20 +7686,20 @@ msgstr "Allkiri %s\n"
 #: src/sigstatus.c:258
 #, c-format
 msgid "Signature valid but the signing key for \"%s\" has expired"
-msgstr ""
+msgstr "Allkiri on kehtiv, kuid allkirjavõti \"%s\" on aegunud"
 
 #: src/sigstatus.c:259
 msgid "Signature valid but the signing key has expired"
-msgstr ""
+msgstr "Allkiri on kehtiv, kuid allkirjastamisvõti on aegunud"
 
 #: src/sigstatus.c:262
 #, c-format
 msgid "Signature valid but the signing key for \"%s\" has been revoked"
-msgstr ""
+msgstr "Allkiri on kehtiv, kuid allkirjavõti \"%s\" on tühistatud"
 
 #: src/sigstatus.c:263
 msgid "Signature valid but the signing key has been revoked"
-msgstr ""
+msgstr "Allkiri on kehtiv, kuid allkirjastamisvõti on tühistatud"
 
 #: src/sigstatus.c:266
 #, c-format
@@ -7868,12 +7740,12 @@ msgstr "SSL ühendus ebaõnnestus"
 #: src/sslmanager.c:101
 #, c-format
 msgid "The SSL certificate of %s cannot be verified by the following reason:"
-msgstr ""
+msgstr "%s SSL-sertifikaati ei saa kontrollida järgmisel põhjusel:"
 
 #: src/sslmanager.c:107
-#, fuzzy, c-format
+#, c-format
 msgid "Subject: %s\n"
-msgstr "  Pealkiri: %s\n"
+msgstr "Pealkiri: %s\n"
 
 #: src/sslmanager.c:108
 #, fuzzy, c-format
@@ -7902,16 +7774,15 @@ msgstr "Võtme sõrmejälg: %s\n"
 
 #: src/sslmanager.c:115
 msgid "Do you accept this certificate?"
-msgstr ""
+msgstr "Kas nõustute selle sertifikaadiga?"
 
 #: src/sslmanager.c:190 src/sslmanager.c:198
-#, fuzzy
 msgid "_Reject"
-msgstr "/Suuna ümber"
+msgstr "_Keeldu"
 
 #: src/sslmanager.c:191 src/sslmanager.c:197
 msgid "_Temporarily accept"
-msgstr ""
+msgstr "_ Nõustu ajutiselt"
 
 #: src/sslmanager.c:192 src/sslmanager.c:196
 #, fuzzy
@@ -8072,7 +7943,7 @@ msgstr "/Loo filtri reeglistik/kasutades Kellele"
 
 #: src/summaryview.c:480
 msgid "/Create f_ilter rule/by _Subject"
-msgstr "/Loo filtri reeglistik/ kasutades päälkirja"
+msgstr "/Loo filtri reeglistik/ kasutades pealkirja"
 
 #: src/summaryview.c:513
 msgid "Creating summary view...\n"
@@ -8107,13 +7978,12 @@ msgid "Could not establish a connection to the server."
 msgstr "Ei suuda ühendada IMAP4 serveriga: %s:%d\n"
 
 #: src/summaryview.c:1626
-#, fuzzy
 msgid "_Search again"
-msgstr "Otsi uuesti"
+msgstr "Ot_si uuesti"
 
 #: src/summaryview.c:1648 src/summaryview.c:1657
 msgid "No more unread messages"
-msgstr "Pole rohkem kirju, mida pole loetud."
+msgstr "Enam pole lugemata sõnumeid"
 
 #: src/summaryview.c:1649
 msgid "No unread message found. Search from the end?"
@@ -8179,7 +8049,7 @@ msgstr "Rohkem seildiga kirju ei leitud. Kas otsime algusest?"
 
 #: src/summaryview.c:2069
 msgid "Attracting messages by subject..."
-msgstr "*Võtan kirju päälkirja järgi..."
+msgstr "*Võtan kirju pealkirja järgi..."
 
 #: src/summaryview.c:2266
 msgid " item(s) selected"
@@ -8319,9 +8189,9 @@ msgid "Filtering..."
 msgstr "Filtreerin..."
 
 #: src/summaryview.c:4950
-#, fuzzy, c-format
+#, c-format
 msgid "%d message(s) have been filtered."
-msgstr "kiri %d on juba salvestatud.\n"
+msgstr "%d kiri/kirja on filtreeritud."
 
 #: src/template.c:190
 #, c-format
@@ -8334,12 +8204,11 @@ msgstr "Loon tekstivaate...\n"
 
 #: src/textview.c:530
 msgid "This message is encrypted, but its decryption failed.\n"
-msgstr ""
+msgstr "See sõnum on krüptitud, kuid selle dekrüpteerimine ebaõnnestus.\n"
 
 #: src/textview.c:859
-#, fuzzy
 msgid "_Copy file name"
-msgstr "Failinimi"
+msgstr "_Kopeeri faili nimi"
 
 #: src/textview.c:1201
 #, fuzzy
@@ -8351,16 +8220,15 @@ msgid ""
 "The body text couldn't be displayed because writing to temporary file "
 "failed.\n"
 msgstr ""
+"Põhiteksti ei saanud kuvada, kuna ajutisse faili kirjutamine ebaõnnestus.\n"
 
 #: src/textview.c:2477
-#, fuzzy
 msgid "Sa_ve this image as..."
-msgstr "/Salveta kui..."
+msgstr "Sal_vesta see pilt kui..."
 
 #: src/textview.c:2497 src/trayicon.c:160
-#, fuzzy
 msgid "Compose _new message"
-msgstr "Kirjuta uus kiri"
+msgstr "Kirjuta _uus kiri"
 
 #: src/textview.c:2499
 #, fuzzy
@@ -8373,18 +8241,16 @@ msgid "Add to address _book..."
 msgstr "/Lisa saatje aadressi raamatusse"
 
 #: src/textview.c:2504
-#, fuzzy
 msgid "Copy this add_ress"
-msgstr "Üldine aadress"
+msgstr "Kopeeri see aad_ress"
 
 #: src/textview.c:2507
-#, fuzzy
 msgid "_Open with Web browser"
-msgstr "Weebi sirvur"
+msgstr "_Ava veebibrauseriga"
 
 #: src/textview.c:2509
 msgid "Copy this _link"
-msgstr ""
+msgstr "Kopeeri see _link"
 
 #: src/textview.c:2716
 #, c-format
@@ -8394,98 +8260,91 @@ msgid ""
 "\n"
 "Open it anyway?"
 msgstr ""
+"Tegelik URL (%s) erineb\n"
+"näivast URL (%s).\n"
+"\n"
+"Kas see ikkagi avada?"
 
 #: src/textview.c:2721
 msgid "Fake URL warning"
-msgstr ""
+msgstr "Võltsitud URL-i hoiatus"
 
 #: src/trayicon.c:141
-#, fuzzy
 msgid "_Display Sylpheed"
-msgstr "Vana Sylpheed"
+msgstr "_Kuva Sylpheed"
 
 #: src/trayicon.c:146
-#, fuzzy
 msgid "Get from _current account"
-msgstr "/_Kiri/Võta _kõigilt kontodelt"
+msgstr "Hankige praegu_selt kontolt"
 
 #: src/trayicon.c:150
-#, fuzzy
 msgid "Get from _all accounts"
-msgstr "/_Kiri/Võta _kõigilt kontodelt"
+msgstr "Hankige _kõikidelt kontodelt"
 
 #: src/trayicon.c:154
-#, fuzzy
 msgid "_Send queued messages"
-msgstr "Saada kirjad järjekorrast"
+msgstr "_Saada järjekorras olevaid sõnumeid"
 
 #: src/trayicon.c:166
-#, fuzzy
 msgid "E_xit"
-msgstr "Välju"
+msgstr "Välj_u"
 
 #: src/trayicon.c:200 src/trayicon.c:300
-#, fuzzy
 msgid "Sylpheed"
-msgstr "Vana Sylpheed"
+msgstr "Sylpheed"
 
-#: src/update_check.c:283 src/update_check.c:288 src/update_check.c:293
+#: src/update_check.c:263 src/update_check.c:268 src/update_check.c:273
 msgid ""
 "A newer version of Sylpheed has been found.\n"
 "Upgrade now?"
 msgstr ""
+"Leiti Sylpheedi uuem versioon.\n"
+"Uuenda nüüd?"
 
-#: src/update_check.c:296 src/update_check.c:614
-#, fuzzy
+#: src/update_check.c:276 src/update_check.c:593
 msgid "New version found"
-msgstr "Allkirja ei leidunud"
+msgstr "Uus versioon on saadaval"
 
-#: src/update_check.c:441 src/update_check.c:721
-#, fuzzy
+#: src/update_check.c:420 src/update_check.c:700
 msgid "Information"
-msgstr "Serveri informatsioon"
+msgstr "Informatsioon"
 
-#: src/update_check.c:442
-#, fuzzy
+#: src/update_check.c:421
 msgid "Sylpheed is already the latest version."
-msgstr "üks teine Sylpheed juba töötab.\n"
+msgstr "Sylpheed on juba uusima versiooniga."
 
-#: src/update_check.c:445
+#: src/update_check.c:424
 msgid "Couldn't get the version information."
-msgstr ""
+msgstr "Versiooniteavet ei õnnestunud hankida."
 
-#: src/update_check.c:661
+#: src/update_check.c:640
 msgid ""
 "Newer version of plug-ins have been found.\n"
 "Upgrade now?\n"
 msgstr ""
+"Leiti pistikprogrammide uuem versioon.\n"
+"Uuenda nüüd?\n"
 
-#: src/update_check.c:722
-#, fuzzy
+#: src/update_check.c:701
 msgid "All Sylpheed plug-ins are already the latest version."
-msgstr "üks teine Sylpheed juba töötab.\n"
+msgstr "Kõik Sylpheedi pistikprogrammid on juba uuemate versioonidega."
 
-#: src/update_check.c:725
+#: src/update_check.c:704
 msgid "Couldn't get the version information of plug-ins."
-msgstr ""
+msgstr "Pistikprogrammide versiooniteavet ei õnnestunud hankida."
 
 #: plugin/attachment_tool/attachment_tool.c:50
 #: plugin/attachment_tool/attachment_tool.c:272
-#, fuzzy
 msgid "Remove attachments"
-msgstr "Manus"
+msgstr "Eemalda manused"
 
 #: plugin/attachment_tool/attachment_tool.c:264
 msgid "This tool is available on local folders only."
-msgstr ""
+msgstr "See tööriist on saadaval ainult kohalikes kaustades."
 
 #: plugin/attachment_tool/attachment_tool.c:273
 msgid "Do you really remove attached files from the selected messages?"
-msgstr ""
-
-#, fuzzy
-#~ msgid "Use secure authentication (APOP)"
-#~ msgstr "See servar nõuab autoriseerimist"
+msgstr "Kas tõesti eemaldate valitud kirjadest manustatud failid?"
 
 #~ msgid "Select Keys"
 #~ msgstr "Vali võtmed"
