@@ -429,6 +429,34 @@ int main(int argc, char *argv[])
 	const gchar *address = NULL;
 	APIInfo *api;
 
+	for (i = 1; i < argc; i++) {
+		if (!strncmp(argv[i], "--debug", 7)) {
+			set_debug_mode(TRUE);
+		} else if (!strncmp(argv[i], "--configdir", 11)) {
+			const gchar *p = argv[i + 1];
+
+			if (p && *p != '\0' && *p != '-') {
+				/* this must only be done at startup */
+#ifdef G_OS_WIN32
+				gchar *utf8dir;
+
+				utf8dir = g_locale_to_utf8
+					(p, -1, NULL, NULL, NULL);
+				if (utf8dir) {
+					set_rc_dir(utf8dir);
+					g_free(utf8dir);
+				} else
+					set_rc_dir(p);
+#else
+				set_rc_dir(p);
+#endif
+				i++;
+			}
+		} else if (!address && argv[i] && argv[i][0] != '-') {
+			address = argv[i];
+		}
+	}
+
 	key_file = g_key_file_new();
 	file = g_strconcat(get_rc_dir(), G_DIR_SEPARATOR_S, "oauth2.ini", NULL);
 	if (!g_key_file_load_from_file(key_file, file, G_KEY_FILE_NONE, NULL)) {
@@ -438,14 +466,6 @@ int main(int argc, char *argv[])
 			g_free(file);
 			g_warning("oauth2.ini not found.");
 			return EXIT_FAILURE;
-		}
-	}
-
-	for (i = 1; i < argc; i++) {
-		if (!strncmp(argv[i], "--debug", 7)) {
-			set_debug_mode(TRUE);
-		} else if (!address && argv[i] && argv[i][0] != '-') {
-			address = argv[i];
 		}
 	}
 

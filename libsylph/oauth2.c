@@ -39,14 +39,16 @@ gint oauth2_get_token   (const gchar     *user,
                          gchar          **r_token,
                          gint            *expire)
 {
-	gchar *argv[] = {"syl-auth-helper", NULL, NULL};
+	gchar *argv[] = {"syl-auth-helper", NULL, NULL, NULL, NULL};
 	gchar *out = NULL;
 	gint status = 0;
 	GError *error = NULL;
 
 	g_return_val_if_fail(user != NULL, -1);
 
-	argv[1] = (gchar *)user;
+	argv[1] = "--configdir";
+	argv[2] = get_rc_dir();
+	argv[3] = (gchar *)user;
 	if (g_spawn_sync(NULL, argv, NULL, G_SPAWN_SEARCH_PATH,
 			 NULL, NULL, &out, NULL, &status, &error)) {
 		debug_print("syl-auth-helper out: %s\n", out);
