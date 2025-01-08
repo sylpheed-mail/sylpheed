@@ -209,6 +209,10 @@ typedef void (*LogFlushFunc)		(void);
 #define Str(x)	#x
 #define Xstr(x)	Str(x)
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void list_free_strings		(GList		*list);
 void slist_free_strings		(GSList		*list);
 
@@ -259,8 +263,10 @@ gchar *strtailchomp	(gchar		*str,
 			 gchar		 tail_char);
 gchar *strcrchomp	(gchar		*str);
 
+#ifndef __cplusplus
 gchar *strcasestr	(const gchar	*haystack,
 			 const gchar	*needle);
+#endif
 gpointer my_memmem	(gconstpointer	 haystack,
 			 size_t		 haystacklen,
 			 gconstpointer	 needle,
@@ -513,8 +519,8 @@ gchar *file_read_to_str		(const gchar	*file);
 gchar *file_read_stream_to_str	(FILE		*fp);
 
 /* process execution */
-gint execute_async		(gchar *const	 argv[]);
-gint execute_sync		(gchar *const	 argv[]);
+gint execute_async		(gchar *	 argv[]);
+gint execute_sync		(gchar *	 argv[]);
 gint execute_command_line	(const gchar	*cmdline,
 				 gboolean	 async);
 gint execute_command_line_async_wait
@@ -595,5 +601,9 @@ void log_warning	(const gchar *format, ...) G_GNUC_PRINTF(1, 2);
 void log_error		(const gchar *format, ...) G_GNUC_PRINTF(1, 2);
 
 void log_flush		(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __UTILS_H__ */

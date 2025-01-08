@@ -180,9 +180,9 @@ static void virtual_folder_init(Folder *folder, const gchar *name,
 guint sinfo_hash(gconstpointer key)
 {
 	const SearchCacheInfo *sinfo = key;
-	guint h;
+	uintptr_t h;
 
-	h = (guint)sinfo->folder;
+	h = (uintptr_t) sinfo->folder;
 	h ^= sinfo->msgnum;
 	h ^= (guint)sinfo->size;
 	h ^= (guint)sinfo->mtime;
@@ -331,7 +331,7 @@ static GSList *virtual_search_folder(VirtualSearchInfo *info, FolderItem *item)
 	GSList *cur;
 	FilterInfo fltinfo;
 	gint count = 1, total, ncachehit = 0;
-	GTimeVal tv_prev, tv_cur;
+	gint64 tv_prev, tv_cur;
 
 	g_return_val_if_fail(info != NULL, NULL);
 	g_return_val_if_fail(info->rule != NULL, NULL);
@@ -342,7 +342,7 @@ static GSList *virtual_search_folder(VirtualSearchInfo *info, FolderItem *item)
 	if (item->stype == F_VIRTUAL)
 		return NULL;
 
-	g_get_current_time(&tv_prev);
+	tv_prev = g_get_real_time();
 	status_print(_("Searching %s ..."), item->path);
 
 	mlist = folder_item_get_msg_list(item, TRUE);
@@ -358,10 +358,8 @@ static GSList *virtual_search_folder(VirtualSearchInfo *info, FolderItem *item)
 		MsgInfo *msginfo = (MsgInfo *)cur->data;
 		GSList *hlist;
 
-		g_get_current_time(&tv_cur);
-		if (tv_cur.tv_sec > tv_prev.tv_sec ||
-		    tv_cur.tv_usec - tv_prev.tv_usec >
-		    PROGRESS_UPDATE_INTERVAL * 1000) {
+		tv_cur = g_get_real_time();
+		if (tv_cur - tv_prev > PROGRESS_UPDATE_INTERVAL * 1000) {
 			status_print(_("Searching %s (%d / %d)..."),
 				     item->path, count, total);
 			tv_prev = tv_cur;
@@ -369,7 +367,7 @@ static GSList *virtual_search_folder(VirtualSearchInfo *info, FolderItem *item)
 		++count;
 
 		if (info->search_cache_table) {
-			gint matched;
+			intptr_t matched;
 			SearchCacheInfo sinfo;
 
 			sinfo.folder = item;
@@ -378,7 +376,7 @@ static GSList *virtual_search_folder(VirtualSearchInfo *info, FolderItem *item)
 			sinfo.mtime = msginfo->mtime;
 			sinfo.flags = msginfo->flags;
 
-			matched = (gint)g_hash_table_lookup
+			matched = (intptr_t) g_hash_table_lookup
 				(info->search_cache_table, &sinfo);
 			if (matched == SCACHE_MATCHED) {
 				match_list = g_slist_prepend
@@ -535,7 +533,7 @@ static GSList *virtual_get_msg_list(Folder *folder, FolderItem *item,
 		++total;
 	}
 
-	item->new = new;
+	item->new_count = new;
 	item->unread = unread;
 	item->total = total;
 	item->updated = TRUE;

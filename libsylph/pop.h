@@ -159,9 +159,17 @@ struct _Pop3Session
 /* #define IDLEN	128 */
 #define IDLEN		POPBUFSIZE
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 Session *pop3_session_new	(PrefsAccount	*account);
 
 GHashTable *pop3_get_uidl_table	(PrefsAccount	*account);
 gint pop3_write_uidl_list	(Pop3Session	*session);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __POP_H__ */

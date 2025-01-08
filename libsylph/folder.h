@@ -279,7 +279,7 @@ struct _FolderItem
 
 	stime_t mtime;
 
-	gint new;
+	gint new_count;
 	gint unread;
 	gint total;
 	gint unmarked_num;
@@ -328,6 +328,10 @@ struct _FolderItem
 
 	gpointer data;
 };
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 Folder     *folder_new			(FolderType	 type,
 					 const gchar	*name,
@@ -471,5 +475,9 @@ gchar *folder_item_get_cache_file	(FolderItem	*item);
 gchar *folder_item_get_mark_file	(FolderItem	*item);
 
 gint   folder_item_close		(FolderItem	*item);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __FOLDER_H__ */

@@ -401,7 +401,7 @@ void procmsg_set_flags(GSList *mlist, FolderItem *item)
 	mark_queue_exist = (item->mark_queue != NULL);
 	mark_table = procmsg_read_mark_file(item);
 	if (!mark_table) {
-		item->new = item->unread = item->total = g_slist_length(mlist);
+		item->new_count = item->unread = item->total = g_slist_length(mlist);
 		item->updated = TRUE;
 		item->mark_dirty = TRUE;
 		return;
@@ -452,7 +452,7 @@ void procmsg_set_flags(GSList *mlist, FolderItem *item)
 		++total;
 	}
 
-	item->new = new;
+	item->new_count = new;
 	item->unread = unread;
 	item->total = total;
 	item->unmarked_num = unflagged;
@@ -500,7 +500,7 @@ void procmsg_mark_all_read(FolderItem *item)
 		item->mark_dirty = TRUE;
 	}
 
-	item->new = item->unread = 0;
+	item->new_count = item->unread = 0;
 }
 
 static FolderSortType cmp_func_sort_type;
@@ -542,14 +542,14 @@ GSList *procmsg_sort_msg_list(GSList *mlist, FolderSortKey sort_key,
 	return mlist;
 }
 
-gint procmsg_get_last_num_in_msg_list(GSList *mlist)
+gint procmsg_get_last_num_in_msg_list(const GSList *mlist)
 {
-	GSList *cur;
-	MsgInfo *msginfo;
+	const GSList *cur;
+	const MsgInfo *msginfo;
 	gint last = 0;
 
 	for (cur = mlist; cur != NULL; cur = cur->next) {
-		msginfo = (MsgInfo *)cur->data;
+		msginfo = (const MsgInfo *)cur->data;
 		if (msginfo && msginfo->msgnum > last)
 			last = msginfo->msgnum;
 	}
@@ -834,7 +834,7 @@ gboolean procmsg_flush_folder(FolderItem *item)
 	procmsg_get_mark_sum(item, &n_new, &n_unread, &n_total, &n_min, &n_max,
 			     0);
 	item->unmarked_num = 0;
-	item->new = n_new;
+	item->new_count = n_new;
 	item->unread = n_unread;
 	item->total = n_total;
 
@@ -912,15 +912,15 @@ static void mark_sum_func(gpointer key, gpointer value, gpointer data)
 }
 
 void procmsg_get_mark_sum(FolderItem *item,
-			  gint *new, gint *unread, gint *total,
+			  gint *new_count, gint *unread, gint *total,
 			  gint *min, gint *max,
 			  gint first)
 {
 	GHashTable *mark_table;
 	struct MarkSum marksum;
 
-	*new = *unread = *total = *min = *max = 0;
-	marksum.new    = new;
+	*new_count = *unread = *total = *min = *max = 0;
+	marksum.new    = new_count;
 	marksum.unread = unread;
 	marksum.total  = total;
 	marksum.min    = min;

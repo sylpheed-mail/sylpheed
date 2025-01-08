@@ -4047,7 +4047,7 @@ static gchar **argv_utf8_to_locale(gchar **argv)
 }
 #endif
 
-gint execute_async(gchar *const argv[])
+gint execute_async(gchar * argv[])
 {
 #if defined(G_OS_WIN32) && !GLIB_CHECK_VERSION(2, 8, 2)
 	gchar **cp_argv;
@@ -4077,7 +4077,7 @@ gint execute_async(gchar *const argv[])
 	return 0;
 }
 
-gint execute_sync(gchar *const argv[])
+gint execute_sync(gchar * argv[])
 {
 	gint status;
 #if defined(G_OS_WIN32) && !GLIB_CHECK_VERSION(2, 8, 2)
@@ -4247,7 +4247,7 @@ gint execute_open_file(const gchar *file, const gchar *content_type)
 		return 0;
 	}
 #elif defined(__APPLE__)
-	const gchar *argv[3] = {"open", NULL, NULL};
+	gchar *argv[3] = {"open", NULL, NULL};
 
 	g_return_val_if_fail(file != NULL, -1);
 
@@ -4256,7 +4256,7 @@ gint execute_open_file(const gchar *file, const gchar *content_type)
 	argv[1] = file;
 	execute_async(argv);
 #else
-	const gchar *argv[3] = {"xdg-open", NULL, NULL};
+	gchar *argv[3] = {"xdg-open", NULL, NULL};
 
 	g_return_val_if_fail(file != NULL, -1);
 

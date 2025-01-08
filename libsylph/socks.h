@@ -44,6 +44,10 @@ struct _SocksInfo
 	gchar *proxy_pass;
 };
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 SocksInfo *socks_info_new(SocksType type, const gchar *proxy_host,
 			  gushort proxy_port, const gchar *proxy_name,
 			  const gchar *proxy_pass);
@@ -55,5 +59,9 @@ gint socks_connect(SockInfo *sock, const gchar *hostname, gushort port,
 gint socks4_connect(SockInfo *sock, const gchar *hostname, gushort port);
 gint socks5_connect(SockInfo *sock, const gchar *hostname, gushort port,
 		    const gchar *proxy_name, const gchar *proxy_pass);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __SOCKS_H__ */

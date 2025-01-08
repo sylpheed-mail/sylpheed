@@ -32,6 +32,10 @@ typedef gint	(*AccountFunc)	(PrefsAccount	*ac_prefs,
 
 extern PrefsAccount *cur_account;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void	      account_read_config_all	(void);
 void	      account_write_config_all	(void);
 
@@ -66,5 +70,9 @@ void	      account_destroy		(PrefsAccount	*ac_prefs);
 void	      account_update_lock	(void);
 void	      account_update_unlock	(void);
 void	      account_updated		(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __ACCOUNT_H__ */

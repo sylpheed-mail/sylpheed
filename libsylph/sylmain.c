@@ -48,6 +48,7 @@
 #  include "ssl.h"
 #endif
 
+#ifndef NO_GAPP
 #ifndef PACKAGE
 #  define PACKAGE	GETTEXT_PACKAGE
 #endif
@@ -247,19 +248,6 @@ void syl_init(void)
 #endif
 }
 
-#define MAKE_DIR_IF_NOT_EXIST(dir)					\
-{									\
-	if (!is_dir_exist(dir)) {					\
-		if (is_file_exist(dir)) {				\
-			g_warning("File '%s' already exists. "		\
-				  "Can't create folder.", dir);		\
-			return -1;					\
-		}							\
-		if (make_dir(dir) < 0)					\
-			return -1;					\
-	}								\
-}
-
 void syl_init_gettext(const gchar *package, const gchar *dirname)
 {
 #ifdef ENABLE_NLS
@@ -288,6 +276,20 @@ void syl_init_gettext(const gchar *package, const gchar *dirname)
 
 	bind_textdomain_codeset(package, CS_UTF_8);
 #endif /* ENABLE_NLS */
+}
+#endif /* ! NO_GAPP */
+
+#define MAKE_DIR_IF_NOT_EXIST(dir)					\
+{									\
+	if (!is_dir_exist(dir)) {					\
+		if (is_file_exist(dir)) {				\
+			g_warning("File '%s' already exists. "		\
+				  "Can't create folder.", dir);		\
+			return -1;					\
+		}							\
+		if (make_dir(dir) < 0)					\
+			return -1;					\
+	}								\
 }
 
 gint syl_setup_rc_dir(void)
@@ -328,6 +330,8 @@ void syl_cleanup(void)
 	/* remove temporary files */
 	remove_all_files(get_tmp_dir());
 	remove_all_files(get_mime_tmp_dir());
+
+#ifndef NO_GAPP
 #if GLIB_CHECK_VERSION(2, 6, 0)
 	g_log_set_default_handler(g_log_default_handler, NULL);
 #endif
@@ -339,4 +343,5 @@ void syl_cleanup(void)
 		g_object_unref(app);
 		app = NULL;
 	}
+#endif
 }

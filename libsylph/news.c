@@ -488,7 +488,7 @@ static gint news_scan_group(Folder *folder, FolderItem *item)
 	}
 
 	if (num == 0) {
-		item->new = item->unread = item->total = item->last_num = 0;
+		item->new_count = item->unread = item->total = item->last_num = 0;
 		return 0;
 	}
 
@@ -511,7 +511,7 @@ static gint news_scan_group(Folder *folder, FolderItem *item)
 		if (unread > num) unread = num;
 	}
 
-	item->new = new;
+	item->new_count = new;
 	item->unread = unread;
 	item->total = num;
 	item->last_num = last;
@@ -969,7 +969,7 @@ static MsgInfo *news_parse_xover(const gchar *xover_str)
 	MsgInfo *msginfo;
 	gchar *subject, *sender, *size, *line, *date, *msgid, *ref, *tmp;
 	gchar *p;
-	gint num, size_int, line_int;
+	gint num, size_int;
 	gchar *xover_buf;
 
 	Xstrdup_a(xover_buf, xover_str, return NULL);
@@ -989,7 +989,7 @@ static MsgInfo *news_parse_xover(const gchar *xover_str)
 
 	num = atoi(xover_str);
 	size_int = atoi(size);
-	line_int = atoi(line);
+	//line_int = atoi(line);
 
 	/* set MsgInfo */
 	msginfo = g_new0(MsgInfo, 1);

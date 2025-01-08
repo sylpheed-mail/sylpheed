@@ -461,7 +461,7 @@ static void foldersel_append_item(GtkTreeStore *store, FolderItem *item,
 		if (item->total > 0)
 			weight = PANGO_WEIGHT_BOLD;
 	} else {
-		use_color = (item->new > 0);
+		use_color = (item->new_count > 0);
 		if (item->unread > 0)
 			weight = PANGO_WEIGHT_BOLD;
 	}

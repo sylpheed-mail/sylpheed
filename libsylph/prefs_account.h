@@ -197,6 +197,10 @@ struct _PrefsAccount
 	gint token_expire;
 };
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 PrefsAccount *prefs_account_new		(void);
 
 PrefsAccount *prefs_account_get_tmp_prefs	(void);
@@ -209,5 +213,9 @@ void prefs_account_read_config		(PrefsAccount	*ac_prefs,
 void prefs_account_write_config_all	(GList		*account_list);
 
 void prefs_account_free			(PrefsAccount	*ac_prefs);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __PREFS_ACCOUNT_H__ */

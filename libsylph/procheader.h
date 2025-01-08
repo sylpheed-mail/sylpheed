@@ -42,6 +42,10 @@ struct _Header
 	gchar *body;
 };
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 gint procheader_get_one_field		(gchar		*buf,
 					 size_t		 len,
 					 FILE		*fp,
@@ -97,5 +101,9 @@ stime_t procheader_date_parse		(gchar		*dest,
 void procheader_date_get_localtime	(gchar		*dest,
 					 gint		 len,
 					 const stime_t	 timer);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __PROCHEADER_H__ */

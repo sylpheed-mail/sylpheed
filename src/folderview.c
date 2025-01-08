@@ -1034,7 +1034,7 @@ gint folderview_check_new(Folder *folder)
 		if (folder && folder != item->folder) continue;
 		if (!folder && FOLDER_IS_REMOTE(item->folder)) continue;
 
-		prev_new = item->new;
+		prev_new = item->new_count;
 		prev_unread = item->unread;
 		folderview_scan_tree_func(item->folder, item, NULL);
 		if (folder_item_scan(item) < 0) {
@@ -1046,8 +1046,8 @@ gint folderview_check_new(Folder *folder)
 		if (item->stype != F_TRASH && item->stype != F_JUNK) {
 			if (prev_unread < item->unread)
 				n_updated += item->unread - prev_unread;
-			else if (prev_new < item->new)
-				n_updated += item->new - prev_new;
+			else if (prev_new < item->new_count)
+				n_updated += item->new_count - prev_new;
 		}
 	}
 
@@ -1094,7 +1094,7 @@ gint folderview_check_new_item(FolderItem *item)
 	gtk_widget_set_sensitive(folderview->treeview, FALSE);
 	GTK_EVENTS_FLUSH();
 
-	prev_new = item->new;
+	prev_new = item->new_count;
 	prev_unread = item->unread;
 	folderview_scan_tree_func(folder, item, NULL);
 	folder_item_scan(item);
@@ -1102,8 +1102,8 @@ gint folderview_check_new_item(FolderItem *item)
 	if (item->stype != F_TRASH && item->stype != F_JUNK) {
 		if (prev_unread < item->unread)
 			n_updated = item->unread - prev_unread;
-		else if (prev_new < item->new)
-			n_updated = item->new - prev_new;
+		else if (prev_new < item->new_count)
+			n_updated = item->new_count - prev_new;
 	}
 
 	gtk_widget_set_sensitive(folderview->treeview, TRUE);
@@ -1154,7 +1154,7 @@ static gboolean folderview_search_new_recursive(GtkTreeModel *model,
 	if (iter) {
 		gtk_tree_model_get(model, iter, COL_FOLDER_ITEM, &item, -1);
 		if (item) {
-			if (item->new > 0 ||
+			if (item->new_count > 0 ||
 			    (item->stype == F_QUEUE && item->total > 0))
 				return TRUE;
 		}
@@ -1364,7 +1364,7 @@ static void folderview_update_row(FolderView *folderview, GtkTreeIter *iter)
 		strcpy(unread_s, "-");
 		strcpy(total_s, "-");
 	} else {
-		itos_buf(new_s, item->new);
+		itos_buf(new_s, item->new_count);
 		itos_buf(unread_s, item->unread);
 		itos_buf(total_s, item->total);
 	}
@@ -1387,7 +1387,7 @@ static void folderview_update_row(FolderView *folderview, GtkTreeIter *iter)
 			weight = PANGO_WEIGHT_BOLD;
 		/* if new messages exist, print with colored letter */
 		use_color =
-			(item->new > 0) ||
+			(item->new_count > 0) ||
 			(add_unread_mark &&
 			 folderview_have_new_children(folderview, iter));
 	}

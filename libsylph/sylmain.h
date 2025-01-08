@@ -21,6 +21,11 @@
 #define __SYLMAIN_H__
 
 #include <glib.h>
+
+#ifdef NO_GAPP
+#define APP_EMIT(sname)
+#define APP_EMITA(sname, ...)
+#else
 #include <glib-object.h>
 
 /* SylApp object */
@@ -48,10 +53,24 @@ struct _SylAppClass
 GObject *syl_app_create	(void);
 GObject *syl_app_get	(void);
 
+#define APP_EMIT(sname) if (syl_app_get()) \
+	g_signal_emit_by_name(syl_app_get(), sname)
+#define APP_EMITA(sname, ...) if (syl_app_get()) \
+	g_signal_emit_by_name(syl_app_get(), sname, __VA_ARGS__)
+
 void syl_init		(void);
 void syl_init_gettext	(const gchar *package, const gchar *dirname);
+#endif
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 gint syl_setup_rc_dir	(void);
 void syl_save_all_state	(void);
 void syl_cleanup	(void);
 
+#ifdef __cplusplus
+}
+#endif
 #endif /* __SYLMAIN_H__ */

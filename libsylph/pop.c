@@ -216,8 +216,6 @@ gint pop3_getauth_auth_recv(Pop3Session *session, const gchar *msg)
 
 gint pop3_getauth_auth_data_send(Pop3Session *session)
 {
-	gchar *p;
-	gchar *response;
 	gchar *response64;
 	PrefsAccount *ac = session->ac_prefs;
 
@@ -250,7 +248,7 @@ gint pop3_getrange_stat_send(Pop3Session *session)
 
 gint pop3_getrange_stat_recv(Pop3Session *session, const gchar *msg)
 {
-	if (sscanf(msg, "%d %lld", &session->count, &session->total_bytes) != 2) {
+	if (sscanf(msg, "%d %" G_GINT64_FORMAT "", &session->count, &session->total_bytes) != 2) {
 		log_warning(_("POP3 protocol error\n"));
 		session->error_val = PS_PROTOCOL;
 		return PS_PROTOCOL;

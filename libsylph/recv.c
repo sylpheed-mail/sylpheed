@@ -132,9 +132,9 @@ gint recv_write(SockInfo *sock, FILE *fp)
 	gint count = 0;
 	gint bytes = 0;
 	gchar *p;
-	GTimeVal tv_prev, tv_cur;
+	gint64 tv_prev, tv_cur;
 
-	g_get_current_time(&tv_prev);
+	tv_prev = g_get_real_time();
 
 	for (;;) {
 		if (sock_gets(sock, buf, sizeof(buf)) < 0) {
@@ -153,16 +153,15 @@ gint recv_write(SockInfo *sock, FILE *fp)
 		bytes += len;
 
 		if (recv_ui_func) {
-			g_get_current_time(&tv_cur);
+			tv_cur = g_get_real_time();
 			/* if elapsed time from previous update is greater
 			   than 50msec, update UI */
-			if (tv_cur.tv_sec - tv_prev.tv_sec > 0 ||
-			    tv_cur.tv_usec - tv_prev.tv_usec > UI_REFRESH_INTERVAL) {
+			if (tv_cur - tv_prev > UI_REFRESH_INTERVAL) {
 				gboolean ret;
 				ret = recv_ui_func(sock, count, bytes,
 						   recv_ui_func_data);
 				if (ret == FALSE) return -1;
-				g_get_current_time(&tv_prev);
+				tv_prev = g_get_real_time();
 			}
 		}
 

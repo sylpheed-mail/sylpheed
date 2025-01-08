@@ -1890,7 +1890,7 @@ EncodingType procmime_get_encoding_for_text_file(const gchar *file)
 		octet_percentage = 0.0;
 
 	debug_print("procmime_get_encoding_for_text_file(): "
-		    "8bit chars: %d / %d (%f%%)\n", octet_chars, total_len,
+		    "8bit chars: %zd / %zd (%f%%)\n", octet_chars, total_len,
 		    100.0 * octet_percentage);
 
 	if (octet_percentage > 0.20) {
@@ -1926,7 +1926,7 @@ EncodingType procmime_get_encoding_for_str(const gchar *str)
 		octet_percentage = 0.0;
 
 	debug_print("procmime_get_encoding_for_str(): "
-		    "8bit chars: %d / %d (%f%%)\n", octet_chars, total_len,
+		    "8bit chars: %zd / %zd (%f%%)\n", octet_chars, total_len,
 		    100.0 * octet_percentage);
 
 	if (octet_percentage > 0.20) {

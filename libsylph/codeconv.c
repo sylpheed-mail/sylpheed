@@ -35,6 +35,9 @@
 #endif
 
 #include <iconv.h>
+#ifndef ICONV_CONST
+#define ICONV_CONST
+#endif
 
 #include "codeconv.h"
 #include "prefs_common.h"
@@ -1875,7 +1878,7 @@ static const struct {
 static GHashTable *conv_get_charset_to_str_table(void)
 {
 	static GHashTable *table;
-	gint i;
+	size_t i;
 	S_LOCK_DEFINE_STATIC(table);
 
 	S_LOCK(table);
@@ -1905,7 +1908,7 @@ static GHashTable *conv_get_charset_from_str_table(void)
 	static GHashTable *table;
 	S_LOCK_DEFINE_STATIC(table);
 
-	gint i;
+	size_t i;
 
 	S_LOCK(table);
 
@@ -1949,13 +1952,13 @@ CharSet conv_get_locale_charset(void)
 	const gchar *cur_locale;
 	const gchar *p;
 #if !defined(G_OS_WIN32) && !defined(__APPLE__)
-	gint i;
+	size_t i;
 #endif
 	S_LOCK_DEFINE_STATIC(cur_charset);
 
 	S_LOCK(cur_charset);
 
-	if (cur_charset != -1) {
+	if ((int) cur_charset != -1) {
 		S_UNLOCK(cur_charset);
 		return cur_charset;
 	}
@@ -2055,12 +2058,12 @@ CharSet conv_get_outgoing_charset(void)
 	static CharSet out_charset = -1;
 	const gchar *cur_locale;
 	const gchar *p;
-	gint i;
+	size_t i;
 	S_LOCK_DEFINE_STATIC(out_charset);
 
 	S_LOCK(out_charset);
 
-	if (out_charset != -1) {
+	if ((int) out_charset != -1) {
 		S_UNLOCK(out_charset);
 		return out_charset;
 	}
@@ -2266,9 +2269,9 @@ void conv_encode_header(gchar *dest, gint len, const gchar *src,
 			const gchar *out_encoding)
 {
 	const gchar *src_encoding;
-	gint mimestr_len;
+	size_t mimestr_len;
 	gchar *mimesep_enc;
-	gint left;
+	size_t left;
 	const gchar *srcp = src;
 	gchar *destp = dest;
 	gboolean use_base64;
@@ -2309,7 +2312,7 @@ void conv_encode_header(gchar *dest, gint len, const gchar *src,
 
 		/* output as it is if the next word is ASCII string */
 		if (!is_next_nonascii(srcp)) {
-			gint word_len;
+			size_t word_len;
 
 			word_len = get_next_word_len(srcp);
 			LBREAK_IF_REQUIRED(left < word_len, TRUE);
@@ -2495,7 +2498,7 @@ static gchar *encode_rfc2231_filename(const gchar *str)
 gchar *conv_encode_filename(const gchar *src, const gchar *param_name,
 			    const gchar *out_encoding)
 {
-	gint name_len, max_linelen;
+	size_t name_len, max_linelen;
 	gchar *out_str, *enc_str;
 	gchar cur_param[80];
 	GString *string;
@@ -2722,7 +2725,7 @@ CharSet conv_check_file_encoding(const gchar *file)
 	if ((size = fread(buf, 2, BUFFSIZE / 2, fp)) > 0) {
 		CharSet guess_enc = C_AUTO;
 
-		debug_print("conv_check_file_encoding: check first %d bytes of file %s\n", size * 2, file);
+		debug_print("conv_check_file_encoding: check first %zd bytes of file %s\n", size * 2, file);
 
 		/* BOM check */
 		if ((buf[0] & 0xff) == 0xfe && (buf[1] & 0xff) == 0xff) {
@@ -2739,7 +2742,7 @@ CharSet conv_check_file_encoding(const gchar *file)
 
 		/* search UTF-16 CR/LF */
 		if (memchr(buf, 0x00, size * 2) != NULL) {
-			gint i;
+			size_t i;
 			guchar c1, c2;
 
 			for (i = 0; i < size; i++) {

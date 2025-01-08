@@ -51,6 +51,10 @@ typedef gint (*SSLVerifyFunc)		(SockInfo	*sockinfo,
 					 X509		*server_cert,
 					 glong		 verify_result);
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void ssl_init				(void);
 void ssl_done				(void);
 gboolean ssl_init_socket		(SockInfo	*sockinfo);
@@ -59,6 +63,10 @@ gboolean ssl_init_socket_with_method	(SockInfo	*sockinfo,
 void ssl_done_socket			(SockInfo	*sockinfo);
 
 void ssl_set_verify_func		(SSLVerifyFunc	 func);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* USE_SSL */
 

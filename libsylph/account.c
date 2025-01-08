@@ -276,7 +276,7 @@ gboolean account_address_exist(const gchar *address)
 		}
 	}
 
-	return (gboolean)g_hash_table_lookup(address_table, address);
+	return g_hash_table_lookup(address_table, address) != NULL;
 }
 
 void account_foreach(AccountFunc func, gpointer user_data)
@@ -486,6 +486,5 @@ void account_updated(void)
 		address_table = NULL;
 	}
 
-	if (syl_app_get())
-		g_signal_emit_by_name(syl_app_get(), "account-updated");
+	APP_EMIT("account-updated");
 }

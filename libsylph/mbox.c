@@ -192,7 +192,7 @@ gint proc_mbox_full(FolderItem *dest, const gchar *mbox,
 				} else if (!strncmp(buf, "From ", 5)) {
 					continue;
 				} else if (!strncmp(buf, ">From ", 6)) {
-					g_memmove(buf, buf + 1, strlen(buf));
+					memmove(buf, buf + 1, strlen(buf));
 					is_next_msg = TRUE;
 					break;
 				} else {

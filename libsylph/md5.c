@@ -124,10 +124,10 @@ MD5Update(struct MD5Context *ctx, guint8 const *buf, guint len)
       t = 64 - t;
       if (len < t) 
         {
-          g_memmove(p, buf, len);
+          memmove(p, buf, len);
           return;
 	}
-      g_memmove(p, buf, t);
+      memmove(p, buf, t);
       if (ctx->doByteReverse)
         byteReverse(ctx->in, 16);
       MD5Transform(ctx->buf, (guint32 *) ctx->in);
@@ -138,7 +138,7 @@ MD5Update(struct MD5Context *ctx, guint8 const *buf, guint len)
 
   while (len >= 64) 
     {
-      g_memmove(ctx->in, buf, 64);
+      memmove(ctx->in, buf, 64);
       if (ctx->doByteReverse)
         byteReverse(ctx->in, 16);
       MD5Transform(ctx->buf, (guint32 *) ctx->in);
@@ -148,7 +148,7 @@ MD5Update(struct MD5Context *ctx, guint8 const *buf, guint len)
 
   /* Handle any remaining bytes of data. */
 
-  g_memmove(ctx->in, buf, len);
+  memmove(ctx->in, buf, len);
 }
 
 /*
@@ -199,7 +199,7 @@ MD5Final(guint8 digest[16], struct MD5Context *ctx)
   MD5Transform(ctx->buf, (guint32 *) ctx->in);
   if (ctx->doByteReverse)
     byteReverse((guint8 *) ctx->buf, 4);
-  g_memmove(digest, ctx->buf, 16);
+  memmove(digest, ctx->buf, 16);
   memset(ctx, 0, sizeof(*ctx));	/* In case it's sensitive */
 }
 

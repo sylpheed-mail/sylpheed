@@ -97,7 +97,7 @@ void session_init(Session *session)
 	session->state = SESSION_READY;
 	session->last_access_time = time(NULL);
 
-	g_get_current_time(&session->tv_prev);
+	session->tv_prev = g_get_real_time();
 
 	session->conn_id = 0;
 
@@ -336,7 +336,7 @@ gboolean session_is_connected(Session *session)
 		session->state == SESSION_RECV);
 }
 
-SessionErrorValue session_get_error(Session *session)
+SessionErrorValue session_get_error(const Session *session)
 {
 	SessionPrivData *priv;
 
@@ -396,17 +396,11 @@ static gboolean session_ping_cb(gpointer data)
 		return FALSE;
 
 	if (session->io_tag > 0 && sock && sock->callback) {
-		GTimeVal tv_cur, tv_result;
+		gint64 tv_cur, tv_result;
 
-		g_get_current_time(&tv_cur);
-		tv_result.tv_sec = tv_cur.tv_sec - session->tv_prev.tv_sec;
-		tv_result.tv_usec = tv_cur.tv_usec - session->tv_prev.tv_usec;
-		if (tv_result.tv_usec < 0) {
-			tv_result.tv_sec--;
-			tv_result.tv_usec += G_USEC_PER_SEC;
-		}
-		if (tv_result.tv_sec * G_USEC_PER_SEC + tv_result.tv_usec >
-		    G_USEC_PER_SEC) {
+		tv_cur = g_get_real_time();
+		tv_result = tv_cur - session->tv_prev;
+		if (tv_result > G_USEC_PER_SEC) {
 			SockFlags save_flags;
 
 			debug_print("state machine freeze for 1 second detected, forcing dispatch.\n");
@@ -599,7 +593,7 @@ gint session_send_data(Session *session, FILE *data_fp, guint size)
 	session->write_data_fp = data_fp;
 	session->write_data_pos = 0;
 	session->write_data_len = size;
-	g_get_current_time(&session->tv_prev);
+	session->tv_prev = g_get_real_time();
 
 #ifdef G_OS_WIN32
 	sock_set_nonblocking_mode(session->sock, FALSE);
@@ -632,7 +626,7 @@ gint session_recv_data(Session *session, guint size, const gchar *terminator)
 
 	g_free(session->read_data_terminator);
 	session->read_data_terminator = g_strdup(terminator);
-	g_get_current_time(&session->tv_prev);
+	session->tv_prev = g_get_real_time();
 
 	if (session->read_buf_len > 0)
 		session->idle_tag = g_idle_add(session_recv_data_idle_cb,
@@ -675,7 +669,7 @@ gint session_recv_data_as_file(Session *session, guint size,
 
 	g_free(session->read_data_terminator);
 	session->read_data_terminator = g_strdup(terminator);
-	g_get_current_time(&session->tv_prev);
+	session->tv_prev = g_get_real_time();
 
 	session->read_data_fp = my_tmpfile();
 	if (!session->read_data_fp) {
@@ -880,17 +874,15 @@ static gboolean session_read_data_cb(SockInfo *source, GIOCondition condition,
 
 	/* incomplete read */
 	if (!complete) {
-		GTimeVal tv_cur;
+		gint64 tv_cur;
 
-		g_get_current_time(&tv_cur);
-		if (tv_cur.tv_sec - session->tv_prev.tv_sec > 0 ||
-		    tv_cur.tv_usec - session->tv_prev.tv_usec >
-		    UI_REFRESH_INTERVAL) {
+		tv_cur = g_get_real_time();
+		if (tv_cur - session->tv_prev > UI_REFRESH_INTERVAL) {
 			if (session->recv_data_progressive_notify)
 				session->recv_data_progressive_notify
 					(session, data_buf->len, 0,
 					 session->recv_data_progressive_notify_data);
-			g_get_current_time(&session->tv_prev);
+			session->tv_prev = g_get_real_time();
 		}
 		return TRUE;
 	}
@@ -1004,11 +996,11 @@ static gboolean session_read_data_as_file_cb(SockInfo *source,
 
 	/* incomplete read */
 	if (!complete) {
-		GTimeVal tv_cur;
+		gint64 tv_cur;
 
 		if (buf_data_len <= PREREAD_SIZE) {
 			if (data_begin_p > session->read_buf) {
-				g_memmove(session->read_buf, data_begin_p,
+				memmove(session->read_buf, data_begin_p,
 					  buf_data_len);
 				data_begin_p = session->read_buf;
 				session->read_buf_p = session->read_buf +
@@ -1039,21 +1031,19 @@ static gboolean session_read_data_as_file_cb(SockInfo *source,
 		}
 		session->read_data_pos += write_len;
 
-		g_memmove(session->read_buf, data_begin_p + write_len,
+		memmove(session->read_buf, data_begin_p + write_len,
 			  PREREAD_SIZE);
 		session->read_buf_p = session->read_buf + PREREAD_SIZE;
 		session->preread_len = PREREAD_SIZE;
 		session->read_buf_len = 0;
 
-		g_get_current_time(&tv_cur);
-		if (tv_cur.tv_sec - session->tv_prev.tv_sec > 0 ||
-		    tv_cur.tv_usec - session->tv_prev.tv_usec >
-		    UI_REFRESH_INTERVAL) {
+		tv_cur = g_get_real_time();
+		if (tv_cur - session->tv_prev > UI_REFRESH_INTERVAL) {
 			if (session->recv_data_progressive_notify)
 				session->recv_data_progressive_notify
 					(session, session->read_data_pos, 0,
 					 session->recv_data_progressive_notify_data);
-			g_get_current_time(&session->tv_prev);
+			session->tv_prev = g_get_real_time();
 		}
 
 		return TRUE;
@@ -1283,12 +1273,10 @@ static gboolean session_write_data_cb(SockInfo *source,
 			priv->error_val = SESSION_ERROR_IO;
 		return FALSE;
 	} else if (ret > 0) {
-		GTimeVal tv_cur;
+		gint64 tv_cur;
 
-		g_get_current_time(&tv_cur);
-		if (tv_cur.tv_sec - session->tv_prev.tv_sec > 0 ||
-		    tv_cur.tv_usec - session->tv_prev.tv_usec >
-		    UI_REFRESH_INTERVAL) {
+		tv_cur = g_get_real_time();
+		if (tv_cur - session->tv_prev > UI_REFRESH_INTERVAL) {
 			session_set_timeout(session, session->timeout_interval);
 			if (session->send_data_progressive_notify)
 				session->send_data_progressive_notify
@@ -1296,7 +1284,7 @@ static gboolean session_write_data_cb(SockInfo *source,
 					 session->write_data_pos,
 					 write_data_len,
 					 session->send_data_progressive_notify_data);
-			g_get_current_time(&session->tv_prev);
+			session->tv_prev = g_get_real_time();
 		}
 		return TRUE;
 	}

@@ -118,7 +118,7 @@ struct _Session
 	SessionState state;
 
 	stime_t last_access_time;
-	GTimeVal tv_prev;
+	gint64 tv_prev;
 
 	gint conn_id;
 
@@ -189,6 +189,10 @@ struct _Session
 	gpointer send_data_notify_data;
 };
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void session_init		(Session	*session);
 gint session_connect		(Session	*session,
 				 const gchar	*server,
@@ -201,7 +205,7 @@ gint session_disconnect		(Session	*session);
 void session_destroy		(Session	*session);
 gboolean session_is_connected	(Session	*session);
 
-SessionErrorValue session_get_error	(Session	*session);
+SessionErrorValue session_get_error	(const Session	*session);
 
 void session_set_access_time	(Session	*session);
 
@@ -244,5 +248,9 @@ gint session_recv_data	(Session	*session,
 gint session_recv_data_as_file	(Session	*session,
 				 guint		 size,
 				 const gchar	*terminator);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __SESSION_H__ */

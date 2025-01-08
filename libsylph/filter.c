@@ -191,7 +191,7 @@ gint filter_action_exec(FilterRule *rule, MsgInfo *msginfo, const gchar *file,
 			debug_print("filter_action_exec(): mark as read\n");
 			if (msginfo->folder) {
 				if (MSG_IS_NEW(fltinfo->flags))
-					msginfo->folder->new--;
+					msginfo->folder->new_count--;
 				if (MSG_IS_UNREAD(fltinfo->flags))
 					msginfo->folder->unread--;
 			}
@@ -566,10 +566,10 @@ static gboolean filter_match_cond(FilterCond *cond, MsgInfo *msginfo,
 			debug_print("filter-log: %s: CMD_TEST, str_value: [%s]%s\n", G_STRFUNC, sv, nm);
 			break;
 		case FLT_COND_SIZE_GREATER:
-			debug_print("filter-log: %s: SIZE_GREATER: %u %s %d (KB)%s\n", G_STRFUNC, msginfo->size, not_match ? "<=" : ">", cond->int_value, nm);
+			debug_print("filter-log: %s: SIZE_GREATER: %" G_GSIZE_FORMAT " %s %d (KB)%s\n", G_STRFUNC, msginfo->size, not_match ? "<=" : ">", cond->int_value, nm);
 			break;
 		case FLT_COND_AGE_GREATER:
-			debug_print("filter-log: %s: AGE_GREATER: %lld (sec) %s %d (day)%s\n", G_STRFUNC, timediff, not_match ? "<=" : ">", cond->int_value, nm);
+			debug_print("filter-log: %s: AGE_GREATER: %" G_GINT64_FORMAT " (sec) %s %d (day)%s\n", G_STRFUNC, timediff, not_match ? "<=" : ">", cond->int_value, nm);
 			break;
 		case FLT_COND_UNREAD:
 			debug_print("filter-log: %s: UNREAD%s\n", G_STRFUNC, nm);

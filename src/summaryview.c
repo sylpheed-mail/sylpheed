@@ -2279,7 +2279,7 @@ static void summary_status_show(SummaryView *summaryview)
 	gtk_label_set(GTK_LABEL(summaryview->statlabel_select), str->str);
 	g_string_truncate(str, 0);
 
-	new = summaryview->folder_item->new;
+	new = summaryview->folder_item->new_count;
 	unread = summaryview->folder_item->unread;
 	total = summaryview->folder_item->total;
 	total_size = summaryview->total_size;
@@ -3117,8 +3117,8 @@ static void summary_mark_row_as_read(SummaryView *summaryview,
 	GET_MSG_INFO(msginfo, iter);
 
 	if (MSG_IS_NEW(msginfo->flags)) {
-		if (summaryview->folder_item->new > 0)
-			summaryview->folder_item->new--;
+		if (summaryview->folder_item->new_count > 0)
+			summaryview->folder_item->new_count--;
 		if (summaryview->on_filter && summaryview->flt_new > 0)
 			summaryview->flt_new--;
 		inc_block_notify(TRUE);
@@ -3131,8 +3131,8 @@ static void summary_mark_row_as_read(SummaryView *summaryview,
 	}
 
 	if (summaryview->folder_item->stype == F_VIRTUAL) {
-		if (MSG_IS_NEW(msginfo->flags) && msginfo->folder->new > 0)
-			msginfo->folder->new--;
+		if (MSG_IS_NEW(msginfo->flags) && msginfo->folder->new_count > 0)
+			msginfo->folder->new_count--;
 		if (MSG_IS_UNREAD(msginfo->flags) &&
 		    msginfo->folder->unread > 0)
 			msginfo->folder->unread--;

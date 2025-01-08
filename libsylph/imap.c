@@ -35,6 +35,9 @@
 #if HAVE_ICONV
 #  include <iconv.h>
 #endif
+#ifndef ICONV_CONST
+#define ICONV_CONST
+#endif
 
 #include "sylmain.h"
 #include "imap.h"
@@ -127,9 +130,6 @@ static gint imap_session_reconnect	(IMAPSession	*session);
 static void imap_session_destroy	(Session	*session);
 /* static void imap_session_destroy_all	(void); */
 
-static gint imap_search_flags		(IMAPSession	*session,
-					 GArray	       **uids,
-					 GHashTable    **flags_table);
 static gint imap_fetch_flags		(IMAPSession	*session,
 					 GArray	       **uids,
 					 GHashTable    **flags_table);
@@ -374,9 +374,6 @@ static gint imap_cmd_subscribe	(IMAPSession	*session,
 				 const gchar	*folder);
 static gint imap_cmd_envelope	(IMAPSession	*session,
 				 const gchar	*seq_set);
-static gint imap_cmd_search	(IMAPSession	*session,
-				 const gchar	*criteria,
-				 GArray        **result);
 static gint imap_cmd_fetch	(IMAPSession	*session,
 				 guint32	 uid,
 				 const gchar	*filename);
@@ -429,8 +426,6 @@ static GSList *imap_get_seq_set_from_msglist	(GSList		*msglist,
 						 gint		 limit);
 static gint imap_seq_set_get_count		(const gchar	*seq_set);
 static void imap_seq_set_free			(GSList		*seq_list);
-
-static GHashTable *imap_get_uid_table		(GArray		*array);
 
 static gboolean imap_rename_folder_func		(GNode		*node,
 						 gpointer	 data);
@@ -834,6 +829,30 @@ static void imap_session_destroy_all(void)
 
 #define THROW goto catch
 
+#if 0
+static gint imap_cmd_search	(IMAPSession	*session,
+				 const gchar	*criteria,
+				 GArray        **result);
+
+static GHashTable *imap_get_uid_table(GArray *array)
+{
+	GHashTable *table;
+	gint i;
+	guint32 uid;
+
+	g_return_val_if_fail(array != NULL, NULL);
+
+	table = g_hash_table_new(NULL, g_direct_equal);
+
+	for (i = 0; i < array->len; i++) {
+		uid = g_array_index(array, guint32, i);
+		g_hash_table_insert(table, GUINT_TO_POINTER(uid),
+				    GINT_TO_POINTER(i + 1));
+	}
+
+	return table;
+}
+
 static gint imap_search_flags(IMAPSession *session, GArray **uids,
 			      GHashTable **flags_table)
 {
@@ -895,6 +914,7 @@ static gint imap_search_flags(IMAPSession *session, GArray **uids,
 
 	return IMAP_SUCCESS;
 }
+#endif
 
 static gint imap_fetch_flags(IMAPSession *session, GArray **uids,
 			     GHashTable **flags_table)
@@ -1005,7 +1025,7 @@ static GSList *imap_get_msg_list_full(Folder *folder, FolderItem *item,
 	g_return_val_if_fail(FOLDER_TYPE(folder) == F_IMAP, NULL);
 	g_return_val_if_fail(folder->account != NULL, NULL);
 
-	item->new = item->unread = item->total = 0;
+	item->new_count = item->unread = item->total = 0;
 
 	session = imap_session_get(folder);
 
@@ -1038,7 +1058,6 @@ static GSList *imap_get_msg_list_full(Folder *folder, FolderItem *item,
 		GArray *uids;
 		GHashTable *msg_table;
 		GHashTable *flags_table;
-		guint32 cache_last;
 		guint32 begin = 0;
 		GSList *cur, *next = NULL;
 		MsgInfo *msginfo;
@@ -1048,7 +1067,7 @@ static GSList *imap_get_msg_list_full(Folder *folder, FolderItem *item,
 		/* get cache data */
 		mlist = procmsg_read_cache(item, FALSE);
 		procmsg_set_flags(mlist, item);
-		cache_last = procmsg_get_last_num_in_msg_list(mlist);
+		//cache_last = procmsg_get_last_num_in_msg_list(mlist);
 
 		/* get all UID list and flags */
 #if 0
@@ -1087,7 +1106,7 @@ static GSList *imap_get_msg_list_full(Folder *folder, FolderItem *item,
 				imap_delete_cached_message
 					(item, msginfo->msgnum);
 				if (MSG_IS_NEW(msginfo->flags))
-					item->new--;
+					item->new_count--;
 				if (MSG_IS_UNREAD(msginfo->flags))
 					item->unread--;
 				item->total--;
@@ -1107,7 +1126,7 @@ static GSList *imap_get_msg_list_full(Folder *folder, FolderItem *item,
 				}
 			} else {
 				if (MSG_IS_NEW(msginfo->flags)) {
-					item->new--;
+					item->new_count--;
 					item->mark_dirty = TRUE;
 				}
 				if (MSG_IS_UNREAD(msginfo->flags)) {
@@ -1373,7 +1392,7 @@ static gint imap_add_msgs(Folder *folder, FolderItem *dest, GSList *file_list,
 	gint count = 1;
 	gint total;
 	gint ok;
-	GTimeVal tv_prev, tv_cur;
+	gint64 tv_prev, tv_cur;
 
 	g_return_val_if_fail(folder != NULL, -1);
 	g_return_val_if_fail(dest != NULL, -1);
@@ -1382,7 +1401,7 @@ static gint imap_add_msgs(Folder *folder, FolderItem *dest, GSList *file_list,
 	session = imap_session_get(folder);
 	if (!session) return -1;
 
-	g_get_current_time(&tv_prev);
+	tv_prev = g_get_real_time();
 	ui_update();
 
 	ok = imap_status(session, IMAP_FOLDER(folder), dest->path,
@@ -1421,10 +1440,8 @@ static gint imap_add_msgs(Folder *folder, FolderItem *dest, GSList *file_list,
 		    dest->stype == F_DRAFT)
 			iflags |= IMAP_FLAG_SEEN;
 
-		g_get_current_time(&tv_cur);
-		if (tv_cur.tv_sec > tv_prev.tv_sec ||
-		    tv_cur.tv_usec - tv_prev.tv_usec >
-		    PROGRESS_UPDATE_INTERVAL * 1000) {
+		tv_cur = g_get_real_time();
+		if (tv_cur - tv_prev > PROGRESS_UPDATE_INTERVAL * 1000) {
 			status_print(_("Appending messages to %s (%d / %d)"),
 				     dest->path, count, total);
 			progress_show(count, total);
@@ -1443,8 +1460,7 @@ static gint imap_add_msgs(Folder *folder, FolderItem *dest, GSList *file_list,
 			return -1;
 		}
 
-		if (syl_app_get())
-			g_signal_emit_by_name(syl_app_get(), "add-msg", dest, fileinfo->file, new_uid);
+		APP_EMITA("add-msg", dest, fileinfo->file, new_uid);
 
 		if (!session->uidplus)
 			last_uid++;
@@ -1582,12 +1598,11 @@ static gint imap_do_copy_msgs(Folder *folder, FolderItem *dest, GSList *msglist,
 	for (cur = msglist; cur != NULL; cur = cur->next) {
 		msginfo = (MsgInfo *)cur->data;
 
-		if (syl_app_get())
-			g_signal_emit_by_name(syl_app_get(), "add-msg", dest, NULL, 0);
+		APP_EMITA("add-msg", dest, NULL, 0);
 
 		dest->total++;
 		if (MSG_IS_NEW(msginfo->flags))
-			dest->new++;
+			dest->new_count++;
 		if (MSG_IS_UNREAD(msginfo->flags))
 			dest->unread++;
 	}
@@ -1768,14 +1783,13 @@ static gint imap_remove_msgs(Folder *folder, FolderItem *item, GSList *msglist)
 		MsgInfo *msginfo = (MsgInfo *)cur->data;
 		guint32 uid = msginfo->msgnum;
 
-		if (syl_app_get())
-			g_signal_emit_by_name(syl_app_get(), "remove-msg", item, NULL, uid);
+		APP_EMITA("remove-msg", item, NULL, uid);
 
 		if (dir_exist)
 			remove_numbered_files(dir, uid, uid);
 		item->total--;
 		if (MSG_IS_NEW(msginfo->flags))
-			item->new--;
+			item->new_count--;
 		if (MSG_IS_UNREAD(msginfo->flags))
 			item->unread--;
 		MSG_SET_TMP_FLAGS(msginfo->flags, MSG_INVALID);
@@ -1822,10 +1836,9 @@ static gint imap_remove_all_msg(Folder *folder, FolderItem *item)
 		return ok;
 	}
 
-	if (syl_app_get())
-		g_signal_emit_by_name(syl_app_get(), "remove-all-msg", item);
+	APP_EMITA("remove-all-msg", item);
 
-	item->new = item->unread = item->total = 0;
+	item->new_count = item->unread = item->total = 0;
 	item->updated = TRUE;
 
 	dir = folder_item_get_path(item);
@@ -1890,7 +1903,7 @@ static gint imap_scan_folder(Folder *folder, FolderItem *item)
 			 &messages, &recent, &uid_next, &uid_validity, &unseen);
 	if (ok != IMAP_SUCCESS) return -1;
 
-	item->new = unseen > 0 ? recent : 0;
+	item->new_count = unseen > 0 ? recent : 0;
 	item->unread = unseen;
 	item->total = messages;
 	item->last_num = (messages > 0 && uid_next > 0) ? uid_next - 1 : 0;
@@ -2015,7 +2028,7 @@ static gint imap_scan_tree_recursive(IMAPSession *session, FolderItem *item,
 			old_item->no_sub = new_item->no_sub;
 			old_item->no_select = new_item->no_select;
 			if (old_item->no_select == TRUE)
-				old_item->new = old_item->unread =
+				old_item->new_count = old_item->unread =
 					old_item->total = 0;
 			if (old_item->no_sub == TRUE && node->children) {
 				debug_print("folder '%s' doesn't have "
@@ -2596,7 +2609,7 @@ static gint imap_rename_folder_real(Folder *folder, FolderItem *item,
 		if (strchr(item->path, '/')) {
 			gchar *dirpath;
 
-			dirpath = g_dirname(item->path);
+			dirpath = g_path_get_dirname(item->path);
 			newpath = g_strconcat(dirpath, "/", name, NULL);
 			g_free(dirpath);
 		} else
@@ -2649,9 +2662,7 @@ static gint imap_rename_folder_real(Folder *folder, FolderItem *item,
 	g_free(real_newpath);
 
 	new_id = folder_item_get_identifier(item);
-	if (syl_app_get())
-		g_signal_emit_by_name(syl_app_get(), "move-folder", item,
-				      old_id, new_id);
+	APP_EMITA("move-folder", item, old_id, new_id);
 	g_free(new_id);
 	g_free(old_id);
 
@@ -2708,8 +2719,7 @@ static gint imap_remove_folder(Folder *folder, FolderItem *item)
 		g_warning("can't remove directory '%s'\n", cache_dir);
 	g_free(cache_dir);
 
-	if (syl_app_get())
-		g_signal_emit_by_name(syl_app_get(), "remove-folder", item);
+	APP_EMITA("remove-folder", item);
 	folder_item_remove(item);
 
 	return 0;
@@ -2743,13 +2753,13 @@ static gint imap_get_uncached_messages_func(IMAPSession *session, gpointer data)
 	GString *str;
 	MsgInfo *msginfo;
 	gint count = 1;
-	GTimeVal tv_prev, tv_cur;
+	gint64 tv_prev, tv_cur;
 	IMAPGetData *get_data = (IMAPGetData *)data;
 	FolderItem *item = get_data->item;
 	gint exists = get_data->exists;
 	gboolean update_count = get_data->update_count;
 
-	g_get_current_time(&tv_prev);
+	tv_prev = g_get_real_time();
 #ifndef USE_THREADS
 	ui_update();
 #endif
@@ -2762,10 +2772,8 @@ static gint imap_get_uncached_messages_func(IMAPSession *session, gpointer data)
 
 	for (;;) {
 		if (exists > 0 && count <= exists) {
-			g_get_current_time(&tv_cur);
-			if (tv_cur.tv_sec > tv_prev.tv_sec ||
-			    tv_cur.tv_usec - tv_prev.tv_usec >
-			    PROGRESS_UPDATE_INTERVAL * 1000) {
+			tv_cur = g_get_real_time();
+			if (tv_cur - tv_prev > PROGRESS_UPDATE_INTERVAL * 1000) {
 #if USE_THREADS
 				((IMAPRealSession *)session)->prog_count = count;
 				g_main_context_wakeup(NULL);
@@ -2805,7 +2813,7 @@ static gint imap_get_uncached_messages_func(IMAPSession *session, gpointer data)
 		}
 		if (update_count) {
 			if (MSG_IS_NEW(msginfo->flags))
-				item->new++;
+				item->new_count++;
 			if (MSG_IS_UNREAD(msginfo->flags))
 				item->unread++;
 		}
@@ -2843,7 +2851,6 @@ static GSList *imap_get_uncached_messages(IMAPSession *session,
 {
 	IMAPGetData get_data = {item, exists, update_count, NULL};
 	gchar seq_set[22];
-	gint ok;
 
 	g_return_val_if_fail(session != NULL, NULL);
 	g_return_val_if_fail(item != NULL, NULL);
@@ -2862,11 +2869,11 @@ static GSList *imap_get_uncached_messages(IMAPSession *session,
 	}
 
 #if USE_THREADS
-	ok = imap_thread_run_progress(session, imap_get_uncached_messages_func,
+	imap_thread_run_progress(session, imap_get_uncached_messages_func,
 				      imap_get_uncached_messages_progress_func,
 				      &get_data);
 #else
-	ok = imap_get_uncached_messages_func(session, &get_data);
+	imap_get_uncached_messages_func(session, &get_data);
 #endif
 
 	progress_show(0, 0);
@@ -3400,7 +3407,7 @@ static MsgInfo *imap_parse_envelope(IMAPSession *session, FolderItem *item,
 	gchar buf[IMAPBUFSIZE];
 	MsgInfo *msginfo = NULL;
 	gchar *cur_pos;
-	gint msgnum;
+	//gint msgnum;
 	guint32 uid = 0;
 	size_t size = 0;
 	MsgFlags flags = {0, 0}, imap_flags = {0, 0};
@@ -3429,7 +3436,7 @@ static MsgInfo *imap_parse_envelope(IMAPSession *session, FolderItem *item,
 }
 
 	PARSE_ONE_ELEMENT(' ');
-	msgnum = atoi(buf);
+	//msgnum = atoi(buf);
 
 	PARSE_ONE_ELEMENT(' ');
 	g_return_val_if_fail(!strcmp(buf, "FETCH"), NULL);
@@ -3841,7 +3848,6 @@ static gint imap_cmd_auth_oauth2(IMAPSession *session, const gchar *user,
                                  const gchar *pass)
 {
 	PrefsAccount *account;
-	gchar *p;
 	gchar *response64;
 	gint ok;
 
@@ -4195,6 +4201,7 @@ static gint imap_cmd_subscribe(IMAPSession *session, const gchar *folder)
 
 #define THROW(err) { ok = err; goto catch; }
 
+#if 0
 static gint imap_cmd_search(IMAPSession *session, const gchar *criteria,
 			    GArray **result)
 {
@@ -4241,6 +4248,7 @@ catch:
 
 	return ok;
 }
+#endif
 
 typedef struct _IMAPCmdFetchData
 {
@@ -4633,7 +4641,6 @@ static gint imap_cmd_ok(IMAPSession *session, GPtrArray *argbuf)
 
 static gint imap_cmd_gen_send(IMAPSession *session, const gchar *format, ...)
 {
-	IMAPRealSession *real = (IMAPRealSession *)session;
 	gchar buf[IMAPBUFSIZE];
 	gchar tmp[IMAPBUFSIZE];
 	gchar *p;
@@ -4644,7 +4651,7 @@ static gint imap_cmd_gen_send(IMAPSession *session, const gchar *format, ...)
 	va_end(args);
 
 #if USE_THREADS
-	if (real->is_running) {
+	if (((IMAPRealSession *)session)->is_running) {
 		g_warning("imap_cmd_gen_send: cannot send command because another command is already running.");
 		return IMAP_EAGAIN;
 	}
@@ -5010,9 +5017,9 @@ static GSList *imap_get_seq_set_from_msglist(GSList *msglist, gint limit)
 			if (str->len > 0)
 				g_string_append_c(str, ',');
 			if (first == last)
-				g_string_sprintfa(str, "%u", first);
+				g_string_append_printf(str, "%u", first);
 			else
-				g_string_sprintfa(str, "%u:%u", first, last);
+				g_string_append_printf(str, "%u:%u", first, last);
 
 			first = next;
 
@@ -5027,9 +5034,9 @@ static GSList *imap_get_seq_set_from_msglist(GSList *msglist, gint limit)
 			if (str->len > 0)
 				g_string_append_c(str, ',');
 			if (first == last)
-				g_string_sprintfa(str, "%u", first);
+				g_string_append_printf(str, "%u", first);
 			else
-				g_string_sprintfa(str, "%u:%u", first, last);
+				g_string_append_printf(str, "%u:%u", first, last);
 
 			first = next;
 
@@ -5087,25 +5094,6 @@ static void imap_seq_set_free(GSList *seq_list)
 {
 	slist_free_strings(seq_list);
 	g_slist_free(seq_list);
-}
-
-static GHashTable *imap_get_uid_table(GArray *array)
-{
-	GHashTable *table;
-	gint i;
-	guint32 uid;
-
-	g_return_val_if_fail(array != NULL, NULL);
-
-	table = g_hash_table_new(NULL, g_direct_equal);
-
-	for (i = 0; i < array->len; i++) {
-		uid = g_array_index(array, guint32, i);
-		g_hash_table_insert(table, GUINT_TO_POINTER(uid),
-				    GINT_TO_POINTER(i + 1));
-	}
-
-	return table;
 }
 
 static gboolean imap_rename_folder_func(GNode *node, gpointer data)
