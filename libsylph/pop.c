@@ -226,8 +226,7 @@ gint pop3_getauth_auth_data_send(Pop3Session *session)
 
 	session->state = POP3_GETAUTH_AUTH_DATA;
 
-	if (!ac->token)
-		oauth2_get_token(session->user, &ac->token, NULL, NULL);
+	oauth2_get_token(session->user, &ac->token, &ac->expires_at);
 	if (!ac->token) {
 		log_warning("Could not get OAuth2 token.\n");
 		session->error_val = PS_AUTHFAIL;

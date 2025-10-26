@@ -193,8 +193,7 @@ struct _PrefsAccount
 
 	/* OAuth2 token */
 	gchar *token;
-	gchar *refresh_token;
-	gint token_expire;
+	time_t expires_at;
 };
 
 PrefsAccount *prefs_account_new		(void);

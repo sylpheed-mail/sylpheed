@@ -3846,15 +3846,14 @@ static gint imap_cmd_auth_oauth2(IMAPSession *session, const gchar *user,
 	gint ok;
 
 	account = (PrefsAccount *)(SESSION(session)->data);
-	if (!account->token)
-		oauth2_get_token(user, &account->token, NULL, NULL);
+	oauth2_get_token(user, &account->token, &account->expires_at);
 	if (!account->token) {
 		log_warning("Could not get OAuth2 token.\n");
 		return IMAP_AUTHFAIL;
 	}
 
 	response64 = oauth2_get_sasl_xoauth2(user, account->token);
-	log_print("IMAP4> %s\n", response64);
+	log_print("IMAP4> <sasl xoauth2 ********>\n");
 	sock_puts(SESSION(session)->sock, response64);
 	ok = imap_cmd_ok(session, NULL);
 	if (ok != IMAP_SUCCESS) {

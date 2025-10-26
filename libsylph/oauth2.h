@@ -28,8 +28,7 @@
 
 gint oauth2_get_token		(const gchar	 *user,
 				 gchar		**token,
-				 gchar		**r_token,
-				 gint		 *expire);
+				 time_t          *expires_at);
 gchar *oauth2_get_sasl_xoauth2	(const gchar	 *user,
 				 const gchar	 *token);
 

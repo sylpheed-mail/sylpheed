@@ -245,9 +245,8 @@ static gint smtp_auth_recv(SMTPSession *session, const gchar *msg)
 		if (!strncmp(msg, "334 ", 4)) {
 			gchar *response64;
 			PrefsAccount *ac = (PrefsAccount *)SESSION(session)->data;
-			if (ac && !ac->token)
-				oauth2_get_token(session->user, &ac->token, NULL, NULL);
-			if (!ac || !ac->token) {
+			oauth2_get_token(session->user, &ac->token, &ac->expires_at);
+			if (!ac->token) {
 				log_warning("Could not get OAuth2 token.\n");
 				session_send_msg(SESSION(session), SESSION_MSG_NORMAL, "*");
 				log_print("ESMTP> *\n");
@@ -257,7 +256,7 @@ static gint smtp_auth_recv(SMTPSession *session, const gchar *msg)
 			response64 = oauth2_get_sasl_xoauth2(session->user, ac->token);
 			session_send_msg(SESSION(session), SESSION_MSG_NORMAL,
 					 response64);
-			log_print("ESMTP> %s\n", response64);
+			log_print("ESMTP> <sasl xoauth2 ********>\n");
 			g_free(response64);
 		}
 		break;
