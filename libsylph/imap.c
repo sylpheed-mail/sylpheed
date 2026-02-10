@@ -2781,6 +2781,7 @@ static gint imap_get_uncached_messages_func(IMAPSession *session, gpointer data)
 		if (sock_getline(SESSION(session)->sock, &tmp) < 0) {
 			log_warning(_("error occurred while getting envelope.\n"));
 			g_string_free(str, TRUE);
+			get_data->newlist = newlist;
 			return IMAP_SOCKET;
 		}
 		strretchomp(tmp);

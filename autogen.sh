@@ -1,7 +1,7 @@
 #!/bin/sh
 
-ACLOCAL=aclocal-1.15
-AUTOMAKE=automake-1.15
+ACLOCAL=aclocal-1.17
+AUTOMAKE=automake-1.17
 
 $ACLOCAL -I ac \
   && libtoolize --force --copy \

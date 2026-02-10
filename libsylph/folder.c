@@ -1291,7 +1291,7 @@ gint folder_item_fetch_all_msg(FolderItem *item)
 		gchar *msg;
 
 		num++;
-		if (folder->ui_func)
+		if (folder->ui_func && num % 128 == 0)
 			folder->ui_func(folder, item,
 					folder->ui_func_data ?
 					folder->ui_func_data :
