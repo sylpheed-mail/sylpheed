@@ -294,6 +294,13 @@ static gint compose_write_headers		(Compose	*compose,
 static gint compose_redirect_write_headers	(Compose	*compose,
 						 FILE		*fp);
 
+/* Strips CR/LF to block header injection; shared by compose_write_from_header. */
+static void compose_remove_header_newlines	(gchar		*str);
+/* Writes From:/Resent-From: from from_entry, sanitised and MIME-encoded. */
+static void compose_write_from_header		(Compose	*compose,
+						 FILE		*fp,
+						 const gchar	*header,
+						 const gchar	*charset);
 static void compose_convert_header		(Compose	*compose,
 						 gchar		*dest,
 						 gint		 len,
@@ -2925,6 +2932,21 @@ static void compose_select_account(Compose *compose, PrefsAccount *account,
 	prev_account = compose->account;
 	compose->account = account;
 
+	/* Keep from_entry in sync with the newly selected account so the user
+	 * sees the right default but can still override it manually. */
+	if (compose->from_entry) {
+		gchar *from_str;
+		if (account->name && *account->name)
+			from_str = g_strdup_printf("%s <%s>",
+						   account->name,
+						   account->address);
+		else
+			from_str = g_strdup(account->address
+					    ? account->address : "");
+		gtk_entry_set_text(GTK_ENTRY(compose->from_entry), from_str);
+		g_free(from_str);
+	}
+
 	compose_set_title(compose);
 
 	ifactory = gtk_item_factory_from_widget(compose->menubar);
@@ -3076,10 +3098,25 @@ static gboolean compose_check_for_valid_recipient(Compose *compose)
 static gboolean compose_check_entries(Compose *compose)
 {
 	const gchar *str;
+	gchar *from_addr;
 
 	if (compose_check_for_valid_recipient(compose) == FALSE) {
 		alertpanel_error(_("Recipient is not specified."));
 		return FALSE;
+	}
+
+	/* Reject send if the user left the From address field empty. */
+	if (compose->from_entry) {
+		str = gtk_entry_get_text(GTK_ENTRY(compose->from_entry));
+		from_addr = g_strdup(str);
+		extract_address(from_addr);
+		if (*from_addr == '\0') {
+			g_free(from_addr);
+			alertpanel_error(_("Sender address is not specified."));
+			gtk_widget_grab_focus(compose->from_entry);
+			return FALSE;
+		}
+		g_free(from_addr);
 	}
 
 	str = gtk_entry_get_text(GTK_ENTRY(compose->subject_entry));
@@ -3342,12 +3379,11 @@ static gboolean compose_check_recipients(Compose *compose)
 	gtk_table_attach_defaults
                 (GTK_TABLE(table), entry, 1, 2, 0, 1);
 
-	if (compose->account->name && *compose->account->name) {
-		g_snprintf(buf, sizeof(buf), "%s <%s>",
-			   compose->account->name, compose->account->address);
-		gtk_entry_set_text(GTK_ENTRY(entry), buf);
-	} else
-		gtk_entry_set_text(GTK_ENTRY(entry), compose->account->address);
+	/* Show the user-editable From address in the confirmation dialog. */
+	gtk_entry_set_text(GTK_ENTRY(entry),
+			   compose->from_entry
+			   ? gtk_entry_get_text(GTK_ENTRY(compose->from_entry))
+			   : "");
 
 	hbox = gtk_hbox_new(FALSE, 0);
 	label = gtk_label_new(prefs_common.trans_hdr ? _("Subject:")
@@ -4832,19 +4868,9 @@ static gint compose_write_headers(Compose *compose, FILE *fp,
 		fprintf(fp, "Date: %s\n", buf);
 	}
 
-	/* From */
-	if (compose->account->name && *compose->account->name) {
-		compose_convert_header
-			(compose, buf, sizeof(buf), compose->account->name,
-			 strlen("From: "), TRUE, charset);
-		if (QUOTE_REQUIRED(buf))
-			fprintf(fp, "From: \"%s\" <%s>\n",
-				buf, compose->account->address);
-		else
-			fprintf(fp, "From: %s <%s>\n",
-				buf, compose->account->address);
-	} else
-		fprintf(fp, "From: %s\n", compose->account->address);
+	/* From: read from the editable from_entry rather than the account. */
+	g_return_val_if_fail(compose->from_entry != NULL, -1);
+	compose_write_from_header(compose, fp, "From", charset);
 
 	slist_free_strings(compose->to_list);
 	g_slist_free(compose->to_list);
@@ -5088,15 +5114,9 @@ static gint compose_redirect_write_headers(Compose *compose, FILE *fp)
 	get_rfc822_date(buf, sizeof(buf));
 	fprintf(fp, "Resent-Date: %s\n", buf);
 
-	/* Resent-From */
-	if (compose->account->name) {
-		compose_convert_header
-			(compose, buf, sizeof(buf), compose->account->name,
-			 strlen("Resent-From: "), TRUE, NULL);
-		fprintf(fp, "Resent-From: %s <%s>\n",
-			buf, compose->account->address);
-	} else
-		fprintf(fp, "Resent-From: %s\n", compose->account->address);
+	/* Resent-From: same as From — read from from_entry, not account. */
+	g_return_val_if_fail(compose->from_entry != NULL, -1);
+	compose_write_from_header(compose, fp, "Resent-From", NULL);
 
 	slist_free_strings(compose->to_list);
 	g_slist_free(compose->to_list);
@@ -5208,6 +5228,56 @@ static gint compose_redirect_write_headers(Compose *compose, FILE *fp)
 }
 
 #undef IS_IN_CUSTOM_HEADER
+
+/* Remove CR and LF characters to prevent header injection. */
+static void compose_remove_header_newlines(gchar *str)
+{
+	gchar *p;
+	for (p = str; *p; p++) {
+		if (*p == '\r' || *p == '\n')
+			*p = ' ';
+	}
+	g_strchomp(str);
+}
+
+/* Parse from_entry text into display name and address, sanitise both against
+ * header injection, MIME-encode the name, then write the header line.
+ * Used for both From: and Resent-From: to avoid duplicating this logic. */
+static void compose_write_from_header(Compose *compose, FILE *fp,
+				      const gchar *header,
+				      const gchar *charset)
+{
+	gchar buf[BUFFSIZE];
+	const gchar *from_text;
+	gchar *from_addr, *from_name;
+
+	g_return_if_fail(compose->from_entry != NULL);
+	from_text = gtk_entry_get_text(GTK_ENTRY(compose->from_entry));
+	from_addr = g_strdup(from_text);
+	extract_address(from_addr);                  /* strip angle-bracket wrapper */
+	compose_remove_header_newlines(from_addr);   /* prevent address injection   */
+	from_name = procheader_get_fromname(from_text);
+	compose_remove_header_newlines(from_name);   /* prevent name injection       */
+	/* procheader_get_fromname falls back to the raw address when no display
+	 * name is present; treat that case as no name. */
+	if (!g_ascii_strcasecmp(from_name, from_addr)) {
+		g_free(from_name);
+		from_name = NULL;
+	}
+
+	if (from_name) {
+		compose_convert_header(compose, buf, sizeof(buf), from_name,
+				       strlen(header) + 2, TRUE, charset);
+		if (QUOTE_REQUIRED(buf))
+			fprintf(fp, "%s: \"%s\" <%s>\n", header, buf, from_addr);
+		else
+			fprintf(fp, "%s: %s <%s>\n", header, buf, from_addr);
+	} else
+		fprintf(fp, "%s: %s\n", header, from_addr);
+
+	g_free(from_addr);
+	g_free(from_name);
+}
 
 static void compose_convert_header(Compose *compose, gchar *dest, gint len,
 				   const gchar *src, gint header_len,
@@ -5525,6 +5595,9 @@ static Compose *compose_create(PrefsAccount *account, ComposeMode mode)
 	g_signal_connect(G_OBJECT(followup_entry), "grab_focus",
 			 G_CALLBACK(compose_grab_focus_cb), compose);
 	g_signal_connect(G_OBJECT(subject_entry), "grab_focus",
+			 G_CALLBACK(compose_grab_focus_cb), compose);
+	/* Track focus on from_entry so toolbar address-book button works. */
+	g_signal_connect(G_OBJECT(compose->from_entry), "grab_focus",
 			 G_CALLBACK(compose_grab_focus_cb), compose);
 
 #if 0
@@ -6194,6 +6267,34 @@ static GtkWidget *compose_account_option_menu_create(Compose *compose,
 
 	gtk_option_menu_set_menu(GTK_OPTION_MENU(optmenu), menu);
 	gtk_option_menu_set_history(GTK_OPTION_MENU(optmenu), def_menu);
+
+	/* Editable From address entry placed after the account dropdown.
+	 * The dropdown still controls which SMTP account is used to send;
+	 * this entry overrides only the From: display header. It is
+	 * pre-filled with the selected account's name and address so that
+	 * normal use requires no manual editing. */
+	{
+		GtkWidget *from_entry;
+		gchar *from_str;
+
+		from_entry = gtk_entry_new();
+		gtk_entry_set_max_length(GTK_ENTRY(from_entry), MAX_ENTRY_LENGTH);
+		gtk_widget_set_tooltip_text(from_entry,
+			_("Sender address shown in the From: header. "
+			  "The account dropdown above still selects the SMTP server."));
+		if (compose->account->name && *compose->account->name)
+			from_str = g_strdup_printf("%s <%s>",
+						   compose->account->name,
+						   compose->account->address);
+		else
+			from_str = g_strdup(compose->account->address
+					    ? compose->account->address : "");
+		gtk_entry_set_text(GTK_ENTRY(from_entry), from_str);
+		g_free(from_str);
+		gtk_box_pack_start(GTK_BOX(hbox), from_entry, TRUE, TRUE, 4);
+		gtk_widget_show(from_entry);
+		compose->from_entry = from_entry;  /* stored for later read-back */
+	}
 
 	return optmenu;
 }

@@ -203,6 +203,7 @@ struct _Compose
 	GtkTooltips *toolbar_tip;
 
 	GtkWidget *sig_combo;
+	GtkWidget *from_entry;  /* editable From: address, pre-filled from account */
 };
 
 struct _AttachInfo
